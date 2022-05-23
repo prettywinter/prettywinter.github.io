@@ -17,7 +17,7 @@ jobs:
         PERSONAL_TOKEN: ${{ secrets.DEPLOY_SECRET }}
 
         # The repository the action should deploy to.
-        PUBLISH_REPOSITORY: prettywinter/prettywinter.github.io
+        PUBLISH_REPOSITORY: git@github.com:prettywinter/prettywinter.github.io.git
 
         # The branch the action should deploy to.
         BRANCH: pages
