@@ -39,18 +39,17 @@ name: Hexo Deploy
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
-
     steps:
       - name: Checkout source
         uses: actions/checkout@v2
         with:
-          ref: master
+          ref: main
 
       - name: Setup Node.js
         uses: actions/setup-node@v1
