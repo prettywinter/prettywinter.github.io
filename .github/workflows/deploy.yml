@@ -20,4 +20,3 @@ jobs:
           deploykey: ${{secrets.DEPLOY_SECRET}}
           username: prettywinter
           email: jhlzlove@163.com
-          if_keep_commit_history: true
