@@ -103,5 +103,5 @@ theme: MengD
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: 'git'
-  repo:  git@github.com:prettywinter/prettywinter.github.io.git
+  repo: git@github.com:prettywinter/prettywinter.github.io.git
   branch: pages
