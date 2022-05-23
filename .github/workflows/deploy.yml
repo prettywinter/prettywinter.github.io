@@ -7,21 +7,19 @@ on:
 
 jobs:
   build:
-    name: Build
     runs-on: ubuntu-latest
     steps:
-    - name: Clean
-      uses: heowc/action-hexo@main
-      with:
-        args: clean
-    - name: Generate
-      uses: heowc/action-hexo@main
-      with:
-        args: generate
-    - name: Deploy
-      uses: heowc/action-hexo@main
-      env:
-        EMAIL: jhlzlove@163.com
-        NAME: jhlz
-      with:
-        args: deploy
+      - uses: actions/checkout@v1
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{runner.OS}}-${{hashFiles('**/package-lock.json')}}
+      - uses: yrpang/github-actions-hexo@v1.3
+        with:
+          deploykey: ${{secrets.DEPLOY_SECRET}}
+          username: prettywinter
+          email: jhlzlove@163.com
+          if_keep_commit_history: true
+          github_page_repository: prettywinter/prettywinter.github.io
+          github_page_repository_branch: pages
