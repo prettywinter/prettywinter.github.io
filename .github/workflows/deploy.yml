@@ -3,21 +3,24 @@ on:
   push:
     branches:
       - main
+
 jobs:
-  build-and-deploy:
+  build:
+    name: Build
     runs-on: ubuntu-latest
-    
     steps:
-    - name: Checkout
-      uses: actions/checkout@main
-
-    - name: Build and Deploy
-      uses: theme-keep/hexo-deploy-github-pages-action@master
+    - name: Clean
+      uses: heowc/action-hexo@main
+      with:
+        args: clean
+    - name: Generate
+      uses: heowc/action-hexo@main
+      with:
+        args: generate
+    - name: Deploy
+      uses: heowc/action-hexo@main
       env:
-        PERSONAL_TOKEN: ${{ secrets.DEPLOY_SECRET }}
-
-        # The repository the action should deploy to.
-        PUBLISH_REPOSITORY: git@github.com:prettywinter/prettywinter.github.io.git
-
-        # The branch the action should deploy to.
-        BRANCH: pages
+        EMAIL: jhlzlove@163.com
+        NAME: prettywinter
+      with:
+        args: deploy
