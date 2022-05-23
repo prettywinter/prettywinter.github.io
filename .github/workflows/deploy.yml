@@ -1,22 +1,23 @@
-name: Deploy
-
-on: 
+name: Hexo Deploy GitHub Pages
+on:
   push:
     branches:
       - main
-
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    
     steps:
-      - uses: actions/checkout@v1
-      - name: Cache node modules
-        uses: actions/cache@v1
-        with:
-          path: node_modules
-          key: ${{runner.OS}}-${{hashFiles('**/package-lock.json')}}
-      - uses: yrpang/github-actions-hexo@v1.3
-        with:
-          deploykey: ${{secrets.DEPLOY_SECRET}}
-          username: prettywinter
-          email: jhlzlove@163.com
+    - name: Checkout
+      uses: actions/checkout@main
+
+    - name: Build and Deploy
+      uses: theme-keep/hexo-deploy-github-pages-action@master
+      env:
+        PERSONAL_TOKEN: ${{ secrets.DEPLOY_SECRET }}
+
+        # The repository the action should deploy to.
+        PUBLISH_REPOSITORY: prettywinter/prettywinter.github.io
+
+        # The branch the action should deploy to.
+        BRANCH: pages
