@@ -21,5 +21,3 @@ jobs:
           username: prettywinter
           email: jhlzlove@163.com
           if_keep_commit_history: true
-          github_page_repository: prettywinter/prettywinter.github.io
-          github_page_repository_branch: pages
