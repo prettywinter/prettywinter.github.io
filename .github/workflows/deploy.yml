@@ -1,78 +1,121 @@
-name: deploy
+name: CI
 
-# 监听 main 分支的 push 操作
-on:
-  push:
-    branches:
-      - main
-
-# 应用变量的配置，方便下面的使用
-env:
-  # 设置用户名、邮箱
-  GIT_USER: prettywinter
-  GIT_EMAIL: jhlzlove@163.com
-  # Hexo 主题的仓库全名、分支
-  THEME_REPO: xaoxuu/hexo-theme-stellar
-  THEME_BRANCH: main
-  # 部署的仓库全名、分支
-  DEPLOY_REPO: prettywinter/prettywinter.github.io
-  DEPLOY_BRANCH: pages
+on: [push]
 
 jobs:
   build:
-    name: Build on node ${{ matrix.node_version }} and ${{ matrix.os }}
-    # 系统
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        # node 版本
-        node_version: [16.x]
-
+    name: A job to deploy blog.
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v1
+      with:
+        submodules: true # Checkout private submodules(themes or something else).
+    
+    # Caching dependencies to speed up workflows. (GitHub will remove any cache entries that have not been accessed in over 7 days.)
+    - name: Cache node modules
+      uses: actions/cache@v1
+      id: cache
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+    - name: Install Dependencies
+      if: steps.cache.outputs.cache-hit != 'true'
+      run: npm i
+    
+    # Deploy hexo blog website.
+    - name: Deploy
+      id: deploy
+      # uses: sma11black/hexo-action@v1.0.3
+      uses: jhlzlove/hexo-deploy-node16@main
+      with:
+        deploy_key: ${{ secrets.DEPLOY_SECRET }}
+        user_name: jhlz  # (or delete this input setting to use bot account)
+        user_email: jhlzlove@163.com # (or delete this input setting to use bot account)
+        commit_msg: ${{ github.event.head_commit.message }}  # (or delete this input setting to use hexo default settings)
+    # Use the output from the `deploy` step(use for test action)
+    - name: Get the output
+      run: |
+        echo "${{ steps.deploy.outputs.notify }}"
 
-      # 下载主题仓库
-      - name: Checkout theme repo
-        uses: actions/checkout@v2
-        with:
-          repository: ${{ env.THEME_REPO }}
-          ref: ${{ env.THEME_BRANCH }}
-          path: themes/stellar
 
-      # 下载部署的目标仓库
-      - name: Checkout deploy repo
-        uses: actions/checkout@v2
-        with:
-          repository: ${{ env.DEPLOY_REPO }}
-          ref: ${{ env.DEPLOY_BRANCH }}
-          path: .deploy_git
+# name: deploy
 
-      # 根据前面指定 node 版本进行环境搭建
-      - name: Use Node.js ${{ matrix.node_version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node_version }}
+# # 监听 main 分支的 push 操作
+# on:
+#   push:
+#     branches:
+#       - main
 
-      # 部署到 yourname.github.io 仓库的密钥、git 的相关配置
-      - name: Configuration environment
-        env:
-          HEXO_DEPLOY_PRI: ${{secrets.DEPLOY_SECRET}}
-        run: |
-          sudo timedatectl set-timezone "Asia/Shanghai"
-          mkdir -p ~/.ssh/
-          echo "$HEXO_DEPLOY_PRI" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
-          git config --global user.name $GIT_USER
-          git config --global user.email $GIT_EMAIL
+# # 应用变量的配置，方便下面的使用
+# env:
+#   # 设置用户名、邮箱
+#   GIT_USER: prettywinter
+#   GIT_EMAIL: jhlzlove@163.com
+#   # Hexo 主题的仓库全名、分支
+#   THEME_REPO: xaoxuu/hexo-theme-stellar
+#   THEME_BRANCH: main
+#   # 部署的仓库全名、分支
+#   DEPLOY_REPO: prettywinter/prettywinter.github.io
+#   DEPLOY_BRANCH: pages
 
-      - name: Deploy blog
-        run: |
-          npm i -g hexo-cli
-          npm i hexo-deployer-git
-          npm install
-          hexo clean
-          hexo generate
-          hexo deploy
+# jobs:
+#   build:
+#     name: Build on node ${{ matrix.node_version }} and ${{ matrix.os }}
+#     # 系统
+#     runs-on: ubuntu-latest
+#     strategy:
+#       matrix:
+#         os: [ubuntu-latest]
+#         # node 版本
+#         node_version: [16.x]
+
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v2
+
+#       # 下载主题仓库
+#       - name: Checkout theme repo
+#         uses: actions/checkout@v2
+#         with:
+#           repository: ${{ env.THEME_REPO }}
+#           ref: ${{ env.THEME_BRANCH }}
+#           path: themes/stellar
+
+#       # 下载部署的目标仓库
+#       - name: Checkout deploy repo
+#         uses: actions/checkout@v2
+#         with:
+#           repository: ${{ env.DEPLOY_REPO }}
+#           ref: ${{ env.DEPLOY_BRANCH }}
+#           path: .deploy_git
+
+#       # 根据前面指定 node 版本进行环境搭建
+#       - name: Use Node.js ${{ matrix.node_version }}
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: ${{ matrix.node_version }}
+
+#       # 部署到 yourname.github.io 仓库的密钥、git 的相关配置
+#       - name: Configuration environment
+#         env:
+#           HEXO_DEPLOY_PRI: ${{secrets.DEPLOY_SECRET}}
+#         run: |
+#           sudo timedatectl set-timezone "Asia/Shanghai"
+#           mkdir -p ~/.ssh/
+#           echo "$HEXO_DEPLOY_PRI" > ~/.ssh/id_rsa
+#           chmod 600 ~/.ssh/id_rsa
+#           ssh-keyscan github.com >> ~/.ssh/known_hosts
+#           git config --global user.name $GIT_USER
+#           git config --global user.email $GIT_EMAIL
+
+#       - name: Deploy blog
+#         run: |
+#           npm i -g hexo-cli
+#           npm i hexo-deployer-git
+#           npm install
+#           hexo clean
+#           hexo generate
+#           hexo deploy
