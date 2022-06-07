@@ -16,8 +16,8 @@ open_graph:
 ######## Sidebar ########
 sidebar:
   logo:
-    avatar: '[config.avatar](/about/)' # you can set avatar link in _config.yml or '[https://xxx.png](/about/)'
-    title: '[config.title](/)' # you can set html tag like: '[<img no-lazy height="32px" src="xxx"/>](/)'
+    avatar: [https://raw.sevencdn.com/prettywinter/dist/main/images/avatar/avatar.jpeg](/about/) # '[config.avatar](/about/)' # you can set avatar link in _config.yml or '[https://xxx.png](/about/)'
+    title: [<img no-lazy height="32px" src="https://raw.sevencdn.com/prettywinter/dist/main/images/favicon/favicon16x16.png"/>](/) #'[config.title](/)' # you can set html tag like: '[<img no-lazy height="32px" src="xxx"/>](/)'
   menu:
     # post: '[btn.blog](/)'
     # wiki: '[btn.wiki](/wiki/)'
@@ -86,7 +86,7 @@ article:
 
 ######## Comments ########
 comments:
-  service: # beaudar, utterances, valine, twikoo, waline
+  service: beaudar # beaudar, utterances, valine, twikoo, waline
   # beaudar
   # https://beaudar.lipk.org/
   beaudar:
