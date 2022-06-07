@@ -47,7 +47,7 @@ env:
   GIT_USER: prettywinter
   GIT_EMAIL: jhlzlove@163.com
   # Hexo 主题的仓库全名、分支
-  THEME_REPO: Lete114/Hexo-Theme-MengD
+  THEME_REPO: xaoxuu/hexo-theme-stellar
   THEME_BRANCH: main
   # 部署的仓库全名、分支
   DEPLOY_REPO: prettywinter/prettywinter.github.io
@@ -74,7 +74,7 @@ jobs:
         with:
           repository: ${{ env.THEME_REPO }}
           ref: ${{ env.THEME_BRANCH }}
-          path: themes/MengD
+          path: themes/stellar
 
       # 下载部署的目标仓库
       - name: Checkout deploy repo

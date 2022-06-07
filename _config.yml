@@ -5,7 +5,7 @@
 # Site
 title: 浮萍一叶
 subtitle: ''
-description: ''
+description: '只要不失你的崇高 全世界都会为你敞开大门 追浴沂之风徽，法舞雩之咏叹'
 keywords:
 author: 江湖浪子
 language: zh-CN
@@ -97,7 +97,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: MengD
+theme: stellar
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment

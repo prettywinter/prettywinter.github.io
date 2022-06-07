@@ -24,6 +24,7 @@ Linux 下基本有源码编译安装、二进制包解压缩安装（可以使�
   - [4. Python](#4-python)
   - [5. Nginx](#5-nginx)
   - [6. Btop++](#6-btop)
+  - [7. SQLite](#7-sqlite)
 - [Linux通用二进制文件安装](#linux通用二进制文件安装)
   - [1. Docker](#1-docker)
   - [2. Node](#2-node)
@@ -202,6 +203,21 @@ git clone https://gitee.com/mirrors/btop.git
 cd btop
 make && make install
 ```
+
+### 7. SQLite
+
+几乎所有版本的 Linux 操作系统都附带 SQLite，如果版本较旧，可以去下载[官网最新版源码](https://www.sqlite.org/download.html)，以下命令适用于 `sqlite-autoconf-xxx.tar.gz`。~~CentOS安装后可能遇见奇怪的问题，不推荐大家使用:dog:~~。
+
+```bash{.line-numbers}
+./configure
+
+make && make install
+
+# 查看版本
+sqlite3 -version
+```
+
+> 如果使用的 CentOS 系统，不想要系统自带的老版本的话，直接删除 /usr/bin/sqlite3 文件和 /usr/lib/ 路径下的`libsqlite3.so.0`、`libsqlite3.so.0.8.6`，然后清理 make 缓存，再次执行以上命令。改名保留也是可以的。
 
 ## Linux通用二进制文件安装
 
