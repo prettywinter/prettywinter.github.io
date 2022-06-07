@@ -1,31 +1,3 @@
-# name: Hexo Deploy GitHub Pages
-# on:
-#   push:
-#     branches:
-#       - main
-
-# jobs:
-#   build:
-#     name: Build
-#     runs-on: ubuntu-latest
-#     steps:
-#     - name: Clean
-#       uses: heowc/action-hexo@main
-#       with:
-#         args: clean
-#     - name: Generate
-#       uses: heowc/action-hexo@main
-#       with:
-#         args: generate
-#     - name: Deploy
-#       uses: heowc/action-hexo@main
-#       env:
-#         EMAIL: jhlzlove@163.com
-#         NAME: prettywinter
-#       with:
-#         args: deploy
-
-# Hexo 带有自定义标签的主题使用 Github Action 自动部署脚本
 name: deploy
 
 # 监听 main 分支的 push 操作
@@ -33,13 +5,6 @@ on:
   push:
     branches:
       - main
-  # 暂时没什么用
-  workflow_call:
-    inputs:
-      commit_msg:
-        description: 'Automatic deploy by Github Action'
-        required: false
-        type: string
 
 # 应用变量的配置，方便下面的使用
 env:
