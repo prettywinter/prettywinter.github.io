@@ -86,91 +86,66 @@ Github Action 的脚本文件是在 `.github/workflows/xxx.yml` 路径下，是 
 
 需要注意的是，如果你使用的 Hexo 主题中有自定义标签，并且在 markdown 文件中有所使用的话，在 Github Action 自动部署的时候会发生解析错误，找不到自定义标签的解析内容，这点需要注意。解决的办法有多种，可以在脚本中添加使用的主题，每次部署的时候去获取，或者在 Hexo 仓库中使用 `git submodule add origin https://github.com/xxxx/ themes/xxx` 的方式去添加主题，在 **yml** 文件中使用 `submodules: true` 选项开启子模块检出，都是可以解决的，下面给两个示例。
 
-以下是浪子使用的脚本示例（适用于不同仓库或者不同分支）：
+以下是浪子使用的脚本示例（适用于不同仓库或者不同分支，第二个借用了他人的脚本）：
 
 ```yml{.line-numbers}
-# Hexo 带有自定义标签的主题使用 Github Action 自动部署脚本
-name: deploy
+name: Hexo Blog CI
 
-# 监听 main 分支的 push 操作
-on:
+# master branch on push, auto run
+on: 
   push:
     branches:
       - main
-
-# 应用变量的配置，方便下面的使用
-env:
-  # 设置用户名、邮箱
-  GIT_USER: xxx
-  GIT_EMAIL: xxx@xx.com
-  # Hexo 主题的仓库全名、分支
-  THEME_REPO: volantis-x/hexo-theme-volantis
-  THEME_BRANCH: main
-  # 部署的仓库全名、分支
-  DEPLOY_REPO: xxx/xxx.github.io
-  DEPLOY_BRANCH: pages
-
+      
 jobs:
-  build:
-    name: Build on node ${{ matrix.node_version }} and ${{ matrix.os }}
-    # 系统
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        # node 版本
-        node_version: [16.x]
-
+  build: 
+    runs-on: ubuntu-latest 
+        
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+    # check it to your workflow can access it
+    # from: https://github.com/actions/checkout
+    - name: Checkout Repository main branch
+      uses: actions/checkout@main 
+      
+    # from: https://github.com/actions/setup-node  
+    - name: Setup Node.js 16.x 
+      uses: actions/setup-node@master
+      with:
+        node-version: "16.15.0"
+    
+    - name: Cache node modules
+      uses: actions/cache@v1    # 缓存node_modules，避免每次跑action都要重新下载
+      id: cache
+      with:
+        path: node_modules
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
+    
+    - name: Setup Hexo Dependencies
+      run: |
+        npm install hexo-cli -g
+        npm install
 
-      # 获取主题仓库
-      - name: Checkout theme repo
-        uses: actions/checkout@v2
-        with:
-          repository: ${{ env.THEME_REPO }}
-          ref: ${{ env.THEME_BRANCH }}
-          path: themes/volantis
-
-      # 获取部署的目标仓库
-      - name: Checkout deploy repo
-        uses: actions/checkout@v2
-        with:
-          repository: ${{ env.DEPLOY_REPO }}
-          ref: ${{ env.DEPLOY_BRANCH }}
-          path: .deploy_git
-
-      # node 版本进行环境搭建
-      - name: Use Node.js ${{ matrix.node_version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node_version }}
-
-      # 部署到 yourname.github.io 仓库的密钥、git 的相关配置
-      - name: Configuration environment
-        env:
-          HEXO_DEPLOY_PRI: ${{secrets.ACCESS_TOKEN}}
-        run: |
-          sudo timedatectl set-timezone "Asia/Shanghai"
-          mkdir -p ~/.ssh/
-          echo "$HEXO_DEPLOY_PRI" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan github.com >> ~/.ssh/known_hosts
-          git config --global user.name $GIT_USER
-          git config --global user.email $GIT_EMAIL
-
-      - name: Deploy blog
-        run: |
-          npm i -g hexo-cli
-          npm i hexo-deployer-git
-          npm install
-          hexo clean
-          hexo generate
-          hexo deploy
+    - name: Setup Deploy Private Key
+      env:
+        HEXO_DEPLOY_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}    # 这个就是Source仓库的私钥
+      run: |
+        mkdir -p ~/.ssh/
+        echo "$HEXO_DEPLOY_PRIVATE_KEY" > ~/.ssh/id_rsa 
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
+        
+    - name: Setup Git Infomation
+      run: | 
+        git config --global user.name "xxx"
+        git config --global user.email "xxxx@qq.com"
+    - name: Deploy Hexo 
+      run: |
+        hexo clean
+        hexo generate 
+        hexo deploy
 ```
-
-以下脚本内容 **仅适用于不同仓库** ：
 
 ```yml{.line-numbers}
 name: CI
@@ -204,11 +179,11 @@ jobs:
     - name: Deploy
       id: deploy
       # 原使用仓库：sma11black/hexo-action@v1.0.3，由于原作者的 node 环境较低，不支持浪子使用的主题，浪子对其进行了修改，上传到了自己的仓库，未发布 marketplace，该脚本遵循 MIT 协议。
-      uses: jhlzlove/deploy-hexo-node16@master
+      uses: jhlzlove/hexo-deploy-node16@main
       with:
         deploy_key: ${{ secrets.ACCESS_TOKEN }}  # ssh private key
-        user_name: jhlz  # (or delete this input setting to use bot account)
-        user_email: jhlzlove@163.com # (or delete this input setting to use bot account)
+        user_name: xxx  # (or delete this input setting to use bot account)
+        user_email: xxxx@qq.com # (or delete this input setting to use bot account)
         commit_msg: ${{ github.event.head_commit.message }}  # (or delete this input setting to use hexo default settings)
     # Use the output from the `deploy` step(use for test action)
     - name: Get the output
