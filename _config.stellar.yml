@@ -17,12 +17,11 @@ open_graph:
 sidebar:
   logo:
     avatar: '[https://raw.sevencdn.com/prettywinter/dist/main/images/avatar/avatar.jpeg](/about/)' # '[config.avatar](/about/)' # you can set avatar link in _config.yml or '[https://xxx.png](/about/)'
-    title: '[<img no-lazy height="32px" src="https://raw.sevencdn.com/prettywinter/dist/main/images/favicon/favicon16x16.png"/>](/)' #'[config.title](/)' # you can set html tag like: '[<img no-lazy height="32px" src="xxx"/>](/)'
+    title: '[config.title](/)' # you can set html tag like: '[<img no-lazy height="32px" src="xxx"/>](/)'
   menu:
     post: '[btn.blog](/)'
     wiki: '[btn.wiki](/wiki/)'
-    friends: '[友链](/friends/)'
-    about: '[关于](/about/)'
+    more: '[更多](/more/)'
   # Sidebar widgets
   widget_layout:
     index: [welcome, recent] # for home/wiki/categories/tags/archives/404 pages
@@ -148,17 +147,17 @@ comments:
     pageview: false
 
     # Custom locales
-    # locale:
-    #   placeholder: Welcome to comment # Comment box placeholder
+    locale:
+      placeholder: Welcome to comment # Comment box placeholder
 
     # Custom emoji
-    # emoji:
-    #   - https://unpkg.com/@waline/emojis@1.0.1/weibo
-    #   - https://unpkg.com/@waline/emojis@1.0.1/alus
-    #   - https://unpkg.com/@waline/emojis@1.0.1/bilibili
-    #   - https://unpkg.com/@waline/emojis@1.0.1/qq
-    #   - https://unpkg.com/@waline/emojis@1.0.1/tieba
-    #   - https://unpkg.com/@waline/emojis@1.0.1/tw-emoji
+    emoji:
+      - https://unpkg.com/@waline/emojis@1.0.1/weibo
+      - https://unpkg.com/@waline/emojis@1.0.1/alus
+      - https://unpkg.com/@waline/emojis@1.0.1/bilibili
+      - https://unpkg.com/@waline/emojis@1.0.1/qq
+      - https://unpkg.com/@waline/emojis@1.0.1/tieba
+      - https://unpkg.com/@waline/emojis@1.0.1/tw-emoji
 
     # Comment infomation, valid meta are nick, mail and link
     # meta:
@@ -212,7 +211,7 @@ footer:
       - '[关于本站](/)'
       - '[GitHub](/)'
   license: '[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)'
-  source: #'[GitHub](https://github.com/xaoxuu/hexo-theme-stellar)'
+  source: '[GitHub](https://github.com/xaoxuu/hexo-theme-stellar)'
   more: # string or array (support markdown)
 
 
@@ -240,7 +239,7 @@ tag_plugins:
     tieba: https://fastly.jsdelivr.net/gh/volantis-x/cdn-emoji/tieba/%s.png
   # {% image %}
   image:
-    fancybox: # true, false
+    fancybox: true # true, false
 
 
 ######## JS Plugins ########
