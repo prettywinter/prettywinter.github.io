@@ -3,6 +3,7 @@ title: RabbitMQ整理
 categories:
   - Java
   - RabbitMQ
+abbrlink: 2d31c306
 ---
 
 RabbitMQ整理

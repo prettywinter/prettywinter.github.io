@@ -3,6 +3,7 @@ title: ElasticSearch + Kibana总结
 categories:
   - Java
   - ELK
+abbrlink: b279c45e
 ---
 
 ES的内部使用了Restful API，并且使用的 JSON 语法，对程序员友好；Kibana提供了友好的客户端操作页面，具有相关的语法提示、图表分析等强大的功能。

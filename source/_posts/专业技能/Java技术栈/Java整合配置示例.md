@@ -3,6 +3,7 @@ title: Java项目整合配置
 categories:
   - Java
   - 配置
+abbrlink: ff45fa2
 ---
 
 来一部二手秘籍罩你闯荡四方。基于 SpringBoot 的两种常用整合配置，注释含混不清的、缺少的以后有空整理。

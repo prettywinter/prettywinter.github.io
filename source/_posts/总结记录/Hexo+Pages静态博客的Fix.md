@@ -3,6 +3,7 @@ title: 解决使用Hexo+Github Pages搭建博客可能遇到的问题
 categories:
   - Hexo
   - Github Pages
+abbrlink: 61d2e814
 ---
 
 某次操作中脑回路异常把 Github Pages 的库给删除了……

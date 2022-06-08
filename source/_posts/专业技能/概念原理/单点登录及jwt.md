@@ -3,6 +3,7 @@ title: SSO单点登录及jwt
 categories:
   - Java
   - JWT
+abbrlink: cb9baf9
 ---
 
 SSO单点登录及jwt

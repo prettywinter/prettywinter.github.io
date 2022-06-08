@@ -4,7 +4,8 @@ categories:
   - Linux
   - CentOS
   - 教程
-cover: https://raw.sevencdn.com/prettywinter/dist/main/images/blogcover/linux.jpeg
+cover: 'https://raw.sevencdn.com/prettywinter/dist/main/images/blogcover/linux.jpeg'
+abbrlink: bb86529a
 ---
 
 一般都选 CentOS/Ubantu 作为服务器，这里介绍使用 CentOS7.9 最小化安装。

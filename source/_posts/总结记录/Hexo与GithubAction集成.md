@@ -1,8 +1,9 @@
 ---
 title: Github Action自动部署Hexo静态博客
-categories: 
-    - Github Action
-    - Hexo
+categories:
+  - Github Action
+  - Hexo
+abbrlink: 9e08f2ab
 ---
 
 使用 Github Pages 服务和 Hexo 搭建的个人静态博客网站，集成 Github Action 完成自动部署。

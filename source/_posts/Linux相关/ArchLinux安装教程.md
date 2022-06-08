@@ -4,7 +4,8 @@ categories:
   - Linux
   - Arch
   - 教程
-cover: https://raw.sevencdn.com/prettywinter/dist/main/images/blogcover/arch.jpeg
+cover: 'https://raw.sevencdn.com/prettywinter/dist/main/images/blogcover/arch.jpeg'
+abbrlink: a5e4683b
 ---
 
 ArchLinux，很不错的一款 Linux 发行版，不过的它的安装可能让很多人望而却步，不过还有背靠 Arch 的另一个子系统，Manjaro，它的安装就和 Window 一样，简单容易。本篇文章是基于之前的大佬教我而写。

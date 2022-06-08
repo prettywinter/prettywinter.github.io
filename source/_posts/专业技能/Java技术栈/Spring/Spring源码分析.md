@@ -3,6 +3,7 @@ title: Spring源码分析笔记
 categories:
   - Spring
   - Java
+abbrlink: fd4a5dd8
 ---
 
 Spring源码分析笔记

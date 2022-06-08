@@ -3,6 +3,7 @@ title: Java框架之SSM
 categories:
   - Java
   - SSM
+abbrlink: 1de35dc6
 ---
 
 Java框架之SSM整理。

@@ -1,9 +1,10 @@
 ---
 title: Github图床使用PicGo实现快捷上传
-categories: 
-    - PicGo
-    - Github
-    - 图床
+categories:
+  - PicGo
+  - Github
+  - 图床
+abbrlink: 9ee4a0a9
 ---
 
 使用 Github 作为图床，并使用 PicGo 实现快捷上传。

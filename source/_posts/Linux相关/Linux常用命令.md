@@ -2,7 +2,8 @@
 title: Linux常用命令
 categories:
   - Linux
-cover: https://raw.sevencdn.com/prettywinter/dist/main/images/blogcover/linux.jpeg
+cover: 'https://raw.sevencdn.com/prettywinter/dist/main/images/blogcover/linux.jpeg'
+abbrlink: d0edc1ed
 ---
 
 Linux 常用命令总结。这些东西还是要常敲的，记住的总会忘记。

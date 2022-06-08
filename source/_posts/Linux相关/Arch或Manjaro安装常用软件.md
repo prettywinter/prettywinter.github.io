@@ -4,7 +4,9 @@ categories:
   - Linux
   - Arch
   - 软件安装
-cover: https://raw.githubusercontentS.com/prettywinter/dist/main/images/blogcover/arch.jpeg
+cover: >-
+  https://raw.githubusercontentS.com/prettywinter/dist/main/images/blogcover/arch.jpeg
+abbrlink: ae78c405
 ---
 
 整理一些 ArchLinux 中常用的软件。

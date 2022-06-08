@@ -40,6 +40,9 @@
 #       run: |
 #         echo "${{ steps.deploy.outputs.notify }}"
 
+# git ls-files -z | while read -d '' path; do touch -d $(git log -1 --format="@%ct" "$path") "$path"; done
+
+
 # workflow name
 name: Hexo Blog CI
 
@@ -59,8 +62,8 @@ jobs:
     - name: Checkout Repository main branch
       uses: actions/checkout@main
       with:
-        submodules: true
         fetch-depth: 0
+        submodules: true
       
     # from: https://github.com/actions/setup-node  
     - name: Setup Node.js 16.x 
@@ -95,7 +98,6 @@ jobs:
       run: | 
         git config --global user.name "prettywinter"
         git config --global user.email "wasdcreate@163.com"
-        git ls-files -z | while read -d '' path; do touch -d $(git log -1 --format="@%ct" "$path") "$path"; done
     - name: Deploy Hexo 
       run: |
         hexo clean

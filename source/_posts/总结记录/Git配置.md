@@ -1,7 +1,8 @@
 ---
 title: Git配置和常用命令
 categories: Git
-cover: https://raw.sevencdn.com/prettywinter/dist/main/images/doc/git_command.jpg
+cover: 'https://raw.sevencdn.com/prettywinter/dist/main/images/doc/git_command.jpg'
+abbrlink: decbe2ce
 ---
 
 Git 入门

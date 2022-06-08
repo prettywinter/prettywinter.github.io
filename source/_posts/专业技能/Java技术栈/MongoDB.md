@@ -3,6 +3,7 @@ title: MongoDB总结整理
 categories:
   - Java
   - MongoDB
+abbrlink: ebfc936d
 ---
 
 MongoDB整理，5.x版本。与之前的版本有些许变化。

@@ -3,6 +3,7 @@ title: Spring Security总结
 categories:
   - Java
   - Spring Security
+abbrlink: 95588d77
 ---
 
 Spring Security总结。Spring Security 的版本在 2.7.0 版本之前（不包括）可以使用 WebSecurityConfigurerAdapter 来配置相关内容。2.7.0 版本之后有所改变（弃用状态，仍可使用）。

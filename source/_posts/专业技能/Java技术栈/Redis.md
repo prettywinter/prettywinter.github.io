@@ -3,6 +3,7 @@ title: Redis数据库
 categories:
   - Java
   - Redis
+abbrlink: eb52a7b2
 ---
 
 Redis 数据库整理

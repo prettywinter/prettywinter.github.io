@@ -1,7 +1,8 @@
 ---
 title: VsCode配置备份
-categories: 
-    - vscode
+categories:
+  - vscode
+abbrlink: 36213fe7
 ---
 
 浪子的 VsCode 配置备份。

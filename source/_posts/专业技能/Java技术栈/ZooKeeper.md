@@ -3,6 +3,7 @@ title: ZooKeeper 总结
 categories:
   - Java
   - ZooKeeper
+abbrlink: 6fff97ea
 ---
 Zookeeoer 总结
 

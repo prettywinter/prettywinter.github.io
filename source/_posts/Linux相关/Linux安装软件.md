@@ -3,7 +3,8 @@ title: Linux安装软件
 categories:
   - Linux
   - 软件安装
-cover: https://raw.sevencdn.com/prettywinter/dist/main/images/blogcover/linux.jpeg
+cover: 'https://raw.sevencdn.com/prettywinter/dist/main/images/blogcover/linux.jpeg'
+abbrlink: 5e42d40d
 ---
 
 Linux 下基本有源码编译安装、二进制包解压缩安装（可以使用包管理器安装，方便快捷）、Appimage格式的软件等，当然，最后一个一般在服务器上也用不到。

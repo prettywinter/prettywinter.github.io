@@ -1,8 +1,9 @@
 ---
 title: 使用maven-assembly-plugin打包项目
-categories: 
-    - Java
-    - maven
+categories:
+  - Java
+  - maven
+abbrlink: f7c71f43
 ---
 
 本示例插件以 `3.3.0` 为例，结合官方文档进行简单的配置。推荐直接访问 [官网](https://maven.apache.org/plugins/maven-assembly-plugin/usage.html)，介绍的很详细。
