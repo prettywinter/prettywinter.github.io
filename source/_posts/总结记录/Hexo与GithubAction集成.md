@@ -106,6 +106,8 @@ jobs:
     # from: https://github.com/actions/checkout
     - name: Checkout Repository main branch
       uses: actions/checkout@main 
+      with:
+        submodules: true
       
     # from: https://github.com/actions/setup-node  
     - name: Setup Node.js 16.x 
