@@ -44,7 +44,7 @@ PicGo 是图片上传到其它存储平台的助手。它支持多种图床：we
 
 打开 VsCode 的扩展商店搜索 **picgo**，安装图中红框框中插件。
 
-![20220515164011](https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/20220515164011.png)
+{% image https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/20220515164011.png width:200px padding:16px %}
 
 安装完成后使用 `Ctrl + Shift + P` 快捷键，搜索打开 `settings.json` 文件，添写以下内容保存，这里面的内容和上面的配置一样。
 
