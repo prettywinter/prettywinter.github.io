@@ -16,13 +16,13 @@ open_graph:
 ######## Sidebar ########
 sidebar:
   logo:
-    avatar: https://raw.sevencdn.com/prettywinter/dist/main/images/avatar/avatar.jpeg(/about/) # '[config.avatar](/about/)' # you can set avatar link in _config.yml or '[https://xxx.png](/about/)'
-    title: <img no-lazy height="32px" src="https://raw.sevencdn.com/prettywinter/dist/main/images/favicon/favicon16x16.png"/>(/) #'[config.title](/)' # you can set html tag like: '[<img no-lazy height="32px" src="xxx"/>](/)'
+    avatar: '[https://raw.sevencdn.com/prettywinter/dist/main/images/avatar/avatar.jpeg](/about/)' # '[config.avatar](/about/)' # you can set avatar link in _config.yml or '[https://xxx.png](/about/)'
+    title: '[<img no-lazy height="32px" src="https://raw.sevencdn.com/prettywinter/dist/main/images/favicon/favicon16x16.png"/>](/)' #'[config.title](/)' # you can set html tag like: '[<img no-lazy height="32px" src="xxx"/>](/)'
   menu:
-    # post: '[btn.blog](/)'
-    # wiki: '[btn.wiki](/wiki/)'
-    # friends: '[友链](/friends/)'
-    # about: '[关于](/about/)'
+    post: '[btn.blog](/)'
+    wiki: '[btn.wiki](/wiki/)'
+    friends: '[友链](/friends/)'
+    about: '[关于](/about/)'
   # Sidebar widgets
   widget_layout:
     index: [welcome, recent] # for home/wiki/categories/tags/archives/404 pages
@@ -90,11 +90,11 @@ comments:
   # beaudar
   # https://beaudar.lipk.org/
   beaudar:
-    repo: xxx/xxx
+    repo: prettywinter/blog-comments
     issue-term: pathname
     issue-number:
     theme: preferred-color-scheme
-    label:
+    label: comment
     input-position: top # top/bottom 评论框位置
     comment-order: desc # desc 排序
     keep-theme: # true/false
@@ -198,19 +198,19 @@ footer:
     #   icon: '<img src="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.3/social/942ebbf1a4b91.svg"/>'
     #   url: /about/#comments
   sitemap:
-    # '博客':
-    #   - '[近期](/)'
-    #   - '[分类](/)'
-    #   - '[标签](/)'
-    #   - '[归档](/)'
-    # '项目':
-    #   - '[开源库](/)'
-    # '社交':
-    #   - '[友链](/)'
-    #   - '[留言板](/)'
-    # '更多':
-    #   - '[关于本站](/)'
-    #   - '[GitHub](/)'
+    '博客':
+      - '[近期](/)'
+      - '[分类](/)'
+      - '[标签](/)'
+      - '[归档](/)'
+    '项目':
+      - '[开源库](/)'
+    '社交':
+      - '[友链](/)'
+      - '[留言板](/)'
+    '更多':
+      - '[关于本站](/)'
+      - '[GitHub](/)'
   license: '[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)'
   source: #'[GitHub](https://github.com/xaoxuu/hexo-theme-stellar)'
   more: # string or array (support markdown)
