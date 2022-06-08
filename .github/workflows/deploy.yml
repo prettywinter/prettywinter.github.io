@@ -60,6 +60,7 @@ jobs:
       uses: actions/checkout@main
       with:
         submodules: true
+        fetch-depth: 0
       
     # from: https://github.com/actions/setup-node  
     - name: Setup Node.js 16.x 
