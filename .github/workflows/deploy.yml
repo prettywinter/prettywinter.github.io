@@ -40,8 +40,6 @@
 #       run: |
 #         echo "${{ steps.deploy.outputs.notify }}"
 
-# git ls-files -z | while read -d '' path; do touch -d $(git log -1 --format="@%ct" "$path") "$path"; done
-
 
 # workflow name
 name: Hexo Blog CI
@@ -65,10 +63,6 @@ jobs:
         fetch-depth: 0
         submodules: true
 
-    - name: Git Config
-      run: |
-        git ls-files -z | while read -d '' path; do touch -d $(git log -1 --format="@%ct" "$path") "$path"; done
-      
     # from: https://github.com/actions/setup-node  
     - name: Setup Node.js 16.x 
       uses: actions/setup-node@master
