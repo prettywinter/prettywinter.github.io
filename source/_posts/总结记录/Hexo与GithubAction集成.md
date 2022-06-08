@@ -49,8 +49,8 @@ graph LR
 
 ### 1. SSH密钥配置
 
-SSH 密钥的作用我想大家都了解了，这里配置这个密钥是两个仓库或者两个分支去通信的凭证。举个栗子，Pages服务是单独一个仓库，而我的备份文件在一个私有库中(一般备份不想让他人可见)，我在我的私有库中使用了Github Action，把自己的内容去部署发布到 Pages 仓库。这样需要一个身份的验证，如果是 Pages 仓库的不同分支也是同理。
-这样我想大家就理解了，下面的内容就是生成一个 SSH 密钥对，把公钥放在 Pages 服务仓库的变量里，把 **私钥** 放在 **备份仓库** 的变量里，之后在 Action 的 **yml** 文件中去使用，这样就不会出错了。
+SSH 密钥的作用我想大家都了解了，这里配置这个密钥是两个仓库或者两个分支去通信的凭证。举个栗子，Pages服务是单独一个仓库，而我的备份文件在一个私有库中(一般备份不想让他人可见)，我在我的私有库中使用了Github Action，把自己的内容去部署发布到 Pages 仓库。这样不同仓库或者不同分支进行交互时就需要一个身份的验证。
+这样我想大家就理解了，下面的内容就是生成一个 SSH 密钥对，把 **公钥** 放在 Pages 服务仓库的变量里，把 **私钥** 放在 **备份仓库** 的变量里，之后在 Action 的 **yml** 文件中去使用，这样备份仓库就可以与 Pages 仓库完成认证并顺利部署了。
 
 #### 1. 创建新的SSH密钥
 
@@ -77,7 +77,7 @@ SSH 密钥的作用我想大家都了解了，这里配置这个密钥是两个�
 
 ##### 2.2 新仓库存放备份
 
-如果 Github Pages 个人博客和 Hexo 备份文件是在两个不同的仓库中，密钥的配置和上面类似。不同之处在于 `action_rsa` 私钥需要配置在 Hexo 备份仓库里。其它的步骤都和 2.1 一样。
+如果 Github Pages 个人博客和 Hexo 备份文件是在两个不同的仓库中，密钥的配置和上面类似。不同之处在于 `action_rsa` 私钥需要放在 Hexo 备份仓库的便量里。其它的步骤都和 2.1 一样。
 
 至此，密钥的配置结束。
 
@@ -85,9 +85,9 @@ SSH 密钥的作用我想大家都了解了，这里配置这个密钥是两个�
 
 Github Action 的脚本文件是在 `.github/workflows/xxx.yml` 路径下，是 `yml` 格式的。我们可以使用别人已经写好的脚本，也可以全部自己编写。
 
-需要注意的是，如果你使用的 Hexo 主题中有自定义标签，并且在 markdown 文件中有所使用的话，在 Github Action 自动部署的时候会发生解析错误，找不到自定义标签的解析内容，这点需要注意。解决的办法有多种，可以在脚本中添加使用的主题，每次部署的时候去获取，或者在 Hexo 仓库中使用 `git submodule add origin https://github.com/xxxx/ themes/xxx` 的方式去添加主题，在 **yml** 文件中使用 `submodules: true` 选项开启子模块检出，都是可以解决的，下面给两个示例。
+需要注意的是，如果你使用的 Hexo 主题中有自定义标签，并且在 markdown 文件中有所使用的话，Action 自动部署的时候会发生解析错误，找不到自定义标签的解析内容，这点需要注意。解决办法就是在 Hexo 仓库中使用 `git submodule add origin https://github.com/xxxx/ themes/xxx` 的方式去添加主题，在 **yml** 文件中使用 `submodules: true` 选项开启子模块检出，下面给两个不同的示例。其中，第二种方式在部署的时候可以把提交信息返回给 Action 自动部署的仓库中。
 
-以下是浪子使用的脚本示例（适用于不同仓库或者不同分支，第二个借用了他人的脚本）：
+纯脚本文件：
 
 ```yml{.line-numbers}
 name: Hexo Blog CI
@@ -106,7 +106,9 @@ jobs:
     # check it to your workflow can access it
     # from: https://github.com/actions/checkout
     - name: Checkout Repository main branch
-      uses: actions/checkout@main 
+      uses: actions/checkout@main
+      # 是否检出子模块，此选项只对 git submodule add <你使用的主题地址> 生效，对于直接 git clone 的主题不生效
+      # 推荐在选择 Hexo 主题时，使用 git submodule add https://github.com/xxx/xxx.git themes/xxx
       with:
         submodules: true
       
@@ -116,8 +118,9 @@ jobs:
       with:
         node-version: "16.15.0"
     
+    # 缓存node_modules，避免每次跑action都要重新下载
     - name: Cache node modules
-      uses: actions/cache@v1    # 缓存node_modules，避免每次跑action都要重新下载
+      uses: actions/cache@v1
       id: cache
       with:
         path: node_modules
@@ -132,7 +135,8 @@ jobs:
 
     - name: Setup Deploy Private Key
       env:
-        HEXO_DEPLOY_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}    # 这个就是Source仓库的私钥
+        # 引用之前设置的仓库私钥
+        HEXO_DEPLOY_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
       run: |
         mkdir -p ~/.ssh/
         echo "$HEXO_DEPLOY_PRIVATE_KEY" > ~/.ssh/id_rsa 
@@ -149,6 +153,8 @@ jobs:
         hexo generate 
         hexo deploy
 ```
+
+使用其它作者的脚本文件：
 
 ```yml{.line-numbers}
 name: CI
@@ -197,3 +203,7 @@ jobs:
 ### 3. 测试
 
 以上内容全部完成后，本地新建一个 md 文件后添加内容后，直接推送到远程仓库，等待一段时间，访问 `yourname.github.io` 查看是否有自己的新文章吧！还是推荐查看 Action 流程，可以查看出错原因。
+
+### 4. 后话
+
+说说后话，当你配置好了，整个博客可以自动部署的时候，另一个问题就是文章的创建日期会变为新的日期。这也是自动部署无法解决的问题，毕竟 Github Action 是 clone 仓库后进行的，创建的时间会随之改变。解决方法就是在每一篇的文章的 `front-matter` 中加入 `date` 字段去标识。最后，留一篇参考[博客](https://kepontry.github.io/2020/01/26/2020-01-26-%E8%A7%A3%E5%86%B3Hexo+Next+Travis%20CI%E5%8D%9A%E5%AE%A2%E6%9B%B4%E6%96%B0%E6%97%B6%E9%97%B4%E9%97%AE%E9%A2%98/)
