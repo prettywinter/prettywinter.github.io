@@ -2,8 +2,6 @@
 title: VsCode配置备份
 categories: 
     - vscode
-cover: true
-headimg: 
 ---
 
 浪子的 VsCode 配置备份。

@@ -3,7 +3,6 @@ title: 认识JVM
 categories:
   - Java
   - JVM
-abbrlink: '32178238'
 ---
 
 JVM的一些术语介绍，简单了解一下。

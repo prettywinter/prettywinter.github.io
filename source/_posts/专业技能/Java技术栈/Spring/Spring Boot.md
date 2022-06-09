@@ -2,7 +2,6 @@
 title: Spring Boot
 categories:
   - Java
-  - Spring
   - Spring Boot
 abbrlink: a541262a
 ---

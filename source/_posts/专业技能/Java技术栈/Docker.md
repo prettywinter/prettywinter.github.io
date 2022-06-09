@@ -4,7 +4,6 @@ cover: 'https://cdn.jsdelivr.net/gh/prettywinter/dist/images/blogcover/docker.jp
 categories:
   - Java
   - docker
-abbrlink: '89826705'
 ---
 
 在大数据时代，应用往往需要撑得住高并发，实现高可用，还要具备高性能，由此演变出了集群架构，但是集群的配置和管理成了一个问题。随着集群架构的发展，目前 k8s 和 docker 这两个容器化的产品大杀四方，其中 docker 的学习成本低，上手快，在企业中应用较多。本篇文章写写入门操作。
