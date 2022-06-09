@@ -106,11 +106,12 @@ jobs:
     # check it to your workflow can access it
     # from: https://github.com/actions/checkout
     - name: Checkout Repository main branch
-      uses: actions/checkout@main
+      uses: actions/checkout@v3
       # 是否检出子模块，此选项只对 git submodule add <你使用的主题地址> 生效，对于直接 git clone 的主题不生效
       # 推荐在选择 Hexo 主题时，使用 git submodule add https://github.com/xxx/xxx.git themes/xxx
       with:
         submodules: true
+        fetch-depth: 0
       
     # from: https://github.com/actions/setup-node  
     - name: Setup Node.js 16.x 
@@ -145,8 +146,8 @@ jobs:
         
     - name: Setup Git Infomation
       run: | 
-        git config --global user.name "xxx"
-        git config --global user.email "xxxx@qq.com"
+        git config --global user.name "github-action"
+        git config --global user.email "github-action@no-reply.com"
     - name: Deploy Hexo 
       run: |
         hexo clean
@@ -167,9 +168,10 @@ jobs:
     name: A job to deploy blog.
     steps:
     - name: Checkout
-      uses: actions/checkout@v1
+      uses: actions/checkout@v3
       with:
         submodules: true # Checkout private submodules(themes or something else).
+        fetch-depth: 0
     
     # Caching dependencies to speed up workflows. (GitHub will remove any cache entries that have not been accessed in over 7 days.)
     - name: Cache node modules
@@ -206,4 +208,23 @@ jobs:
 
 ### 4. 后话
 
-说说后话，当你配置好了，整个博客可以自动部署的时候，另一个问题就是文章的创建日期会变为新的日期。这也是自动部署无法解决的问题，毕竟 Github Action 是 clone 仓库后进行的，创建的时间会随之改变。解决方法就是在每一篇的文章的 `front-matter` 中加入 `date` 字段去标识。最后，留一篇参考[博客](https://kepontry.github.io/2020/01/26/2020-01-26-%E8%A7%A3%E5%86%B3Hexo+Next+Travis%20CI%E5%8D%9A%E5%AE%A2%E6%9B%B4%E6%96%B0%E6%97%B6%E9%97%B4%E9%97%AE%E9%A2%98/)
+说说后话，当你配置好了，整个博客可以自动部署的时候，另一个问题就是 Action 部署之后所有文章 的 **创建日期** 和 **更新日期** 都会变为部署时候的日期。这也是自动部署带来的问题，毕竟 Github Action 是 clone 了我们的仓库后进行操作的。目前的解决方法就是在每一篇的文章的 `front-matter` 中加入 `date` 字段去标识。可以参考这篇[博客](https://kepontry.github.io/2020/01/26/2020-01-26-%E8%A7%A3%E5%86%B3Hexo+Next+Travis%20CI%E5%8D%9A%E5%AE%A2%E6%9B%B4%E6%96%B0%E6%97%B6%E9%97%B4%E9%97%AE%E9%A2%98/)。不过浪子都是手动创建 md 文件写文章，时间这个问题不解决也没大碍，以后有解决方案会更新过来。
+
+### 5. 解决
+
+安装插件：`npm install hexo-filter-date-from-git --save`，如果是用了上面浪子提供的脚本的少侠，直接安装这个插件，然后重新提交，Action 部署之后，可以查看博客日期是否正常。如果是使用自己的脚本，需要加入 `fetch-depth: 0` 选项，具体看下面。
+
+之前在 Github 官方的 [checkout](https://github.com/actions/checkout) 脚本的介绍中发现：
+
+```yml
+# Fetch all history for all tags and branches
+steps:
+- name: Checkout
+  uses: actions/checkout@v3
+  with:
+    fetch-depth: 0
+```
+
+本以为加上这一个就可以解决部署的创建时间的问题，但是结果还是不如人意。后来在群里的一位大佬的指导下，说是需要安装一个 Hexo 的插件，就是上面那个。然后才可以在部署的时候去使用 `git commit` 的 log 记录时间去覆盖原有的 date、updated 选项。
+
+至此，问题解决，呼，真不容易~
