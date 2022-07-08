@@ -113,5 +113,5 @@ deploy:
   repo: git@github.com:prettywinter/prettywinter.github.io.git
   branch: pages
 
-favicon: https://raw.sevencdn.com/prettywinter/dist/main/images/favicon/favicon-32x32.png
+# favicon: https://raw.sevencdn.com/prettywinter/dist/main/images/favicon/favicon-32x32.png
 avatar: https://raw.sevencdn.com/prettywinter/dist/main/images/avatar/avatar.jpeg
