@@ -4,9 +4,8 @@
 
 # Site
 title: 浮萍一叶
-avatar: https://raw.sevencdn.com/prettywinter/dist/main/images/avatar/avatar.jpeg
 subtitle: ''
-description: '只要不失你的崇高 全世界都会为你敞开大门 追浴沂之风徽，法舞雩之咏叹'
+description: '追浴沂之风徽 法舞雩之咏叹'
 keywords:
 author: 江湖浪子
 language: 
@@ -115,3 +114,4 @@ deploy:
   branch: pages
 
 favicon: https://raw.sevencdn.com/prettywinter/dist/main/images/favicon/favicon-32x32.png
+avatar: https://raw.sevencdn.com/prettywinter/dist/main/images/avatar/avatar.jpeg

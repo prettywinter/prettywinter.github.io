@@ -2,8 +2,7 @@
 title: CentOS安装软件
 categories: Linux
 tags: [软件安装, CentOS]
-cover: true
-headimg: https://raw.sevencdn.com/prettywinter/dist/main/images/blogcover/linux.jpeg
+cover: https://raw.sevencdn.com/prettywinter/dist/main/images/blogcover/linux.jpeg
 abbrlink: 5e42d40d
 ---
 

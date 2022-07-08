@@ -2,8 +2,7 @@
 title: ArchLinux/Manjaro安装一些常用软件
 categories: Linux
 tags: [Arch, 配置, 软件安装]
-cover: true
-headimg: https://raw.githubusercontentS.com/prettywinter/dist/main/images/blogcover/arch.jpeg
+cover: https://raw.githubusercontentS.com/prettywinter/dist/main/images/blogcover/arch.jpeg
 abbrlink: 8ecfb81b
 ---
 

@@ -2,8 +2,7 @@
 title: Window开发环境配置
 categories: win
 tags: [Win, 配置]
-cover: true
-headimg: https://fastly.jsdelivr.net/gh/prettywinter/dist/images/blogcover/工欲善其事.jpg
+cover: https://fastly.jsdelivr.net/gh/prettywinter/dist/images/blogcover/工欲善其事.jpg
 abbrlink: 6a7c9e96
 ---
 
