@@ -2,7 +2,7 @@
 title: Git配置和常用命令
 categories: 教程
 tags: [Git, 配置]
-cover: ttps://raw.sevencdn.com/prettywinter/dist/main/images/doc/git_command.jpg
+cover: https://raw.sevencdn.com/prettywinter/dist/main/images/doc/git_command.jpg
 abbrlink: f26bc7f6
 ---
 
