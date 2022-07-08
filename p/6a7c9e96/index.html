@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.2.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://fastly.jsdelivr.net'>
+  <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  <title>Window开发环境配置 - 浮萍一叶</title>
+
+  
+    <meta name="description" content="Window开发环境的配置，主要是Windows平台，Linux非常简单，末尾给一个示例。如果你的 Linux 是 CentOS 或者 Ubantu，使用 rpm、deb 安装一般不用配置环境变量。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Window开发环境配置">
+<meta property="og:url" content="https://prettywinter.github.io/p/6a7c9e96/">
+<meta property="og:site_name" content="浮萍一叶">
+<meta property="og:description" content="Window开发环境的配置，主要是Windows平台，Linux非常简单，末尾给一个示例。如果你的 Linux 是 CentOS 或者 Ubantu，使用 rpm、deb 安装一般不用配置环境变量。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/%E5%8F%98%E9%87%8F%E8%AE%BE%E7%BD%AE01.png">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/%E5%8F%98%E9%87%8F%E8%AE%BE%E7%BD%AE02.png">
+<meta property="article:published_time" content="2022-06-08T03:55:05.000Z">
+<meta property="article:modified_time" content="2022-07-08T02:29:27.000Z">
+<meta property="article:author" content="江湖浪子">
+<meta property="article:tag" content="配置">
+<meta property="article:tag" content="Win">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/%E5%8F%98%E9%87%8F%E8%AE%BE%E7%BD%AE01.png">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+
+  
+
+  
+
+
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+
+<header class="header">
+
+<div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.2/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://raw.sevencdn.com/prettywinter/dist/main/images/avatar/avatar.jpeg" onerror="javascript:this.classList.add('error');this.src='https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/image/2659360.svg';"></a><a class="title" href="/about/"><div class="main">江湖浪子</div></a></div>
+<nav class="menu dis-select"><a class="nav-item active" href="/">文章</a><a class="nav-item" href="/wiki/">项目</a><a class="nav-item" href="/more/">更多</a></nav></header>
+
+<div class="widgets">
+
+<div class="widget-wrap single" id="toc"><div class="widget-header cap dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="toc-text">环境配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-JDK"><span class="toc-text">1. JDK</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Maven"><span class="toc-text">2. Maven</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Gradle"><span class="toc-text">3. Gradle</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-MySQL%E6%95%B0%E6%8D%AE%E5%BA%93%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-text">4. MySQL数据库环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Android-studio"><span class="toc-text">5. Android studio</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-Tomcat"><span class="toc-text">6. Tomcat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-Node-js"><span class="toc-text">7. Node.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-Jetty"><span class="toc-text">8. Jetty</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-Go"><span class="toc-text">9. Go</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3"><span class="toc-text">一些问题解决</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-MySQL"><span class="toc-text">1. MySQL</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Mysql5-7-20%E4%BB%A5%E5%8F%8A%E4%BB%A5%E4%B8%8A%E7%89%88%E6%9C%AC%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8%E9%97%AE%E9%A2%98"><span class="toc-text">1. Mysql5.7.20以及以上版本无法启动问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-MySQL8-0%E5%AE%89%E8%A3%85"><span class="toc-text">2. MySQL8.0安装</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%84"><span class="toc-text">附</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-docker-%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F"><span class="toc-text">1.docker 镜像加速</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Vmware-%E5%8F%8C%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE%EF%BC%8C%E4%B8%BB%E8%A6%81%E6%96%B9%E4%BE%BF%E6%9C%AC%E6%9C%BA%E6%B5%8B%E8%AF%95"><span class="toc-text">2.Vmware 双网卡配置，主要方便本机测试</span></a></li></ol></li></ol></div></div></div>
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/win/">win</a></div><div id="post-meta">发布于&nbsp;<time datetime="2022-06-08T03:55:05.000Z">2022-06-08</time></div></div>
+
+<article class='content md post'>
+<h1 class="article-title"><span>Window开发环境配置</span></h1>
+<p>Window开发环境的配置，主要是Windows平台，Linux非常简单，末尾给一个示例。如果你的 Linux 是 CentOS 或者 Ubantu，使用 rpm、deb 安装一般不用配置环境变量。</p>
+<span id="more"></span>
+
+<!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=4 orderedList=false} -->
+
+<!-- code_chunk_output -->
+
+<ul>
+<li><a href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE">环境配置</a><ul>
+<li><a href="#1-jdk">1. JDK</a></li>
+<li><a href="#2-maven">2. Maven</a></li>
+<li><a href="#3-gradle">3. Gradle</a></li>
+<li><a href="#4-mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F">4. MySQL数据库环境变量</a></li>
+<li><a href="#5-android-studio">5. Android studio</a></li>
+<li><a href="#6-tomcat">6. Tomcat</a></li>
+<li><a href="#7-nodejs">7. Node.js</a></li>
+<li><a href="#8-jetty">8. Jetty</a></li>
+<li><a href="#9-go">9. Go</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3">一些问题解决</a><ul>
+<li><a href="#1-mysql">1. MySQL</a><ul>
+<li><a href="#1-mysql5720%E4%BB%A5%E5%8F%8A%E4%BB%A5%E4%B8%8A%E7%89%88%E6%9C%AC%E6%97%A0%E6%B3%95%E5%90%AF%E5%8A%A8%E9%97%AE%E9%A2%98">1. Mysql5.7.20以及以上版本无法启动问题</a></li>
+<li><a href="#2-mysql80%E5%AE%89%E8%A3%85">2. MySQL8.0安装</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E9%99%84">附</a><ul>
+<li><a href="#1docker-%E9%95%9C%E5%83%8F%E5%8A%A0%E9%80%9F">1.docker 镜像加速</a></li>
+<li><a href="#2vmware-%E5%8F%8C%E7%BD%91%E5%8D%A1%E9%85%8D%E7%BD%AE%E4%B8%BB%E8%A6%81%E6%96%B9%E4%BE%BF%E6%9C%AC%E6%9C%BA%E6%B5%8B%E8%AF%95">2.Vmware 双网卡配置，主要方便本机测试</a></li>
+</ul>
+</li>
+</ul>
+<!-- /code_chunk_output -->
+
+<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><blockquote>
+<p>配置环境变量时，安装路径最好不要有中文或者空格，因为我们也不清楚到底会在什么时候出问题，中文和空格也许就是潜在的危险。Nacos 启动的时候如果JDK的路径含有空格就会启动失败。<br>推荐开发使用 Linux。</p>
+</blockquote>
+<h3 id="1-JDK"><a href="#1-JDK" class="headerlink" title="1. JDK"></a>1. JDK</h3><p>新建系统变量名：<code>JAVA_HOME</code><br>变量值示例(依据自己的jdk安装路径选择)：<code>D:\software\Java\jdk1.8.0_131</code></p>
+<p>JRE_HOME，和上面一样，示例<br>新建系统变量名：<code>JRE_HOME</code><br>变量值：<code>D:\software\Java\jre1.8.0_131</code><br>新建系统变量名：<code>CLASSPATH</code><br>变量值: <code>.;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar</code>。注意最前面的英文小数点 <code>.</code></p>
+<blockquote>
+<p>注：jdk1.5以后CLASSPATH可以不用再进行设置;<br>配置系统变量即使用任何用户登录系统都可以使用相关的命令；如果添加的是用户变量，那么只有添加变量的当前用户才能使用该命令。</p>
+</blockquote>
+<p>配置完成后，path里使用引用方式(%env_name%)配置JAVA_HOME和JRE_HOME到bin目录，例如<code>%JAVA_HOME%\bin</code>。最后打开cmd，输入 <code>java -version</code> 显示版本号代表安装成功。</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/%E5%8F%98%E9%87%8F%E8%AE%BE%E7%BD%AE01.png" alt="变量设置"><br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/%E5%8F%98%E9%87%8F%E8%AE%BE%E7%BD%AE02.png" alt="变量设置"></p>
+<h3 id="2-Maven"><a href="#2-Maven" class="headerlink" title="2. Maven"></a>2. Maven</h3><p>设置系统变量名：<code>M2_HOME</code><br>变量值示例:<code>D:\software\apache-maven-3.3.9</code><br>然后在path里配置到bin目录；打开cmd命令行 输入 <code>mvn –version</code> 显示版本号则maven配置成功</p>
+<p><strong><a target="_blank" rel="noopener" href="https://developer.aliyun.com/mvn/guide">maven配置文件使用阿里源：</a></strong><br>编辑maven的安装路径下的 <code>conf/setting.xml</code> 文件，找到 <code>&lt;mirror&gt;</code> 标签添加：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;mirror&gt;</span><br><span class="line">    &lt;id&gt;aliyunmaven&lt;/id&gt;</span><br><span class="line">    &lt;mirrorOf&gt;*&lt;/mirrorOf&gt;</span><br><span class="line">    &lt;name&gt;阿里云公共仓库&lt;/name&gt;</span><br><span class="line">    &lt;url&gt;https://maven.aliyun.com/repository/public&lt;/url&gt;</span><br><span class="line">&lt;/mirror&gt;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Maven 3.8.5 版本与 Idea2020.3.x 系列不兼容，在 Idea 中加载 Maven 项目时会抛出 Idea 内部没有相关方法的异常信息。<br>Idea 2020.3.4 和 2021.2.2 版本最高可以使用 Maven3.8.4；</p>
+</blockquote>
+<h3 id="3-Gradle"><a href="#3-Gradle" class="headerlink" title="3. Gradle"></a>3. Gradle</h3><p>设置系统变量名：<code>GRADLE_HOME</code><br>变量值示例：<code>D:\software\Java\gradle-7.0</code><br>检测配置是否成功： <code>gradle –v</code></p>
+<p>配置仓库下载源</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 指定所使用的仓库， mavenCentral()表示使用中央仓库，此刻项目中所使用的jar包都会默认依次从仓库中下载到本地指定的目录 --&gt;</span><br><span class="line">allprojects &#123;</span><br><span class="line">    repositories &#123;</span><br><span class="line">        // 从本地仓库寻找依赖，如果过没有再执行下面的操作</span><br><span class="line">        mavenLocal()</span><br><span class="line">        // 如果只配置中央仓库，表示只从中央仓库下载jar包。但是如果指定下载位置已经有了，就不会再下载了。</span><br><span class="line">        mavenCentral()</span><br><span class="line">        maven &#123;</span><br><span class="line">            url &#x27;https://maven.aliyun.com/repository/public/&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-MySQL数据库环境变量"><a href="#4-MySQL数据库环境变量" class="headerlink" title="4. MySQL数据库环境变量"></a>4. MySQL数据库环境变量</h3><p>直接在path里配置绝对路径到bin目录即可。</p>
+<p>当然也可以像上面一样配置，系统变量名： <code>MYSQL_HOME</code>，变量值：<code>D:\software\MySQL8.0</code></p>
+<h3 id="5-Android-studio"><a href="#5-Android-studio" class="headerlink" title="5. Android studio"></a>5. Android studio</h3><p>直接在path里设置sdk目录下的tools、platform-tools的绝对路径即可，示例<code>D:\Android\Sdk\platform-tools;</code></p>
+<h3 id="6-Tomcat"><a href="#6-Tomcat" class="headerlink" title="6. Tomcat"></a>6. Tomcat</h3><p>Tomcat有安装版和压缩包两种，如果是安装版，需要先配置好jdk;不管如何，推荐先配置好 JDK。</p>
+<p>新建系统变量名：<code>CATALINA_HOME</code><br>变量值示例：<code>D:\software\tomcat8.5</code><br>配置完成后在系统path里配置 <code>%CATALINA_HOME%\bin</code>。</p>
+<blockquote>
+<p>Tomcat启动的日志输出的默认字符集编码是 utf-8，但是window的控制台是gbk编码的，所以如果想要在window下正常输出，就要修改 Tomcat 的日志打印编码。<br>编辑tomcat安装路径下的 <code>conf/logging.properties</code> 文件,找到以下内容并修改为：<code>java.util.logging.ConsoleHandler.encoding = GBK</code>，保存重启即可。</p>
+</blockquote>
+<div class="tag-plugin link dis-select"><a class="link-card plain" title="undefined" href="参考::https://blog.csdn.net/u012964753/article/details/81045716" target="_blank" rel="external nofollow noopener noreferrer"><div class="left"><span class="title">undefined</span><span class="desc fs12">https://prettywinter.github.io/%E5%8F%82%E8%80%83::https:/blog.csdn.net/u012964753/article/details/81045716</span></div><div class="right"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div></div></a></div>
+
+<h3 id="7-Node-js"><a href="#7-Node-js" class="headerlink" title="7. Node.js"></a>7. Node.js</h3><p>安装 nodejs 后，打开命令行，修改成国内的淘宝镜像源，这样下载速度快些：<del><code>npm config set registry https://registry.npm.taobao.org</code> 往期配置，过期不推荐</del></p>
+<p><a target="_blank" rel="noopener" href="https://npmmirror.com/">官网最新配置方法</a>：<code>npm config set registry https://registry.npmmirror.com</code></p>
+<p>nodejs 默认的模块安装是在 C 盘下的，我们可以进行配置修改，安装到其它位置。安装的目录需要自己提前建立好。<br>以下配置中的 <code>node_cache</code> 和 <code>node_global</code> 文件夹就是提前建好的，默认安装完 nodejs 后是没有这两个文件夹的。</p>
+<ul>
+<li><strong>修改全局安装路径：</strong><br><code>npm config set prefix &quot;D:\software\nodejs\node_global&quot;</code></li>
+<li><strong>修改全局缓存路径：</strong></li>
+<li><code>npm config set cache &quot;D:\software\nodejs\node_cache&quot;</code><br><strong>然后检查是否修改成功：</strong><br><code>npm config ls -l</code></li>
+</ul>
+<p>修改成功后直接在环境变量 path 里加入 <code>D:\software\nodejs\node_global;</code>，加入这个环境变量后，使用 npm 命令全局安装后的命令就可以直接在 cmd 的任何路径使用了，例如<code>yarn</code> 、<code>hexo</code>、<code>vue-cli</code>等，否则会显示”XXX既不是内部命令，也不是外部命令”</p>
+<h3 id="8-Jetty"><a href="#8-Jetty" class="headerlink" title="8. Jetty"></a>8. Jetty</h3><div class="tag-plugin link dis-select"><a class="link-card plain" title="undefined" href="官网下载::https://www.eclipse.org/jetty/documentation.php" target="_blank" rel="external nofollow noopener noreferrer"><div class="left"><span class="title">undefined</span><span class="desc fs12">https://prettywinter.github.io/%E5%AE%98%E7%BD%91%E4%B8%8B%E8%BD%BD::https:/www.eclipse.org/jetty/documentation.php</span></div><div class="right"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div></div></a></div>
+
+<p>下载后解压，之后进入 jetty 的安装目录。<br>运行以下命令(<code>$JETTY_HOME</code> 是安装目录)：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 为当前基目录添加标准文件及文件夹</span><br><span class="line">java -jar $JETTY_HOME/start.jar --add-to-startd=http,deploy</span><br><span class="line"># 创建demo演示，不然启动后是404页面</span><br><span class="line">java -jar $JETTY_HOME/start.jar --add-module=demo</span><br><span class="line"># 启动jetty服务</span><br><span class="line">java -jar $JETTY_HOME/start.jar</span><br><span class="line"></span><br><span class="line"># 如果不想用8080，可以使用以下命令在启动时动态修改</span><br><span class="line"># 也可以修改配置文件，使其永久生效</span><br><span class="line">java -jar $JETTY_HOME/start.jar jetty.http.port=9999</span><br></pre></td></tr></table></figure>
+
+<p>之后就可以在浏览器使用 <code>localhost:9999</code> 进行访问了。</p>
+<div class="tag-plugin link dis-select"><a class="link-card plain" title="undefined" href="官方文档::https://www.eclipse.org/jetty/documentation/jetty-11/operations-guide/index.html" target="_blank" rel="external nofollow noopener noreferrer"><div class="left"><span class="title">undefined</span><span class="desc fs12">https://prettywinter.github.io/%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3::https:/www.eclipse.org/jetty/documentation/jetty-11/operations-guide/</span></div><div class="right"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div></div></a></div>
+
+<h3 id="9-Go"><a href="#9-Go" class="headerlink" title="9. Go"></a>9. Go</h3><p>新建系统环境变量名 <code>GOROOT</code>，变量值为 go 的安装路径；<br>新建系统变量名 <code>GOPATH</code>，变量值为手动创建的 Go 工程目录。<br>在 Path 中加入 <code>%GOROOT%\bin</code>，保存。打开 cmd，输入 <code>go env</code> 查看配置信息。</p>
+<p>使用 Vscode 安装 Go 插件的话，速度感人，可以参考：<div class="tag-plugin link dis-select"><a class="link-card plain" title="undefined" href="VScode安装Go插件::https://goproxy.io/zh/" target="_blank" rel="external nofollow noopener noreferrer"><div class="left"><span class="title">undefined</span><span class="desc fs12">https://prettywinter.github.io/VScode%E5%AE%89%E8%A3%85Go%E6%8F%92%E4%BB%B6::https:/goproxy.io/zh/</span></div><div class="right"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div></div></a></div></p>
+<h2 id="一些问题解决"><a href="#一些问题解决" class="headerlink" title="一些问题解决"></a>一些问题解决</h2><h3 id="1-MySQL"><a href="#1-MySQL" class="headerlink" title="1. MySQL"></a>1. MySQL</h3><p>官网下载安装版或者解压版，安装版一般不会有什么错误，环境变量如果安装的时候勾选加入 Path 中也不用手动配置了，比较简单，这里不说了。由于浪子比较喜欢解压版的，因为解压版的体积小，只包含了启动的服务，也方便安装。</p>
+<p>以下问题假设均发生在安装配置好环境变量之后。</p>
+<h4 id="1-Mysql5-7-20以及以上版本无法启动问题"><a href="#1-Mysql5-7-20以及以上版本无法启动问题" class="headerlink" title="1. Mysql5.7.20以及以上版本无法启动问题"></a>1. Mysql5.7.20以及以上版本无法启动问题</h4><p>网络上一大堆教程提到要设置my.ini，其实5.7.20不需要my.ini，设置my.ini反而导致MySQL启动失败且不报任何错误。可以直接打开cmd（管理员身份最好），进入MySQL的 bin 目录，执行以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 安装 MySQL 服务</span><br><span class="line">mysqld -install</span><br><span class="line"># 初始化，建立date文件</span><br><span class="line">mysqld --initialize-insecure --user=mysql</span><br><span class="line"># 启动 MySQL 服务</span><br><span class="line">net start mysql</span><br><span class="line"># 进入 MySQL 的 bash 环境</span><br><span class="line">mysql -u root -p</span><br><span class="line"></span><br><span class="line"># 如果你有其它的设置，后面不想要了</span><br><span class="line"># 那么可以移除 MySQL 服务</span><br><span class="line">mysqld -remove</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意：</strong> 如果安装 MySQL 服务失败或者命令无效，请确认是否是以管理员的身份运行的 cmd&#x2F;shell&#x2F;cmder 等软件。</p>
+</blockquote>
+<h4 id="2-MySQL8-0安装"><a href="#2-MySQL8-0安装" class="headerlink" title="2. MySQL8.0安装"></a>2. MySQL8.0安装</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 安装服务并启动</span><br><span class="line">mysqld --install</span><br><span class="line">mysqld --initialize-insecure --user=mysql</span><br><span class="line">net start mysql</span><br><span class="line"># 进入 MySQL 环境，初始无密码，直接回车就 ok</span><br><span class="line">mysql -u root -p</span><br><span class="line"># 修改密码为 123456</span><br><span class="line">alter user &#x27;root&#x27;@&#x27;localhost&#x27; identified by &#x27;123456&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>如果连接 sqlyog 报错，进入到 MySQL 的 bash 环境(mysql -u root -p)，然后执行命令：<code>ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED WITH mysql_native_password BY &#39;password&#39;;</code></p>
+<h2 id="附"><a href="#附" class="headerlink" title="附"></a>附</h2><h3 id="1-docker-镜像加速"><a href="#1-docker-镜像加速" class="headerlink" title="1.docker 镜像加速"></a>1.docker 镜像加速</h3><p>Docker配置下载镜像加速(<code>vim /etc/docker/daemon.json</code>)，设置完毕重启。<br>1、Docker官方的中国镜像加速地址(不用注册)：<a target="_blank" rel="noopener" href="https://registry.docker-cn.com/">https://registry.docker-cn.com</a><br>2、中科大的镜像加速器(不用注册（推荐）)：<a target="_blank" rel="noopener" href="https://docker.mirrors.ustc.edu.cn/">https://docker.mirrors.ustc.edu.cn/</a><br>3、阿里云的镜像加速器(需要注册)：登录阿里云的容器hub服务，镜像加速器那一栏里会为你独立分配一个加速器地址<br>4、DaoCloud的镜像加速器(需要注册)：登录DaoCloud的加速器获取脚本，该脚本可以将加速器添加到守护进程的配置文件中</p>
+<h3 id="2-Vmware-双网卡配置，主要方便本机测试"><a href="#2-Vmware-双网卡配置，主要方便本机测试" class="headerlink" title="2.Vmware 双网卡配置，主要方便本机测试"></a>2.Vmware 双网卡配置，主要方便本机测试</h3><p>VMWare 创建虚拟机时可以配置双网卡。打开网络适配器，可以看到 VMWare 有 VM1 和 VM8，NAT模式使用的是 VM8，而“仅主机”模式使用的 VM1，配置了双网卡，那么就可以把 VM1 的 IP 修改成自己想要的 IP，这样就可以与宿主机通信了，NAT 模式的网络再如何变也无妨了，因为我们使用的是另一个网络通道。</p>
+
+
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body fs14"><a id="next" href="/p/72ef477f/">移动硬盘或U盘中安装wintogo系统<span class="note">较早</span></a><div class="line"></div><a id="prev" href="/p/2b8a4efd/">Windows使用技巧<span class="note">较新</span></a></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md reveal' id="comments">
+    <div class='cmt-title cap theme'>
+      快来参与讨论吧
+    </div>
+    <div class='cmt-body beaudar'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="beaudar" repo="prettywinter/blog-comments" issue-term="pathname" theme="preferred-color-scheme" label="comment" input-position="top" comment-order="desc" loading="false" branch="main"></div>
+
+    </div>
+  </div>
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<p>本站由 <a href="https://prettywinter.github.io/">@江湖浪子</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.8.0" title="v1.8.0">Stellar</a> 作为主题。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.8.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://fastly.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
+
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@6/swiper-bundle.min.css","js":"https://unpkg.com/swiper@6/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://fastly.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://fastly.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://fastly.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti/umd/heti.min.css","js":"https://unpkg.com/heti/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function loadBeaudar() {
+    const els = document.querySelectorAll("#comments #beaudar");
+    if (els.length === 0) return;
+    els.forEach((el, i) => {
+      try {
+        el.innerHTML = '';
+      } catch (error) {
+        console.log(error);
+      }
+      var script = document.createElement('script');
+      script.src = 'https://beaudar.lipk.org/client.js';
+      script.async = true;
+      for (let key of Object.keys(el.attributes)) {
+        let attr = el.attributes[key];
+        if (['class', 'id'].includes(attr.name) === false) {
+          script.setAttribute(attr.name, attr.value);
+        }
+      }
+      el.appendChild(script);
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+      loadBeaudar();
+  });
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

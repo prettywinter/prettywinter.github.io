@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.2.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://fastly.jsdelivr.net'>
+  <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  <title>Java框架之SSM - 浮萍一叶</title>
+
+  
+    <meta name="description" content="Java框架之SSM整理。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java框架之SSM">
+<meta property="og:url" content="https://prettywinter.github.io/p/fa647c74/">
+<meta property="og:site_name" content="浮萍一叶">
+<meta property="og:description" content="Java框架之SSM整理。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/prettywinter/dist/images/doc/Page%E5%8F%82%E6%95%B0.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/prettywinter/dist/images/doc/Page%E5%8F%AF%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0.png">
+<meta property="article:published_time" content="2022-06-08T03:55:05.000Z">
+<meta property="article:modified_time" content="2022-06-13T03:57:45.000Z">
+<meta property="article:author" content="江湖浪子">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="SSM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/prettywinter/dist/images/doc/Page%E5%8F%82%E6%95%B0.png">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+
+  
+
+  
+
+
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+
+<header class="header">
+
+<div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.2/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://raw.sevencdn.com/prettywinter/dist/main/images/avatar/avatar.jpeg" onerror="javascript:this.classList.add('error');this.src='https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/image/2659360.svg';"></a><a class="title" href="/about/"><div class="main">江湖浪子</div></a></div>
+<nav class="menu dis-select"><a class="nav-item active" href="/">文章</a><a class="nav-item" href="/wiki/">项目</a><a class="nav-item" href="/more/">更多</a></nav></header>
+
+<div class="widgets">
+
+<div class="widget-wrap single" id="toc"><div class="widget-header cap dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Sping-Spring-MVC-Mybatis"><span class="toc-text">Sping+Spring MVC+Mybatis</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Spring"><span class="toc-text">1. Spring</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86"><span class="toc-text">1.1 事务管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-Spring-AOP"><span class="toc-text">1.2 Spring AOP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-%E6%96%87%E4%BB%B6%E7%9A%84%E4%B8%8A%E4%BC%A0%E4%B8%8B%E8%BD%BD"><span class="toc-text">1.3 文件的上传下载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-%E6%8B%A6%E6%88%AA%E5%99%A8-%E4%B8%80%E8%88%AC%E7%94%A8%E4%BA%8E%E7%94%A8%E6%88%B7%E8%AE%A4%E8%AF%81%EF%BC%8C%E5%85%B6%E5%AE%83%E4%B8%8D%E5%B8%B8%E7%94%A8"><span class="toc-text">1.4 拦截器(一般用于用户认证，其它不常用)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Spring-MVC"><span class="toc-text">2. Spring MVC</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E8%B7%B3%E8%BD%AC"><span class="toc-text">2.1 跳转</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-Spring-MVC%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-text">2.2 Spring MVC异常处理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Mybatis-x2F-Mybatis-Plus"><span class="toc-text">3. Mybatis&#x2F;Mybatis Plus</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-MP%E5%88%86%E9%A1%B5%E6%8F%92%E4%BB%B6"><span class="toc-text">3.1 MP分页插件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-MP%E7%9A%84LambdaQueryWrapper"><span class="toc-text">3.2 MP的LambdaQueryWrapper</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-MP%E7%A8%8B%E5%BA%8F%E4%B8%AD%E8%8E%B7%E5%8F%96%E6%96%B0%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE%E7%9A%84Id"><span class="toc-text">3.3 MP程序中获取新插入数据的Id</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-MP%E4%B8%AD%E7%9A%84saveBatch-%E6%8F%92%E5%85%A5%E7%9A%84%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98"><span class="toc-text">3.4 MP中的saveBatch()插入的性能问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-5-MP%E4%B8%AD%E4%B8%8D%E8%83%BD%E6%8F%92%E5%85%A5%E6%88%96%E6%9B%B4%E6%96%B0null%E5%80%BC"><span class="toc-text">3.5 MP中不能插入或更新null值</span></a></li></ol></li></ol></li></ol></div></div></div>
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/skill/">skill</a></div><div id="post-meta">发布于&nbsp;<time datetime="2022-06-08T03:55:05.000Z">2022-06-08</time></div></div>
+
+<article class='content md post'>
+<h1 class="article-title"><span>Java框架之SSM</span></h1>
+<p>Java框架之SSM整理。</p>
+<span id="more"></span>
+
+<!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=4 orderedList=false} -->
+
+<!-- code_chunk_output -->
+
+<ul>
+<li><a href="#spingspring-mvcmybatis">Sping+Spring MVC+Mybatis</a><ul>
+<li><a href="#1-spring">1. Spring</a><ul>
+<li><a href="#11-%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86">1.1 事务管理</a></li>
+<li><a href="#12-spring-aop">1.2 Spring AOP</a></li>
+<li><a href="#13-%E6%96%87%E4%BB%B6%E7%9A%84%E4%B8%8A%E4%BC%A0%E4%B8%8B%E8%BD%BD">1.3 文件的上传下载</a></li>
+<li><a href="#14-%E6%8B%A6%E6%88%AA%E5%99%A8%E4%B8%80%E8%88%AC%E7%94%A8%E4%BA%8E%E7%94%A8%E6%88%B7%E8%AE%A4%E8%AF%81%E5%85%B6%E5%AE%83%E4%B8%8D%E5%B8%B8%E7%94%A8">1.4 拦截器(一般用于用户认证，其它不常用)</a></li>
+</ul>
+</li>
+<li><a href="#2-spring-mvc">2. Spring MVC</a><ul>
+<li><a href="#21-%E8%B7%B3%E8%BD%AC">2.1 跳转</a></li>
+<li><a href="#22-spring-mvc%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86">2.2 Spring MVC异常处理</a></li>
+</ul>
+</li>
+<li><a href="#3-mybatismybatis-plus">3. Mybatis&#x2F;Mybatis Plus</a><ul>
+<li><a href="#31-mp%E5%88%86%E9%A1%B5%E6%8F%92%E4%BB%B6">3.1 MP分页插件</a></li>
+<li><a href="#32-mp%E7%9A%84lambdaquerywrapper">3.2 MP的LambdaQueryWrapper</a></li>
+<li><a href="#33-mp%E7%A8%8B%E5%BA%8F%E4%B8%AD%E8%8E%B7%E5%8F%96%E6%96%B0%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE%E7%9A%84id">3.3 MP程序中获取新插入数据的Id</a></li>
+<li><a href="#34-mp%E4%B8%AD%E7%9A%84savebatch%E6%8F%92%E5%85%A5%E7%9A%84%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98">3.4 MP中的saveBatch()插入的性能问题</a></li>
+<li><a href="#35-mp%E4%B8%AD%E4%B8%8D%E8%83%BD%E6%8F%92%E5%85%A5%E6%88%96%E6%9B%B4%E6%96%B0null%E5%80%BC">3.5 MP中不能插入或更新null值</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /code_chunk_output -->
+
+<h2 id="Sping-Spring-MVC-Mybatis"><a href="#Sping-Spring-MVC-Mybatis" class="headerlink" title="Sping+Spring MVC+Mybatis"></a>Sping+Spring MVC+Mybatis</h2><h3 id="1-Spring"><a href="#1-Spring" class="headerlink" title="1. Spring"></a>1. Spring</h3><h4 id="1-1-事务管理"><a href="#1-1-事务管理" class="headerlink" title="1.1 事务管理"></a>1.1 事务管理</h4><p>Spring 管理事物的方式：</p>
+<ul>
+<li>编程式事务，在代码中硬编码。(不推荐使用)</li>
+<li>声明式事务，在配置文件中配置(推荐使用)<ol>
+<li>基于XML的声明式事务</li>
+<li>基于注解的声明式事务</li>
+</ol>
+</li>
+</ul>
+<h4 id="1-2-Spring-AOP"><a href="#1-2-Spring-AOP" class="headerlink" title="1.2 Spring AOP"></a>1.2 Spring AOP</h4><p>编写一个 Aop 配置类：<br>导入 aop 依赖；在 Aop 配置类上加上 @Aspect、@Configuration 注解；编写切面增强方法。</p>
+<ol>
+<li>切入点表达式<ul>
+<li>方法级别的切入点表达式：<code>execution(* com.XXX.*.*(..))</code>，第一个 * 号代表可以返回任意类型值。</li>
+<li>类级别的切入点表达式：<code>within(com.XXX.*)</code></li>
+<li>自定义拦截器：<code>@annotation(com.XXX)</code></li>
+</ul>
+</li>
+<li>增强方式<ul>
+<li>前置增强、后置增强、环绕增强</li>
+<li>前置和后置都没有返回值，方法参数都是JointPoint</li>
+<li>环绕增强中，需要调用proceed()才能继续处理业务逻辑(类似拦截器)，该方法返回值为业务的返回值，因此环绕增强的返回类型设置为 Object 比较推荐。</li>
+<li>环绕增强的方法参数是ProceedingJointPoint</li>
+</ul>
+</li>
+</ol>
+<h4 id="1-3-文件的上传下载"><a href="#1-3-文件的上传下载" class="headerlink" title="1.3 文件的上传下载"></a>1.3 文件的上传下载</h4><p>要求表单提交必须是post，encType 必须为 multiPart&#x2F;form-data; <code>multipart file</code> 默认的上传文件大小(max-request-size)最大为10M.</p>
+<p>文件的下载在响应之前要设置以附件的形式，否则点击下载时会在浏览器打开。<br><code>response.setHeader(&quot;content-disposition&quot;, &quot;attachment;filename=&quot; + URLEncoder.encode(fileName, &quot;UTF-8&quot;))</code></p>
+<p>将文件传到指定的目录：transferTo()，文件io可以使用 spring 框架自带的 copy 方法：<code>FileCopyUtils.copy(is, os)</code></p>
+<h4 id="1-4-拦截器-一般用于用户认证，其它不常用"><a href="#1-4-拦截器-一般用于用户认证，其它不常用" class="headerlink" title="1.4 拦截器(一般用于用户认证，其它不常用)"></a>1.4 拦截器(一般用于用户认证，其它不常用)</h4><p>编写拦截器：</p>
+<ol>
+<li>实现 HandlerInterceptor 接口；</li>
+<li>重写 preHandle、postHandle、afterCompletion 方法，其中 preHandle 方法中返回 true 代表放行，返回 false 代表中断。</li>
+<li>配置拦截器：实现 WebMvcConfigurer 接口；重写 addInterceptors 方法，添加编写的拦截器。另外，在实现的这个接口中，还有另外一个方法可以解决跨域问题，是一个全局跨域配置。</li>
+</ol>
+<p>preHandle 返回值为 true 时，执行控制器中的方法，当控制器方法执行完成后会返回拦截器中执行拦截器中的 postHandle 方法，postHandle 执行完成之后响应请求。在响应请求完成后会执行 afterCompletion 方法，该方法无论执行成功或者失败都会执行。</p>
+<p>拦截器只能拦截 controller 相关请求，不能拦截 jsp 静态资源文件；拦截器可以中断请求轨迹；请求之前如果该请求配置了拦截器，请求会先经过拦截器，放行之后执行请求的 controller，controller 执行完成后会回到拦截器继续执行拦截器代码。<br>如果配置了多个拦截器，默认执行的顺序和栈结构是一样的；但是也可以通过 <code>order()</code> 方法修改，里面填 int 类型的数字，数字大的优先执行。</p>
+<h3 id="2-Spring-MVC"><a href="#2-Spring-MVC" class="headerlink" title="2. Spring MVC"></a>2. Spring MVC</h3><h4 id="2-1-跳转"><a href="#2-1-跳转" class="headerlink" title="2.1 跳转"></a>2.1 跳转</h4><ol>
+<li>跳转到页面<ul>
+<li>转发方式：直接 return 逻辑视图名</li>
+<li>重定向方式：重定向(redirect)不会经过视图解析器 redirect:&#x2F;视图全名</li>
+</ul>
+</li>
+<li>跳转到方法<ul>
+<li>转发跳转相同 controller 的不同方法使用 springMVC 提供的 <code>forward:</code> 关键字</li>
+<li>重定向使用 <code>redirect:/controller的RequestMapping/方法的RequestMapping</code><br>不同 controller 的方法跳转，和相同的一样。</li>
+</ul>
+</li>
+</ol>
+<p>重定向到登录页面：<code>response.sendRedirect(request.getContextPath() + &quot;/login.jsp&quot;)</code></p>
+<h4 id="2-2-Spring-MVC异常处理"><a href="#2-2-Spring-MVC异常处理" class="headerlink" title="2.2 Spring MVC异常处理"></a>2.2 Spring MVC异常处理</h4><p>实现 HandlerExceptionResolver 的接口，重写里面的 resolveException 方法。</p>
+<h3 id="3-Mybatis-x2F-Mybatis-Plus"><a href="#3-Mybatis-x2F-Mybatis-Plus" class="headerlink" title="3. Mybatis&#x2F;Mybatis Plus"></a>3. Mybatis&#x2F;Mybatis Plus</h3><p>没什么官网文档更详细的了：</p>
+<div class="tag-plugin link dis-select"><a class="link-card plain" title="undefined" href="Mybatis官网::https://mybatis.org/mybatis-3/zh/index.html" target="_blank" rel="external nofollow noopener noreferrer"><div class="left"><span class="title">undefined</span><span class="desc fs12">https://prettywinter.github.io/Mybatis%E5%AE%98%E7%BD%91::https:/mybatis.org/mybatis-3/zh/</span></div><div class="right"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div></div></a></div>
+<div class="tag-plugin link dis-select"><a class="link-card plain" title="Plus官网::https://baomidou.com/guide/" href="Mybatis"><div class="left"><span class="title">Plus官网::https://baomidou.com/guide/</span><span class="desc fs12">https://prettywinter.github.io/Mybatis</span></div><div class="right"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div></div></a></div>
+
+<h4 id="3-1-MP分页插件"><a href="#3-1-MP分页插件" class="headerlink" title="3.1 MP分页插件"></a>3.1 MP分页插件</h4><p>Mybatis Plus自带的分页：IPage、Page<br>IPage是一个接口，Page是IPage的实现类，<br>在使用时，可以使用Page创建一个对象实例，设置分页的一些参数；IPage对象用来存放自定义的分页规则和查询条件参数，比如以下简单例子：</p>
+<ol>
+<li><p>UserMapper.java</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//mapper中也可以使用 Page ，效果一样的</span><br><span class="line">IPage&lt;User&gt; getUserList(Page&lt;User&gt; page,@param(&quot;id&quot;) Integer id,@Param(&quot;startTime&quot;) String startTime,@Param(&quot;endTime&quot;) String endTime);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>UserService.java</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">IPage&lt;User&gt; selectUserList(Integer id, String startTime, String endTime);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>UserServiceImpl.java</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Autowired</span><br><span class="line">private UserMapper userMapper;</span><br><span class="line">@Override</span><br><span class="line">public IPage&lt;User&gt; selectUserList(Integer id, String startTime, String endTime) &#123;</span><br><span class="line">    Page&lt;User&gt; page = new Page&lt;&gt;();</span><br><span class="line">    // page.setXXX 设置自定义分页属性</span><br><span class="line"></span><br><span class="line">    IPage&lt;User&gt; ipage = userMapper.getUserList(page, id, startTime, endTime);</span><br><span class="line">    return ipage;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>UserController.java</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Autowired</span><br><span class="line">private UserService userService;</span><br><span class="line"></span><br><span class="line">@GetMapping(&quot;/userList&quot;)</span><br><span class="line">public IPage&lt;User&gt; selectUserList(Integer id, String startTime, String endTime) &#123;</span><br><span class="line">    return userService.selectUserList(id, startTime, endTime);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>上面的Page分页参数有两种设置方式如下：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/prettywinter/dist/images/doc/Page%E5%8F%82%E6%95%B0.png" alt="Page参数" title="Page参数"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/prettywinter/dist/images/doc/Page%E5%8F%AF%E8%AE%BE%E7%BD%AE%E5%8F%82%E6%95%B0.png" alt="Page可设置参数" title="Page可设置参数"></p>
+<p>Mybatis框架中 jdbcType 支持两种时间类型，分别是：<code>jdbcType=DATE</code>、<code>jdbcType=TIMESTAMP</code>，第一种格式是 <code>年-月-日</code>，后一种格式是 <code>年-月-日 时:分:秒</code>，分别对应数据库的 date 类型和 datetime 类型。</p>
+<h4 id="3-2-MP的LambdaQueryWrapper"><a href="#3-2-MP的LambdaQueryWrapper" class="headerlink" title="3.2 MP的LambdaQueryWrapper"></a>3.2 MP的LambdaQueryWrapper</h4><p>Mybatis Plus自带的 LambdaQueryWrapper 可以用来查询对象信息，如下代码：根据openId 查找对应的 customer。在不涉及多表查询时，用此方法比较 nice，个人感觉很好玩。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// 注意，只有指定了 LambdaQueryWrapper&lt;?&gt; 中的 ? 类型后才可以使用函数式接口</span><br><span class="line">LambdaQueryWrapper&lt;Customer&gt; query = Wrappers.lambdaQuery();</span><br><span class="line">query.eq(Customer::getOpenId, openId);</span><br><span class="line">return customerMapper.selectOne(query);</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-3-MP程序中获取新插入数据的Id"><a href="#3-3-MP程序中获取新插入数据的Id" class="headerlink" title="3.3 MP程序中获取新插入数据的Id"></a>3.3 MP程序中获取新插入数据的Id</h4><p>Mybatis 的 mapper.xml 文件中，在插入数据的标签中可以添加 <code>useGeneratedKeys=&quot;true&quot; keyProperty=&quot;id&quot;</code> 这两个属性，插入之后会返会新插入数据的主键 id，之后我们可以使用的这个主键与其他表进行关联。不过需要注意的是，这个 <code>id</code> 必须是自增的。</p>
+<h4 id="3-4-MP中的saveBatch-插入的性能问题"><a href="#3-4-MP中的saveBatch-插入的性能问题" class="headerlink" title="3.4 MP中的saveBatch()插入的性能问题"></a>3.4 MP中的saveBatch()插入的性能问题</h4><p>Mybatis Plus 中有批量插入的方法：saveBatch()，它可以保存一个集合。使用这个方法，不用写 sql 语句，但是性能比较差，网上看文章说在数据库（指MySQL）连接（url）后面加入一个配置：<code>rewriteBatchedStatements=true</code>，这样可以解决大批量插入时的性能问题，当我第一次看到这个方法查资料时看到一篇文章写的特别好，但是后来浪子找不到了，等到以后找到再补上链接。</p>
+<h4 id="3-5-MP中不能插入或更新null值"><a href="#3-5-MP中不能插入或更新null值" class="headerlink" title="3.5 MP中不能插入或更新null值"></a>3.5 MP中不能插入或更新null值</h4><p>当使用 Mybatis Plus 时，更新数据为 null 值时，会发现，即使数据库的字段可以设置为 null，但是更新或插入时还是数据更新失败。这个就涉及到字段验证策略了。对于这个问题，官网 <a target="_blank" rel="noopener" href="https://www.mybatis-plus.com/guide/faq.html">常见问题</a> 中也有解决方法，<a target="_blank" rel="noopener" href="https://www.mybatis-plus.com/guide/faq.html#%E6%8F%92%E5%85%A5%E6%88%96%E6%9B%B4%E6%96%B0%E7%9A%84%E5%AD%97%E6%AE%B5%E6%9C%89-%E7%A9%BA%E5%AD%97%E7%AC%A6%E4%B8%B2-%E6%88%96%E8%80%85-null">点击查看官网说明</a></p>
+<ol>
+<li><p>局部配置（在更改的字段加上特定的注解）</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 修改策略，最好是再后面加上该字段在数据库中的类型</span><br><span class="line">@TableField(updateStrategy = FieldStrategy.IGNORED, jdbcType = JdbcType.INTEGER)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>可以开全局配置，在 <code>xxx.properties</code> 或者 <code>xxx.yml</code> 文件中注入配置 GlobalConfiguration 属性 fieldStrategy。</p>
+</li>
+</ol>
+
+
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body fs14"><a id="next" href="/p/a541262a/">Spring Boot<span class="note">较早</span></a><div class="line"></div><a id="prev" href="/p/6d89a949/">Java框架之SSH<span class="note">较新</span></a></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md reveal' id="comments">
+    <div class='cmt-title cap theme'>
+      快来参与讨论吧
+    </div>
+    <div class='cmt-body beaudar'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="beaudar" repo="prettywinter/blog-comments" issue-term="pathname" theme="preferred-color-scheme" label="comment" input-position="top" comment-order="desc" loading="false" branch="main"></div>
+
+    </div>
+  </div>
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<p>本站由 <a href="https://prettywinter.github.io/">@江湖浪子</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.8.0" title="v1.8.0">Stellar</a> 作为主题。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.8.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://fastly.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
+
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@6/swiper-bundle.min.css","js":"https://unpkg.com/swiper@6/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://fastly.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://fastly.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://fastly.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti/umd/heti.min.css","js":"https://unpkg.com/heti/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function loadBeaudar() {
+    const els = document.querySelectorAll("#comments #beaudar");
+    if (els.length === 0) return;
+    els.forEach((el, i) => {
+      try {
+        el.innerHTML = '';
+      } catch (error) {
+        console.log(error);
+      }
+      var script = document.createElement('script');
+      script.src = 'https://beaudar.lipk.org/client.js';
+      script.async = true;
+      for (let key of Object.keys(el.attributes)) {
+        let attr = el.attributes[key];
+        if (['class', 'id'].includes(attr.name) === false) {
+          script.setAttribute(attr.name, attr.value);
+        }
+      }
+      el.appendChild(script);
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+      loadBeaudar();
+  });
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

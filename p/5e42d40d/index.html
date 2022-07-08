@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.2.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://fastly.jsdelivr.net'>
+  <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  <title>CentOS安装软件 - 浮萍一叶</title>
+
+  
+    <meta name="description" content="此篇文章以后随缘更新，这个系统的有关问题网上一般都有结果，浪子已不再使用 CentOS 系统，bye～。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CentOS安装软件">
+<meta property="og:url" content="https://prettywinter.github.io/p/5e42d40d/">
+<meta property="og:site_name" content="浮萍一叶">
+<meta property="og:description" content="此篇文章以后随缘更新，这个系统的有关问题网上一般都有结果，浪子已不再使用 CentOS 系统，bye～。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/Linux_MySQL%E5%88%9D%E5%A7%8B%E5%8C%96%E6%88%90%E5%8A%9F%E6%88%AA%E5%9B%BE.png">
+<meta property="article:published_time" content="2022-06-08T03:55:05.000Z">
+<meta property="article:modified_time" content="2022-07-08T02:29:27.000Z">
+<meta property="article:author" content="江湖浪子">
+<meta property="article:tag" content="软件安装">
+<meta property="article:tag" content="CentOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/Linux_MySQL%E5%88%9D%E5%A7%8B%E5%8C%96%E6%88%90%E5%8A%9F%E6%88%AA%E5%9B%BE.png">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+
+  
+
+  
+
+
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+
+<header class="header">
+
+<div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.2/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://raw.sevencdn.com/prettywinter/dist/main/images/avatar/avatar.jpeg" onerror="javascript:this.classList.add('error');this.src='https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/image/2659360.svg';"></a><a class="title" href="/about/"><div class="main">江湖浪子</div></a></div>
+<nav class="menu dis-select"><a class="nav-item active" href="/">文章</a><a class="nav-item" href="/wiki/">项目</a><a class="nav-item" href="/more/">更多</a></nav></header>
+
+<div class="widgets">
+
+<div class="widget-wrap single" id="toc"><div class="widget-header cap dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85"><span class="toc-text">Linux源码安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Redis"><span class="toc-text">1. Redis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Git"><span class="toc-text">2. Git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-RabbitMQ"><span class="toc-text">3. RabbitMQ</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Python"><span class="toc-text">4. Python</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Nginx"><span class="toc-text">5. Nginx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-Btop"><span class="toc-text">6. Btop++</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-FFmpeg"><span class="toc-text">7. FFmpeg</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E9%80%9A%E7%94%A8%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E5%AE%89%E8%A3%85"><span class="toc-text">Linux通用二进制文件安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Node"><span class="toc-text">1. Node</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-MongoDB"><span class="toc-text">2. MongoDB</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-MySQL"><span class="toc-text">3. MySQL</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%86%E7%A0%81%E6%AD%A3%E7%A1%AE%E4%BD%86%E6%98%AF%E8%BF%9B%E4%B8%8D%E5%8E%BB-bash-%E7%8E%AF%E5%A2%83"><span class="toc-text">密码正确但是进不去 bash 环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A2%84%E8%AF%BB%E5%A4%84%E7%90%86"><span class="toc-text">预读处理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Some-Questions"><span class="toc-text">Some Questions</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%85%B3%E4%BA%8E%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E5%A4%B1%E8%B4%A5"><span class="toc-text">1. 关于源码编译安装失败</span></a></li></ol></li></ol></div></div></div>
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/Linux/">Linux</a></div><div id="post-meta">发布于&nbsp;<time datetime="2022-06-08T03:55:05.000Z">2022-06-08</time></div></div>
+
+<article class='content md post'>
+<h1 class="article-title"><span>CentOS安装软件</span></h1>
+<p>此篇文章以后随缘更新，这个系统的有关问题网上一般都有结果，浪子已不再使用 CentOS 系统，bye～。</p>
+<span id="more"></span>
+
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=4 orderedList=true}-->
+
+<!-- code_chunk_output -->
+
+<ul>
+<li><a href="#linux%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85">Linux源码安装</a><ul>
+<li><a href="#1-redis">1. Redis</a></li>
+<li><a href="#2-git">2. Git</a></li>
+<li><a href="#3-rabbitmq">3. RabbitMQ</a></li>
+<li><a href="#4-python">4. Python</a></li>
+<li><a href="#5-nginx">5. Nginx</a></li>
+<li><a href="#6-btop">6. Btop++</a></li>
+<li><a href="#7-ffmpeg">7. FFmpeg</a></li>
+</ul>
+</li>
+<li><a href="#linux%E9%80%9A%E7%94%A8%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E5%AE%89%E8%A3%85">Linux通用二进制文件安装</a><ul>
+<li><a href="#1-node">1. Node</a></li>
+<li><a href="#2-mongodb">2. MongoDB</a></li>
+<li><a href="#3-mysql">3. MySQL</a><ul>
+<li><a href="#%E5%AF%86%E7%A0%81%E6%AD%A3%E7%A1%AE%E4%BD%86%E6%98%AF%E8%BF%9B%E4%B8%8D%E5%8E%BB-bash-%E7%8E%AF%E5%A2%83">密码正确但是进不去 bash 环境</a></li>
+<li><a href="#%E9%A2%84%E8%AF%BB%E5%A4%84%E7%90%86">预读处理</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#some-questions">Some Questions</a><ul>
+<li><a href="#1-%E5%85%B3%E4%BA%8E%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E5%A4%B1%E8%B4%A5">1. 关于源码编译安装失败</a></li>
+</ul>
+</li>
+</ul>
+<!-- /code_chunk_output -->
+
+<p><strong>TIPS：</strong> 如果下面的命令不是使用超级用户执行的话，可能不能安装成功，这个时候可以添加 <code>sudo</code> 选项进行重试。</p>
+<h2 id="Linux源码安装"><a href="#Linux源码安装" class="headerlink" title="Linux源码安装"></a>Linux源码安装</h2><h3 id="1-Redis"><a href="#1-Redis" class="headerlink" title="1. Redis"></a>1. Redis</h3><div class="tag-plugin link dis-select"><a class="link-card plain" title="undefined" href="官网源码下载::https://redis.io/download/" target="_blank" rel="external nofollow noopener noreferrer"><div class="left"><span class="title">undefined</span><span class="desc fs12">https://prettywinter.github.io/%E5%AE%98%E7%BD%91%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD::https:/redis.io/download/</span></div><div class="right"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div></div></a></div>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 安装编译 redis 需要的工具</span><br><span class="line">sudo yum -y install gcc automake autoconf libtool make</span><br><span class="line"># 进入解压目录，进行编译，直到编译完成</span><br><span class="line">make MALLOC=libc</span><br><span class="line"># 安装到指定路径</span><br><span class="line">make install PREFIX=/usr/local/redis</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Redis 的默认的配置文件在源码解压后的目录中</p>
+</blockquote>
+<h3 id="2-Git"><a href="#2-Git" class="headerlink" title="2. Git"></a>2. Git</h3><div class="tag-plugin link dis-select"><a class="link-card plain" title="undefined" href="官网源码下载::https://github.com/git/git/tags" target="_blank" rel="external nofollow noopener noreferrer"><div class="left"><span class="title">undefined</span><span class="desc fs12">https://prettywinter.github.io/%E5%AE%98%E7%BD%91%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD::https:/github.com/git/git/tags</span></div><div class="right"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div></div></a></div>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># 安装编译 Git 源码的工具和依赖</span><br><span class="line">yum install curl-devel expat-devel gettext-devel openssl-devel zlib-devel gcc perl-ExtUtils-MakeMaker</span><br><span class="line"></span><br><span class="line"># 卸载旧版 Git</span><br><span class="line">yum -y remove git</span><br><span class="line"></span><br><span class="line"># 编译 Git 源码</span><br><span class="line">make</span><br><span class="line"></span><br><span class="line"># 安装git至指定的路径</span><br><span class="line">make prefix=/usr/local/git install</span><br><span class="line"></span><br><span class="line"># 配置环境变量： 编辑文件 vi /etc/profile </span><br><span class="line">export PATH=$PATH:/usr/local/git/bin</span><br><span class="line"></span><br><span class="line"># 刷新环境变量</span><br><span class="line">source /etc/profile</span><br><span class="line"></span><br><span class="line"># 查看Git是否安装完成</span><br><span class="line">git --version</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-RabbitMQ"><a href="#3-RabbitMQ" class="headerlink" title="3. RabbitMQ"></a>3. RabbitMQ</h3><p>RabbitMQ 是使用 Erlang 语言编写的中间件，联想一下 Java，我们可以猜到它需要先搭建 Erlang 环境。主要是这个环境需要编译源码，RabbitMQ 本身官网提供了二进制压缩包。</p>
+<div class="tag-plugin link dis-select"><a class="link-card plain" title="undefined" href="Erlang源码下载::https://www.erlang.org/downloads" target="_blank" rel="external nofollow noopener noreferrer"><div class="left"><span class="title">undefined</span><span class="desc fs12">https://prettywinter.github.io/Erlang%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD::https:/www.erlang.org/downloads</span></div><div class="right"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div></div></a></div>
+
+<p>一、Erlang环境搭建</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"># 安装编译 Erlang 的相关依赖</span><br><span class="line">yum install gcc glibc-devel make ncurses-devel openssl-devel xmlto</span><br><span class="line"># 解压源码包</span><br><span class="line">tar -zxvf otp_src_24.1.7.tar.gz</span><br><span class="line"></span><br><span class="line">cd otp_src_24.1.7/</span><br><span class="line"># 指定安装目录</span><br><span class="line">./configure --prefix=/usr/local/erlang</span><br><span class="line"># 编译安装</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"># 测试安装是否成功：</span><br><span class="line">cd /usr/local/erlang/bin/</span><br><span class="line">./erl</span><br><span class="line"></span><br><span class="line"># 安装成功后配置环境变量 vim /etc/profile</span><br><span class="line">export PATH=$PATH:/usr/local/erlang/bin</span><br><span class="line"></span><br><span class="line"># 添加完成保存退出，刷新使其生效</span><br><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>二、安装Rabbitmq</p>
+<p>通过第一步，我们就搭建好了 Erlang 环境，接下来就是安装 RabbitMQ 了，这个还是比较简单的，因为它已经编译好了，我们可以下载直接配置，无需编译。</p>
+<div class="tag-plugin link dis-select"><a class="link-card plain" title="undefined" href="二进制文件包下载::https://www.rabbitmq.com/install-generic-unix.html" target="_blank" rel="external nofollow noopener noreferrer"><div class="left"><span class="title">undefined</span><span class="desc fs12">https://prettywinter.github.io/%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E5%8C%85%E4%B8%8B%E8%BD%BD::https:/www.rabbitmq.com/install-generic-unix.html</span></div><div class="right"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div></div></a></div>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># 解压</span><br><span class="line">tar -Jxvf rabbitmq-server-generic-unix-3.9.11.tar.xz</span><br><span class="line"># 移动</span><br><span class="line">mv rabbitmq_server-3.9.11 /usr/local/rabbitmq</span><br><span class="line"></span><br><span class="line"># 添加环境变量：vim /etc/profile</span><br><span class="line">export PATH=$PATH:/usr/local/rabbitmq/sbin</span><br><span class="line"># 刷新变量</span><br><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-Python"><a href="#4-Python" class="headerlink" title="4. Python"></a>4. Python</h3><p>Linux 下基本不需要配置 Python 的环境，有个别的 ISO 镜像版本比较老，比如 CentOS7 的 mini ISO 镜像是2.x的，我们可以通过各大系统的包管理工具进行安装，也可以自己通过源码编译安装。</p>
+<div class="tag-plugin link dis-select"><a class="link-card plain" title="undefined" href="源码下载::https://www.python.org/downloads/" target="_blank" rel="external nofollow noopener noreferrer"><div class="left"><span class="title">undefined</span><span class="desc fs12">https://prettywinter.github.io/%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD::https:/www.python.org/downloads/</span></div><div class="right"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div></div></a></div>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># 安装相关工具和依赖</span><br><span class="line">yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gcc make libffi-devel</span><br><span class="line"></span><br><span class="line"># 解压压缩包</span><br><span class="line">tar -zxvf Python-3.10.2.tgz  </span><br><span class="line"># 进入文件夹</span><br><span class="line">cd Python-3.10.2</span><br><span class="line"></span><br><span class="line"># 配置安装位置</span><br><span class="line">./configure prefix=/usr/local/python3</span><br><span class="line"></span><br><span class="line"># 编译并安装</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br><span class="line"># 使用 python3 验证是否安装成功</span><br><span class="line">python3 -V</span><br><span class="line"></span><br><span class="line">#添加python3的软链接 </span><br><span class="line">ln -s /usr/local/python3/bin/python3.8 /usr/bin/python3 </span><br><span class="line"></span><br><span class="line">#添加 pip3 的软链接 </span><br><span class="line">ln -s /usr/local/python3/bin/pip3.8 /usr/bin/pip3</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-Nginx"><a href="#5-Nginx" class="headerlink" title="5. Nginx"></a>5. Nginx</h3><div class="tag-plugin link dis-select"><a class="link-card plain" title="undefined" href="官网源码下载::https://nginx.org/en/" target="_blank" rel="external nofollow noopener noreferrer"><div class="left"><span class="title">undefined</span><span class="desc fs12">https://prettywinter.github.io/%E5%AE%98%E7%BD%91%E6%BA%90%E7%A0%81%E4%B8%8B%E8%BD%BD::https:/nginx.org/en/</span></div><div class="right"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div></div></a></div>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 解压</span><br><span class="line">tar -zvxf nginx-1.20.2.tar.gz</span><br><span class="line"># 配置安装路径</span><br><span class="line">./configure --prefix=/usr/local/nginx</span><br><span class="line"># 编译安装</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"># 进入安装目录查看是否安装成功</span><br><span class="line">cd /usr/local/nginx</span><br><span class="line"></span><br><span class="line"># 启动 停止 重启</span><br><span class="line">./nginx start</span><br><span class="line">./nginx -s stop</span><br><span class="line">./nginx -s reload</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-Btop"><a href="#6-Btop" class="headerlink" title="6. Btop++"></a>6. Btop++</h3><p>Btop++ 是一个 Linux 资源监视器，显示处理器、内存、磁盘、网络和进程的使用情况和统计资料，界面美观，使用简单。这里使用了源码编译安装，但是浪子推荐下载 Github 仓库的二进制包解压运行 install.sh 脚本安装。</p>
+<div class="tag-plugin link dis-select"><a class="link-card plain" title="undefined" href="Github地址::https://github.com/aristocratos/btop" target="_blank" rel="external nofollow noopener noreferrer"><div class="left"><span class="title">undefined</span><span class="desc fs12">https://prettywinter.github.io/Github%E5%9C%B0%E5%9D%80::https:/github.com/aristocratos/btop</span></div><div class="right"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div></div></a></div>
+<div class="tag-plugin link dis-select"><a class="link-card plain" title="undefined" href="Gitee同步仓库::https://gitee.com/mirrors/btop" target="_blank" rel="external nofollow noopener noreferrer"><div class="left"><span class="title">undefined</span><span class="desc fs12">https://prettywinter.github.io/Gitee%E5%90%8C%E6%AD%A5%E4%BB%93%E5%BA%93::https:/gitee.com/mirrors/btop</span></div><div class="right"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div></div></a></div>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># 安装、升级相关依赖工具</span><br><span class="line">yum install coreutils sed build-essential -y</span><br><span class="line">yum install centos-release-scl -y</span><br><span class="line">yum install devtoolset-10 -y</span><br><span class="line">scl enable devtoolset-10 bash </span><br><span class="line">echo &quot;source /opt/rh/devtoolset-10/enable&quot; &gt;&gt; /etc/profile</span><br><span class="line"></span><br><span class="line"># 克隆源码编译安装</span><br><span class="line">git clone https://gitee.com/mirrors/btop.git</span><br><span class="line">cd btop</span><br><span class="line">make &amp;&amp; make install</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-FFmpeg"><a href="#7-FFmpeg" class="headerlink" title="7. FFmpeg"></a>7. FFmpeg</h3><div class="tag-plugin link dis-select"><a class="link-card plain" title="undefined" href="FFmpeg使用::http://www.ffmpeg.org/" target="_blank" rel="external nofollow noopener noreferrer"><div class="left"><span class="title">undefined</span><span class="desc fs12">https://prettywinter.github.io/FFmpeg%E4%BD%BF%E7%94%A8::http:/www.ffmpeg.org/</span></div><div class="right"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div></div></a></div>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># 克隆源码 也可以下载 https://github.com/FFmpeg/FFmpeg/releases 相应的包上传</span><br><span class="line">git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg</span><br><span class="line"></span><br><span class="line"># 安装相关依赖</span><br><span class="line">yum install yasm.x86_64 -y</span><br><span class="line"></span><br><span class="line">cd ffmpeg</span><br><span class="line">./configure --enable-ffplay --enable-ffserver --prefix=/usr/local/ffmpeg</span><br><span class="line"># 编译安装</span><br><span class="line">make &amp;&amp; make install</span><br><span class="line"></span><br><span class="line"># 查看是否安装成功</span><br><span class="line">cd /usr/local/ffmpeg</span><br></pre></td></tr></table></figure>
+
+<h2 id="Linux通用二进制文件安装"><a href="#Linux通用二进制文件安装" class="headerlink" title="Linux通用二进制文件安装"></a>Linux通用二进制文件安装</h2><p>通用二进制文件一般使用包管理工具即可快速安装使用，是非常方便的。</p>
+<h3 id="1-Node"><a href="#1-Node" class="headerlink" title="1. Node"></a>1. Node</h3><div class="tag-plugin link dis-select"><a class="link-card plain" title="undefined" href="二进制包下载::https://nodejs.org/en/download/" target="_blank" rel="external nofollow noopener noreferrer"><div class="left"><span class="title">undefined</span><span class="desc fs12">https://prettywinter.github.io/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8C%85%E4%B8%8B%E8%BD%BD::https:/nodejs.org/en/download/</span></div><div class="right"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div></div></a></div>
+
+<p>Node 可以直接下载二进制文件，解压配置环境变量即可。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 官网下载二进制压缩包是 xz 结尾的，和下面的镜像站下载的略有不同</span><br><span class="line">tar -Jvxf node-v16.15.0-linux-x64.tar.xz -C /usr/local/</span><br><span class="line">cd /usr/local/</span><br><span class="line">mv node-v16.15.0-linux-x64/ nodejs</span><br><span class="line">ln -s /usr/local/nodejs/bin/node /usr/local/bin</span><br><span class="line">ln -s /usr/local/nodejs/bin/npm /usr/local/bin</span><br></pre></td></tr></table></figure>
+
+<p>如果嫌弃官网下载速度慢可以到这里 <a target="_blank" rel="noopener" href="https://registry.npmmirror.com/binary.html?path=node/latest-v16.x/">https://registry.npmmirror.com/binary.html?path=node/latest-v16.x/</a> 选择合适的版本下载。</p>
+<h3 id="2-MongoDB"><a href="#2-MongoDB" class="headerlink" title="2. MongoDB"></a>2. MongoDB</h3><div class="tag-plugin link dis-select"><a class="link-card plain" title="undefined" href="二进制包下载::https://www.mongodb.com/try/download/community" target="_blank" rel="external nofollow noopener noreferrer"><div class="left"><span class="title">undefined</span><span class="desc fs12">https://prettywinter.github.io/%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8C%85%E4%B8%8B%E8%BD%BD::https:/www.mongodb.com/try/download/community</span></div><div class="right"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div></div></a></div>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"># 解压</span><br><span class="line">tar -xvzf mongodb-linux-x86_64-rhel62-3.4.22.tgz</span><br><span class="line">mv mongodb-linux-x86_64-rhel62-3.4.22 /usr/local/mongodb</span><br><span class="line"></span><br><span class="line"># 创建数据存储目录、工作目录以及日志目录</span><br><span class="line">cd /usr/local/mongodb/</span><br><span class="line">mkdir conf</span><br><span class="line">mkdir data</span><br><span class="line">mkdir logs</span><br><span class="line"></span><br><span class="line"># 添加环境变量: vim /etc/profile</span><br><span class="line">export MONGODB_HOME=/usr/local/mongodb  </span><br><span class="line">export PATH=$PATH:$MONGODB_HOME/bin</span><br><span class="line"></span><br><span class="line"># 使环境变量生效</span><br><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>顺带说一下配置，编辑 MongoDB 的配置文件 <code>mongodb.conf</code>，修改以下内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 数据存储目录</span></span><br><span class="line">dbpath = /usr/local/mongodb/data/db</span><br><span class="line"><span class="comment"># 日志存储目录</span></span><br><span class="line">logpath = /usr/local/mongodb/logs/mongodb.log</span><br><span class="line"><span class="comment"># 指定端口号</span></span><br><span class="line">port = 27017</span><br><span class="line"><span class="comment"># 以守护进程的方式启动，即后台运行</span></span><br><span class="line">fork = <span class="literal">true</span></span><br><span class="line"><span class="comment"># 可以连接的地址，开启远程登录</span></span><br><span class="line">bind_ip = 0.0.0.0</span><br><span class="line"><span class="comment"># 启用密码验证，可根据实际情况配置</span></span><br><span class="line"><span class="comment"># auth = true</span></span><br></pre></td></tr></table></figure>
+
+<p>mongodb安装好后第一次启动服务是不需要密码的，也没有任何用户，通过shell命令可直接进入，cd到mongodb目录下的bin文件夹，执行命令 <code>./mongo</code> 即可。如果配置了环境变量，可以在任意路径执行 <code>mongo</code> 也可以。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 指定配置文件启动服务</span></span><br><span class="line">./mongod --config /usr/local/mongodb/conf/mongodb.conf</span><br><span class="line"><span class="comment"># 进入系统数据库</span></span><br><span class="line">use admin</span><br><span class="line"><span class="comment"># 创建 root 用户</span></span><br><span class="line">db.createUser( &#123;user: <span class="string">&quot;root&quot;</span>,<span class="built_in">pwd</span>: <span class="string">&quot;xxx&quot;</span>,roles: [ &#123; role: <span class="string">&quot;userAdminAnyDatabase&quot;</span>, db: <span class="string">&quot;admin&quot;</span> &#125; ]&#125;);</span><br><span class="line"><span class="comment"># 查看创建的用户(以下两个命令二选一)</span></span><br><span class="line">show <span class="built_in">users</span>;</span><br><span class="line">db.system.users.find();</span><br><span class="line"><span class="comment"># 关闭服务</span></span><br><span class="line">db.shutdownServer();</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动时开启密码验证，也可以在配置文件中加入 auth = true 在启动时开启验证，这样就不用 --auth 选项了</span></span><br><span class="line">./mongod --config /usr/local/mongodb/conf/mongodb.conf --auth</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-MySQL"><a href="#3-MySQL" class="headerlink" title="3. MySQL"></a>3. MySQL</h3><p>MySQL 说实话我觉得通用的二进制文件包安装较为简单，卸载是最简单的，比使用包管理工具安装的简单的多。下面给两个包管理工具安装的参考链接，我没怎么用过，仅作参考。</p>
+<p>apt-get安装：<a target="_blank" rel="noopener" href="https://blog.lanluo.cn/8662">https://blog.lanluo.cn/8662</a><br>yum安装：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/87069388">https://zhuanlan.zhihu.com/p/87069388</a></p>
+<p>接下来进入正题，使用通用的 MySQL8.x 版本的二进制压缩包进行安装。至于卸载，就把有关 MySQL 创建的几个文件夹删掉就行了，<code>/etc/my.cnf</code> 是默认自带的，卸载的时候删不删都没有问题，如果默认没有这个文件也不必担心，可以手动添加。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"># 检查mysql用户组和用户是否存在，如果没有，则创建</span><br><span class="line">cat /etc/group | grep mysql</span><br><span class="line">cat /etc/passwd | grep mysql</span><br><span class="line"># 创建 mysql 组</span><br><span class="line">groupadd mysql</span><br><span class="line"># 新建 mysql 用户并加入 mysql 群组</span><br><span class="line">useradd -r -g mysql mysql</span><br><span class="line"></span><br><span class="line"># 安装所需依赖(需要安装 libaio-devel.x86_64 numactl 这两个依赖)</span><br><span class="line">yum -y install libaio-devel.x86_64 numactl</span><br><span class="line"></span><br><span class="line"># 解压二进制文件包到 /usr/local/mysql 目录</span><br><span class="line">tar -C /usr/local/mysql</span><br><span class="line">cd /usr/local/mysql/bin</span><br><span class="line"># 初始化数据，成功初始化后需要记录最后 root@localhost: 后的字符串（初始化失败则不显示），它是后面进入 bash 环境的初始密码</span><br><span class="line">./mysqld --initialize --user=mysql --datadir=/usr/local/mysql/data --basedir=/usr/local/mysql</span><br><span class="line"></span><br><span class="line"># vim /etc/my.cnf(没有该文件手动创建) 修改内容</span><br><span class="line">basedir=/usr/local/mysql</span><br><span class="line">datadir=/usr/local/mysql/data</span><br><span class="line">port = 3306</span><br><span class="line"></span><br><span class="line"># 启动MySQL服务 启动成功会有 Starting MySQL.. SUCCESS! 提示；否则就是启动失败，根据提示查看日志记录定位问题</span><br><span class="line">cd /usr/local/mysql/support-files/</span><br><span class="line">mysql.server start</span><br><span class="line"></span><br><span class="line"># 添加软链接并重启服务</span><br><span class="line">ln -s /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql </span><br><span class="line">ln -s /usr/local/mysql/bin/mysql /usr/bin/mysql</span><br><span class="line">service mysql restart</span><br><span class="line"># systemctl restart mysql</span><br><span class="line"></span><br><span class="line"># 添加开机自启</span><br><span class="line"># 1、将服务文件拷贝到init.d下，并重命名为mysql</span><br><span class="line">cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld</span><br><span class="line"># 2、赋予可执行权限</span><br><span class="line">chmod +x /etc/init.d/mysqld</span><br><span class="line"># 3、添加服务</span><br><span class="line">chkconfig --add mysqld</span><br><span class="line"># 4、显示服务列表</span><br><span class="line">chkconfig --list</span><br></pre></td></tr></table></figure>
+
+<p>至此，安装任务基本完成，下面需要添加用户并分配权限，进入 MySQL 的 bash 环境需要之前进行初始化时生成的密码。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># 登录 MySQL，密码使用初始化成功时 root@localhost: 后的字符串</span><br><span class="line">mysql -u root -p</span><br><span class="line"></span><br><span class="line"># 修改密码 毕竟那么不好记</span><br><span class="line"># 而且如果不修改 它会报 ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement. 的错误</span><br><span class="line">alter user root@&#x27;localhost&#x27; identified by &#x27;newpassword&#x27;;</span><br><span class="line">flush privileges;</span><br><span class="line"></span><br><span class="line"># 开放远程连接</span><br><span class="line">use mysql;</span><br><span class="line"># 允许所有主机，都可以通过用户为root用户，密码为默认数据库登录密码，进行数据库操作</span><br><span class="line">update user set host=&#x27;%&#x27; where user=&#x27;root&#x27;;</span><br><span class="line"></span><br><span class="line"># ① 适用于 MySQL 8.0之前的版本，可以直接授权</span><br><span class="line"># grant all privileges on *.* to &#x27;root&#x27;@&#x27;%&#x27; identified by &#x27;root&#x27; with grant option;</span><br><span class="line"></span><br><span class="line"># ② 适用于 MySQL 8.0之后的版本，需要先创建一个用户，再进行授权【推荐方式②】</span><br><span class="line">create user dev@&#x27;%&#x27; identified by &#x27;123456&#x27;;</span><br><span class="line">grant select,update,delete,insert on *.* to dev@&#x27;%&#x27; with grant option;</span><br><span class="line"># 刷新权限，这一句很重要，使修改生效，如果没有写，则还是不能进行远程连接。这句表示从mysql数据库的grant表中重新加载权限数据，因为MySQL把权限都放在了cache中，所以，做完修改后需要重新加载。</span><br><span class="line">flush privileges;</span><br></pre></td></tr></table></figure>
+
+<p>初始化成功截图：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/Linux_MySQL%E5%88%9D%E5%A7%8B%E5%8C%96%E6%88%90%E5%8A%9F%E6%88%AA%E5%9B%BE.png" alt="初始化成功截图"></p>
+<blockquote>
+<p>记录日志最末尾位置 <code>root@localhost:</code> 后的字符串，此字符串为mysql管理员临时登录密码。</p>
+</blockquote>
+<h4 id="密码正确但是进不去-bash-环境"><a href="#密码正确但是进不去-bash-环境" class="headerlink" title="密码正确但是进不去 bash 环境"></a>密码正确但是进不去 bash 环境</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ERROR 1045 (28000): Access denied for user &#x27;root&#x27;@&#x27;localhost&#x27; (using password: YES/NO) </span><br></pre></td></tr></table></figure>
+
+<p>解决方法：</p>
+<ol>
+<li>使用 kill 命令停止 mysqld 相关服务</li>
+<li>cd &#x2F;usr&#x2F;local&#x2F;mysql&#x2F;bin&#x2F;，运行命令： <code>mysqld_safe --user=mysql --skip-grant-tables --skip-networking &amp;</code></li>
+<li>使用密码登录数据库 mysql -u root -p 并切换到 mysql 数据库</li>
+<li>执行命令：<code>update user set host=&#39;%&#39; where user=&#39;root&#39;;</code></li>
+</ol>
+<h4 id="预读处理"><a href="#预读处理" class="headerlink" title="预读处理"></a>预读处理</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; use dbname;</span><br><span class="line">Reading table information for completion of table and column names</span><br><span class="line">You can turn off this feature to get a quicker startup with -A </span><br></pre></td></tr></table></figure>
+
+<p>这个问题是之前使用的 apt-get 管理工具安装的 MySQL 出现的，原因是因爲數據庫採用了預讀處理。解决办法就是在我们进入MySQL的bash环境时，需要加入 <code>-A</code> 参数，不让其预读数据库信息，<code>mysql -u root -p -A</code>。如果覺得每次进入 bash 环境都要添加参数比较麻烦，也可以在 <strong><code>my.cnf</code></strong> 文件里加上如下內容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[mysql]</span><br><span class="line">no-auto-rehash</span><br></pre></td></tr></table></figure>
+
+<h2 id="Some-Questions"><a href="#Some-Questions" class="headerlink" title="Some Questions"></a>Some Questions</h2><h3 id="1-关于源码编译安装失败"><a href="#1-关于源码编译安装失败" class="headerlink" title="1. 关于源码编译安装失败"></a>1. 关于源码编译安装失败</h3><p>如果源码编译失败，先确认所需依赖是否全部成功安装，然后清除上一次编译的缓存，之后再次编译，不然会一直失败。<a target="_blank" rel="noopener" href="https://blog.csdn.net/wcnmlgb888/article/details/82713106">参考网址</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 清除上一次编译失败的缓存</span><br><span class="line">make distclean</span><br><span class="line"># 再次编译</span><br><span class="line">make</span><br></pre></td></tr></table></figure>
+
+
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body fs14"><a id="next" href="/p/817c7d82/">Linux常用命令<span class="note">较早</span></a><div class="line"></div><a id="prev" href="/p/5d8de8e6/">CentOS7.x最小安装<span class="note">较新</span></a></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md reveal' id="comments">
+    <div class='cmt-title cap theme'>
+      快来参与讨论吧
+    </div>
+    <div class='cmt-body beaudar'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="beaudar" repo="prettywinter/blog-comments" issue-term="pathname" theme="preferred-color-scheme" label="comment" input-position="top" comment-order="desc" loading="false" branch="main"></div>
+
+    </div>
+  </div>
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<p>本站由 <a href="https://prettywinter.github.io/">@江湖浪子</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.8.0" title="v1.8.0">Stellar</a> 作为主题。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.8.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://fastly.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
+
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@6/swiper-bundle.min.css","js":"https://unpkg.com/swiper@6/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://fastly.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://fastly.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://fastly.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti/umd/heti.min.css","js":"https://unpkg.com/heti/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function loadBeaudar() {
+    const els = document.querySelectorAll("#comments #beaudar");
+    if (els.length === 0) return;
+    els.forEach((el, i) => {
+      try {
+        el.innerHTML = '';
+      } catch (error) {
+        console.log(error);
+      }
+      var script = document.createElement('script');
+      script.src = 'https://beaudar.lipk.org/client.js';
+      script.async = true;
+      for (let key of Object.keys(el.attributes)) {
+        let attr = el.attributes[key];
+        if (['class', 'id'].includes(attr.name) === false) {
+          script.setAttribute(attr.name, attr.value);
+        }
+      }
+      el.appendChild(script);
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+      loadBeaudar();
+  });
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

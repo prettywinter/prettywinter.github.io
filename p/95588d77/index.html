@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.2.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://fastly.jsdelivr.net'>
+  <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  <title>Spring Security总结 - 浮萍一叶</title>
+
+  
+    <meta name="description" content="Spring Security 是一个功能强大且高度可定制的身份验证和访问控制框架。 它是保护基于 Spring 的应用程序的事实标准。 Spring Security 是一个专注于为 Java 应用程序提供身份验证和授权的框架。 像所有 Spring 项目一样，Spring Security 的真正强大之处在于它可以轻松扩展以满足自定义需求。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Security总结">
+<meta property="og:url" content="https://prettywinter.github.io/p/95588d77/">
+<meta property="og:site_name" content="浮萍一叶">
+<meta property="og:description" content="Spring Security 是一个功能强大且高度可定制的身份验证和访问控制框架。 它是保护基于 Spring 的应用程序的事实标准。 Spring Security 是一个专注于为 Java 应用程序提供身份验证和授权的框架。 像所有 Spring 项目一样，Spring Security 的真正强大之处在于它可以轻松扩展以满足自定义需求。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-06-08T03:55:05.000Z">
+<meta property="article:modified_time" content="2022-07-08T01:54:44.000Z">
+<meta property="article:author" content="江湖浪子">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Spring Security">
+<meta name="twitter:card" content="summary">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+
+  
+
+  
+
+
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+
+<header class="header">
+
+<div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.2/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://raw.sevencdn.com/prettywinter/dist/main/images/avatar/avatar.jpeg" onerror="javascript:this.classList.add('error');this.src='https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/image/2659360.svg';"></a><a class="title" href="/about/"><div class="main">江湖浪子</div></a></div>
+<nav class="menu dis-select"><a class="nav-item active" href="/">文章</a><a class="nav-item" href="/wiki/">项目</a><a class="nav-item" href="/more/">更多</a></nav></header>
+
+<div class="widgets">
+
+<div class="widget-wrap single" id="toc"><div class="widget-header cap dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E7%B1%BB"><span class="toc-text">核心类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A4%E8%AF%81%E5%B8%B8%E7%94%A8%E4%B8%89%E4%B8%AA%E7%B1%BB"><span class="toc-text">认证常用三个类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%88%E6%9D%83%E5%B8%B8%E7%94%A8%E4%B8%89%E4%B8%AA%E7%B1%BB"><span class="toc-text">授权常用三个类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#AuthenticationManager-ProviderManager-AuthencationProvider%E5%85%B3%E7%B3%BB"><span class="toc-text">AuthenticationManager ProviderManager AuthencationProvider关系</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#WebSecurityConfigurerAdapter"><span class="toc-text">WebSecurityConfigurerAdapter</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#UserDetailsService-%E7%94%A8%E6%9D%A5%E4%BF%AE%E6%94%B9%E9%BB%98%E8%AE%A4%E8%AE%A4%E8%AF%81%E7%9A%84%E6%95%B0%E6%8D%AE%E6%BA%90%E4%BF%A1%E6%81%AF"><span class="toc-text">UserDetailsService 用来修改默认认证的数据源信息</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AEAuthenticationManager%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-text">配置AuthenticationManager的两种方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86"><span class="toc-text">密码加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RememberMe"><span class="toc-text">RememberMe</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86-SessionManagementFilter"><span class="toc-text">会话管理(SessionManagementFilter)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CORS"><span class="toc-text">CORS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98"><span class="toc-text">跨域问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-text">异常处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%AE%A4%E8%AF%81%E5%BC%82%E5%B8%B8"><span class="toc-text">1. 认证异常</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%8E%88%E6%9D%83%E5%BC%82%E5%B8%B8"><span class="toc-text">2. 授权异常</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E9%85%8D%E7%BD%AE"><span class="toc-text">自定义异常处理配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%88%E6%9D%83"><span class="toc-text">授权</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5"><span class="toc-text">两种权限管理策略</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8EURL%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86"><span class="toc-text">基于URL权限管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E6%96%B9%E6%B3%95%E7%9A%84%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86"><span class="toc-text">基于方法的权限管理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E6%9D%83%E9%99%90%E4%BF%AE%E6%94%B9"><span class="toc-text">动态权限修改</span></a></li></ol></li></ol></div></div></div>
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/skill/">skill</a></div><div id="post-meta">发布于&nbsp;<time datetime="2022-06-08T03:55:05.000Z">2022-06-08</time></div></div>
+
+<article class='content md post'>
+<h1 class="article-title"><span>Spring Security总结</span></h1>
+<p>Spring Security 是一个功能强大且高度可定制的身份验证和访问控制框架。 它是保护基于 Spring 的应用程序的事实标准。</p>
+<p>Spring Security 是一个专注于为 Java 应用程序提供身份验证和授权的框架。 像所有 Spring 项目一样，Spring Security 的真正强大之处在于它可以轻松扩展以满足自定义需求。</p>
+<span id="more"></span>
+
+<!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=4 orderedList=true} -->
+
+<!-- code_chunk_output -->
+
+<ul>
+<li><a href="#%E6%A0%B8%E5%BF%83%E7%B1%BB">核心类</a><ul>
+<li><a href="#%E8%AE%A4%E8%AF%81%E5%B8%B8%E7%94%A8%E4%B8%89%E4%B8%AA%E7%B1%BB">认证常用三个类</a></li>
+<li><a href="#%E6%8E%88%E6%9D%83%E5%B8%B8%E7%94%A8%E4%B8%89%E4%B8%AA%E7%B1%BB">授权常用三个类</a></li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a><ul>
+<li><a href="#authenticationmanager-providermanager-authencationprovider%E5%85%B3%E7%B3%BB">AuthenticationManager ProviderManager AuthencationProvider关系</a><ul>
+<li><a href="#websecurityconfigureradapter">WebSecurityConfigurerAdapter</a></li>
+<li><a href="#userdetailsservice-%E7%94%A8%E6%9D%A5%E4%BF%AE%E6%94%B9%E9%BB%98%E8%AE%A4%E8%AE%A4%E8%AF%81%E7%9A%84%E6%95%B0%E6%8D%AE%E6%BA%90%E4%BF%A1%E6%81%AF">UserDetailsService 用来修改默认认证的数据源信息</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E9%85%8D%E7%BD%AEauthenticationmanager%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F">配置AuthenticationManager的两种方式</a></li>
+<li><a href="#%E5%AF%86%E7%A0%81%E5%8A%A0%E5%AF%86">密码加密</a></li>
+<li><a href="#rememberme">RememberMe</a></li>
+<li><a href="#%E4%BC%9A%E8%AF%9D%E7%AE%A1%E7%90%86sessionmanagementfilter">会话管理(SessionManagementFilter)</a></li>
+<li><a href="#cors">CORS</a></li>
+<li><a href="#%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98">跨域问题</a></li>
+<li><a href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86">异常处理</a><ul>
+<li><a href="#1-%E8%AE%A4%E8%AF%81%E5%BC%82%E5%B8%B8">1. 认证异常</a></li>
+<li><a href="#2-%E6%8E%88%E6%9D%83%E5%BC%82%E5%B8%B8">2. 授权异常</a></li>
+<li><a href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E9%85%8D%E7%BD%AE">自定义异常处理配置</a></li>
+</ul>
+</li>
+<li><a href="#%E6%8E%88%E6%9D%83">授权</a><ul>
+<li><a href="#%E4%B8%A4%E7%A7%8D%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86%E7%AD%96%E7%95%A5">两种权限管理策略</a><ul>
+<li><a href="#%E5%9F%BA%E4%BA%8Eurl%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86">基于URL权限管理</a></li>
+<li><a href="#%E5%9F%BA%E4%BA%8E%E6%96%B9%E6%B3%95%E7%9A%84%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86">基于方法的权限管理</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8A%A8%E6%80%81%E6%9D%83%E9%99%90%E4%BF%AE%E6%94%B9">动态权限修改</a></li>
+</ul>
+</li>
+</ul>
+<!-- /code_chunk_output -->
+
+<p>Spring Security 的版本在 2.7.0 版本之前（不包括）可以使用 WebSecurityConfigurerAdapter 来配置相关内容。2.7.0 版本之后有所改变（弃用状态，仍可使用）。<a target="_blank" rel="noopener" href="https://docs.spring.io/spring-security/reference/servlet/configuration/java.html">官网配置</a></p>
+<h2 id="核心类"><a href="#核心类" class="headerlink" title="核心类"></a>核心类</h2><p><a target="_blank" rel="noopener" href="https://docs.spring.io/spring-security/reference/servlet/authentication/architecture.html">体系结构</a></p>
+<h3 id="认证常用三个类"><a href="#认证常用三个类" class="headerlink" title="认证常用三个类"></a>认证常用三个类</h3><ul>
+<li>AuthenticationManager（authenticate()，返回 Authentication 表示认证成功，返回 AuthenticationException 认证失败）<blockquote>
+<p>AuthenticationManager 主要实现类为 ProviderManager，在 ProviderManager 中管理了众多的 AuthenticationProvider 实例，在一次完整的认证流程中，允许存在多个 AuthenticationProvider，用来实现多种认证方式，这些 AuthenticationProvider 实例都是由 ProviderManager 统一管理的。</p>
+</blockquote>
+</li>
+<li>Authentication（保存认证以及认证成功的信息）</li>
+<li>SecurityContextHolder（取出用户信息）<blockquote>
+<p>基于 threadLocal 线程绑定，请求时把 session 中的用户信息放入 SecurityContextHolder 中，请求结束后清空信息；之后的请求同理。</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="授权常用三个类"><a href="#授权常用三个类" class="headerlink" title="授权常用三个类"></a>授权常用三个类</h3><p>AccessDeclsionManager（访问决策管理器）此次请求是否放行资源<br>AccessDecislonVoter（访问决定投票器）此次请求是否具有访问资源的权限<br>ConfigAttribute（保存授权时的角色信息）</p>
+<p>ProviderManager 是一个接口<br>AuthenticationProvider 是它的一个实现。<br>DaoAuthenticationProvider 通过调用 retrieveUser() 认证。</p>
+<p>思考：</p>
+<ul>
+<li>为什么在引入 Spring Security 之后没有任何配置所有的请求就要认证呢？<br>SpringBootWebSecurityConfiguration，自动配置类</li>
+<li>在项目中明明没有登录界面，登录界面怎么来的呢？<br>访问接口时，在引入 spring security 之后会先经过一系列过滤器。在请求到达 FilterSecurityInterceptor 时，发现请求并未认证，请求拦截下来，并抛出 AccessDeniedException 异常。抛出的异常会被 ExceptionTranslationFilter 捕获，这个 Filter 中会调用 LoginUrlAuthenticationEntryPoint#commence 方法给客户端返回 302，要求客户端进行重定向到 &#x2F;login 页面。客户端发送 &#x2F;login 请求。&#x2F;login 请求会再次被拦截器中 DefaultLoginPageGeneratingFilter 拦截到，并在拦截器中返回生成登录页面。</li>
+<li>为什么使用 user 和控制台打印的密码能登录，登录时验证数据源存在哪里呢？<br>Spring Security中有一个基于内存（InMemoryUserDetailsManager）的默认用户实现。</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><h4 id="AuthenticationManager-ProviderManager-AuthencationProvider关系"><a href="#AuthenticationManager-ProviderManager-AuthencationProvider关系" class="headerlink" title="AuthenticationManager ProviderManager AuthencationProvider关系"></a>AuthenticationManager ProviderManager AuthencationProvider关系</h4><p>AuthenticationManager 全局的父接口，只有一个 authenticate 方法。需要 ProviderManager 实现。ProviderManager 遍历下面的 AuthencationProvider 认证，只要有一个认证通过即可。</p>
+<h5 id="WebSecurityConfigurerAdapter"><a href="#WebSecurityConfigurerAdapter" class="headerlink" title="WebSecurityConfigurerAdapter"></a>WebSecurityConfigurerAdapter</h5><p>WebSecurityConfigurerAdapter 是 Spring Security 为我们提供的扩展类，方便我们重写默认配置，实现定制。</p>
+<h5 id="UserDetailsService-用来修改默认认证的数据源信息"><a href="#UserDetailsService-用来修改默认认证的数据源信息" class="headerlink" title="UserDetailsService 用来修改默认认证的数据源信息"></a>UserDetailsService 用来修改默认认证的数据源信息</h5><p>UserDetailsService接口下有许多的实现。同时，此接口也方便了我们以后的自定义数据源的扩展。</p>
+<h2 id="配置AuthenticationManager的两种方式"><a href="#配置AuthenticationManager的两种方式" class="headerlink" title="配置AuthenticationManager的两种方式"></a>配置AuthenticationManager的两种方式</h2><ol>
+<li><p>继承 WebSecurityConfigurerAdapter，springboot 对 security 默认配置中 在工厂默认创建 AuthenticationManager。</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 默认配置会自动发现创建的 UserDetailService 的 Bean</span><br><span class="line">@Autowired</span><br><span class="line">public void initialize(AuthenticationManagerBuilder builder) &#123;</span><br><span class="line">    System.out.println(&quot;spring boot 默认配置&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自定义全局认证数据源</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// 自定义配置</span><br><span class="line">@Override</span><br><span class="line">public void configure(AuthenticationManagerBuilder builder) &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>总结：</strong></p>
+<ol>
+<li>默认自动配置全局 AuthenticationManager 默认找当前项目中是否存在自定义 UserDetailService 实例，自动将当前项目的 UserDetailService 实例设置为数据源。</li>
+<li>默认自动配置全局 AuthenticationManager 在工厂中使用时直接在代码中注入即可。</li>
+<li>一旦通过自定义的方式配置后，会自动覆盖默认的实现；并且需要在实现中指定自定义的数据源。</li>
+</ol>
+<h2 id="密码加密"><a href="#密码加密" class="headerlink" title="密码加密"></a>密码加密</h2><p>常见加密方案：Hash算法+盐<br>单向自适应函数（占用大量系统资源，每个认证请求都会大大降低应用程序的性能），开发者可以通过bcrypt、PBKDF2、sCrypt以及argon2来体验这种自适应单向函数加密。</p>
+<p>密码的认证是由 PasswordEncoder 进行的，他可以根据不同的加密实现不同的认证方式，所以非常的灵活。</p>
+<p>自定义密码加密有两种方式，一种是直接指定密码加密的方式（比如Bcrypt），另一种是使用自定义升级的方式。</p>
+<h2 id="RememberMe"><a href="#RememberMe" class="headerlink" title="RememberMe"></a>RememberMe</h2><p>RememberMe是一种服务端的行为，并非是把用户名密码保存在Cookie中的信息。传统的登录方式基于Session会话，一旦用户的会话过期，就要再次登录，这样就太过于繁琐。如果有一种机制，会话过期后，还能继续保持认证状态，就会方便很多,RememberMe就是为了解决这一需求而生的。</p>
+<p>具体的实现思路就是通过Cookie来记录当前用户身份，用户登录成功之后，会通过一定算法，将用户信息时间戳等进行贾母，加密完成后，通过响应头带回前端存储再Cookie中，当浏览器会话过期之后，如果再次访问网站，会自动将Cookie中的信息发送给服务器，服务器对Cookie中的信息进行校验分析，进而确定出用户的身份，Cookie中所保存的用户信息也是有失效的，例如三天、一周等。</p>
+<p>认证成功后写一段信息在Cookie中</p>
+<h2 id="会话管理-SessionManagementFilter"><a href="#会话管理-SessionManagementFilter" class="headerlink" title="会话管理(SessionManagementFilter)"></a>会话管理(SessionManagementFilter)</h2><p>会话并发管理：简单来说，就是多个客户端使用同一账户登录。默认情况下，同一账户可以再多少设备上登录并没有限制，我们可以在 Spring Security 中进行配置。</p>
+<p>开启会话管理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 自定义配置</span><br><span class="line">@Override</span><br><span class="line">public void configure(HttpSecurity http) throw Exception &#123;</span><br><span class="line">    http...</span><br><span class="line">        .sessionManagement() // 开启会话管理</span><br><span class="line">        // 最大并发会话为 1</span><br><span class="line">        .maximumSessions(1);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Spring Security 开启会话管理默认的是挤掉另一个客户端登录；我们可以设置为禁止其它客户端登录（当前用户登录成功，其它客户端无法使用当前的账户登录，除非当前用户注销退出）。集群下的会话管理可以使用 Redis 的Session 共享。</p>
+<h2 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h2><h2 id="跨域问题"><a href="#跨域问题" class="headerlink" title="跨域问题"></a>跨域问题</h2><ol>
+<li><p>入门：@CrossOrigin<br>该注解由 Spring 框架提供，含有属性：<br>allowCredentials:浏览器是否应当发送凭证信息，如 Cookie。<br>allowHeader:允许访问头<br>origins:允许指定访问的所属域访问，<code>*</code> 表示所有字段。<br>exposeHeaders:哪些响应头可以作为响应的一部分暴露出来。使用通配符无效。<br>maxAge:预检查请求的有效期，有效期内不必再次发送预检请求，默认是100s。<br>methods:允许的请求方法，<code>*</code> 表示所有方法。</p>
+</li>
+<li><p>进阶：addCrosMapping<br>Spring MVC 提供：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">public class WebMvcConfig implements WebMvcConfigurer &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public void addCorsMappings(CorsRegistry registry) &#123;</span><br><span class="line">        registry.addMapping(&quot;/**&quot;)</span><br><span class="line">                .allowCredentials(false)</span><br><span class="line">                .allowedHeaders(&quot;*&quot;)</span><br><span class="line">                .allowedMethods(&quot;*&quot;)</span><br><span class="line">                .allowedOrigins(&quot;*&quot;)</span><br><span class="line">                .maxAge(3600);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>CrosFilter<br>Spring Web提供的跨域处理解决方案：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">import org.springframework.boot.web.servlet.FilterRegistrationBean;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">import org.springframework.web.cors.CorsConfiguration;</span><br><span class="line">import org.springframework.web.cors.UrlBasedCorsConfigurationSource;</span><br><span class="line">import org.springframework.web.filter.CorsFilter;</span><br><span class="line"></span><br><span class="line">import java.util.Arrays;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">public class WebMvcConfig &#123;</span><br><span class="line">    FilterRegistrationBean&lt;CorsFilter&gt; corsFilter() &#123;</span><br><span class="line">        FilterRegistrationBean&lt;CorsFilter&gt; registrationBean = new FilterRegistrationBean&lt;&gt;();</span><br><span class="line">        CorsConfiguration corsConfiguration = new CorsConfiguration();</span><br><span class="line">        corsConfiguration.setAllowedHeaders(Arrays.asList(&quot;*&quot;));</span><br><span class="line">        corsConfiguration.setAllowedMethods(Arrays.asList(&quot;*&quot;));</span><br><span class="line">        corsConfiguration.setAllowedOrigins(Arrays.asList(&quot;*&quot;));</span><br><span class="line">        corsConfiguration.setMaxAge(3600L);</span><br><span class="line"></span><br><span class="line">        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();</span><br><span class="line">        source.registerCorsConfiguration(&quot;/**&quot;, corsConfiguration);</span><br><span class="line">        registrationBean.setFilter(new CorsFilter(source));</span><br><span class="line">        registrationBean.setOrder(-1);</span><br><span class="line">        return registrationBean;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Spring Security中的跨域解决方案<br>当项目中使用了Spring Security后，上面的方案有的会失效，有的可以继续使用，这是为什么？</p>
+</li>
+</ol>
+<p>通过 <code>@CrossOrigin</code> 注解或者重写 <code>addCorsMappings</code> 方法配置的跨域解决方案，统统失效了（发送的预检请求会被 Spring Security 拦截）；通过 CorsFilter 配置的跨域，有没有失效则要看过滤器的优先级。如果过滤优先级高于 Spring Security 过滤器，即先于 Spring Security 过滤器执行，则 CorsFilter 所配置的跨域处理依然有效；如果优先级低于 Spring Security 过滤器，则 CorsFilter 所配置的跨域处理就会失效。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">public class WebMvcConfig extends WebSecurityConfigurerAdapter &#123;</span><br><span class="line">    @Override</span><br><span class="line">    protected void configure(HttpSecurity http) throws Exception &#123;</span><br><span class="line">        http.authorizeRequests().anyRequest()</span><br><span class="line">                .authenticated().and()</span><br><span class="line">                .formLogin().and()</span><br><span class="line">                // 跨域处理方案</span><br><span class="line">                .cors().configurationSource(corsConfigurationSource()).and()</span><br><span class="line">                .csrf().disable();</span><br><span class="line">    &#125;</span><br><span class="line">    CorsConfigurationSource corsConfigurationSource() &#123;</span><br><span class="line">        CorsConfiguration corsConfiguration = new CorsConfiguration();</span><br><span class="line">        corsConfiguration.setAllowedHeaders(Arrays.asList(&quot;*&quot;));</span><br><span class="line">        corsConfiguration.setAllowedMethods(Arrays.asList(&quot;*&quot;));</span><br><span class="line">        corsConfiguration.setAllowedOrigins(Arrays.asList(&quot;*&quot;));</span><br><span class="line">        corsConfiguration.setMaxAge(3600L);</span><br><span class="line">        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();</span><br><span class="line">        source.registerCorsConfiguration(&quot;/**&quot;, corsConfiguration);</span><br><span class="line">        return source;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h2><h3 id="1-认证异常"><a href="#1-认证异常" class="headerlink" title="1. 认证异常"></a>1. 认证异常</h3><p>认证异常涉及的异常类型比较多，AuthenticationException 是所有认证异常的父类。</p>
+<h3 id="2-授权异常"><a href="#2-授权异常" class="headerlink" title="2. 授权异常"></a>2. 授权异常</h3><p>相较于认证异常，权限异常类就要少了很多。在实际项目开发中，如果默认提供的异常无法满足需求，就需要根据实际需求自定义异常类。</p>
+<h3 id="自定义异常处理配置"><a href="#自定义异常处理配置" class="headerlink" title="自定义异常处理配置"></a>自定义异常处理配置</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">@Configuration</span><br><span class="line">public class WebMvcConfig extends WebSecurityConfigurerAdapter &#123;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    protected void configure(HttpSecurity http) throws Exception &#123;</span><br><span class="line">        http.authorizeRequests().mvcMatchers(&quot;/hello&quot;).hasRole(&quot;ADMIN&quot;)</span><br><span class="line">                .anyRequest()</span><br><span class="line">                .authenticated().and()</span><br><span class="line">                .formLogin().and()</span><br><span class="line">                .csrf().disable()</span><br><span class="line">                // 异常处理</span><br><span class="line">                .exceptionHandling()</span><br><span class="line">                // 认证异常</span><br><span class="line">                .authenticationEntryPoint((request, response, authException) -&gt; &#123;</span><br><span class="line">                    response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);</span><br><span class="line">                    response.setStatus(HttpStatus.UNAUTHORIZED.value());</span><br><span class="line">                    response.getWriter().write(&quot;尚未认证，请进行认证操作&quot;);</span><br><span class="line">                &#125;)</span><br><span class="line">                // 权限异常</span><br><span class="line">                .accessDeniedHandler((request, response, accessDeniedException) -&gt; &#123;</span><br><span class="line">                    response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);</span><br><span class="line">                    response.setStatus(HttpStatus.FORBIDDEN.value());</span><br><span class="line">                    response.getWriter().write(&quot;无权访问&quot;);</span><br><span class="line">                &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="授权"><a href="#授权" class="headerlink" title="授权"></a>授权</h2><p>权限很好理解，有权访问和无权访问，RBAC模式</p>
+<h3 id="两种权限管理策略"><a href="#两种权限管理策略" class="headerlink" title="两种权限管理策略"></a>两种权限管理策略</h3><ul>
+<li>基于过滤器的权限管理（FilterSecurityInterceptor）<br>主要拦截Http请求，拦截下来后，根据Http请求地址进行权限校验</li>
+<li>基于方法的权限管理（MethodSecurityInterceptor）<br>主要是用来处理方法级别的权限问题。当需要调用某一个方法时，基于 AOP 将操作拦截下来，然后判断用户是否具备相关的权限。</li>
+</ul>
+<h4 id="基于URL权限管理"><a href="#基于URL权限管理" class="headerlink" title="基于URL权限管理"></a>基于URL权限管理</h4><p>mvcMatchers()<br>antMatchers()</p>
+<h4 id="基于方法的权限管理"><a href="#基于方法的权限管理" class="headerlink" title="基于方法的权限管理"></a>基于方法的权限管理</h4><p>这种方式就是在 controller 层的方法上加上注解，指明需要哪些权限或者具有的角色才能访问对应的资源。</p>
+<p>首先，配置类中开启方法权限校验：@EnableGlobalMethodSecurity(prePostEnabled &#x3D; true, SecuredEnable &#x3D; true, jsr250Enabled &#x3D; true)，<del>（这里开启了三种方式，一般只用第一种）</del></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 前置校验</span></span><br><span class="line"><span class="meta">@preAuthorize(&quot;hasAuthority(&quot;权限名称&quot;)&quot;)</span></span><br><span class="line"><span class="comment">// 过滤 filterTarget 必须是数组 集合，不能过滤某个对象</span></span><br><span class="line"><span class="meta">@preFilter(filterTarget = &quot;users&quot;)</span></span><br><span class="line"><span class="comment">// 后置校验</span></span><br><span class="line"><span class="meta">@PostAuthorize()</span></span><br><span class="line"><span class="meta">@PostFilter()</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Secured(&quot;role1&quot;, &quot;role2&quot;)</span> <span class="comment">// 只能判断角色，或者 关系，满足一个即通过请求</span></span><br><span class="line"><span class="comment">// 允许所有用户访问</span></span><br><span class="line"><span class="meta">@PermitAll()</span></span><br><span class="line"><span class="comment">// 拒绝所有访问</span></span><br><span class="line"><span class="meta">@DenyAll()</span></span><br><span class="line"><span class="comment">// jsr250 提供的注解，和 Secured() 类似</span></span><br><span class="line"><span class="meta">@RolesAllowed(&quot;role1&quot;, &quot;role2&quot;)</span></span><br></pre></td></tr></table></figure>
+
+<p>项目中，一般前四个用的较多，后面几个功能较为单一。</p>
+<h3 id="动态权限修改"><a href="#动态权限修改" class="headerlink" title="动态权限修改"></a>动态权限修改</h3><p>以上方式都是通过代码实现的，比较难以修改，可以使用动态的权限修改，比如从数据库层面实现，修改字段即可达到修改相应的权限的目的。</p>
+<p>实现 FilterInvocationSecurityMetaSource 接口，重写 getAttributes() 方法。</p>
+<p>之后再 Security 的配置类中，使用 http.apply() 方法，覆写里面的配置，setSecurityMetaSource() 改为实现 FilterInvocationSecurityMetaSource 接口的实现类即可。setRejectPublicInvocations() 设为 true&#x2F;false，为 true 时拒绝 <strong>公共资源</strong>（没有权限管理的公共接口） 的访问。</p>
+
+
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body fs14"><a id="next" href="/p/ece26077/">Spring使用总结<span class="note">较早</span></a><div class="line"></div><a id="prev" href="/p/a541262a/">Spring Boot<span class="note">较新</span></a></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md reveal' id="comments">
+    <div class='cmt-title cap theme'>
+      快来参与讨论吧
+    </div>
+    <div class='cmt-body beaudar'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="beaudar" repo="prettywinter/blog-comments" issue-term="pathname" theme="preferred-color-scheme" label="comment" input-position="top" comment-order="desc" loading="false" branch="main"></div>
+
+    </div>
+  </div>
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<p>本站由 <a href="https://prettywinter.github.io/">@江湖浪子</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.8.0" title="v1.8.0">Stellar</a> 作为主题。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.8.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://fastly.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
+
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@6/swiper-bundle.min.css","js":"https://unpkg.com/swiper@6/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://fastly.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://fastly.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://fastly.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti/umd/heti.min.css","js":"https://unpkg.com/heti/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function loadBeaudar() {
+    const els = document.querySelectorAll("#comments #beaudar");
+    if (els.length === 0) return;
+    els.forEach((el, i) => {
+      try {
+        el.innerHTML = '';
+      } catch (error) {
+        console.log(error);
+      }
+      var script = document.createElement('script');
+      script.src = 'https://beaudar.lipk.org/client.js';
+      script.async = true;
+      for (let key of Object.keys(el.attributes)) {
+        let attr = el.attributes[key];
+        if (['class', 'id'].includes(attr.name) === false) {
+          script.setAttribute(attr.name, attr.value);
+        }
+      }
+      el.appendChild(script);
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+      loadBeaudar();
+  });
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

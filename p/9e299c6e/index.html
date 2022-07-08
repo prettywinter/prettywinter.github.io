@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.2.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://fastly.jsdelivr.net'>
+  <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  <title>MySQL整理总结 - 浮萍一叶</title>
+
+  
+    <meta name="description" content="MySQL数据库整理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL整理总结">
+<meta property="og:url" content="https://prettywinter.github.io/p/9e299c6e/">
+<meta property="og:site_name" content="浮萍一叶">
+<meta property="og:description" content="MySQL数据库整理">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-06-08T03:55:05.000Z">
+<meta property="article:modified_time" content="2022-06-13T03:57:45.000Z">
+<meta property="article:author" content="江湖浪子">
+<meta property="article:tag" content="MySQL">
+<meta name="twitter:card" content="summary">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+
+  
+
+  
+
+
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+
+<header class="header">
+
+<div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.2/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://raw.sevencdn.com/prettywinter/dist/main/images/avatar/avatar.jpeg" onerror="javascript:this.classList.add('error');this.src='https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/image/2659360.svg';"></a><a class="title" href="/about/"><div class="main">江湖浪子</div></a></div>
+<nav class="menu dis-select"><a class="nav-item active" href="/">文章</a><a class="nav-item" href="/wiki/">项目</a><a class="nav-item" href="/more/">更多</a></nav></header>
+
+<div class="widgets">
+
+<div class="widget-wrap single" id="toc"><div class="widget-header cap dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL-%E5%AE%89%E8%A3%85%EF%BC%88win%EF%BC%89"><span class="toc-text">MySQL 安装（win）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Mysql5-7-%E7%89%88%E6%9C%AC%E5%AE%89%E8%A3%85"><span class="toc-text">1. Mysql5.7 版本安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-MySQL8-0%E5%AE%89%E8%A3%85"><span class="toc-text">2. MySQL8.0安装</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL%E5%9F%BA%E7%A1%80"><span class="toc-text">MySQL基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%AE%A4%E8%AF%86DQL-DML-DDL-DCL"><span class="toc-text">1. 认识DQL DML DDL DCL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95%E5%88%86%E7%B1%BB"><span class="toc-text">2. 数据库索引分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%9B%9B%E4%B8%AA%E7%89%B9%E6%80%A7"><span class="toc-text">3. 数据库事务的四个特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%9B%9B%E7%A7%8D%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="toc-text">4. 事务的四种隔离级别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E5%8C%BA"><span class="toc-text">5. 数据库分区</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL%E4%BC%98%E5%8C%96"><span class="toc-text">MySQL优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%95%B0%E6%8D%AE%E8%A1%A8%E7%BB%93%E6%9E%84%E4%BC%98%E5%8C%96"><span class="toc-text">1. 数据表结构优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%A1%A8%E5%88%86%E5%8C%BA"><span class="toc-text">2. 表分区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-MySQL%E8%AF%AD%E5%8F%A5%E4%BC%98%E5%8C%96%E5%8F%A3%E8%AF%80"><span class="toc-text">3. MySQL语句优化口诀</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E9%94%81"><span class="toc-text">数据库锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%82%B2%E8%A7%82%E9%94%81%E3%80%81%E4%B9%90%E8%A7%82%E9%94%81"><span class="toc-text">1. 悲观锁、乐观锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%AD%BB%E9%94%81%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-text">2. 死锁的原因</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%A7%E7%94%9F%E6%AD%BB%E9%94%81%E7%9A%84%E5%9B%9B%E4%B8%AA%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6"><span class="toc-text">产生死锁的四个必要条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%BB%E9%94%81%E7%9A%84%E8%A7%A3%E9%99%A4"><span class="toc-text">死锁的解除</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL%E6%9E%B6%E6%9E%84"><span class="toc-text">MySQL架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6"><span class="toc-text">1. MySQL主从复制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%9B%86%E7%BE%A4%E6%9E%B6%E6%9E%84"><span class="toc-text">2. 集群架构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL%E8%BF%9B%E9%98%B6%E6%93%8D%E4%BD%9C"><span class="toc-text">MySQL进阶操作</span></a></li></ol></div></div></div>
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/skill/">skill</a></div><div id="post-meta">发布于&nbsp;<time datetime="2022-06-08T03:55:05.000Z">2022-06-08</time></div></div>
+
+<article class='content md post'>
+<h1 class="article-title"><span>MySQL整理总结</span></h1>
+<p>MySQL数据库整理</p>
+<span id="more"></span>
+
+<!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=4 orderedList=true}-->
+
+<!-- code_chunk_output -->
+
+<ul>
+<li><a href="#mysql-%E5%AE%89%E8%A3%85win">MySQL 安装（win）</a><ul>
+<li><a href="#1-mysql57-%E7%89%88%E6%9C%AC%E5%AE%89%E8%A3%85">1. Mysql5.7 版本安装</a></li>
+<li><a href="#2-mysql80%E5%AE%89%E8%A3%85">2. MySQL8.0安装</a></li>
+</ul>
+</li>
+<li><a href="#mysql%E5%9F%BA%E7%A1%80">MySQL基础</a><ul>
+<li><a href="#1-%E8%AE%A4%E8%AF%86dql-dml-ddl-dcl">1. 认识DQL DML DDL DCL</a></li>
+<li><a href="#2-%E6%95%B0%E6%8D%AE%E5%BA%93%E7%B4%A2%E5%BC%95%E5%88%86%E7%B1%BB">2. 数据库索引分类</a></li>
+<li><a href="#3-%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%9B%9B%E4%B8%AA%E7%89%B9%E6%80%A7">3. 数据库事务的四个特性</a></li>
+<li><a href="#4-%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%9B%9B%E7%A7%8D%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB">4. 事务的四种隔离级别</a></li>
+<li><a href="#5-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E5%8C%BA">5. 数据库分区</a></li>
+</ul>
+</li>
+<li><a href="#mysql%E4%BC%98%E5%8C%96">MySQL优化</a><ul>
+<li><a href="#1-%E6%95%B0%E6%8D%AE%E8%A1%A8%E7%BB%93%E6%9E%84%E4%BC%98%E5%8C%96">1. 数据表结构优化</a></li>
+<li><a href="#2-%E8%A1%A8%E5%88%86%E5%8C%BA">2. 表分区</a></li>
+<li><a href="#3-mysql%E8%AF%AD%E5%8F%A5%E4%BC%98%E5%8C%96%E5%8F%A3%E8%AF%80">3. MySQL语句优化口诀</a></li>
+</ul>
+</li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E5%BA%93%E9%94%81">数据库锁</a><ul>
+<li><a href="#1-%E6%82%B2%E8%A7%82%E9%94%81%E4%B9%90%E8%A7%82%E9%94%81">1. 悲观锁、乐观锁</a></li>
+<li><a href="#2-%E6%AD%BB%E9%94%81%E7%9A%84%E5%8E%9F%E5%9B%A0">2. 死锁的原因</a><ul>
+<li><a href="#%E4%BA%A7%E7%94%9F%E6%AD%BB%E9%94%81%E7%9A%84%E5%9B%9B%E4%B8%AA%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6">产生死锁的四个必要条件</a></li>
+<li><a href="#%E6%AD%BB%E9%94%81%E7%9A%84%E8%A7%A3%E9%99%A4">死锁的解除</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#mysql%E6%9E%B6%E6%9E%84">MySQL架构</a><ul>
+<li><a href="#1-mysql%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6">1. MySQL主从复制</a></li>
+<li><a href="#2-%E9%9B%86%E7%BE%A4%E6%9E%B6%E6%9E%84">2. 集群架构</a></li>
+</ul>
+</li>
+<li><a href="#mysql%E8%BF%9B%E9%98%B6%E6%93%8D%E4%BD%9C">MySQL进阶操作</a></li>
+</ul>
+<!-- /code_chunk_output -->
+
+<h2 id="MySQL-安装（win）"><a href="#MySQL-安装（win）" class="headerlink" title="MySQL 安装（win）"></a>MySQL 安装（win）</h2><p>官网下载安装版或者解压版，安装版一般不会有什么错误，环境变量如果安装的时候勾选加入 Path 中也不用配置，比较简单。这里介绍解压版的安装使用。</p>
+<h3 id="1-Mysql5-7-版本安装"><a href="#1-Mysql5-7-版本安装" class="headerlink" title="1. Mysql5.7 版本安装"></a>1. Mysql5.7 版本安装</h3><p>下载压缩包解压，设置好环境变量 MYSQL_HOME&#x3D;解压目录，在path加上<code>%MY_HOME%\bin</code>，然后执行以下三条命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysqld -install</span><br><span class="line">mysqld --initialize-insecure --user=mysql</span><br><span class="line">net start mysql</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 安装 MySQL 服务</span><br><span class="line">mysqld -install</span><br><span class="line"># 移除 MySQL 服务</span><br><span class="line">mysqld -remove</span><br><span class="line"># 初始化，建立data文件</span><br><span class="line">mysqld --initialize</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-MySQL8-0安装"><a href="#2-MySQL8-0安装" class="headerlink" title="2. MySQL8.0安装"></a>2. MySQL8.0安装</h3><p>基本和上面一样。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># 安装服务并启动</span><br><span class="line">mysqld --install</span><br><span class="line">mysqld --initialize-insecure --user=mysql</span><br><span class="line">net start mysql</span><br><span class="line"># 进入 MySQL 环境，初始无密码，直接回车就 ok</span><br><span class="line">mysql -u root -p</span><br><span class="line"># 修改密码为 123456，当然也可以修改成其他的</span><br><span class="line">alter user &#x27;root&#x27;@&#x27;localhost&#x27; identified by &#x27;123456&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>如果连接sqlyog报错，进入到 MySQL 的环境(mysql -u root -p)，然后执行命令：<code>ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED WITH mysql_native_password BY &#39;password&#39;;</code></p>
+<blockquote>
+<p>Java 程序中连接 8.0 以上的数据库时区设置：<code>serverTimezone=Asia/Shanghai</code><br>UTC 时间和中国时间相差 8 小时。</p>
+</blockquote>
+<h2 id="MySQL基础"><a href="#MySQL基础" class="headerlink" title="MySQL基础"></a>MySQL基础</h2><h3 id="1-认识DQL-DML-DDL-DCL"><a href="#1-认识DQL-DML-DDL-DCL" class="headerlink" title="1. 认识DQL DML DDL DCL"></a>1. 认识DQL DML DDL DCL</h3><ol>
+<li><p>DQL 数据查询语言：select</p>
+</li>
+<li><p>DML 数据操纵语言：insert update delete</p>
+</li>
+<li><p>DDL 数据定义语言：create alter drop<br>数据定义语言DDL用来管理数据库中的各种对象—–表、视图、索引、同义词、聚簇等。</p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">create</span><br><span class="line">alter</span><br><span class="line">drop</span><br><span class="line">-- 修改属性 </span><br><span class="line">alter table 表名 modify 属性名 set 属性</span><br><span class="line"></span><br><span class="line">-- 修改已有字段名及属性</span><br><span class="line">alter table 表名 change old_字段 new_字段 set 属性</span><br><span class="line"></span><br><span class="line">-- 删除字段</span><br><span class="line">alter table 表名 drop 字段名</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>DCL 数据控制语言</p>
+<p> 数据控制语言DCL用来授予或回收访问数据库的某种特权，并控制数据库操纵事务发生的时间及效果，对数据库实行监视等。如：</p>
+<ol>
+<li>GRANT：授权。</li>
+<li>ROLLBACK：回滚命令使数据库状态回到上次最后提交的状态。</li>
+<li>COMMIT：提交。</li>
+</ol>
+</li>
+</ol>
+<h3 id="2-数据库索引分类"><a href="#2-数据库索引分类" class="headerlink" title="2. 数据库索引分类"></a>2. 数据库索引分类</h3><ol>
+<li>主键索引</li>
+<li>唯一索引</li>
+<li>普通索引（前缀索引）</li>
+<li>复合索引</li>
+</ol>
+<h3 id="3-数据库事务的四个特性"><a href="#3-数据库事务的四个特性" class="headerlink" title="3. 数据库事务的四个特性"></a>3. 数据库事务的四个特性</h3><ol>
+<li>A 原子性</li>
+<li>C 一致性</li>
+<li>I 隔离性</li>
+<li>D 持久性</li>
+</ol>
+<h3 id="4-事务的四种隔离级别"><a href="#4-事务的四种隔离级别" class="headerlink" title="4. 事务的四种隔离级别"></a>4. 事务的四种隔离级别</h3><ol>
+<li>读未提交内容</li>
+<li>读已提交内容 脏读</li>
+<li>幻读（重复读） 读已提交</li>
+<li>可串行化 解决幻影读</li>
+</ol>
+<h3 id="5-数据库分区"><a href="#5-数据库分区" class="headerlink" title="5. 数据库分区"></a>5. 数据库分区</h3><p>MySQL 可以在建表时最后可以创建表分区，通过 partition by 关键字创建。如下示例:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-- 注意，这种方式括号内必须是整数字段名或返回确定整数的函数</span><br><span class="line">-- 如果想要定义非整型和多列范围，需要加入 columns，</span><br><span class="line">-- 而且括号内必须是列名，不支持函数。</span><br><span class="line">partition by range(字段名)</span><br><span class="line"></span><br><span class="line">-- 这种方式支持非整型和多列</span><br><span class="line">partition by range columns(a, b)</span><br></pre></td></tr></table></figure>
+
+<p>也可以在建表完成后创建分区，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-- 创建分区</span><br><span class="line">alter TABLE table_name add PARTITION(PARTITION partition_name VALUES LESS THAN (20180630) ENGINE = InnoDB</span><br><span class="line">);</span><br><span class="line">-- 删除分区</span><br><span class="line">ALTER TABLE table_name DROP PARTITION partition_name；</span><br></pre></td></tr></table></figure>
+
+<p>MySQL 支持四种分区方式：RANGE、LIST、HASH、KEY</p>
+<h2 id="MySQL优化"><a href="#MySQL优化" class="headerlink" title="MySQL优化"></a>MySQL优化</h2><h3 id="1-数据表结构优化"><a href="#1-数据表结构优化" class="headerlink" title="1. 数据表结构优化"></a>1. 数据表结构优化</h3><ol>
+<li><p>选择合适的数据类型<br>（1）使用可存下数据的最小的数据类型。<br>（2）使用简单地数据类型，int要比varchar类型在mysql处理上更简单。<br>（3）尽可能使用not null定义字段，这是由innodb的特性决定的，因为非not null的数据可能需要一些额外的字段进行存储，这样就会增加一些IO。可以对非null的字段设置一个默认值。<br>（4）尽量少用text，非用不可最好分表，将text字段存放到另一张表中，在需要的时候再使用联合查询，这样可提高查询主表的效率。</p>
+</li>
+<li><p>LIKE关键字匹配’%’开头的字符串,不会使用索引。含有 or 的查询子句，如果要利用索引，那么 or 之间的每一个字段都必须是索引字段。or 之间的任何一个字段没有索引的话所有涉及的索引都不会被利用。</p>
+</li>
+</ol>
+<h3 id="2-表分区"><a href="#2-表分区" class="headerlink" title="2. 表分区"></a>2. 表分区</h3><p>MySQL5.1开始支持分区功能，在不同版本中查看当前数据库是否支持的命令也不相同。</p>
+<table>
+<thead>
+<tr>
+<th>版本</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>5.6以下</td>
+<td>show variables like ‘%partition%’;</td>
+</tr>
+<tr>
+<td>5.6之后（包括5.6）</td>
+<td>show plugins;</td>
+</tr>
+<tr>
+<td>8.0之后</td>
+<td>只有InnoDB支持表分区</td>
+</tr>
+</tbody></table>
+<h3 id="3-MySQL语句优化口诀"><a href="#3-MySQL语句优化口诀" class="headerlink" title="3. MySQL语句优化口诀"></a>3. MySQL语句优化口诀</h3><p>阿里巴巴手册：SQL优化标准是到ref，最差是range，达到const最好。<br>索引失效：<br>全值匹配最喜欢，最左前缀规矩严。<br>带头大哥不能死，中间兄弟不能断。<br>索引列上少计算，范围之后全完蛋。<br>LIKE百分最右边，覆盖索引*全不见。<br>不等空值还有OR，你建索引也失效。<br>VAR引号要出现，SQL高级也不难。</p>
+<p>建立索引口诀：<br>主键索引自动建，频繁查询索引现；<br>查询关联其他表，外键索引也要看；<br>频繁更新引不建，where条件用到算；<br>单键&#x2F;组合选择难，高并发下组合建；<br>若要速度有体现，排序字段索引建；<br>统计、分组你咋看？索引索引建建建。</p>
+<h2 id="数据库锁"><a href="#数据库锁" class="headerlink" title="数据库锁"></a>数据库锁</h2><h3 id="1-悲观锁、乐观锁"><a href="#1-悲观锁、乐观锁" class="headerlink" title="1. 悲观锁、乐观锁"></a>1. 悲观锁、乐观锁</h3><p>悲观锁：使用系统层面的加锁方式<br>乐观锁：数据库层面的锁，通过增加 <code>version</code> 字段以及使用数据库的 <strong>事务</strong> 的方式加锁</p>
+<p>可以解决超卖等问题，一般使用乐观锁，乐观锁的性能相较于悲观锁要好得多，这样在不影响用户的体验下保证了应用的性能。</p>
+<h3 id="2-死锁的原因"><a href="#2-死锁的原因" class="headerlink" title="2. 死锁的原因"></a>2. 死锁的原因</h3><p>死锁是由于两个或以上的线程互相持有对方需要的资源，导致这些线程处于等待状态，无法执行。</p>
+<h4 id="产生死锁的四个必要条件"><a href="#产生死锁的四个必要条件" class="headerlink" title="产生死锁的四个必要条件"></a>产生死锁的四个必要条件</h4><p>1.互斥性：线程对资源的占有是排他性的，一个资源只能被一个线程占有，直到释放。</p>
+<p>2.请求和保持条件：一个线程对请求被占有资源发生阻塞时，对已经获得的资源不释放。</p>
+<p>3.不剥夺：一个线程在释放资源之前，其他的线程无法剥夺占用。</p>
+<p>4.循环等待：发生死锁时，线程进入死循环，永久阻塞。</p>
+<h4 id="死锁的解除"><a href="#死锁的解除" class="headerlink" title="死锁的解除"></a>死锁的解除</h4><p>1.抢占资源，从一个或多个进程中抢占足够数量的资源，分配给死锁进程，以解除死锁状态。</p>
+<p>2.终止（或撤销）进程，终止（或撤销）系统中的一个或多个死锁进程，直至打破循环环路，使系统从死锁状态解脱出来.</p>
+<h2 id="MySQL架构"><a href="#MySQL架构" class="headerlink" title="MySQL架构"></a>MySQL架构</h2><h3 id="1-MySQL主从复制"><a href="#1-MySQL主从复制" class="headerlink" title="1. MySQL主从复制"></a>1. MySQL主从复制</h3><ol>
+<li>修改MySQL的配置文件：<code>vim /etc/my.cnf</code></li>
+<li>分别在配置文件中加入如下配置</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># 两台及其的 server-id 不能一样</span><br><span class="line">mysql(master)</span><br><span class="line">server-id=1</span><br><span class="line">log-bin=mysql-bin</span><br><span class="line">log-slave-updates</span><br><span class="line">slave-skip-errors=all</span><br><span class="line"></span><br><span class="line">mysql(slave)</span><br><span class="line">server-id=2</span><br><span class="line">log-bin=mysql-bin</span><br><span class="line">log-slave-updates</span><br><span class="line">slave-skip-errors=all</span><br></pre></td></tr></table></figure>
+
+<p>登录主节点执行 <code>show master status</code> 命令。<br>登录从节点执行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">change master to master_host=<span class="string">&#x27;master主机地址&#x27;</span>,</span><br><span class="line">master_user=<span class="string">&#x27;master用户名&#x27;</span>,</span><br><span class="line">master_password=<span class="string">&#x27;master密码&#x27;</span>,</span><br><span class="line">master_log_file=<span class="string">&#x27;log文件名&#x27;</span>,</span><br><span class="line">master_log_pos=上面命令的 position;</span><br></pre></td></tr></table></figure>
+
+<p>开启从节点: <code>start/stop slave</code></p>
+<blockquote>
+<p><code>show slave status\G</code> 如果出现 1593 的报错，那么先关闭 MySQL 服务，然后删除 &#x2F;var&#x2F;lib&#x2F;mysql&#x2F;auto.cnf 文件，然后启动 MySQL 服务即可。</p>
+</blockquote>
+<h3 id="2-集群架构"><a href="#2-集群架构" class="headerlink" title="2. 集群架构"></a>2. 集群架构</h3><p>基于主从复制发展而来，主从架构节点数据库只能实现冗余备份，不能进行操作，但是集群架构可以操作从库。可以使用阿里开源的 mycat 作为 MySQL 的统一管理中心。</p>
+<p>mycat相当于一个路由，把写的操作转发给写库，把读的操作分发给读库。</p>
+<p>mycat不仅会根据 SQL 语句去分析检测此次操作是发给读库还是写库，还会根据是否具有事务属性区分是读还是写。</p>
+<p>如果查询也开启了事务，那么查询也会走主库。</p>
+<h2 id="MySQL进阶操作"><a href="#MySQL进阶操作" class="headerlink" title="MySQL进阶操作"></a>MySQL进阶操作</h2><p>查看MySQL的binlog命令<br>&#x2F;usr&#x2F;bin&#x2F;mysqlbinlog –no-defaults -v –base64-output&#x3D;decode-rows binlog.000001 &gt; nov3.sql</p>
+<p>根据binlog的内容恢复数据<br>&#x2F;usr&#x2F;bin&#x2F;mysqlbinlog binlog.000007 | mysql -uroot -p -v -f &gt; &#x2F;opt&#x2F;1.txt<br>然后输入密码开始恢复数据，<br>-f是为了跳过执行错误，<br>-v是展开执行的详细信息<br>如果文件中存在不能执行的指令，可以按照时间进行执行比如：<br>加上时间段参数 <code>--start-datetime=‘2022-01-06 14:14:37’ --stop-datetime=‘2022-01-24 13:04:44’</code> 恢复指定时间段的数据。</p>
+
+
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body fs14"><a id="next" href="/p/f7ba05e4/">Nginx<span class="note">较早</span></a><div class="line"></div><a id="prev" href="/p/1a01f215/">MongoDB总结整理<span class="note">较新</span></a></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md reveal' id="comments">
+    <div class='cmt-title cap theme'>
+      快来参与讨论吧
+    </div>
+    <div class='cmt-body beaudar'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="beaudar" repo="prettywinter/blog-comments" issue-term="pathname" theme="preferred-color-scheme" label="comment" input-position="top" comment-order="desc" loading="false" branch="main"></div>
+
+    </div>
+  </div>
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<p>本站由 <a href="https://prettywinter.github.io/">@江湖浪子</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.8.0" title="v1.8.0">Stellar</a> 作为主题。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.8.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://fastly.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
+
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@6/swiper-bundle.min.css","js":"https://unpkg.com/swiper@6/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://fastly.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://fastly.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://fastly.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti/umd/heti.min.css","js":"https://unpkg.com/heti/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function loadBeaudar() {
+    const els = document.querySelectorAll("#comments #beaudar");
+    if (els.length === 0) return;
+    els.forEach((el, i) => {
+      try {
+        el.innerHTML = '';
+      } catch (error) {
+        console.log(error);
+      }
+      var script = document.createElement('script');
+      script.src = 'https://beaudar.lipk.org/client.js';
+      script.async = true;
+      for (let key of Object.keys(el.attributes)) {
+        let attr = el.attributes[key];
+        if (['class', 'id'].includes(attr.name) === false) {
+          script.setAttribute(attr.name, attr.value);
+        }
+      }
+      el.appendChild(script);
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+      loadBeaudar();
+  });
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

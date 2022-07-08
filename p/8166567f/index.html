@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 6.2.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://fastly.jsdelivr.net'>
+  <link rel="preconnect" href="https://fastly.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  <title>ArchLinux安装教程 - 浮萍一叶</title>
+
+  
+    <meta name="description" content="ArchLinux，很不错的一款 Linux 发行版，不过的它的安装可能让很多人望而却步，不过还有背靠 Arch 的另一个子系统，Manjaro，它的安装就和 Window 一样，简单容易。本篇文章仅作参考。 undefinedhttps:&#x2F;&#x2F;prettywinter.github.io&#x2F;%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3::https:&#x2F;wiki.archl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ArchLinux安装教程">
+<meta property="og:url" content="https://prettywinter.github.io/p/8166567f/">
+<meta property="og:site_name" content="浮萍一叶">
+<meta property="og:description" content="ArchLinux，很不错的一款 Linux 发行版，不过的它的安装可能让很多人望而却步，不过还有背靠 Arch 的另一个子系统，Manjaro，它的安装就和 Window 一样，简单容易。本篇文章仅作参考。 undefinedhttps:&#x2F;&#x2F;prettywinter.github.io&#x2F;%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3::https:&#x2F;wiki.archl">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-06-08T03:55:05.000Z">
+<meta property="article:modified_time" content="2022-07-08T02:29:27.000Z">
+<meta property="article:author" content="江湖浪子">
+<meta property="article:tag" content="Arch">
+<meta property="article:tag" content="安装教程">
+<meta property="article:tag" content="系统">
+<meta name="twitter:card" content="summary">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+
+  
+
+  
+
+
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='post'>
+    
+
+
+<header class="header">
+
+<div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.2/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://raw.sevencdn.com/prettywinter/dist/main/images/avatar/avatar.jpeg" onerror="javascript:this.classList.add('error');this.src='https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/image/2659360.svg';"></a><a class="title" href="/about/"><div class="main">江湖浪子</div></a></div>
+<nav class="menu dis-select"><a class="nav-item active" href="/">文章</a><a class="nav-item" href="/wiki/">项目</a><a class="nav-item" href="/more/">更多</a></nav></header>
+
+<div class="widgets">
+
+<div class="widget-wrap single" id="toc"><div class="widget-header cap dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E5%88%97%E8%A1%A8"><span class="toc-text">一、国内镜像列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%89%8D%E8%A8%80"><span class="toc-text">二、前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-text">三、准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%BC%80%E5%A7%8B%E5%AE%89%E8%A3%85"><span class="toc-text">四、开始安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%86%E5%8C%BA"><span class="toc-text">1. 分区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%88%86%E5%8C%BA"><span class="toc-text">2. 格式化分区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%8C%82%E8%BD%BD%E5%88%86%E5%8C%BA"><span class="toc-text">3. 挂载分区</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%AE%BE%E7%BD%AE%E4%B8%8B%E8%BD%BD%E9%95%9C%E5%83%8F%E6%BA%90%EF%BC%8C%E6%8F%90%E5%8D%87%E6%88%91%E4%BB%AC%E5%90%8E%E7%BB%AD%E7%9A%84%E4%B8%8B%E8%BD%BD%E9%80%9F%E5%BA%A6"><span class="toc-text">4. 设置下载镜像源，提升我们后续的下载速度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%AE%89%E8%A3%85-linux-%E5%9F%BA%E6%9C%AC%E7%BB%84%E4%BB%B6"><span class="toc-text">5. 安装 linux 基本组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%89%A7%E8%A1%8C%E4%BB%A5%E4%B8%8B%E5%91%BD%E4%BB%A4"><span class="toc-text">6. 执行以下命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E5%88%87%E6%8D%A2%E5%88%B0%E6%8C%82%E8%BD%BD%E7%82%B9"><span class="toc-text">7. 切换到挂载点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E8%AE%BE%E7%BD%AE%E6%97%B6%E9%97%B4"><span class="toc-text">8. 设置时间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-%E8%AE%BE%E7%BD%AEroot%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81"><span class="toc-text">9. 设置root用户密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-%E8%AE%BE%E7%BD%AE%E8%AF%AD%E8%A8%80%E5%92%8C%E6%9C%AC%E6%9C%BA%E5%90%8D"><span class="toc-text">10. 设置语言和本机名</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-%E9%80%80%E5%87%BA"><span class="toc-text">11. 退出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-%E5%89%8D%E6%9C%9F%E5%87%86%E5%A4%87"><span class="toc-text">12. 前期准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#13-%E5%AE%89%E8%A3%85%E9%A9%B1%E5%8A%A8-%E8%AF%B7%E7%A1%AE%E4%BF%9D%E6%98%AF%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5%E6%AD%A3%E5%B8%B8"><span class="toc-text">13. 安装驱动(请确保是网络连接正常)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#14-%E5%AE%89%E8%A3%85%E6%A1%8C%E9%9D%A2-%E8%BF%99%E9%87%8C%E5%AE%89%E8%A3%85%E7%9A%84Gnome"><span class="toc-text">14. 安装桌面(这里安装的Gnome)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#15-%E5%B0%BE%E5%A3%B0"><span class="toc-text">15. 尾声</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E8%83%BD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">可能遇到的问题</span></a></li></ol></div></div></div>
+
+
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a><span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/Linux/">Linux</a></div><div id="post-meta">发布于&nbsp;<time datetime="2022-06-08T03:55:05.000Z">2022-06-08</time></div></div>
+
+<article class='content md post'>
+<h1 class="article-title"><span>ArchLinux安装教程</span></h1>
+<p>ArchLinux，很不错的一款 Linux 发行版，不过的它的安装可能让很多人望而却步，不过还有背靠 Arch 的另一个子系统，Manjaro，它的安装就和 Window 一样，简单容易。本篇文章仅作参考。</p>
+<div class="tag-plugin link dis-select"><a class="link-card plain" title="undefined" href="官方文档::https://wiki.archlinux.org/title/Installation_guide#Boot_the_live_environment" target="_blank" rel="external nofollow noopener noreferrer"><div class="left"><span class="title">undefined</span><span class="desc fs12">https://prettywinter.github.io/%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3::https:/wiki.archlinux.org/title/Installation_guide#Boot_the_live_environment</span></div><div class="right"><div class="lazy img" data-bg="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg"></div></div></a></div>
+
+<span id="more"></span>
+
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=5 orderedList=true}-->
+
+<!-- code_chunk_output -->
+
+<ul>
+<li><a href="#%E4%B8%80%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E5%88%97%E8%A1%A8">一、国内镜像列表</a></li>
+<li><a href="#%E4%BA%8C%E5%89%8D%E8%A8%80">二、前言</a></li>
+<li><a href="#%E4%B8%89%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C">三、准备工作</a></li>
+<li><a href="#%E5%9B%9B%E5%BC%80%E5%A7%8B%E5%AE%89%E8%A3%85">四、开始安装</a><ul>
+<li><a href="#1-%E5%88%86%E5%8C%BA">1. 分区</a></li>
+<li><a href="#2-%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%88%86%E5%8C%BA">2. 格式化分区</a></li>
+<li><a href="#3-%E6%8C%82%E8%BD%BD%E5%88%86%E5%8C%BA">3. 挂载分区</a></li>
+<li><a href="#4-%E8%AE%BE%E7%BD%AE%E4%B8%8B%E8%BD%BD%E9%95%9C%E5%83%8F%E6%BA%90%E6%8F%90%E5%8D%87%E6%88%91%E4%BB%AC%E5%90%8E%E7%BB%AD%E7%9A%84%E4%B8%8B%E8%BD%BD%E9%80%9F%E5%BA%A6">4. 设置下载镜像源，提升我们后续的下载速度</a></li>
+<li><a href="#5-%E5%AE%89%E8%A3%85-linux-%E5%9F%BA%E6%9C%AC%E7%BB%84%E4%BB%B6">5. 安装 linux 基本组件</a></li>
+<li><a href="#6-%E6%89%A7%E8%A1%8C%E4%BB%A5%E4%B8%8B%E5%91%BD%E4%BB%A4">6. 执行以下命令</a></li>
+<li><a href="#7-%E5%88%87%E6%8D%A2%E5%88%B0%E6%8C%82%E8%BD%BD%E7%82%B9">7. 切换到挂载点</a></li>
+<li><a href="#8-%E8%AE%BE%E7%BD%AE%E6%97%B6%E9%97%B4">8. 设置时间</a></li>
+<li><a href="#9-%E8%AE%BE%E7%BD%AEroot%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81">9. 设置root用户密码</a></li>
+<li><a href="#10-%E8%AE%BE%E7%BD%AE%E8%AF%AD%E8%A8%80%E5%92%8C%E6%9C%AC%E6%9C%BA%E5%90%8D">10. 设置语言和本机名</a></li>
+<li><a href="#11-%E9%80%80%E5%87%BA">11. 退出</a></li>
+<li><a href="#12-%E5%89%8D%E6%9C%9F%E5%87%86%E5%A4%87">12. 前期准备</a></li>
+<li><a href="#13-%E5%AE%89%E8%A3%85%E9%A9%B1%E5%8A%A8%E8%AF%B7%E7%A1%AE%E4%BF%9D%E6%98%AF%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5%E6%AD%A3%E5%B8%B8">13. 安装驱动(请确保是网络连接正常)</a></li>
+<li><a href="#14-%E5%AE%89%E8%A3%85%E6%A1%8C%E9%9D%A2%E8%BF%99%E9%87%8C%E5%AE%89%E8%A3%85%E7%9A%84gnome">14. 安装桌面(这里安装的Gnome)</a></li>
+<li><a href="#15-%E5%B0%BE%E5%A3%B0">15. 尾声</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8F%AF%E8%83%BD%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98">可能遇到的问题</a></li>
+</ul>
+<!-- /code_chunk_output -->
+
+<p>如果是懒人或者小白，可以直接使用 Manjaro 系统，它是 Arch 的子项目，安装简单，Arch有的功能它基本都有，背靠 Arch，可以使用 AUR 仓库，配置简单。安装就和 Window 或者其它的 Linux 一样，只需要一个 ISO 镜像就可以，浪子推荐 Manjaro-kde 版本。如果你的硬件配置过低，又想充分利用资源的话，推荐使用 Manjaro-xfce 版本。KDE 桌面美观，占用资源多；xfce占用资源低，详情可以自行百度。</p>
+<h2 id="一、国内镜像列表"><a href="#一、国内镜像列表" class="headerlink" title="一、国内镜像列表"></a>一、国内镜像列表</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">##</span><br><span class="line">## Arch Linux repository mirrorlist</span><br><span class="line">## Generated on 2021-07-27</span><br><span class="line">##</span><br><span class="line">## China</span><br><span class="line">#Server = http://mirrors.163.com/archlinux/$repo/os/$arch</span><br><span class="line">#Server = http://mirrors.bfsu.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">#Server = https://mirrors.bfsu.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">#Server = http://mirrors.cqu.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">#Server = https://mirrors.cqu.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">#Server = http://mirrors.dgut.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">#Server = https://mirrors.dgut.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">#Server = http://mirrors.hit.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">#Server = https://mirrors.hit.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">#Server = http://mirror.lzu.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">#Server = http://mirrors.neusoft.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">#Server = https://mirrors.neusoft.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">#Server = http://mirrors.nju.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">#Server = https://mirrors.nju.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">#Server = http://mirror.redrock.team/archlinux/$repo/os/$arch</span><br><span class="line">#Server = https://mirror.redrock.team/archlinux/$repo/os/$arch</span><br><span class="line">#Server = https://mirrors.sjtug.sjtu.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">#Server = http://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">#Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">#Server = http://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">#Server = https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">#Server = https://mirrors.xjtu.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">#Server = http://mirrors.zju.edu.cn/archlinux/$repo/os/$arch</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、前言"><a href="#二、前言" class="headerlink" title="二、前言"></a>二、前言</h2><p>下面的内容其实到第 <em><strong>13</strong></em> 步各位少侠就可以去找别的适合自己的教程了，这部分是需要结合自己电脑的配置情况去输入命令的。第 <em><strong>14</strong></em> 步安装桌面少侠们也可以去找自己喜欢的桌面风格样式。这里做个说明节省大家的时间。</p>
+<h2 id="三、准备工作"><a href="#三、准备工作" class="headerlink" title="三、准备工作"></a>三、准备工作</h2><ol>
+<li>镜像</li>
+<li>确保网络良好 <strong>(最简单的就是使用手机数据线连接电脑，开启USB共享；条件允许使用网线最佳)</strong></li>
+</ol>
+<h2 id="四、开始安装"><a href="#四、开始安装" class="headerlink" title="四、开始安装"></a>四、开始安装</h2><p><strong>注意，以下命令都是紧接着的（可以不看文字，跟着命令走，确保联网正常，命令输入正确），分步是为了给自己做个说明，也便于理解。我也加入了注释，分区部分的注释建议大家一定要看，浪子尽力做到能让第一次安装的少侠看明白。单个字母就是执行了 <code>fdisk /dev/sda</code> 命令后，我们手动输入的命令。</strong></p>
+<h3 id="1-分区"><a href="#1-分区" class="headerlink" title="1. 分区"></a>1. 分区</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">fdisk /dev/sda    # 进入分区命令行，一直到最后的 w 命令，否则一直处于分区命令模式中</span><br><span class="line"></span><br><span class="line">g                 # 该命令创建一个新的 gpt 分区表</span><br><span class="line"></span><br><span class="line">n                 # 该命令新建分区，默认是1，直接回车即可</span><br><span class="line"></span><br><span class="line">                  # 这一步是选择柱面，直接回车即可</span><br><span class="line"></span><br><span class="line">+500M             # 给这个新建的gpt分区 500M 的空间，如果硬盘空间足够可以多给，后面我们会把分区格式化</span><br><span class="line"></span><br><span class="line">n                 # 新建第二个分区，像上面一样，两次回车，大小给 +8G</span><br><span class="line"></span><br><span class="line">+8G               # 给该分区分配 8G 内存，这个分区稍后我们将格式为交换分区</span><br><span class="line"></span><br><span class="line">n                 # 建立第三个分区，然后三次回车键；分配剩余所有的空间，如果有需求可以再添加分区</span><br><span class="line"></span><br><span class="line">p                 # 上面分区完了后，输入该命令可以看到刚才的分区信息</span><br><span class="line"></span><br><span class="line">w                 # 确认无误后，w 保存退出；分区完成</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注：</strong> 上面三个分区中 500M 的引导分区是必须的，8G 的交换分区如果内存足够也可以不分，建议都分上，它会在内存不足的时候使用硬盘的部分空间当作虚拟内存使用。基本每种系统都有。剩下的分区就是我们操作的分区了。</p>
+</blockquote>
+<h3 id="2-格式化分区"><a href="#2-格式化分区" class="headerlink" title="2. 格式化分区"></a>2. 格式化分区</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">mkfs.fat -F32 /dev/sda1       # 上面分配的 500M 的分区格式，用来存放系统信息</span><br><span class="line"></span><br><span class="line">mkswap /dev/sda2              # 上面分配的 8G 的分区格式为交换分区</span><br><span class="line"></span><br><span class="line">mkfs.ext4 /dev/sda3           # ext4 文件格式的分区，这个分区就是我们直接操作的空间了</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注：</strong> 上面的 <code>sdax</code> 需要根据自己的实际分区情况来定，我这里仅仅是示例，可以看后面的注释部分，中途有确认项选择 <code>y</code> 即可。</p>
+</blockquote>
+<h3 id="3-挂载分区"><a href="#3-挂载分区" class="headerlink" title="3. 挂载分区"></a>3. 挂载分区</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/sda3 /mnt          # 把sda3挂载到mnt上</span><br><span class="line"></span><br><span class="line">mkdir -p /mnt/boot/efi        # 创建多级目录</span><br><span class="line"></span><br><span class="line">mount /dev/sda1 /mnt/boot/efi # 把sda1挂载到/mnt/boot/efi下</span><br><span class="line"></span><br><span class="line">swapon /dev/sda2              # 这个好像是激活swap分区，我忘了；执行命令后，大家可以去查一下</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-设置下载镜像源，提升我们后续的下载速度"><a href="#4-设置下载镜像源，提升我们后续的下载速度" class="headerlink" title="4. 设置下载镜像源，提升我们后续的下载速度"></a>4. 设置下载镜像源，提升我们后续的下载速度</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 把系统文件先做个备份</span><br><span class="line">cp /etc/pacman.d/mirrorlist/etc/pacman.d/mirrorlist.bak</span><br><span class="line"># 向文件添加内容，不理解没关系，执行命令就好</span><br><span class="line">echo &quot;https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch&quot; &gt; /etc/pacman.d/mirrorlist</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-安装-linux-基本组件"><a href="#5-安装-linux-基本组件" class="headerlink" title="5. 安装 linux 基本组件"></a>5. 安装 linux 基本组件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacstrap /mnt base base-devel linux linux-firmware dhcpcd iwd neworkmanager grub efibootmgr vim</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-执行以下命令"><a href="#6-执行以下命令" class="headerlink" title="6. 执行以下命令"></a>6. 执行以下命令</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">genfstab -U /mnt &gt;&gt; /mnt/etc/fstab</span><br><span class="line"></span><br><span class="line"># 查看一下是不是和自己开始的分区个数一致，一样代表写入成功；可以执行后续操作；</span><br><span class="line"># 如果失败，请重新再来。一般来说，按照顺序执行正确命令到这里理论不会失败</span><br><span class="line"># 在这里这么说是因为这一步比较重要，如果失败可以重新尝试一下</span><br><span class="line">cat /mnt/etc/fstab</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-切换到挂载点"><a href="#7-切换到挂载点" class="headerlink" title="7. 切换到挂载点"></a>7. 切换到挂载点</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arch-chroot /mnt</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-设置时间"><a href="#8-设置时间" class="headerlink" title="8. 设置时间"></a>8. 设置时间</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ln -sf /usr/share/zoneinfo/Asia/Shanghai/etc/localtime</span><br><span class="line"></span><br><span class="line">hwclock --systohc</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-设置root用户密码"><a href="#9-设置root用户密码" class="headerlink" title="9. 设置root用户密码"></a>9. 设置root用户密码</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd      # 之后输入想设置的密码</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-设置语言和本机名"><a href="#10-设置语言和本机名" class="headerlink" title="10. 设置语言和本机名"></a>10. 设置语言和本机名</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;en_US.UTF-8 UTF-8&quot; &gt;&gt; /etc/locale.gen</span><br><span class="line"></span><br><span class="line">locale-gen</span><br><span class="line"></span><br><span class="line">echo &quot;LANG=en_US.UTF-8&quot; &gt;&gt; /etc/locale.conf</span><br><span class="line"></span><br><span class="line"># 以上三行是设置语言，设置为英文是确保没有乱码，</span><br><span class="line"># 因为刚装完的系统是没有中文环境的，如果这里设置中文，安装了以后没有中文字体，将会出现乱码。</span><br><span class="line"># 安装完了后可以安装中文环境，然后进行设置</span><br><span class="line"></span><br><span class="line"># 下面开始写入本机信息</span><br><span class="line">echo &quot;本机名，想要啥自己输入&quot; &gt;&gt; /etc/hostname</span><br><span class="line"></span><br><span class="line">grub-install --target=x86_64-efi --efi-directory=/boot/efi</span><br><span class="line"></span><br><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br><span class="line"></span><br><span class="line"># 创建一个新用户，以username为例(-m 自动生成用户主目录，-G 加入一个不存在的组 wheel)</span><br><span class="line">useradd -m -G wheel username</span><br><span class="line"></span><br><span class="line"># 设置密码</span><br><span class="line">passwd username</span><br><span class="line"></span><br><span class="line"># 然后编辑一个文件</span><br><span class="line">vim /etc/sudoers</span><br><span class="line"></span><br><span class="line"># 找到 %wheel ALL=(ALL)ALL (vim 编辑时输入 `/#%` 会跳到这儿)</span><br><span class="line">去掉前面的注释 `#` ，完成后保存退出。</span><br></pre></td></tr></table></figure>
+
+<h3 id="11-退出"><a href="#11-退出" class="headerlink" title="11. 退出"></a>11. 退出</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 退出 arch-chroot 状态</span><br><span class="line">exit</span><br><span class="line"></span><br><span class="line"># 取消挂载</span><br><span class="line">umount /mnt/boot/efi</span><br><span class="line"></span><br><span class="line">umount /mnt</span><br><span class="line"></span><br><span class="line"># 重启系统</span><br><span class="line">reboot(记得拔掉 U 盘)</span><br></pre></td></tr></table></figure>
+
+<h3 id="12-前期准备"><a href="#12-前期准备" class="headerlink" title="12. 前期准备"></a>12. 前期准备</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"># 重启之后登录进系统，这时我们需要进行安装桌面系统的前期准备</span><br><span class="line">sudo cp /etc/pacman.d/mirrorlist/etc/pacman.d/mirrorlist.bak</span><br><span class="line"></span><br><span class="line">sudo vim /etc/pacman.d/mirrorlist</span><br><span class="line"># 编辑文件加入下面的一行内容。加入的内容依然是我们之前提升下载速度所加入的</span><br><span class="line"># 如果还是之前的设置内容，就不用添加了，保存退出即可。</span><br><span class="line">Server = &quot;https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch&quot;</span><br><span class="line"></span><br><span class="line"># 然后编辑 pacman.conf 文件</span><br><span class="line">sudo vim /etc/pacman.conf</span><br><span class="line"># 直接到最后，把带有下面的标签部分的的两行的注释取消掉，然后再加入以下内容</span><br><span class="line">[multilib]</span><br><span class="line">Include = /etc/pacman.d/mirrorlist</span><br><span class="line"></span><br><span class="line">[archlinuxcn]</span><br><span class="line">Server = https://mirrors.ustc.edu.cn/archlinuxcn/$arch</span><br><span class="line"></span><br><span class="line"># 按顺序执行以下命令吧</span><br><span class="line">sudo systemctl start iwd</span><br><span class="line"></span><br><span class="line">sudo systemctl start dhcpcd</span><br><span class="line"></span><br><span class="line">sudo systemctl enable NetworkManager</span><br><span class="line"></span><br><span class="line">sudo systemctl enable dhcpcd</span><br><span class="line"></span><br><span class="line">sudo systemctl enable iwd</span><br><span class="line"></span><br><span class="line"># 编辑文件</span><br><span class="line">sudo vim /etc/NetworkManager/NetworkManager.conf</span><br><span class="line"># 加入以下内容，保存退出</span><br><span class="line">[device]</span><br><span class="line">wifi.backend=iwd</span><br><span class="line"></span><br><span class="line"># 输入 ip a 查看现在连上网没有</span><br><span class="line">其实，如果按照我刚开始的联网方式，这里配置完也是连着网的。</span><br></pre></td></tr></table></figure>
+
+<h3 id="13-安装驱动-请确保是网络连接正常"><a href="#13-安装驱动-请确保是网络连接正常" class="headerlink" title="13. 安装驱动(请确保是网络连接正常)"></a>13. 安装驱动(请确保是网络连接正常)</h3><p>这一步大家可以根据自己的电脑 <strong>硬件型号</strong> 去选择，k可以百度也可以上 ArchWiki 查询；下面的桌面系统部分也可以选择自己喜欢的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># haveged 是做 GPG 签名的</span><br><span class="line">sudo pacman -Syu haveged</span><br><span class="line"></span><br><span class="line">sudo systemctl start haveged</span><br><span class="line"></span><br><span class="line">sudo systemctl enable haveged</span><br><span class="line"></span><br><span class="line">sudo rm -rf /etc/pacman.d/gnupg</span><br><span class="line"></span><br><span class="line">sudo pacman-key --init</span><br><span class="line"></span><br><span class="line">sudo pacman-key --populate archlinux</span><br><span class="line"></span><br><span class="line">sudo pacman -S archlinuxcn-keyring</span><br><span class="line"></span><br><span class="line"># 我的CPU、显卡是intel 5 代核显，执行以下命令。</span><br><span class="line"># 如果是其他的CPU 显卡请 自行 去官网查看或者百度，这个我也不懂，哈哈哈</span><br><span class="line"># 显卡驱动</span><br><span class="line">sudo pacman -S vulkan-intel lilb32-vulkan-intel mesa lib32-mesa</span><br><span class="line"></span><br><span class="line"># 声卡驱动</span><br><span class="line">sudo pacman -S alsa alsa-utils pulseaudio pulseaudio-alsa</span><br></pre></td></tr></table></figure>
+
+<h3 id="14-安装桌面-这里安装的Gnome"><a href="#14-安装桌面-这里安装的Gnome" class="headerlink" title="14. 安装桌面(这里安装的Gnome)"></a>14. 安装桌面(这里安装的Gnome)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S cinnamon gnome gnome-extra</span><br><span class="line">之后一路回车，出现选项选择 y</span><br><span class="line">等待安装完成。</span><br><span class="line"></span><br><span class="line">sudo pacman -S sddm</span><br><span class="line"></span><br><span class="line">sudo systemctl enable sddm</span><br><span class="line"></span><br><span class="line">sudo pacman -S way-microhei way-zenhei ttf-dejavu</span><br><span class="line"></span><br><span class="line">sudo pacman -S google-chrome</span><br><span class="line"></span><br><span class="line">现在就可以重启了，让我们怀着高兴紧张又期待的心情输入 reboot 回车吧！</span><br></pre></td></tr></table></figure>
+
+<h3 id="15-尾声"><a href="#15-尾声" class="headerlink" title="15. 尾声"></a>15. 尾声</h3><p>感谢教我的大佬，还记得大佬对我说，到这里基本的桌面和谷歌浏览器都帮我弄好了，剩下的就要靠我自己了。不知道为什么，当时听到这句话有一点么想哭。<br>然后我听大佬的用的 cinnamon,大佬还给我发了截图。我看过去的第一眼，哇塞！好漂亮！！！然后大佬对我说，你需要自己去设置，默认的很丑，哈哈哈哈。<br>犹记大佬最后对我说 <strong>你要学会靠自己，要会自己解决问题</strong>，我会尽力的。<br>确实，自己手动安装一遍的收获真的是很大啊，我很佩服教我的大佬，并不仅仅是因为他教我安装 arch。感谢大佬，比心 ^o^</p>
+<h2 id="可能遇到的问题"><a href="#可能遇到的问题" class="headerlink" title="可能遇到的问题"></a>可能遇到的问题</h2><ol>
+<li>如果你插入了一个 <strong>ntfs</strong> 格式的硬盘，Linux 识别不了，不能挂载的话，请安装 <strong>ntfs-3g</strong> ；命令：<code>yay -S ntfs-3g</code></li>
+<li>未完待续。。。</li>
+</ol>
+
+
+<div class="article-footer reveal fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap reveal" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body fs14"><a id="next" href="/p/8ecfb81b/">ArchLinux/Manjaro安装一些常用软件<span class="note">较早</span></a><div class="line"></div><a id="prev" href="/p/ae731a06/">注解总结和一些说明<span class="note">较新</span></a></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md reveal' id="comments">
+    <div class='cmt-title cap theme'>
+      快来参与讨论吧
+    </div>
+    <div class='cmt-body beaudar'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="beaudar" repo="prettywinter/blog-comments" issue-term="pathname" theme="preferred-color-scheme" label="comment" input-position="top" comment-order="desc" loading="false" branch="main"></div>
+
+    </div>
+  </div>
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<p>本站由 <a href="https://prettywinter.github.io/">@江湖浪子</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.8.0" title="v1.8.0">Stellar</a> 作为主题。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.8.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://fastly.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
+
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@6/swiper-bundle.min.css","js":"https://unpkg.com/swiper@6/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://fastly.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://fastly.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://fastly.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti/umd/heti.min.css","js":"https://unpkg.com/heti/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function loadBeaudar() {
+    const els = document.querySelectorAll("#comments #beaudar");
+    if (els.length === 0) return;
+    els.forEach((el, i) => {
+      try {
+        el.innerHTML = '';
+      } catch (error) {
+        console.log(error);
+      }
+      var script = document.createElement('script');
+      script.src = 'https://beaudar.lipk.org/client.js';
+      script.async = true;
+      for (let key of Object.keys(el.attributes)) {
+        let attr = el.attributes[key];
+        if (['class', 'id'].includes(attr.name) === false) {
+          script.setAttribute(attr.name, attr.value);
+        }
+      }
+      el.appendChild(script);
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+      loadBeaudar();
+  });
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>
