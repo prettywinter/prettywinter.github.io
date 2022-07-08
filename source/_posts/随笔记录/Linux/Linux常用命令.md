@@ -2,7 +2,6 @@
 title: Linux常用命令
 categories: Linux
 tags: [命令]
-cover: https://raw.sevencdn.com/prettywinter/dist/main/images/blogcover/linux.jpeg
 abbrlink: 817c7d82
 ---
 

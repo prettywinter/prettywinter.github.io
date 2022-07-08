@@ -2,7 +2,6 @@
 title: ArchLinux安装教程
 categories: Linux
 tags: [Arch, 安装教程, 系统]
-cover: https://raw.sevencdn.com/prettywinter/dist/main/images/blogcover/arch.jpeg
 abbrlink: 8166567f
 ---
 

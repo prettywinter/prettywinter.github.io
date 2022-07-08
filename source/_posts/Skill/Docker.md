@@ -1,6 +1,5 @@
 ---
 title: Docker入门
-cover: https://fastly.jsdelivr.net/gh/prettywinter/dist/images/blogcover/docker.jpeg
 categories: skill
 tags: [docker]
 abbrlink: 8699d8dc
