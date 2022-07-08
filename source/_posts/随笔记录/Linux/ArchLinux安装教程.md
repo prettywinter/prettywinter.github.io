@@ -2,11 +2,12 @@
 title: ArchLinux安装教程
 categories: Linux
 tags: [Arch, 安装教程, 系统]
-cover: https://raw.sevencdn.com/prettywinter/dist/main/images/blogcover/arch.jpeg
+cover: true
+headimg: https://raw.sevencdn.com/prettywinter/dist/main/images/blogcover/arch.jpeg
 abbrlink: 8166567f
 ---
 
-ArchLinux，很不错的一款 Linux 发行版，不过的它的安装可能让很多人望而却步，不过还有背靠 Arch 的另一个子系统，Manjaro，它的安装就和 Window 一样，简单容易。本篇文章是基于之前的大佬教我而写。
+ArchLinux，很不错的一款 Linux 发行版，不过的它的安装可能让很多人望而却步，不过还有背靠 Arch 的另一个子系统，Manjaro，它的安装就和 Window 一样，简单容易。本篇文章仅作参考。
 {% link 官方文档::https://wiki.archlinux.org/title/Installation_guide#Boot_the_live_environment %}
 
 <!-- more -->

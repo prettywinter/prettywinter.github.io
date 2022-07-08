@@ -1,6 +1,7 @@
 ---
 title: SSO单点登录及jwt
 categories: skill
+tags: [单点登录]
 abbrlink: a4b69068
 ---
 SSO单点登录及jwt

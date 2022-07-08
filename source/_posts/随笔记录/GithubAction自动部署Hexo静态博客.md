@@ -19,27 +19,30 @@ GitHub 提供 Linux、Windows 和 macOS 虚拟机来运行工作流程，或者�
 
 ## 二、Hexo博客集成Github Action
 
-使用过 Github Pages 和 Hexo 服务的少侠都知道，在我们写完文章的时候，都会执行 `hexo cl && hexo g && hexo d` 这几条命令去部署自己的博客。如果是喜欢 **备份** 的的小伙伴，可能会在带有 Github Pages 服务的的仓库（yourname.github.io）使用另一个分支去存储备份；或者直接使用了两个仓库：一个存储 Hexo 博客文件备份，另一个存储Github Pages服务需要的HTML、CSS、JS等静态文件。
-这时当我们写完文章后，使用推送命令 `git add . && git commit -m "add/update" && git push` 把文件提交到备份库，然后再去部署到 Pages 服务的分支或者仓库。
+以下称呼中：**博客/Pages** 仓库代表 Github Pages 免费提供的博客部署的文件存放仓库，即访问 yourname.github.io 看到的页面等文件。
+
+使用过 Github Pages 和 Hexo 服务的少侠都知道，我们写完文章的时候，都会执行 `hexo cl && hexo g && hexo d` 这几条命令去发布到 Pages 仓库。
+如果有 **备份** 的小伙伴们，可能会在 Pages 的仓库（yourname.github.io）使用另一个 **分支** 去存储备份；或者直接使用两个仓库：Pages 仓库和存储 Hexo 的文件备份。
+这时当我们写完文章后，使用推送命令 `git add . && git commit -m "add/update" && git push` 把文件提交到备份库/分支，然后再执行 `hexo cl && hexo g && hexo d`部署到 Pages 服务的分支或者仓库。
 
 <!-- T-上，B\D-下；L-左，R-右 -->
 ```mermaid
 graph LR
-    A[本地仓库] --git push--> 备份到另一个远程仓库或者yourname.github.io的分支
-    A --hexo d--> yourname.github.io博客分支
+    A[本地仓库] --git push--> 推送到备份仓库或者备份分支
+    A --hexo d--> yourname.github.io博客部署仓库分支
 ```
 
 从上面介绍来看，需要备份文件的Hexo博客，每次都需要经过两个步骤：
 
-1. 备份写好的文件
+1. 备份写好的文件以及主题等配置
 2. Pages仓库部署静态文件
 
-那么能不能简化成为一步呢？答案是肯定的，CI/CD 在日常的项目中已经是很常见的了，接下来我们使用 Github Action 来帮助我们完成自动部署。这样我们自己只需要在本地写好文章，然后推送到远程仓库，至于后面的 `hexo cl && hexo g && hexo d` 这几个命令就交给 Action 去自动完成。
+那么能不能简化成为一步呢？答案是肯定的，CI/CD 在日常的项目中已经是很常见的了，接下来我们使用 Github Action 来帮助我们完成自动部署。这样我们自己只需要在本地写好文章，然后推送到远程仓库，至于后面的 `hexo cl && hexo g && hexo d` 这几个命令就交给 Action 去帮助我们自动完成。
 
 ```mermaid
 graph LR
-    A[本地仓库] --git push--> 备份到另一个远程仓库或者yourname.github.io的分支
-    --Github Action部署博客--> yourname.github.io
+    A[本地仓库] --git push--> 推送到备份仓库或分支
+    --Action自动部署博客--> yourname.github.io
 ```
 
 当然，有的少侠喜欢写完直接部署，隔一段时间才进行备份文件的推送，亦或者不需要文件/主题配置的备份，可能觉得这样做没必要（浪子以前就是）。这个看少侠自己的情况了，如果想把玩把玩Github Action，可以当作 CI/CD 的入门案例。
@@ -88,7 +91,7 @@ Github Action 的脚本文件是在 `.github/workflows/xxx.yml` 路径下，是 
 
 纯脚本文件：
 
-```yml{.line-numbers}
+```yml
 name: Hexo Blog CI
 
 # master branch on push, auto run

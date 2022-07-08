@@ -36,13 +36,13 @@ abbrlink: f7ba05e4
 
 （1） 启动spring-boot 项目 端口号8080
 
-（2） 访问 localhost:8080 /hello 可以看到消息
+（2） 访问 localhost:8080/hello 可以看到消息
 
 ### 1.3 配置反向代理
 
 （1）在Nginx主机修改 Nginx 配置文件
 
-```cfg{.line-numbers}
+```text
 http {
     include       mime.types;
     default_type  application/octet-stream;
@@ -82,7 +82,7 @@ http {
 
 修改 Nginx配置文件：
 
-```properties{.line-numbers}
+```text
 http {
     include       mime.types;
     default_type  application/octet-stream;
@@ -110,7 +110,7 @@ http {
 }
 ```
 
-地址栏输入localhost 刷新观察每个网页的标题，看是否不同。
+地址栏输入 localhost 刷新观察每个网页的标题，看是否不同。
 
 经过测试，三台服务器出现的概率各为33.3333333%，交替显示。
 
@@ -118,7 +118,7 @@ http {
 
 比如想让NO.1出现次数是其它服务器的2倍，则修改配置如下：
 
-```properties{.line-numbers}
+```text
 http {
     include       mime.types;
     default_type  application/octet-stream;
@@ -150,7 +150,7 @@ http {
 
 我们可以在服务器上使用Nginx映射出一个目录作为共享的目录，然后访问该可以进行下载。有许多网站使用了该技术。
 
-```properties{.line-numbers}
+```text
 server {
         listen       8181;
         server_name  localhost;

@@ -16,13 +16,11 @@ open_graph:
 ######## Sidebar ########
 sidebar:
   logo:
-    avatar: '[config.avatar](/about/)' # you can set avatar link in _config.yml or '[https://xxx.png](/about/)'
+    avatar: '[https://raw.sevencdn.com/prettywinter/dist/main/images/avatar/avatar.jpeg](/about/)' # '[config.avatar](/about/)' # you can set avatar link in _config.yml or '[https://xxx.png](/about/)'
     title: '[config.title](/)' # you can set html tag like: '[<img no-lazy height="32px" src="xxx"/>](/)'
   menu:
     post: '[btn.blog](/)'
-    # wiki: '[btn.wiki](/wiki/)'
-    # friends: '[友链](/friends/)'
-    # about: '[关于](/about/)'
+    wiki: '[btn.wiki](/wiki/)'
     more: '[更多](/more/)'
   # Sidebar widgets
   widget_layout:
@@ -30,7 +28,6 @@ sidebar:
     page: [welcome, toc] # for pages using 'layout:page'
     post: [toc, repo_info] # for pages using 'layout:post'
     wiki: [toc, repo_info, wiki_more] # for pages using 'layout:wiki'
-    more: [toc, repo_info, wiki_more] # for pages using 'layout:wiki'
   widgets:
     # Recent update
     recent:
@@ -67,10 +64,8 @@ breadcrumb:
 
 ######## Article ########
 article:
-  # 如果没有指定封面，是否根据 tags 作为关键词搜索封面图片？
+  # 如果没有指定封面，是否根据 tags 作为关键词搜索封面？
   auto_cover: false # search from https://source.unsplash.com/
-  # 如果没有指定横幅，是否根据 tags 作为关键词搜索横幅图片？
-  auto_banner: false # search from https://source.unsplash.com/
   # 如果没有指定 excerpt 和 description，将自动取多长的内容作为文章摘要？
   auto_excerpt: 200
   # 分类颜色
@@ -90,7 +85,7 @@ article:
 
 ######## Comments ########
 comments:
-  service: # beaudar, utterances, valine, twikoo, waline
+  service: beaudar # beaudar, utterances, valine, twikoo, waline
   # beaudar
   # https://beaudar.lipk.org/
   beaudar:
@@ -104,6 +99,46 @@ comments:
     keep-theme: # true/false
     loading: false
     branch: main
+  # utterances
+  # https://utteranc.es/
+  utterances:
+    repo: xxx/xxx
+    issue-term: pathname
+    issue-number:
+    theme: preferred-color-scheme
+    label:
+  valine:
+    js: https://fastly.jsdelivr.net/gh/XuxuGood/simple-blog-cdn@main/js/Valine.min.js
+    appId: # your appId
+    appKey: # your appKey
+    placeholder:
+    requiredFields: [nick, mail]
+    enableQQ: true # Unstable avatar link
+    recordIP: false # Record commenter IP
+    avatar: robohash # gravatar style https://valine.js.org/avatar
+    pageSize: 10 # comment list page size
+    lang: zh-cn
+    highlight: true
+    mathJax: false
+    tagMeta: [博主, 小伙伴, 访客] # 标签要显示的文字,默认'博主,小伙伴,访客'
+    metaPlaceholder:
+      nick: "昵称/QQ号(必填)"
+      mail: "邮箱（必填，完全保密）"
+      link: "网址(https://)"
+    master: #md5加密后的博主邮箱
+      - 6783037F2DF30EAB99F9FC256157D875
+    friends: #md5加密后的小伙伴邮箱
+      - 6783037F2DF30EAB99F9FC256157D875
+  # Twikoo
+  # https://twikoo.js.org/
+  twikoo:
+    js: https://fastly.jsdelivr.net/npm/twikoo@1.4.0/dist/twikoo.all.min.js # 建议锁定版本
+    envId: https://xxx # vercel函数
+  waline:
+    js: https://unpkg.com/@waline/client@v2/dist/waline.js
+    css: https://unpkg.com/@waline/client@v2/dist/waline.css
+    # Waline server address url, you should set this to your own link
+    serverURL:
 
     # If false, comment count will only be displayed in post page, not in home page
     commentCount: true
@@ -112,17 +147,17 @@ comments:
     pageview: false
 
     # Custom locales
-    # locale:
-    #   placeholder: Welcome to comment # Comment box placeholder
+    locale:
+      placeholder: Welcome to comment # Comment box placeholder
 
     # Custom emoji
-    # emoji:
-    #   - https://unpkg.com/@waline/emojis@1.0.1/weibo
-    #   - https://unpkg.com/@waline/emojis@1.0.1/alus
-    #   - https://unpkg.com/@waline/emojis@1.0.1/bilibili
-    #   - https://unpkg.com/@waline/emojis@1.0.1/qq
-    #   - https://unpkg.com/@waline/emojis@1.0.1/tieba
-    #   - https://unpkg.com/@waline/emojis@1.0.1/tw-emoji
+    emoji:
+      - https://unpkg.com/@waline/emojis@1.0.1/weibo
+      - https://unpkg.com/@waline/emojis@1.0.1/alus
+      - https://unpkg.com/@waline/emojis@1.0.1/bilibili
+      - https://unpkg.com/@waline/emojis@1.0.1/qq
+      - https://unpkg.com/@waline/emojis@1.0.1/tieba
+      - https://unpkg.com/@waline/emojis@1.0.1/tw-emoji
 
     # Comment infomation, valid meta are nick, mail and link
     # meta:
@@ -162,21 +197,21 @@ footer:
     #   icon: '<img src="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.3/social/942ebbf1a4b91.svg"/>'
     #   url: /about/#comments
   sitemap:
-    # '博客':
-    #   - '[近期](/)'
-    #   - '[分类](/)'
-    #   - '[标签](/)'
-    #   - '[归档](/)'
-    # '项目':
-    #   - '[开源库](/)'
-    # '社交':
-    #   - '[友链](/)'
-    #   - '[留言板](/)'
-    # '更多':
-    #   - '[关于本站](/)'
-    #   - '[GitHub](/)'
+    '博客':
+      - '[近期](/)'
+      - '[分类](/categories/)'
+      - '[标签](/tags/)'
+      - '[归档](/archive/)'
+    '项目':
+      - '[开源库](/wiki/)'
+    '社交':
+      - '[友链](/friends/)'
+      - '[留言板](/)'
+    '更多':
+      - '[关于本站](/)'
+      - '[GitHub](/)'
   license: '[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)'
-  source: #'[GitHub](https://github.com/xaoxuu/hexo-theme-stellar)'
+  source: '[GitHub](https://github.com/xaoxuu/hexo-theme-stellar)'
   more: # string or array (support markdown)
 
 
@@ -274,15 +309,6 @@ plugins:
     enable: false
     cdn: https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML
 
-  # Katex - The fastest math typesetting library for the web
-  # https://katex.org/docs/autorender.html
-  # https://github.com/KaTeX/KaTeX
-  # 使用 hexo-renderer-markdown-it-plus 作为公式渲染器：npm uninstall hexo-renderer-marked --save npm install hexo-renderer-markdown-it-plus --save
-  katex:
-    enable: false
-    min_css: <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous">
-    min_js: <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js" integrity="sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja" crossorigin="anonymous"></script>
-    auto_render_min_js: <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"onload="renderMathInElement(document.body);"></script>
 
 style:
   darkmode: auto # auto / always / false
@@ -297,7 +323,7 @@ style:
     highlightjs_theme: https://fastly.jsdelivr.net/gh/highlightjs/cdn-release@11.5.0/build/styles/atom-one-dark.min.css
 
 default:
-  avatar: https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/avatar/round/3442075.svg
+  avatar: https://raw.sevencdn.com/prettywinter/dist/main/images/avatar/avatar.jpeg
   link: https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg
   cover: https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/cover/76b86c0226ffd.svg
   image: https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/image/2659360.svg

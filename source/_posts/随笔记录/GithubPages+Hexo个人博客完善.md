@@ -18,7 +18,7 @@ abbrlink: 61d2e814
 在设置这一项时需要在 Github 仓库中进行设置要部署的分支才可以，不然部署之后访问会看不到页面。
 步骤：进入仓库 -> 选择 Settings -> 找到 Pages，如下图：
 
-![assign branch](https://cdn.jsdelivr.net/gh/prettywinter/dist/images/doc/github_pages选择分支作为博客部署目录.png)
+![assign branch](https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/github_pages选择分支作为博客部署目录.png)
 
 设置完成后保存，重新部署即可发布到指定的分支。
 

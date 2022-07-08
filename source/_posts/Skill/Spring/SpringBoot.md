@@ -5,6 +5,7 @@ tags: [Java, Spring Boot]
 abbrlink: a541262a
 ---
 
+Spring Boot 可以轻松创建可以“直接运行”的独立的、生产级的基于 Spring 的应用程序。大多数 Spring Boot 应用程序需要最少的 Spring 配置。
 
 <!-- more -->
 
@@ -24,7 +25,7 @@ abbrlink: a541262a
 
 ## Spring Boot
 
-使用 IDEA 工具创建 SpringBoot 项目时，可以使用阿里云的快速构建模板：`https://start.aliyun.com/`，速度还可以。
+使用 IDEA 工具创建 SpringBoot 项目时，可以使用阿里云的快速构建模板：`https://start.aliyun.com/`
 
 ### 1. 注解
 

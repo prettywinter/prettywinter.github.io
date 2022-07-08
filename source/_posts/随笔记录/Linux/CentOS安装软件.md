@@ -1,13 +1,13 @@
 ---
-title: Linux安装软件
+title: CentOS安装软件
 categories: Linux
-tags: [软件安装]
-cover: https://raw.sevencdn.com/prettywinter/dist/main/images/blogcover/linux.jpeg
+tags: [软件安装, CentOS]
+cover: true
+headimg: https://raw.sevencdn.com/prettywinter/dist/main/images/blogcover/linux.jpeg
 abbrlink: 5e42d40d
 ---
 
-Linux 下基本有源码编译安装、二进制包解压缩安装（可以使用包管理器安装，方便快捷）、Appimage格式的软件等，当然，最后一个一般在服务器上也用不到。
-整理这个就是为了防止有一天浪子在没网络的时候，比较无聊，搭个环境在本地写写代码什么的。我相信大家都喜欢使用各个系统相应的包管理工具（rpm、apt-get、pacman等）直接安装，一个字，爽的不要不要的，不需要担心，缺啥装啥就行了。
+此篇文章以后随缘更新，这个系统的有关问题网上一般都有结果，浪子已不再使用 CentOS 系统，bye～。
 
 <!-- more -->
 
@@ -22,14 +22,13 @@ Linux 下基本有源码编译安装、二进制包解压缩安装（可以使�
   - [4. Python](#4-python)
   - [5. Nginx](#5-nginx)
   - [6. Btop++](#6-btop)
+  - [7. FFmpeg](#7-ffmpeg)
 - [Linux通用二进制文件安装](#linux通用二进制文件安装)
-  - [1. Docker](#1-docker)
-  - [2. Node](#2-node)
-  - [3. MongoDB](#3-mongodb)
-  - [4. MySQL](#4-mysql)
+  - [1. Node](#1-node)
+  - [2. MongoDB](#2-mongodb)
+  - [3. MySQL](#3-mysql)
     - [密码正确但是进不去 bash 环境](#密码正确但是进不去-bash-环境)
     - [预读处理](#预读处理)
-  - [5. FFmpeg](#5-ffmpeg)
 - [Some Questions](#some-questions)
   - [1. 关于源码编译安装失败](#1-关于源码编译安装失败)
 
@@ -182,7 +181,7 @@ cd /usr/local/nginx
 
 ### 6. Btop++
 
-Btop++ 是一个 Linux 资源监视器，显示处理器、内存、磁盘、网络和进程的使用情况和统计资料，界面美观，使用简单。
+Btop++ 是一个 Linux 资源监视器，显示处理器、内存、磁盘、网络和进程的使用情况和统计资料，界面美观，使用简单。这里使用了源码编译安装，但是浪子推荐下载 Github 仓库的二进制包解压运行 install.sh 脚本安装。
 
 {% link Github地址::https://github.com/aristocratos/btop %}
 {% link Gitee同步仓库::https://gitee.com/mirrors/btop %}
@@ -201,30 +200,31 @@ cd btop
 make && make install
 ```
 
-## Linux通用二进制文件安装
+### 7. FFmpeg
 
-通用二进制文件一般使用包管理工具即可快速安装使用，写这个主要是因为没有网络的情况下，在自己虚拟机上搭建相应的环境去耍。以下都是推荐使用各个平台的包管理工具去耍。以下都是使用的 yum，之前用的 CentOS 做实验。
-
-### 1. Docker
-
-推荐使用包管理工具安装 Docker 和 docker-compose。
+{% link FFmpeg使用::http://www.ffmpeg.org/ %}
 
 ```bash{.line-numbers}
-# 如果有旧版本先卸载
-yum remove docker docker-common docker-selinux docker-engine
+# 克隆源码 也可以下载 https://github.com/FFmpeg/FFmpeg/releases 相应的包上传
+git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg
 
-# 安装相关工具
-yum install -y yum-utils
-# 添加阿里云镜像
-yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
-# 安装 docker 引擎
-yum install docker-ce
+# 安装相关依赖
+yum install yasm.x86_64 -y
 
-# 设置开机自启
-systemctl enable docker
+cd ffmpeg
+./configure --enable-ffplay --enable-ffserver --prefix=/usr/local/ffmpeg
+# 编译安装
+make && make install
+
+# 查看是否安装成功
+cd /usr/local/ffmpeg
 ```
 
-### 2. Node
+## Linux通用二进制文件安装
+
+通用二进制文件一般使用包管理工具即可快速安装使用，是非常方便的。
+
+### 1. Node
 
 {% link 二进制包下载::https://nodejs.org/en/download/ %}
 
@@ -241,7 +241,7 @@ ln -s /usr/local/nodejs/bin/npm /usr/local/bin
 
 如果嫌弃官网下载速度慢可以到这里 https://registry.npmmirror.com/binary.html?path=node/latest-v16.x/ 选择合适的版本下载。
 
-### 3. MongoDB
+### 2. MongoDB
 
 {% link 二进制包下载::https://www.mongodb.com/try/download/community %}
 
@@ -266,7 +266,7 @@ source /etc/profile
 
 顺带说一下配置，编辑 MongoDB 的配置文件 `mongodb.conf`，修改以下内容：
 
-```bash{.line-numbers}
+```bash
 # 数据存储目录
 dbpath = /usr/local/mongodb/data/db
 # 日志存储目录
@@ -283,7 +283,7 @@ bind_ip = 0.0.0.0
 
 mongodb安装好后第一次启动服务是不需要密码的，也没有任何用户，通过shell命令可直接进入，cd到mongodb目录下的bin文件夹，执行命令 `./mongo` 即可。如果配置了环境变量，可以在任意路径执行 `mongo` 也可以。
 
-```bash{.line-numbers}
+```bash
 # 指定配置文件启动服务
 ./mongod --config /usr/local/mongodb/conf/mongodb.conf
 # 进入系统数据库
@@ -300,14 +300,14 @@ db.shutdownServer();
 ./mongod --config /usr/local/mongodb/conf/mongodb.conf --auth
 ```
 
-### 4. MySQL
+### 3. MySQL
 
 MySQL 说实话我觉得通用的二进制文件包安装较为简单，卸载是最简单的，比使用包管理工具安装的简单的多。下面给两个包管理工具安装的参考链接，我没怎么用过，仅作参考。
 
 apt-get安装：https://blog.lanluo.cn/8662
 yum安装：https://zhuanlan.zhihu.com/p/87069388
 
-接下来进入正题，使用通用的 MySQL8.x 版本的二进制压缩包进行安装。至于卸载，就把有关 MySQL 创建的几个文件夹删掉就行了，`/etc/my.cnf` 是默认自带的，卸载的时候删不删都没有问题，没有的也不必担心，新建也是可以的。
+接下来进入正题，使用通用的 MySQL8.x 版本的二进制压缩包进行安装。至于卸载，就把有关 MySQL 创建的几个文件夹删掉就行了，`/etc/my.cnf` 是默认自带的，卸载的时候删不删都没有问题，如果默认没有这个文件也不必担心，可以手动添加。
 
 ```bash{.line-numbers}
 # 检查mysql用户组和用户是否存在，如果没有，则创建
@@ -324,14 +324,15 @@ yum -y install libaio-devel.x86_64 numactl
 # 解压二进制文件包到 /usr/local/mysql 目录
 tar -C /usr/local/mysql
 cd /usr/local/mysql/bin
-# 初始化数据，需要记录最后 root@localhost: 后的字符串，它是后面进入 bash 环境的初始密码
+# 初始化数据，成功初始化后需要记录最后 root@localhost: 后的字符串（初始化失败则不显示），它是后面进入 bash 环境的初始密码
 ./mysqld --initialize --user=mysql --datadir=/usr/local/mysql/data --basedir=/usr/local/mysql
 
 # vim /etc/my.cnf(没有该文件手动创建) 修改内容
+basedir=/usr/local/mysql
 datadir=/usr/local/mysql/data
 port = 3306
 
-# 启动MySQL服务 启动成功会有 Starting MySQL.. SUCCESS! 提示
+# 启动MySQL服务 启动成功会有 Starting MySQL.. SUCCESS! 提示；否则就是启动失败，根据提示查看日志记录定位问题
 cd /usr/local/mysql/support-files/
 mysql.server start
 
@@ -352,11 +353,11 @@ chkconfig --add mysqld
 chkconfig --list
 ```
 
-至此，安装任务基本完成，下面需要添加用户并分配权限，进入 MySQL 的 bash 环境需要前面我们进行初始化时生成的密码。
+至此，安装任务基本完成，下面需要添加用户并分配权限，进入 MySQL 的 bash 环境需要之前进行初始化时生成的密码。
 
 ```bash{.line-numbers}
 # 登录 MySQL，密码使用初始化成功时 root@localhost: 后的字符串
-mysql -uroot -p
+mysql -u root -p
 
 # 修改密码 毕竟那么不好记
 # 而且如果不修改 它会报 ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement. 的错误
@@ -369,20 +370,19 @@ use mysql;
 update user set host='%' where user='root';
 
 # ① 适用于 MySQL 8.0之前的版本，可以直接授权
-grant all privileges on *.* to 'root'@'%' identified by 'root' with grant option;
+# grant all privileges on *.* to 'root'@'%' identified by 'root' with grant option;
+
 # ② 适用于 MySQL 8.0之后的版本，需要先创建一个用户，再进行授权【推荐方式②】
-create user root@'%' identified by 'root';
-grant all privileges on *.* to root@'%' with grant option;
+create user dev@'%' identified by '123456';
+grant select,update,delete,insert on *.* to dev@'%' with grant option;
 # 刷新权限，这一句很重要，使修改生效，如果没有写，则还是不能进行远程连接。这句表示从mysql数据库的grant表中重新加载权限数据，因为MySQL把权限都放在了cache中，所以，做完修改后需要重新加载。
 flush privileges;
 ```
 
 初始化成功截图：
-![初始化成功截图](https://cdn.jsdelivr.net/gh/prettywinter/dist/images/blogcover/Linux_MySQL初始化成功截图.png)
+![初始化成功截图](https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/Linux_MySQL初始化成功截图.png)
 
 > 记录日志最末尾位置 `root@localhost:` 后的字符串，此字符串为mysql管理员临时登录密码。
-
-如果启动失败查看err日志，根据日志定位修复问题。
 
 #### 密码正确但是进不去 bash 环境
 
@@ -407,29 +407,9 @@ You can turn off this feature to get a quicker startup with -A
 
 这个问题是之前使用的 apt-get 管理工具安装的 MySQL 出现的，原因是因爲數據庫採用了預讀處理。解决办法就是在我们进入MySQL的bash环境时，需要加入 `-A` 参数，不让其预读数据库信息，`mysql -u root -p -A`。如果覺得每次进入 bash 环境都要添加参数比较麻烦，也可以在 **`my.cnf`** 文件里加上如下內容：
 
-```bash{.line-numbers}
+```bash
 [mysql]
 no-auto-rehash
-```
-
-### 5. FFmpeg
-
-{% link FFmpeg使用::http://www.ffmpeg.org/ %}
-
-```bash{.line-numbers}
-# 克隆源码 也可以下载 https://github.com/FFmpeg/FFmpeg/releases 相应的包上传
-git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg
-
-# 安装相关依赖
-yum install yasm.x86_64 -y
-
-cd ffmpeg
-./configure --enable-ffplay --enable-ffserver --prefix=/usr/local/ffmpeg
-# 编译安装
-make && make install
-
-# 查看是否安装成功
-cd /usr/local/ffmpeg
 ```
 
 ## Some Questions

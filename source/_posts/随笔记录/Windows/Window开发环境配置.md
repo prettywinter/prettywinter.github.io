@@ -2,7 +2,8 @@
 title: Window开发环境配置
 categories: win
 tags: [Win, 配置]
-cover: https://fastly.jsdelivr.net/gh/prettywinter/dist/images/blogcover/工欲善其事.jpg
+cover: true
+headimg: https://fastly.jsdelivr.net/gh/prettywinter/dist/images/blogcover/工欲善其事.jpg
 abbrlink: 6a7c9e96
 ---
 
@@ -55,8 +56,8 @@ JRE_HOME，和上面一样，示例
 
 配置完成后，path里使用引用方式(%env_name%)配置JAVA_HOME和JRE_HOME到bin目录，例如`%JAVA_HOME%\bin`。最后打开cmd，输入 `java -version` 显示版本号代表安装成功。
 
-![变量设置](https://cdn.jsdelivr.net/gh/prettywinter/dist/images/doc/变量设置01.png)
-![变量设置](https://cdn.jsdelivr.net/gh/prettywinter/dist/images/doc/变量设置02.png)
+![变量设置](https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/变量设置01.png)
+![变量设置](https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/变量设置02.png)
 
 ### 2. Maven
 

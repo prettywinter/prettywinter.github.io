@@ -2,7 +2,8 @@
 title: CentOS7.x最小安装
 categories: Linux
 tags: [CentOS, 系统, 安装教程]
-cover: https://raw.sevencdn.com/prettywinter/dist/main/images/blogcover/linux.jpeg
+cover: true
+headimg: https://raw.sevencdn.com/prettywinter/dist/main/images/blogcover/linux.jpeg
 abbrlink: 5d8de8e6
 ---
 

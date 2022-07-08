@@ -11,7 +11,9 @@ Node相关总结
 
 {% link Node文档::http://nodejs.cn/learn/ %}
 
-```shell{.line-numbers}
+## 一、常用命令
+
+```shell
 # 查看npm版本
 npm -v
 
@@ -81,4 +83,10 @@ yarn config get registry
 # 更换国内源
 yarn config set registry https://registry.npm.taobao.org --global
 yarn config set disturl https://npm.taobao.org/dist --global
+```
+
+## 二、安装
+
+```bash
+npm i -g @vue/cli
 ```

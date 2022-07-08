@@ -5,7 +5,9 @@ tags: [Java, Spring Security]
 abbrlink: 95588d77
 ---
 
-Spring Security总结。Spring Security 的版本在 2.7.0 版本之前（不包括）可以使用 WebSecurityConfigurerAdapter 来配置相关内容。2.7.0 版本之后有所改变（弃用状态，仍可使用）。
+Spring Security 是一个功能强大且高度可定制的身份验证和访问控制框架。 它是保护基于 Spring 的应用程序的事实标准。
+
+Spring Security 是一个专注于为 Java 应用程序提供身份验证和授权的框架。 像所有 Spring 项目一样，Spring Security 的真正强大之处在于它可以轻松扩展以满足自定义需求。
 
 <!-- more -->
 
@@ -31,11 +33,18 @@ Spring Security总结。Spring Security 的版本在 2.7.0 版本之前（不包
   - [2. 授权异常](#2-授权异常)
   - [自定义异常处理配置](#自定义异常处理配置)
 - [授权](#授权)
-  - [权限管理策略](#权限管理策略)
+  - [两种权限管理策略](#两种权限管理策略)
+    - [基于URL权限管理](#基于url权限管理)
+    - [基于方法的权限管理](#基于方法的权限管理)
+  - [动态权限修改](#动态权限修改)
 
 <!-- /code_chunk_output -->
 
+Spring Security 的版本在 2.7.0 版本之前（不包括）可以使用 WebSecurityConfigurerAdapter 来配置相关内容。2.7.0 版本之后有所改变（弃用状态，仍可使用）。[官网配置](https://docs.spring.io/spring-security/reference/servlet/configuration/java.html)
+
 ## 核心类
+
+[体系结构](https://docs.spring.io/spring-security/reference/servlet/authentication/architecture.html)
 
 ### 认证常用三个类
 
@@ -229,6 +238,7 @@ public class WebMvcConfig extends WebSecurityConfigurerAdapter {
         source.registerCorsConfiguration("/**", corsConfiguration);
         return source;
     }
+}
 ```
 
 ## 异常处理
@@ -269,16 +279,55 @@ public class WebMvcConfig extends WebSecurityConfigurerAdapter {
                     response.getWriter().write("无权访问");
                 });
     }
+}
 ```
 
 ## 授权
 
 权限很好理解，有权访问和无权访问，RBAC模式
 
-### 权限管理策略
+### 两种权限管理策略
 
 - 基于过滤器的权限管理（FilterSecurityInterceptor）
 主要拦截Http请求，拦截下来后，根据Http请求地址进行权限校验
 - 基于方法的权限管理（MethodSecurityInterceptor）
 主要是用来处理方法级别的权限问题。当需要调用某一个方法时，基于 AOP 将操作拦截下来，然后判断用户是否具备相关的权限。
 
+#### 基于URL权限管理
+
+mvcMatchers()
+antMatchers()
+
+#### 基于方法的权限管理
+
+这种方式就是在 controller 层的方法上加上注解，指明需要哪些权限或者具有的角色才能访问对应的资源。
+
+首先，配置类中开启方法权限校验：@EnableGlobalMethodSecurity(prePostEnabled = true, SecuredEnable = true, jsr250Enabled = true)，~~（这里开启了三种方式，一般只用第一种）~~
+
+```java
+// 前置校验
+@preAuthorize("hasAuthority("权限名称")")
+// 过滤 filterTarget 必须是数组 集合，不能过滤某个对象
+@preFilter(filterTarget = "users")
+// 后置校验
+@PostAuthorize()
+@PostFilter()
+
+@Secured("role1", "role2") // 只能判断角色，或者 关系，满足一个即通过请求
+// 允许所有用户访问
+@PermitAll()
+// 拒绝所有访问
+@DenyAll()
+// jsr250 提供的注解，和 Secured() 类似
+@RolesAllowed("role1", "role2")
+```
+
+项目中，一般前四个用的较多，后面几个功能较为单一。
+
+### 动态权限修改
+
+以上方式都是通过代码实现的，比较难以修改，可以使用动态的权限修改，比如从数据库层面实现，修改字段即可达到修改相应的权限的目的。
+
+实现 FilterInvocationSecurityMetaSource 接口，重写 getAttributes() 方法。
+
+之后再 Security 的配置类中，使用 http.apply() 方法，覆写里面的配置，setSecurityMetaSource() 改为实现 FilterInvocationSecurityMetaSource 接口的实现类即可。setRejectPublicInvocations() 设为 true/false，为 true 时拒绝 **公共资源**（没有权限管理的公共接口） 的访问。

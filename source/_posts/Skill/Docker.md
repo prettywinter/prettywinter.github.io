@@ -1,6 +1,7 @@
 ---
 title: Docker入门
-cover: https://cdn.jsdelivr.net/gh/prettywinter/dist/images/blogcover/docker.jpeg
+cover: true
+headimg: https://fastly.jsdelivr.net/gh/prettywinter/dist/images/blogcover/docker.jpeg
 categories: skill
 tags: [docker]
 abbrlink: 8699d8dc
@@ -14,28 +15,30 @@ abbrlink: 8699d8dc
 
 <!-- code_chunk_output -->
 
-- [Docker入门](#docker入门)
-- [配置](#配置)
-  - [1. docker常用命令](#1-docker常用命令)
-- [Docker进一步理解](#docker进一步理解)
+- [一、Docker入门](#一docker入门)
+- [二、准备配置](#二准备配置)
+  - [1. 命令行设置国内镜像源](#1-命令行设置国内镜像源)
+  - [2. 编辑配置文件设置镜像加速](#2-编辑配置文件设置镜像加速)
+- [三、常用命令](#三常用命令)
+- [四、Docker进阶](#四docker进阶)
   - [1. Docker为什么提供网络功能？](#1-docker为什么提供网络功能)
   - [2. docker数据卷（volume）](#2-docker数据卷volume)
-- [Dockerfile](#dockerfile)
-- [docker-compose](#docker-compose)
+- [五、Dockerfile](#五dockerfile)
+- [六、docker-compose](#六docker-compose)
   - [1. 常用命令](#1-常用命令)
   - [2. docker-compose.yml示例](#2-docker-composeyml示例)
   - [3. 使用portainer可视化工具](#3-使用portainer可视化工具)
 
 <!-- /code_chunk_output -->
 
-## Docker入门
+## 一、Docker入门
 
 一个镜像可以去创建多个容器，各个容器之间互不干扰。
 
 Q：docker 拉取的镜像为什么比我们直接下载的文件体积大？
 A：一个镜像不仅仅是原来的软件包，它还包含了软件包运行所需的操作系统依赖、软件自身依赖等。所以随着我们的使用，使用的镜像越多，新的镜像下载会越来越快，因为有些依赖已经存在，后续的镜像如果对存在的依赖有使用的话，它会复用已经存在的依赖，而不会去再次下载。
 
-## 配置
+## 二、准备配置
 
 为了避免使用普通用户运行 docker 的相关命令时出现报错，我们可以在docker命令前加上sudo去运行，但是每次都加显然很麻烦。那么在安装完docker后，可以运行以下命令：
 
@@ -50,59 +53,82 @@ newgrp docker
 docker ps
 ```
 
-命令行设置下载国内镜像源：`dockerd --registry-mirror=https://registry.docker-cn.com`
+### 1. 命令行设置国内镜像源
 
-编辑配置文件设置下载镜像加速(`vim /etc/docker/daemon.json`)，设置完毕重启docker。
-1、Docker官方的中国镜像加速地址(不用注册)：https://registry.docker-cn.com  
-2、中科大的镜像加速器(不用注册（推荐）)：https://docker.mirrors.ustc.edu.cn/
-3、阿里云的镜像加速器(需要注册)：登录阿里云的容器hub服务，镜像加速器那一栏里会为你独立分配一个加速器地址
-4、DaoCloud的镜像加速器(需要注册)：登录DaoCloud的加速器获取脚本，该脚本可以将加速器添加到守护进程的配置文件中。
+```bash
+dockerd --registry-mirror=https://registry.docker-cn.com
+```
 
-### 1. docker常用命令
+### 2. 编辑配置文件设置镜像加速
 
-```bash{.line-numbers}
+```json /etc/docker/daemon.json
+{
+ "registry-mirrors" : [
+   "https://mirror.ccs.tencentyun.com",
+   "http://registry.docker-cn.com",
+   "http://docker.mirrors.ustc.edu.cn",
+   "http://hub-mirror.c.163.com"
+ ],
+ "insecure-registries" : [
+   "registry.docker-cn.com",
+   "docker.mirrors.ustc.edu.cn"
+ ],
+ "debug" : true,
+ "experimental" : true
+}
+```
+
+> 设置完毕重启docker。
+
+|加速源|url|是否需要注册|
+|--|--|--|
+|Docker官方的中国镜像加速地址|https://registry.docker-cn.com|需要|
+|中科大的镜像加速器|https://docker.mirrors.ustc.edu.cn/|不用注册（推荐)
+|阿里云的镜像加速器|登录阿里云的容器hub服务，镜像加速器那一栏里会为你独立分配一个加速器地址|需要注册|
+|DaoCloud的镜像加速器|登录DaoCloud的加速器获取脚本，该脚本可以将加速器添加到守护进程的配置文件中。|需要注册|
+
+## 三、常用命令
+
+```bash
 # 镜像操作
-docker info         # docker信息
+docker search name         # 根据镜像名称查找镜像
+docker pull 镜像名称:版本号       # 拉取镜像，注意对应的版本号
 docker images -a    # 列出本地所有的镜像
 docker images --digests # 显示镜像的摘要信息
 docker images --no-trunc    # 显示完整的镜像信息
-
-docker search 镜像名称         # 根据镜像名称查找镜像
-docker pull 镜像名称:版本号       # 拉取镜像，注意对应的版本号
-docker load -i 镜像          # 加载自己下载的tar包到docker本地仓库
-docker rmi 名称或者id        # 删除镜像，-f 选项强制删除
+docker rmi name/id        # 删除镜像，-f 选项强制删除
+docker info         # docker详细信息
 
 # 容器操作
 docker ps   # 列出当前正在运行的容器
 docker ps -a    # 列出所有的容器
 docker ps -q    # 列出所有的容器ID
-docker stop 容器名称或容器ID    # 停止容器运行
-docker start 容器名称或容器ID     # 启动容器
-docker restart 容器名称或容器ID     # 重启容器
-docker rm 容器名称或容器ID    # 删除容器，-f 选项强制删除
+docker inspect name/id     # 查看容器内部信息
+docker stop name/id    # 停止容器运行
+docker start name/id     # 启动容器
+docker restart name/id     # 重启容器
+docker rm name/id    # 删除容器，-f 选项强制删除
 
-docker logs 容器名称或ID    # 查看容器服务运行日志
-docker logs -f 容器名称或ID # 实时监听服务运行日志
-docker logs -t 容器名称或ID # 为服务运行日志加入时间戳
+docker logs name/id    # 查看容器服务运行日志
+docker logs -f name/id # 实时监听服务运行日志
+docker logs -t name/id # 为服务运行日志加入时间戳
+
 
 # 进入容器
-docker exec -it 容器名称或ID bash
-
-# 查看容器内部信息
-docker inspect 容器名称或ID
+docker exec -it name/id bash
 
 # 将容器打包成一个新的镜像
-docker commit -m "描述信息" -a "作者信息" 容器名称或者ID 打包的镜像名称:标签
+docker commit -m "描述信息" -a "作者信息" 容器名称或者ID tarName:tag
 # 将镜像备份,备份为 .tar 文件
-docker save 镜像名称:标签 -o 文件名
-# 退出
-exit
+docker save 镜像名称:标签 -o fileName
 ```
+
+> 以上的 **name/id** 均指容器创建时指定的名称或者容器的标识id（docker ps可以查看）.
 
 接下来以MySQL为例来体会一下docker，使用之前确定网络连接良好。
 
 ```bash{.line-numbers}
-# 查找docker hub中是否有MySQL镜像，可以去 docker hub 的官网搜索版本直接pull
+# 查找docker hub中是否有MySQL镜像，可以去 [docker hub](https://hub.docker.com/) 的官网搜索版本
 docker search mysql
 
 # 拉取MySQL8.0.20版本
@@ -112,7 +138,7 @@ docker pull mysql:8.0.20
 docker images -a
 
 # 创建并运行容器 MYSQL_ROOT_PASSWORD 该项在启动时必须指定，不然容器启动失败
-docker run -d -p 3306:3306 --name mysql8 -v /docker-data/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 mysql:8.0.20
+docker run -d -p 3306:3306 --name mysql8 -v /docker-data/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 mysql:8.0.20 --restart=always
 # 创建容器时，最后的 mysql:8.0.20 就是使用刚刚下载的镜像创建容器；
 # 如果不写也可以，docker会自动在本地检测有没有最新的，如果没有会自动下载。
 
@@ -154,7 +180,9 @@ docker rmi mysql:8.0.20
 docker images
 ```
 
-## Docker进一步理解
+使用 `--restart=always` 参数可以在 Docker 服务启动时自动启动对应的docker容器。如果在 docker 容器已经启动后，想要设置容器跟随 docker 服务自启动，可以使用更新的命令：`docker update --restart=always 容器名称`，比如我想让MySQL容器自动启动，那么命令就是`docker update --restart=always mysql`，这样，容器名称为 `mysql` 的容器就会跟随Docker服务而自启动了。
+
+## 四、Docker进阶
 
 ### 1. Docker为什么提供网络功能？
 
@@ -173,7 +201,7 @@ docker inspect 网桥名称或ID
 docker run -d --name mysql -p 3306:3306 --network ems mysql:8.0
 ```
 
-网桥不会自动创建，如果要使用网桥，必须先创建，再使用；运行容器时指定的网桥不存在，那么会导致这个容器运行失败。在容器启动时指定了网桥后，在这个网桥中的所有容器，可以直接使用容器名称与其它容器通信。类似于同一局域网进行联机对战。
+网桥不会自动创建，如果要使用网桥，必须 **先创建，再使用；** 运行容器时指定的网桥不存在，那么会导致这个容器运行失败。在容器启动时指定了网桥后，在这个网桥中的所有容器，可以直接使用容器名称与其它容器通信。类似于同一局域网进行联机对战。
 
 ```bash
 docker run -d --name tomcat01 -p 8081:8080 --network ems tomcat:8.0-jre8
@@ -205,7 +233,7 @@ docker volume rm 卷名
 docker volume prune
 ```
 
-## Dockerfile
+## 五、Dockerfile
 
 如果不清楚 Dockerfile 的相关指令含义，可以查阅官方文档，有清晰的介绍。Dockerfile 文件中的命令必须使用大写，通常以 FROM 指令开始。
 
@@ -231,7 +259,7 @@ ENTRYPOINT java -jar app.jar
 构建自定义镜像：`docker build -t demo:1.0 .`，注意最后的 ` . ` 不要漏掉。
 用自定义镜像启动容器：`docker run -d -p 8081:8081 --name demo demo:1.0`
 
-## docker-compose
+## 六、docker-compose
 
 docker-compose 和 Dockerfile 很相似，都是需要我们写一个文件，文件中按照特定的格式去写一些内容和指令，再使用命令去运行这个文件。一个 docker-compose 对应一个 stack。
 

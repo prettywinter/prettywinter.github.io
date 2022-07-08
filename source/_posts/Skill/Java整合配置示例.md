@@ -13,7 +13,7 @@ abbrlink: ff45fa2
 
 ### 1. properties
 
-```properties{.line-numbers}
+```properties
 # 应用名称
 spring.application.name=mytest
 # 应用服务 WEB 访问端口
@@ -44,7 +44,7 @@ mybatis-plus.configuration.log-impl=org.apache.ibatis.logging.stdout.StdOutImpl
 
 ### 2. yml
 
-```yml{.line-numbers}
+```yml
 logging:
     level:
         com:
@@ -75,7 +75,7 @@ spring:
 
 ## 附
 
-```bash{.line-numbers}
+```bash
 # sqlserver 默认端口号为：1433
 URL:"jdbc:microsoft:sqlserver://localhost:1433;DatabaseName=dbname"
 DRIVERNAME:"com.microsoft.jdbc.sqlserver.SQLServerDriver";

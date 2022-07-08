@@ -461,9 +461,9 @@ SpringBoot AOP： 默认使用 CGlib 代理
 
 CGlib创建动态代理的原理：父子继承关系创建代理对象，原始类作为父类，代理类作为子类，这样既可以保证两者方法一致，同时在代理类中提供新的实现（额外功能+原始方法）。
 
-![CGlib创建代理对象](https://cdn.jsdelivr.net/gh/prettywinter/dist/images/doc/CGlib创建代理对象.png)
+![CGlib创建代理对象](https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/CGlib创建代理对象.png)
 
-![CGlib代理](https://cdn.jsdelivr.net/gh/prettywinter/dist/images/doc/CGlib代理.png)
+![CGlib代理](https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/CGlib代理.png)
 
 ### 3. 基于注解的AOP开发
 

@@ -2,7 +2,8 @@
 title: Git配置和常用命令
 categories: 教程
 tags: [Git, 配置]
-cover: https://raw.sevencdn.com/prettywinter/dist/main/images/doc/git_command.jpg
+cover: true
+headimg: https://raw.sevencdn.com/prettywinter/dist/main/images/doc/git_command.jpg
 abbrlink: f26bc7f6
 ---
 
@@ -214,5 +215,4 @@ $ git reset --soft 版本库ID
 
 ## 一张图总结
 
-{% image https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/git_command.jpg 常用git命令总结 %}
-<!-- ![git命令总结](https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/git_command.jpg "git命令总结") -->
+![git命令总结](https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/git_command.jpg "git命令总结")

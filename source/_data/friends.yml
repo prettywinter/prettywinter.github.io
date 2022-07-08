@@ -1,0 +1,18 @@
+group1:
+  title: 海内存知己 天涯若比邻
+  description: 感谢人生旅途中的每一份真挚的友谊，按结识先后顺序：
+  items:
+    - title: 静态友链测试
+      url: https://baidu.com
+# 如果不需要 title 和 description，可以直接把 items 内容提升到 group 层级中，例如：
+# group2:
+#   - title: 某某某
+#     ...
+#   - title: 某某某
+#     ...
+# 可以设置 api、repo 来显示 GitHub Issues 中的数据：
+group2:
+  title: 来自 GitHub 的朋友
+  description: '以下友链通过 [GitHub Issue](https://github.com/jhlzlove/blog-api/issues/) 提交，按 issue 最后更新时间排序：'
+  api: https://hexo-friends-api.vercel.app
+  repo: jhlzlove/blog-api

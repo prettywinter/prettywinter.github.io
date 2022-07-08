@@ -4,23 +4,25 @@ categories: 配置
 tags: [配置]
 ---
 
-浪子的 VsCode 配置备份。
+浪子的 VsCode 配置备份。插件部分需安装对应的插件才可生效。
 
 <!-- more -->
 
 ```json{.line-numbers}
 {
     // ########################### 编辑器配置 ############################
-    // 字体及字体大小
+    // 字体及字体大小，设置的字体本机需要安装才能生效
+    // 如果有空格或者中文，尽量使用 单引号 括住
     "editor.fontFamily": "'Fira Code', '文泉驿微米黑'",
     "editor.fontSize": 16,
-    // 是否启用连字
+    // 启用连字
     "editor.fontLigatures": true,
-    // 行高
+    // 设置行高
     "editor.lineHeight": 23,
     // 字母间像素
     "editor.letterSpacing": 0.5,
     // ########################## 彩色括号对 ###########################
+    // 1.6x 版本之后 IDE 自带，不需要安装插件了
     "editor.bracketPairColorization.enabled": true,
     "editor.guides.bracketPairs": "active",
     "editor.suggestSelection": "first",
@@ -32,12 +34,12 @@ tags: [配置]
     "terminal.integrated.cursorBlinking": true,
     // 鼠标右键：控制是否将在终端中选定的文本复制到剪贴板。
     "terminal.integrated.copyOnSelection": true,
-    // 鼠标右键：控制终端如何回应右键单击操作。 copyPaste: 当有选定内容时复制，否则粘贴。
+    // 鼠标右键：控制终端如何回应右键单击操作。copyPaste: 当有选定内容时复制，否则粘贴。
     "terminal.integrated.rightClickBehavior": "copyPaste",
-    // 设置默认打开的终端类型，Linux ? bash : PowerShell
-    // "terminal.integrated.defaultProfile.linux": "bash",
+    // 设置默认打开的终端类型，Linux ? zsh : PowerShell
+    // "terminal.integrated.defaultProfile.linux": "zsh",
     // "terminal.integrated.defaultProfile.windows": "PowerShell",
-    // 使用自定义终端类型 Git Bash
+    // 浪子喜欢在 Win 下使用 Git Bash
     "terminal.integrated.profiles.windows": {
         "Git-Bash": { // 命名可自定义 terminal.integrated.defaultProfile.windows 项填写自定义名即可
           "path": "D:\\xxxx\\Git\\bin\\bash.exe",
@@ -82,8 +84,9 @@ tags: [配置]
     "java.dependency.packagePresentation": "hierarchical",
 
     // PicGo 配置(PicGo 插件)
-    // data.json 文件是安装了 PicGo 软件后在如下目录生成的配置文件。如果配置了这个，下面的就无须配置了
+    // data.json 文件是安装了 PicGo 软件后在如下目录生成的配置文件。
     // "picgo.configPath": "C:\\Users\\你的用户名\\AppData\\Roaming\\picgo\\data.json",
+    // 上面的选项如果配置了，下面的无须配置。
 
     // 当前使用图床 可选：weibo, qiniu, tcyun, upyun, github, aliyun, imgur and SM.MS
     "picgo.picBed.current": "github|weibo|qiniu|tcyun|upyun|aliyun|imgur|SM.MS",
