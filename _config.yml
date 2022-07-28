@@ -3,12 +3,14 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: 浮萍一叶
 subtitle: ''
 description: ''
 keywords:
-author: John Doe
-language: en
+author: 江湖浪子
+language: 
+  - en
+  - zh-CN
 timezone: ''
 
 # URL
@@ -97,9 +99,14 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: stellar
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: ''
+  type: git
+  branch: pages
+  repo: git@github.com:prettywinter/prettywinter.github.io.git
+  message: Automatic deploy by Github Action：{{ now('YYYY-MM-DD HH:mm:ss') }}
+
+favicon: https://raw.sevencdn.com/prettywinter/dist/main/images/favicon/favicon-32x32.png
