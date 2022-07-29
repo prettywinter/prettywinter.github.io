@@ -22,7 +22,7 @@ sidebar:
     post: '[btn.blog](/)'
     # wiki: '[btn.wiki](/wiki/)'
     friends: '[友链](/friends/)'
-    note: '[便签](/note/)'
+    notes: '[便签](/notes/)'
     more: '[更多](/about/)'
   # Sidebar widgets
   widget_layout:
@@ -154,7 +154,7 @@ footer:
     #   - '[GitHub](/)'
   license: '[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)'
   source: '[GitHub](https://github.com/prettywinter/prettywinter.github.io)'
-  more: [friends, about] # string or array (support markdown)
+  more: # string or array (support markdown)
 
 
 ######## Tag Plugins ########
