@@ -1,5 +1,5 @@
 ---
-title: GithubPages+Hexo个人博客完善
+title: GithubPages+Hexo博客配置
 categories: 配置
 tags: [Github Pages, Hexo, 博客]
 ---
@@ -10,12 +10,11 @@ tags: [Github Pages, Hexo, 博客]
 
 ### 1. 使用 hexo d
 
-使用该命令需要安装插件：{% copy npm install --save hexo-deployer-git %}
+使用该命令需要安装插件：{% copy width:max npm install --save hexo-deployer-git %}
 
 ### 2. 使用yourname.github.io的其它分支部署pages
 
-在设置这一项时需要在 Github 仓库中进行设置要部署的分支才可以，不然部署之后访问会看不到页面。
-步骤：进入仓库 -> 选择 Settings -> 找到 Pages，如下图：
+在设置这一项之前确保在 `blog/_config.yml` 中已设置为 pages 分支，然后在 Github 仓库中进行设置部署的分支。步骤：进入仓库 -> 选择 Settings -> 找到 Pages，如下图：
 
 {% image https://raw.sevencdn.com/prettywinter/dist/main/images/doc/github_pages选择分支作为博客部署目录.png %}
 
@@ -51,12 +50,12 @@ pretty_urls:
 
 ### 4. 生成 RSS 页面
 
-一般都不需要这个需求，就不讲解了。RSS 就类似与关注、订阅，博客有了更新可以通知并发送给你。
-安装插件：{% copy npm install -save hexo-generator-feed %}
+一般都不需要这个需求，就不讲解了。RSS 就类似与关注、订阅功能。安装插件：
+{% copy npm install -save hexo-generator-feed %}
 
-配置示例（依然是在博客的配置文件中添加，安装完插件可以直接添加到最后）：
+配置示例：
 
-```yml
+```yml blog/_config.yml
 # In the front-matter of your post,
 # you can optionally add a description, intro or excerpt setting to write a summary for the post.
 # Otherwise the summary will default to the excerpt or the first 140 characters of the post.
@@ -78,20 +77,18 @@ feed:
   autodiscovery: true
 ```
 
-配置完成执行 `hexo cl && hexo g && hexo d`，然后访问 `https://yourname.github.io/rss2.xml` 或者 `https://yourname.github.io/atom.xml` 查看生成的xml。
+配置完成执行 `hexo cl && hexo g && hexo d`，然后访问 `https://yourname.github.io/rss2.xml` 或者 `https://yourname.github.io/atom.xml` 查看。
 
 ### 5. 引入[Mermaid](https://github.com/webappdevelp/hexo-filter-mermaid-diagrams)流程图
 
-Hexo 默认的 markdown 不支持 Mermaid 流程图的，需要安装依赖来支持：
+Hexo 默认的 markdown 不支持 Mermaid 流程图，需要安装依赖来支持：
 
-```bash
-npm install --save hexo-filter-mermaid-diagrams
-```
+{% copy width:max npm install --save hexo-filter-mermaid-diagrams %}
 
 在 `_config.yml` 文件中加入以下内容：
 
 ```yml blog/_config.yml
-mermaid chart
+# mermaid chart
 mermaid: ## mermaid url https://github.com/knsv/mermaid
   enable: true  # default true
   version: "7.1.2" # default v7.1.2
@@ -99,9 +96,7 @@ mermaid: ## mermaid url https://github.com/knsv/mermaid
     #startOnload: true  // default true
 ```
 
-之后，还需要在主题文件中加入一些代码，具体的配置可以参考 [官网](https://github.com/webappdevelp/hexo-filter-mermaid-diagrams)。
-
-如果实在不想配置，或者嫌弃配置麻烦，可以使用下面的一种方法。
+之后，还需要在主题文件中加入一些代码，具体的配置可以参考 [官网](https://github.com/webappdevelp/hexo-filter-mermaid-diagrams)。如果嫌弃配置麻烦或者实在不想配置，可以使用下面的懒人方法。
 
 可以采取另一种解决方案：[hexo-filter-kroki](https://github.com/miao1007/hexo-filter-kroki)，这个是使用 [Kroki.io](https://kroki.io/) 去生成图，然后把图片返回到你的博客中。
 
@@ -126,3 +121,16 @@ steps:
   with:
     fetch-depth: 0
 ```
+
+### 7. 数学公式渲染
+
+Hexo 默认的 markdown 渲染器是不支持公式渲染的，可以进行替换，可以使用的渲染器有很多，可以去网上查看不同，这里使用 hexo-renderer-markdown-it-plus 作为公式渲染器。
+
+```bash
+# 卸载默认的渲染器
+npm uninstall hexo-renderer-marked
+# 安装 hexo-renderer-markdown-it-plus
+npm install hexo-renderer-markdown-it-plus --save
+```
+
+安装完成后，需要配置，一般在主题中有 katex 的设置项，开启即可。没有的话的可以根据 [官网 README](https://github.com/CHENXCHEN/hexo-renderer-markdown-it-plus) 进行配置。

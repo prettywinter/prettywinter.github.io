@@ -1,5 +1,5 @@
 ---
-title: 生产力工具整理
+title: Win环境准备
 categories: 配置
 tags: []
 cover: https://raw.githubusercontents.com/prettywinter/dist/main/images/blogcover/工欲善其事.jpg
@@ -7,7 +7,7 @@ cover: https://raw.githubusercontents.com/prettywinter/dist/main/images/blogcove
 pin: true
 ---
 
-Window开发环境的配置，以及一些工具网站、插件、软件的整理。
+Window环境配置整理
 
 <!-- more -->
 
@@ -47,10 +47,9 @@ Path: `%JRE_HOME%\bin`
 Path: `%M2_HOME%\bin`
 检验：`mvn –version`
 
-**[maven配置文件使用阿里源：](https://developer.aliyun.com/mvn/guide)**
-编辑maven的安装路径下的 `conf/setting.xml` 文件，找到 `<mirror>` 标签添加：
+**[maven配置文件使用阿里源：](https://developer.aliyun.com/mvn/guide)** 编辑maven的安装路径下的 `conf/setting.xml` 文件，找到 `<mirror>` 标签添加：
 
-```xml conf/setting.xml
+```xml .../maven/conf/setting.xml
 <mirror>
     <id>aliyunmaven</id>
     <mirrorOf>*</mirrorOf>
@@ -66,9 +65,11 @@ Path: `%M2_HOME%\bin`
 Path: `%GRADLE_HOME%\bin`
 检测： `gradle –v`
 
-配置全局下载源，在安装目录中（D:\software\Java\gradle-7.0）新建 `init.gradle` 文件，添加以下内容，保存退出。
+#### 3.1 配置全局下载源
 
-```xml
+在安装目录中（D:\software\Java\gradle-7.0）新建 `init.gradle` 文件，添加以下内容，保存退出。
+
+```xml .../gradle-7.0/init.gradle
 allprojects {
 	repositories {
         <!-- 首选本地 maven 仓库，没有再下载 -->
@@ -84,7 +85,9 @@ allprojects {
 }
 ```
 
-`init.gradle` 相当于 maven 中的 `settings.xml`，因此它也是有加载顺序的：
+#### 3.2 说明
+
+`init.gradle` 相当于 maven 中的 `settings.xml`，因此它是有加载顺序的：
 
 ```bash
 # 顺序查找，* 代表任意名称
@@ -154,23 +157,24 @@ Path：`%CATALINA_HOME%\bin`。
 
 安装 nodejs 后，打开命令行，修改成国内的淘宝镜像源，这样下载速度快些：~~`npm config set registry https://registry.npm.taobao.org` 过期配置不推荐~~
 
-[最新配置方法](https://npmmirror.com/)：`npm config set registry https://registry.npmmirror.com`
+[最新配置命令](https://npmmirror.com/)：`npm config set registry https://registry.npmmirror.com`
 
 nodejs 默认的模块安装是在 C 盘下的，我们可以进行配置修改，安装到其它位置。安装的目录需要自己提前建立好。
 以下配置中的 `node_cache` 和 `node_global` 文件夹就是提前建好的，默认安装完 nodejs 后是没有这两个文件夹的。
 
 - **修改全局安装路径：**
-`npm config set prefix "D:\software\nodejs\node_global"`
+{% copy width:max npm config set prefix "D:\software\nodejs\node_global" %}
 - **修改全局缓存路径：**
-- `npm config set cache "D:\software\nodejs\node_cache"`
-**然后检查是否修改成功：**
-`npm config ls -l`
+{% copy width:max npm config set cache "D:\software\nodejs\node_cache" %}
+
+**检查是否修改成功：** `npm config ls -l`
 
 修改成功后直接在环境变量 path 里加入 `D:\software\nodejs\node_global;`，加入这个环境变量后，使用 npm 命令全局安装后的命令就可以直接在 cmd 的任何路径使用了，例如`yarn` 、`hexo`、`vue-cli`等，否则会显示"XXX既不是内部命令，也不是外部命令"
 
 ### 8. Jetty
 
-{% link https://www.eclipse.org/jetty/documentation.php 官网下载 %}
+{% link https://www.eclipse.org/jetty/documentation/jetty-11/operations-guide/index.html 官方文档 %}
+
 
 下载后解压，之后进入 jetty 的安装目录。
 运行以下命令(`$JETTY_HOME` 是安装目录)：
@@ -189,8 +193,6 @@ java -jar $JETTY_HOME/start.jar jetty.http.port=9999
 ```
 
 之后就可以在浏览器使用 `localhost:9999` 进行访问了。
-
-{% link https://www.eclipse.org/jetty/documentation/jetty-11/operations-guide/index.html 官方文档 %}
 
 ### 9. Go
 
@@ -273,58 +275,3 @@ Edge浏览器取代了传统的IE，也使用了 Chromium 内核，带来了很�
 
 > IDEA 2021 之后的版本如果不需要多人协同可以关闭 Code With ME 和 Space 插件，提高运行速度。
 > IDEA 2021.3 ~ 最新版本食用方法：https://gitee.com/ja-netfilter/ja-netfilter
-
-## 三、软件、网站
-
-### 1. VsCode高速下载
-
-由于 vscode 官方下载特别慢，可以使用 cdn 加速下载，只需要替换掉头部链接即可。如果使用了下面的下载器，直接用下载器下载速度也很快哦~
-
-举个栗子：
-原下载链接：`http://vscode.cdn.azure.cn/stable/fe719cd3e5825bf14e14182fddeb88ee8daf044f/VSCode-win32-x64-1.65.2.zip`
-
-把 `https://az764295.vo.msecnd.net` 替换为 `http://vscode.cdn.azure.cn`
-
-修改后下载链接：{% copy width:max http://vscode.cdn.azure.cn/stable/fe719cd3e5825bf14e14182fddeb88ee8daf044f/VSCode-win32-x64-1.65.2.zip %}
-
-> VsCode如果使用的window便携（.zip）版本，升级时只要把原本的 data 文件夹复制到最新版本的文件夹内，重启即可。
-
-### 2. Git高速下载
-
-淘宝镜像网下载 Git：{% copy https://npm.taobao.org/mirrors/git-for-windows/ %}
-
-### 3. 下载器
-
-[文件蜈蚣](http://www.filecxx.com/zh_CN/index.html) Github 地址：https://github.com/filecxx/FileCentipede
-[Motrix](https://motrix.app/) Github 地址：https://github.com/agalwood/Motrix
-
-上面的两个软件在Edge、Google、Firefox都有对应的插件，安装对应的插件后就可以自动接管下载；如果不安装浏览器插件，需要手动复制下载链接，打开软件添加下载任务，把链接复制进去下载。推荐使用吧，毕竟 IDM 收费，协议也没有这两个多。
-
-### 4. downkyi（window平台下载B站视频）
-
-Github 地址：{% copy git:https leiurayer/downkyi %}
-
-### 5. cmder（window平台使用Linux命令）
-
-可以替换 cmd 或者 powershell 的一款产品，可以使用 Linux 的命令操作命令行而不报错。
-Github 地址：{% copy git:https cmderdev/cmder %}
-
-### 6. 工具网站
-
-{% link https://www.webfx.com/tools/emoji-cheat-sheet/ markdown使用Emoji表情 %}
-
-{% link https://emojipedia.org/ Emoji表情官网 %}
-
-{% link http://patorjk.com/software/taag/ 自定义Spring Boot启动logo %}
-
-{% link https://md5jiami.bmcx.com/ MD5在线加密 %}
-
-{% link https://shields.io GitHub个性md标签 %}
-
-{% link https://goproxy.io/zh/ VSCode安装Go插件代理设置 %}
-
-## 附：其它软件配置
-
-### 1.Vmware 双网卡配置，主要方便本机测试
-
-VMWare 创建虚拟机时可以配置双网卡。打开网络适配器，可以看到 VMWare 有 VM1 和 VM8，NAT模式使用的是 VM8，而“仅主机”模式使用的 VM1，配置了双网卡，那么就可以把 VM1 的 IP 修改成自己想要的 IP，这样就可以与宿主机通信了，NAT 模式的网络再如何变也无妨了，因为我们使用的是另一个网络通道。

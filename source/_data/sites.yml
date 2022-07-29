@@ -12,7 +12,11 @@ mirrors:
       screenshot: https://bu.dusays.com/2021/07/04/3e669b4780254.png
       avatar: https://bu.dusays.com/2021/07/04/53979dab9a153.png
       description:
-
+    - title: Git国内镜像仓库
+      url: https://npm.taobao.org/mirrors/git-for-windows/
+      screenshot:
+      avatar:
+      description:
 
 mac:
   title: Mac 应用下载
@@ -188,6 +192,21 @@ online_tools:
       screenshot: https://7.dusays.com/2021/03/03/e4df394a287a6.png
       avatar:
       description:
+    - title: Emoji Cheat Sheet
+      url: https://www.webfx.com/tools/emoji-cheat-sheet/
+      screenshot: 
+      avatar:
+      description: Markdown Emoji Cheat Sheet
+    - title: MD5加密
+      url: https://md5jiami.bmcx.com/
+      screenshot: 
+      avatar:
+      description:
+    - title: 项目Logo生成
+      url: http://patorjk.com/software/taag/
+      screenshot:
+      avatar:
+      description:
 
 community:
   title: 技术社区
@@ -243,3 +262,28 @@ examples:
     avatar: https://fastly.jsdelivr.net/gh/volantis-x/cdn-org/blog/favicon/apple-touch-icon.png
     url: https://volantis.js.org/
     screenshot: https://i.loli.net/2021/04/08/YQ2nhcvyCuFsm3g.png
+
+github:
+  title: Github
+  description:
+  items:
+    - title: 文件蜈蚣
+      url: https://github.com/filecxx/FileCentipede
+      screenshot: 
+      avatar:
+      description: 一款多协议支持的下载器
+    - title: Motrix
+      url: https://github.com/agalwood/Motrix
+      screenshot: 
+      avatar:
+      description: 一款多协议支持的下载器
+    - title: Downkyi
+      url: https://github.com/leiurayer/downkyi
+      screenshot: 
+      avatar:
+      description: Bilibili下载器
+    - title: 文件蜈蚣
+      url: https://github.com/cmderdev/cmder
+      screenshot: 
+      avatar:
+      description: 可以替换 cmd 或者 powershell 的命令行软件，完美使用 Linux 的命令。
