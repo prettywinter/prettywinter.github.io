@@ -543,6 +543,14 @@
   dependencies:
     "function-bind" "^1.1.1"
 
+"hexo-abbrlink@^2.2.1":
+  "integrity" "sha512-yvazN7bbrIb7p8QU3nJ/8fbDmir1mFroYvUYcJz5xpc6DtszKggschmqZg6WNUdjhDBFyDwksrIUfwQnw0OOuA=="
+  "resolved" "https://registry.npmmirror.com/hexo-abbrlink/-/hexo-abbrlink-2.2.1.tgz"
+  "version" "2.2.1"
+  dependencies:
+    "hexo-front-matter" "^1.0.0"
+    "hexo-fs" "^3.1.0"
+
 "hexo-cli@^4.0.0":
   "integrity" "sha512-lr46h1tK1RNQJAQZbzKYAWGsmqF5DLrW6xKEakqv/o9JqgdeempBjIm7HqjcZEUBpWij4EO65X6YJiDmT9LR7g=="
   "resolved" "https://registry.npmmirror.com/hexo-cli/-/hexo-cli-4.3.0.tgz"
@@ -570,6 +578,27 @@
     "hexo-util" "^2.1.0"
     "moment" "^2.18.0"
     "nunjucks" "^3.2.1"
+
+"hexo-filter-date-from-git@^0.1.2":
+  "integrity" "sha512-nGQFdheRo244h62jLN/ih8uAY4z/MvTPJTbjfNecPjdSnRycIL2B6RNAc2UFZvl4rptjir3mk1B9oXVQDCWw7A=="
+  "resolved" "https://registry.npmmirror.com/hexo-filter-date-from-git/-/hexo-filter-date-from-git-0.1.2.tgz"
+  "version" "0.1.2"
+  dependencies:
+    "moment-timezone" "^0.5.4"
+
+"hexo-filter-kroki@^2.1.8":
+  "integrity" "sha512-te99eNXFXEuRH7/NNrreJzhePA6pqKnMEoMM+jD6PIZjbWsuEX04lZhJ3fwmFQqnQUhXflu5rAzhGrATqFMEJQ=="
+  "resolved" "https://registry.npmmirror.com/hexo-filter-kroki/-/hexo-filter-kroki-2.1.8.tgz"
+  "version" "2.1.8"
+  dependencies:
+    "pako" "^1.0.11"
+
+"hexo-front-matter@^1.0.0":
+  "integrity" "sha512-Hn8IIzgWWnxYTekrjnA0rxwWMoQHifyrxKMqVibmFaRKf4AQ2V6Xo13Jiso6CDwYfS+OdA41QS5DG1Y+QXA5gw=="
+  "resolved" "https://registry.npmmirror.com/hexo-front-matter/-/hexo-front-matter-1.0.0.tgz"
+  "version" "1.0.0"
+  dependencies:
+    "js-yaml" "^3.13.1"
 
 "hexo-front-matter@^2.0.0":
   "integrity" "sha512-IR3tjAyK2Ga/0a/WDAoNy5+n3ju2/mkuAsCDEeGgGLf5+7kkiOkkG/FrnueuYgz0h2MPfWDLBiDsSTCmB0sLCA=="
@@ -601,6 +630,14 @@
   "version" "1.0.0"
   dependencies:
     "hexo-pagination" "1.0.0"
+
+"hexo-generator-feed@^3.0.0":
+  "integrity" "sha512-Jo35VSRSNeMitS2JmjCq3OHAXXYU4+JIODujHtubdG/NRj2++b3Tgyz9pwTmROx6Yxr2php/hC8og5AGZHh8UQ=="
+  "resolved" "https://registry.npmmirror.com/hexo-generator-feed/-/hexo-generator-feed-3.0.0.tgz"
+  "version" "3.0.0"
+  dependencies:
+    "hexo-util" "^2.1.0"
+    "nunjucks" "^3.0.0"
 
 "hexo-generator-index@^2.0.0":
   "integrity" "sha512-q/29Vj9BZs0dwBcF+s9IT8ymS4aYZsDwBEYDnh96C8tsX+KPY5v6TzCdttz58BchifaJpP/l9mi6u9rZuYqA0g=="
@@ -983,7 +1020,7 @@
   "resolved" "https://registry.npmmirror.com/minimist/-/minimist-1.2.6.tgz"
   "version" "1.2.6"
 
-"moment-timezone@^0.5.21":
+"moment-timezone@^0.5.21", "moment-timezone@^0.5.4":
   "integrity" "sha512-3zAEHh2hKUs3EXLESx/wsgw6IQdusOT8Bxm3D9UrHPQR7zlMmzwybC8zHEM1tQ4LJwP7fcxrWr8tuBg05fFCbg=="
   "resolved" "https://registry.npmmirror.com/moment-timezone/-/moment-timezone-0.5.34.tgz"
   "version" "0.5.34"
@@ -1049,7 +1086,7 @@
   "resolved" "https://registry.npmmirror.com/normalize-path/-/normalize-path-3.0.0.tgz"
   "version" "3.0.0"
 
-"nunjucks@^3.2.1":
+"nunjucks@^3.0.0", "nunjucks@^3.2.1":
   "integrity" "sha512-psb6xjLj47+fE76JdZwskvwG4MYsQKXUtMsPh6U0YMvmyjRtKRFcxnlXGWglNybtNTNVmGdp94K62/+NjF5FDQ=="
   "resolved" "https://registry.npmmirror.com/nunjucks/-/nunjucks-3.2.3.tgz"
   "version" "3.2.3"
@@ -1108,6 +1145,11 @@
     "prelude-ls" "~1.1.2"
     "type-check" "~0.3.2"
     "word-wrap" "~1.2.3"
+
+"pako@^1.0.11":
+  "integrity" "sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw=="
+  "resolved" "https://registry.npmmirror.com/pako/-/pako-1.0.11.tgz"
+  "version" "1.0.11"
 
 "parse5@6.0.1":
   "integrity" "sha512-Ofn/CTFzRGTTxwpNEs9PP93gXShHcTq255nzRYSKe8AkVpZY7e1fpmTfOyoIvjP5HG7Z2ZM7VS9PPhQGW2pOpw=="
