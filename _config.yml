@@ -54,8 +54,8 @@ highlight:
   line_number: true
   auto_detect: false
   tab_replace: ''
-  wrap: false
-  hljs: true
+  wrap: true
+  hljs: false
 prismjs:
   enable: false
   preprocess: true
@@ -114,8 +114,3 @@ deploy:
   message: Automatic deploy by Github Action：{{ now('YYYY-MM-DD HH:mm:ss') }}
 
 favicon: https://raw.sevencdn.com/prettywinter/dist/main/images/favicon/favicon-32x32.png
-
-# 代码块高亮样式
-inject:
-  head:
-    - <link rel="stylesheet" href="https://fastly.jsdelivr.net/gh/highlightjs/cdn-release@11.5.0/build/styles/atom-one-dark.min.css">
