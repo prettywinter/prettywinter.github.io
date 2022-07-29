@@ -2,13 +2,13 @@ group1:
   title: 海内存知己 天涯若比邻
   description: 感谢人生旅途中的每一份真挚的友谊，按结识先后顺序：
   items:
-    - title: 某某某
+    - title: 测试
       url: https://www.baidu.com
       avatar: 
 
 # 可以设置 api、repo 来显示 GitHub Issues 中的数据：
 group3:
   title: 来自 GitHub 的朋友
-  description: '以下友链通过 [GitHub Issue](https://github.com/xaoxuu/friends/issues/) 提交，按 issue 最后更新时间排序：'
+  description: '以下友链通过 [GitHub Issue](https://github.com/jhlzlove/blog-api/issues) 提交，按 issue 最后更新时间排序：'
   api: https://hexo-friends-api.vercel.app
   repo: jhlzlove/blog-api
