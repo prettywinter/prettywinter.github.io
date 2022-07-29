@@ -1,200 +1,295 @@
-#--------------------------------------------------------
-# Hexo-MengD(萌典)
-# 项目地址：https://github.com/lete114/hexo-theme-MengD
-# 主题文档：https://mengd.js.org
-# 一个简洁、轻量的Hexo主题
-#--------------------------------------------------------
+######## Stellar info ########
+stellar:
+  version: '1.8.0'
+  homepage: 'https://xaoxuu.com/wiki/stellar/'
+  repo: 'https://github.com/xaoxuu/hexo-theme-stellar'
+  cdn_css: # Use cdn links instead of /css/main.css
+  cdn_js: # Use cdn links instead of /js/main.js
 
-# 关于如何提高访问速度：https://github.com/lete114/hexo-minify
 
-# 导航栏菜单
-menu:
-  enable: true # 是否开启导航栏
-  # 首页: /
-  # 找文章:
-  #   - 标签 || /tags
-  #   - 分类 || /categories
-  #   - 归档 || /archives
-  # 友情链接: /link
-  # 关于我: /about
-
-# 图标
-social:
-  # fab fa-github: https://github.com/lete114
-  # fa fa-envelope: mailto:lete@lete114.top
-
-title: # 网站标题支持html，可写img标签等
-favicon: /img/favicon.png
-avatar: /img/logo.gif
-pageCount: 5 # 首页展示文章数
-darkmode: true # 深色模式
-pjax: true # pjax
-search: false # 需安装插件: npm install hexo-generator-search --save
-
-# 置顶文章
-stick:
-  # 例如: text: <i class="fas fa-arrow-up"></i>置顶
-  text: # 支持html
-  color: '#ffa51e' # 置顶标签文字颜色
-
-# 自动注册页面
-pages:
-  tags: true
-  categories: true
-  error: ## 404页面
-    enable: true
-    text: 404 Not Found
-
-# 目录
-toc:
-  enable: true
-  options: # 详细配置: https://hexo.io/zh-cn/docs/helpers#toc
-    list_number: false
-
-## 主题颜色
-themeColor:
-  main: '#e58a8a' # 主色
-  bodyA: '#00c4b6' # 全局a标签颜色
-  title: '#ff7242' # 博主昵称
-
+######## head tags ########
 open_graph:
   enable: true
-  options: # 详细配置: https://hexo.io/zh-cn/docs/helpers#open-graph
+  twitter_id: # for open_graph meta
 
-# 有趣的标题切换
-amusingTitle:
-  enable: true
-  leaveTitle: '(つェ⊂) 我藏好了哦~ '
-  returnTitle: '(*´∇｀*) 被你发现啦~ '
 
-# 自动截取
-description:
-  line: 3 # 显示多少行后出现省略号(...)
-  length: 150 # 截取多少字
+######## Sidebar ########
+sidebar:
+  logo:
+    avatar: '[config.avatar](/about/)' # you can set avatar link in _config.yml or '[https://xxx.png](/about/)'
+    title: '[config.title](/)' # you can set html tag like: '[<img no-lazy height="32px" src="xxx"/>](/)'
+  menu:
+    # post: '[btn.blog](/)'
+    # wiki: '[btn.wiki](/wiki/)'
+    # friends: '[友链](/friends/)'
+    # about: '[关于](/about/)'
+  # Sidebar widgets
+  widget_layout:
+    index: [welcome, recent] # for home/wiki/categories/tags/archives/404 pages
+    page: [welcome, toc] # for pages using 'layout:page'
+    post: [toc, repo_info] # for pages using 'layout:post'
+    wiki: [toc, repo_info, wiki_more] # for pages using 'layout:wiki'
+  widgets:
+    # Recent update
+    recent:
+      layout: recent
+      rss: # /atom.xml # npm i hexo-generator-feed
+      limit: 5 # Count of posts
+    # TOC (valid only in layout:post/wiki)
+    toc:
+      layout: toc
+      list_number: false
+      min_depth: 2
+      max_depth: 5
+      fallback: recent # Use a backup widget when toc does not exist.
+    # welcome
+    welcome:
+      layout: markdown
+      title: Stellar 入门指南
+      content: | # support markdown
+        欢迎使用 [Stellar](https://github.com/xaoxuu/hexo-theme-stellar/) 主题，下面是您的入门指南，祝您使用愉快！
+        <br>
+        **第一步**
+        创建 `blog/_config.stellar.yml` 文件，在此文件中填写需要自定义的主题配置。
+        <br>
+        **第二步**
+        创建 `blog/source/_data/widgets.yml` 文件，此文件中填写需要自定义的侧边栏组件，例如 `welcome` 组件。
+        <br>
+        如果有任何疑问，请先查阅[文档](https://xaoxuu.com/wiki/stellar/)，如果文档中没有提供，请提 [issue](https://github.com/xaoxuu/hexo-theme-stellar/issues/) 向开发中询问。
 
-prefetch:
-  enable: true # 是否启用预加载
-  load: true # 是否在页面所有资源加载完毕后再进行预加载
-  delay: 1000 # 延迟1秒后预加载
-  threshold: 25 # 目标元素在浏览器可视区域25%时触发预加载
-  # 自定义预加载资源，如果你开启了本地搜索功能，可以将下方的注释去掉，当使用搜索时不用等太长的请求时间
-  # customs: [/seatch.json]
 
-# 将文章页的所有外链转换为卡片式外链
-cardlink: true
 
-# 图片懒加载
-lazyload:
-  enable: true
-  loadimg: /img/load.gif
+######## Main ########
+breadcrumb:
+  home: home # config.title / config.author / home or custom content
 
-# 代码块高亮主题
-highlightTheme: mac # default / darker / pale night / light / ocean / mac / mac light
-codeBlockExpand: # 是否开启代码块折叠
-  enable: true
-  height: 400 # 代码块高度超过400折叠 单位px
-  scrollTop: 200 # 展开后,再次(手动点击)点击折叠滚动到代码块开始的距离 单位px
+######## Article ########
+article:
+  # 如果没有指定封面，是否根据 tags 作为关键词搜索封面图片？
+  auto_cover: false # search from https://source.unsplash.com/
+  # 如果没有指定横幅，是否根据 tags 作为关键词搜索横幅图片？
+  auto_banner: false # search from https://source.unsplash.com/
+  # 如果没有指定 excerpt 和 description，将自动取多长的内容作为文章摘要？
+  auto_excerpt: 200
+  # 分类颜色
+  category_color:
+    '新闻稿': '#DA0F47'
+  # 文章许可协议
+  license: '本文采用 [署名-非商业性使用-相同方式共享 4.0 国际](https://creativecommons.org/licenses/by-nc-sa/4.0/) 许可协议，转载请注明出处。'
+  # 分享
+  share: # [wechat, weibo, email, link]
+  # 相关文章，需要安装插件 (for layout: post)
+  # npm i hexo-related-popular-posts
+  related_posts:
+    enable: false
+    max_count: 5
+    auto_cover: true # 如果没有封面就根据 tags 作为关键词搜索封面，开了此项将不会自动从文章中提取首张图片作为封面了。
 
-# 自定义引入外部css、js
-import:
-  headBefore: # 引入到<head>之后
-  headAfter: # 引入到</head>之前
-  bodyBefore: # 引入到<body>之后
-  bodyAfter: # 引入到</body>之前
-  # 例如：
-  # - <link rel="stylesheet" href="/css/index.css">
-  # - '<style>body{color: red}</style>' ## 注意由于css的‘{}’是关键符号所以需要(单/双)引号''
-  # - <script>alert(1)</script>
 
-# 文章版权
-copyright:
-  enable: true
-  author: MengD(萌典)
-  mail: me@imlete.cn
-  licenses: CC BY-NC-SA 4.0||https://creativecommons.org/licenses/by-nc-sa/4.0/ ## 其中||为分隔符，左侧为描述，右侧为版权许可
-  description: 本博客所有文章除特别声明外，均采用||许可协议。转载请注明来自
-  title: Hexo-Theme-MengD(萌典)
+######## Comments ########
+comments:
+  service: # beaudar, utterances, valine, twikoo, waline
+  # beaudar
+  # https://beaudar.lipk.org/
+  beaudar:
+    repo: prettywinter/blog-comments
+    issue-term: pathname
+    issue-number:
+    theme: preferred-color-scheme
+    label: comment
+    input-position: top # top/bottom 评论框位置
+    comment-order: desc # desc 排序
+    keep-theme: # true/false
+    loading: false
+    branch: main
 
-# 页脚
+    # Custom locales
+    # locale:
+    #   placeholder: Welcome to comment # Comment box placeholder
+
+    # Custom emoji
+    # emoji:
+    #   - https://unpkg.com/@waline/emojis@1.0.1/weibo
+    #   - https://unpkg.com/@waline/emojis@1.0.1/alus
+    #   - https://unpkg.com/@waline/emojis@1.0.1/bilibili
+    #   - https://unpkg.com/@waline/emojis@1.0.1/qq
+    #   - https://unpkg.com/@waline/emojis@1.0.1/tieba
+    #   - https://unpkg.com/@waline/emojis@1.0.1/tw-emoji
+
+    # Comment infomation, valid meta are nick, mail and link
+    # meta:
+    #   - nick
+    #   - mail
+    #   - link
+
+    # Set required meta field, e.g.: [nick] | [nick, mail]
+    # requiredMeta:
+    #   - nick
+
+    # Language, available values: en-US, zh-CN, zh-TW, pt-BR, ru-RU, jp-JP
+    # lang: zh-CN
+
+    # Word limit, no limit when setting to 0
+    # wordLimit: 0
+
+    # Whether enable login, can choose from 'enable', 'disable' and 'force'
+    # login: enable
+
+    # comment per page
+    # pageSize: 10
+
+######## Footer ########
 footer:
-  since: 2020
-  customText: 我相信我可以，但我一直在路上，所以我有无限的可能！！
+  social:
+    # github:
+    #   icon: '<img src="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.3/social/08a41b181ce68.svg"/>'
+    #   url: /
+    # music:
+    #   icon: '<img src="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.3/social/3845874.svg"/>'
+    #   url: /
+    # unsplash:
+    #   icon: '<img src="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.3/social/3616429.svg"/>'
+    #   url: /
+    # comments:
+    #   icon: '<img src="https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.3/social/942ebbf1a4b91.svg"/>'
+    #   url: /about/#comments
+  sitemap:
+    # '博客':
+    #   - '[近期](/)'
+    #   - '[分类](/)'
+    #   - '[标签](/)'
+    #   - '[归档](/)'
+    # '项目':
+    #   - '[开源库](/)'
+    # '社交':
+    #   - '[友链](/)'
+    #   - '[留言板](/)'
+    # '更多':
+    #   - '[关于本站](/)'
+    #   - '[GitHub](/)'
+  license: '[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)'
+  source: #'[GitHub](https://github.com/xaoxuu/hexo-theme-stellar)'
+  more: # string or array (support markdown)
 
-# 统计(分析)
-analytics:
-  baidu:
-  google:
 
-# 设置字体
-font:
-  # 全局字体
-  html: consolas,Menlo,'PingFang SC','Microsoft YaHei',sans-serif
-  # 代码块字体
-  code: consolas,Menlo,'PingFang SC','Microsoft YaHei',sans-serif
+######## Tag Plugins ########
+tag_plugins:
+  # {% note text %}
+  note:
+    default_color: '' # light, dark, red, orange, yellow, green, cyan, blue, purple
+  # {% checkbox %}
+  checkbox:
+    interactive: false # enable interactive for user
+  # {% quot %}
+  quot:
+    default: # 可以自行配置多种图标方案
+      prefix: https://s2.loli.net/2022/01/04/vsTB5pGrIHfPxSj.png
+      suffix: https://s2.loli.net/2022/01/04/NORdtjlAhifZSns.png
+    hashtag:
+      prefix: https://s2.loli.net/2022/01/04/UvHcsa73jQPnobq.png
+  # {% emoji %}
+  emoji:
+    default: https://fastly.jsdelivr.net/gh/volantis-x/cdn-emoji/qq/%s.gif
+    twemoji: https://fastly.jsdelivr.net/gh/twitter/twemoji/assets/svg/%s.svg
+    qq: https://fastly.jsdelivr.net/gh/volantis-x/cdn-emoji/qq/%s.gif
+    aru: https://fastly.jsdelivr.net/gh/volantis-x/cdn-emoji/aru-l/%s.gif
+    tieba: https://fastly.jsdelivr.net/gh/volantis-x/cdn-emoji/tieba/%s.png
+  # {% image %}
+  image:
+    fancybox: # true, false
 
-# 评论
-## 注意大小写
-comments: discuss # twikoo / waline / valine
 
-# Discuss
-## https://discuss.js.org
-# 自定义添加 https://discuss.js.org/Quick-Start.html#%E5%AE%A2%E6%88%B7%E7%AB%AF-client
-discuss:
-  source: https://unpkg.com/discuss@latest/dist/discuss.js
-  serverURLs: ## 你的 Discuss 评论系统服务端地址
+######## JS Plugins ########
+plugins:
+  ## required plugins ##
+  # jquery
+  jquery: https://fastly.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js
 
-# valine
-## https://valine.js.org/
-# 自定义添加 https://valine.js.org/configuration.html
-valine:
-  source: https://unpkg.com/valine/dist/Valine.min.js
-  appid: # 你的 leancloud app id
-  appkey: # 你的 leancloud app key
+  # issues api
+  sitesjs: /js/plugins/sites.js
+  friendsjs: /js/plugins/friends.js
 
-# waline
-## https://waline.js.org
-# 自定义添加 https://waline.js.org/client/basic.html
-waline:
-  source: https://unpkg.com/@waline/client/dist/waline.js
-  source_css: https://unpkg.com/@waline/client/dist/waline.css
-  serverURL: https://env-jxscvzag.service.tcloudbase.com/discuss/mengd # 服务端地址
+  ## optional plugins ##
+  # preload
+  preload:
+    enable: true
+    service: flying_pages # instant_page, flying_pages
+    instant_page: https://fastly.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js
+    flying_pages: https://fastly.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js
 
-# twikoo
-## https://twikoo.js.org/
-twikoo:
-  source: https://unpkg.com/twikoo/dist/twikoo.all.min.js
-  envId: # 你的环境id
+  # image lazyload
+  # https://www.npmjs.com/package/vanilla-lazyload
+  lazyload:
+    enable: true # [hexo clean && hexo s] is required after changing this value.
+    js: https://fastly.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js
+    transition: blur # blur, fade
 
-## 说说
+  # https://scrollrevealjs.org/api/reveal.html
+  scrollreveal:
+    enable: #true
+    js: https://fastly.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js
+    distance: 8px
+    duration: 500 # ms
+    interval: 100 # ms
+    scale: 1 # 0.1~1
 
-# Artitalk
-## https://artitalk.js.org/settings.html
-artitalk:
-  enable: false # 是否开启
-  source: https://unpkg.com/artitalk
-  title: Artitalk # 标题
-  path: artitalk/index.html # 路径
-  appid: WhOxxxxxxxxxxxxxMMI #  LeanCloud appId
-  appkey: M9Pxxxxxxxxxxxxxxx3Kvs # LeanCloud appKey
-  option:
+  # https://fancyapps.com/docs/ui/fancybox/
+  # available for {% image xxx %}
+  fancybox:
+    enable: true
+    js: https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js
+    css: https://fastly.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css
+    # 可以处理评论区的图片（不支持 iframe 类评论系统）例如：
+    # 使用valine评论可以写: .vcontent img:not(.vemoji)
+    # 使用twikoo评论可以写: .tk-content img:not([class*="emo"])
+    # 使用waline评论可以写: #waline_container .vcontent img
+    selector: .swiper-slide img # 多个选择器用英文逗号隔开
 
-# 主题的css与js引入
-## 无特殊要求请勿更改
-CDN:
-  mainJs: /js/main.js
-  mainCss: /css/main.css
-  utlis: /js/utlis.js
-  search: /js/search.js
-  # lazyload
-  lazyload: /js/lazyload.js
-  # prefetch
-  prefetch: /third-party/js/prefetch-page.js
-  # cardlink
-  cardlink: /third-party/js/cardlink.js
-  # pjax
-  pjax: /third-party/js/pjax.js
-  # fancybox
-  fancyboxJs: /third-party/js/fancybox.js
-  fancyboxCss: /third-party/css/fancybox.css
-  # fortawesome
-  fortawesome: /third-party/fontawesome-free/css/all.min.css
+  # swiper
+  swiper:
+    enable: true
+    css: https://unpkg.com/swiper@6/swiper-bundle.min.css
+    js: https://unpkg.com/swiper@6/swiper-bundle.min.js
+
+
+  # 赫蹏 (Heti) - 专为中文网页内容设计的排版样式增强
+  # https://github.com/sivan/heti
+  heti:
+    enable: false
+    css: https://unpkg.com/heti/umd/heti.min.css
+    js: https://unpkg.com/heti/umd/heti-addon.min.js
+
+  # MathJax
+  # 需在Markdown文件开头加入mathjax: true
+  # 推荐使用Pandoc: npm uninstall hexo-renderer-marked --save & npm install hexo-renderer-pandoc --save
+  mathjax:
+    enable: false
+    cdn: https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+
+  # Katex - The fastest math typesetting library for the web
+  # https://katex.org/docs/autorender.html
+  # https://github.com/KaTeX/KaTeX
+  # 使用 hexo-renderer-markdown-it-plus 作为公式渲染器：npm uninstall hexo-renderer-marked --save npm install hexo-renderer-markdown-it-plus --save
+  katex:
+    enable: false
+    min_css: <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.css" integrity="sha384-Xi8rHCmBmhbuyyhbI88391ZKP2dmfnOl4rT9ZfRI7mLTdk1wblIUnrIq35nqwEvC" crossorigin="anonymous">
+    min_js: <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/katex.min.js" integrity="sha384-X/XCfMm41VSsqRNQgDerQczD69XqmjOOOwYQvr/uuC+j4OPoNhVgjdGFwhvN02Ja" crossorigin="anonymous"></script>
+    auto_render_min_js: <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.0/dist/contrib/auto-render.min.js" integrity="sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR" crossorigin="anonymous"onload="renderMathInElement(document.body);"></script>
+
+style:
+  darkmode: auto # auto / always / false
+  theme:
+    light: '#f8f8f8'
+    dark: '#313438'
+  animated_avatar:
+    animate: auto # auto, always
+    background: https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.2/avatar/round/rainbow64@3x.webp
+  codeblock:
+    scrollbar: 4px
+    highlightjs_theme: https://fastly.jsdelivr.net/gh/highlightjs/cdn-release@11.5.0/build/styles/atom-one-dark.min.css
+
+default:
+  avatar: https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/avatar/round/3442075.svg
+  link: https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/link/8f277b4ee0ecd.svg
+  cover: https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/cover/76b86c0226ffd.svg
+  image: https://fastly.jsdelivr.net/gh/cdn-x/placeholder@1.0.1/image/2659360.svg
