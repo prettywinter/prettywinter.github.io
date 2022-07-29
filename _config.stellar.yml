@@ -21,7 +21,7 @@ sidebar:
   menu:
     # post: '[btn.blog](/)'
     # wiki: '[btn.wiki](/wiki/)'
-    # friends: '[友链](/friends/)'
+    friends: '[友链](/friends/)'
     # about: '[关于](/about/)'
     more: '[更多](/more/)'
   # Sidebar widgets
@@ -89,7 +89,7 @@ article:
 
 ######## Comments ########
 comments:
-  service: # beaudar, utterances, valine, twikoo, waline
+  service: beaudar # beaudar, utterances, valine, twikoo, waline
   # beaudar
   # https://beaudar.lipk.org/
   beaudar:

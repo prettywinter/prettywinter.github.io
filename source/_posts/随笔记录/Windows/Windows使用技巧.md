@@ -1,6 +1,6 @@
 ---
 title: Windows使用技巧
-categories: windown
+categories: windows
 tags: [使用技巧]
 ---
 

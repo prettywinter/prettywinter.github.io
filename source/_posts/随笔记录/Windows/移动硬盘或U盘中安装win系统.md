@@ -1,6 +1,6 @@
 ---
 title: 移动硬盘或U盘中安装wintogo系统
-categories: window
+categories: windows
 tasg: [wintogo, u盘]
 ---
 
