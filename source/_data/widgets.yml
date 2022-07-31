@@ -1,5 +1,5 @@
-notice:
+welcome:
   layout: markdown
   title: 公告
   content: | # support markdown
-    博客逐步迁移完成，主题适配中。。。
+    博客主题逐步迁移完成~
