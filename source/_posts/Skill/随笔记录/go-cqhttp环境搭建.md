@@ -4,7 +4,7 @@ categories: 机器人
 tags: [go-cqhttp, qq机器人]
 ---
 
-go-cqhttp 框架搭建。
+go-cqhttp 框架搭建。水一篇~
 
 <!-- more -->
 
