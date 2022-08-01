@@ -271,7 +271,6 @@ Edge浏览器取代了传统的IE，也使用了 Chromium 内核，带来了很�
 3. Translation（翻译）
 4. GsonFormatPlus(Json -> Java对象生成)
 5. Pojo To Json(Java对象 -> Json转换)
-6. Save Actions(保存格式化，2021.2 之后自带，无需下载)
 
 > IDEA 2021 之后的版本如果不需要多人协同可以关闭 Code With ME 和 Space 插件，提高运行速度。
 > IDEA 2021.3 ~ 最新版本食用方法：https://gitee.com/ja-netfilter/ja-netfilter

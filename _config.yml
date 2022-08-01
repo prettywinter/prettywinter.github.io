@@ -114,3 +114,7 @@ deploy:
   message: Automatic deploy by Github Action：{{ now('YYYY-MM-DD HH:mm:ss') }}
 
 favicon: https://raw.sevencdn.com/prettywinter/dist/main/images/favicon/favicon-32x32.png
+
+inject:
+  script:
+    - https://sdk.jinrishici.com/v2/browser/jinrishici.js
