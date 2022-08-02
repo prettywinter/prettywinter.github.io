@@ -3,9 +3,3 @@ welcome:
   title: 公告
   content: | # support markdown
     博客主题逐步迁移完成~
-
-jinrichici:
-  layout: markdown
-  title: h
-  content: |
-    <span id="jinrishici-sentence">正在加载今日诗词....</span>
