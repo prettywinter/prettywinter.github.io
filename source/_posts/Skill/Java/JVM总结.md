@@ -15,6 +15,7 @@ JVM
 - [JVM内存模型](#jvm内存模型)
 - [调优命令](#调优命令)
 - [常见调优工具](#常见调优工具)
+- [Arthas](#arthas)
 
 <!-- /code_chunk_output -->
 
@@ -36,12 +37,23 @@ JVM
 ## 调优命令
 
 Sun JDK监控和故障处理命令有jps jstat jmap jhat jstack jinfo
-jps，JVM Process Status Tool,显示指定系统内所有的HotSpot虚拟机进程。
-jstat，JVM statistics Monitoring是用于监视虚拟机运行时状态信息的命令，它可以显示出虚拟机进程中的类装载、内存、垃圾收集、JIT编译等运行数据。
-jmap，JVM Memory Map命令用于生成heap dump文件
-jhat，JVM Heap Analysis Tool命令是与jmap搭配使用，用来分析jmap生成的dump，jhat内置了一个微型的HTTP/HTML服务器，生成dump的分析结果后，可以在浏览器中查看jstack，用于生成java虚拟机当前时刻的线程快照。
-jinfo，JVM Configuration info 这个命令作用是实时查看和调整虚拟机运行参数。
+jps：JVM Process Status Tool,显示指定系统内所有的HotSpot虚拟机进程。
+jstat：JVM statistics Monitoring是用于监视虚拟机运行时状态信息的命令，它可以显示出虚拟机进程中的类装载、内存、垃圾收集、JIT编译等运行数据。
+jmap：JVM Memory Map命令用于生成heap dump文件。
+jhat：JVM Heap Analysis Tool命令是与jmap搭配使用，用来分析jmap生成的dump，jhat内置了一个微型的HTTP/HTML服务器，生成dump的分析结果后，可以在浏览器中查看jstack，用于生成java虚拟机当前时刻的线程快照。
+jinfo：JVM Configuration info 这个命令作用是实时查看和调整虚拟机运行参数。
+jstack：查找死锁。
 
+```bash
+jmap ‐dump:format=b,file=eureka.hprof 14660
+# jstack pid -A 后面数字为显示的线程所在行的后面10行，最后的参数是线程id的16进制表示。
+jstack 19663|grep -A 10 4cd0
+
+jstat -gc pid
+
+# 打印GC日志方法 %t：时间
+java ‐jar ‐Xloggc:./gc‐%t.log ‐XX:+PrintGCDetails ‐XX:+PrintGCDateStamps ‐XX:+PrintGCTimeStamps ‐XX:+PrintGCCause ‐XX:+UseGCLogFileRotation ‐XX:NumberOfGCLogFiles=10 ‐XX:GCLogFileSize=100M xxxx.jar
+```
 ## 常见调优工具
 
 常用调优工具分为两类,jdk自带监控工具：jconsole和jvisualvm，第三方有：MAT(Memory Analyzer Tool)、GChisto。
@@ -49,3 +61,9 @@ jconsole，Java Monitoring and Management Console是从java5开始，在JDK中�
 jvisualvm，jdk自带全能工具，可以分析内存快照、线程快照；监控内存变化、GC变化等。
 MAT，Memory Analyzer Tool，一个基于Eclipse的内存分析工具，是一个快速、功能丰富的Java heap分析工具，它可以帮助我们查找内存泄漏和减少内存消耗
 GChisto，一款专业分析gc日志的工具
+
+## [Arthas](https://arthas.aliyun.com/doc/)
+
+首先下载到本机，用java -jar运行即可，可以识别机器上所有Java进程。
+
+输入dashboard可以查看整个进程的运行情况，线程、内存、GC、运行环境信息。详细使用参照 [官方文档](https://arthas.aliyun.com/doc/)。
