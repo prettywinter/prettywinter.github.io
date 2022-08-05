@@ -31,7 +31,7 @@ MySQL的优化原则，示项目具体情况而定。
 - 表字段数少而精
     √ IO高效 √全表遍历 √表修复快 √提高幵发 √alter table快
 - 单表1G体积 500W行评估
-    - 顺序读1G文件需N秒 单行丌赸过200Byte
+    - 顺序读1G文件需N秒，单行不超过200Byte
     - 单表不超过50个纯INT字段
     - 单表不超过20个CHAR(10)字段
 - 表字段数上限控制在 20~50 个。
@@ -39,7 +39,7 @@ MySQL的优化原则，示项目具体情况而定。
 ### 4. 平衡范式与冗余
 
 严格遵循三大范式？
-在一些场景中，不必严格遵循三范式，没有绝对的对不错，可以适当时牺牲范式、加入冗余。比如效率优先、提升性能的场景。但会增加代码复杂度。
+在一些场景中，不必严格遵循三范式，没有绝对的对不错，可以适当时牺牲范式，加入冗余。比如效率优先、提升性能的场景。但会增加代码复杂度。
 
 ### 5. 拒绝3B
 
@@ -51,13 +51,12 @@ MySQL的优化原则，示项目具体情况而定。
 
 ### 1. 用好数值类型
 
-三类数值类型：
- TINYINT(1Byte)
- SMALLINT(2B)
- MEDIUMINT(3B)
- INT(4B)、BIGINT(8B)
- FLOAT(4B)、DOUBLE(8B)
- DECIMAL(M,D)、
+TINYINT(1Byte)
+SMALLINT(2B)
+MEDIUMINT(3B)
+INT(4B)、BIGINT(8B)
+FLOAT(4B)、DOUBLE(8B)
+DECIMAL(M,D)、
 
 ### 2. 将字符类型转为数字类型
 
@@ -71,17 +70,13 @@ MySQL的优化原则，示项目具体情况而定。
 
 ### 3. 优先使用ENUM或SET
 
-优先使用ENUM或SET
-- 字符串
-- 可能值已知且有限
+优先使用 ENUM 或 SET 的情况：字符串，可能值已知且有限
 
-存储
-- ENUM占用1字节，转为数值运算
-- SET视节点定，最多占用8字节
-- 比较时需要加 {% kbd ' %} 单引号(即使是数值)
+**优点：**
+- ENUM占用1字节，转为数值运算；SET视节点定，最多占用8字节
+- 比较时需要加 `'` 单引号(即使是数值)
 
-{% note color:green 举例： `sex` enum('F','M') COMMENT '性别' \n `c1` enum('0','1','2','3') COMMENT '职介审核' %}
- 
+{% note color:green 举例： `sex` enum('F','M') COMMENT '性别';\\n`c1` enum('0','1','2','3') COMMENT '职介审核' %}
 
 ### 4. 避免使用NULL字段
 
@@ -91,12 +86,8 @@ MySQL的优化原则，示项目具体情况而定。
 
 ### 5. 少用并拆分TEXT/BLOB
 
-- TEXT类型处理性能远低亍VARCHAR
-- 强制生成硬盘临时表
-- 浪费更多空间
-- VARCHAR(65535) ==> 64K (注意UTF-8)
-- 尽量不用TEXT/BLOB数据类型
-- 若必须使用则拆分到单独的表
+TEXT 类型处理性能远低于 VARCHAR，会强制生成硬盘临时表，浪费更多空间：VARCHAR(65535) ==> 64K (注意UTF-8)；
+尽量不用TEXT/BLOB数据类型，若必须使用则拆分到单独的表
 
 ### 6. 不在数据库里存图片
 
@@ -106,9 +97,7 @@ MySQL的优化原则，示项目具体情况而定。
 
 - 改善查询
 - 减慢更新
-- 索引不是赹多赹好
-- 综合评估数据密度和数据分布
-- 最好不超过字段数20%，结合核心SQL优先考虑覆盖索引
+- 索引不是越多越好，需要综合评估数据密度和数据分布；最好不超过字段数20%，结合核心SQL优先考虑覆盖索引
 
 {% note color:green 举例： 不要给“性别”列创建索引 %}
 
@@ -124,7 +113,7 @@ MySQL的优化原则，示项目具体情况而定。
 
 建立前缀索引的方式：
 
-```bash
+```sql
 ALTER TABLE table_name ADD KEY(column_name(prefix_length)); 
 ```
 
@@ -148,18 +137,14 @@ SELECT COUNT(DISTINCT LEFT(column_name, prefix_length)) / COUNT(*) FROM table_na
 - 按自增顺序插入值
 - 忌用字符串做主键
 - 聚簇索引分裂
-- 推荐用独立于业务的AUTO_INCREMENT列或全局ID生成器做代理主键
+- 推荐用独立于业务的 AUTO_INCREMENT 列或全局 ID 生成器做代理主键
 - 若不指定主键，InnoDB会用唯一且非空值索引代替
 
 ### 5. 尽量不用外键
 
 尽量不使用外键，由程序来保证约束，实际中确实很少使用。
 
-- 外键可节省开发量
-- 有额外开销
-- 逐行操作
-- 可‘到达’其它表，意味着锁
-- 高并发时容易死锁
+虽然外键可节省开发量，但是有额外开销：逐行操作，可‘到达’其它表，意味着锁；在高并发场景容易死锁。
 
 ## 四、SQL
 
@@ -172,7 +157,7 @@ SELECT COUNT(DISTINCT LEFT(column_name, prefix_length)) / COUNT(*) FROM table_na
 尽可能少用存储过程、触发器
 减用使用MySQL函数对结果进行处理，由客户端程序负责。
 
-### 4. 尽量不用SELECT *，只取需要的数据
+### 4. 尽量不用SELECT *，只取需要的数据列
 
 ### 5. 改写OR为IN()
 
@@ -183,7 +168,7 @@ SELECT COUNT(DISTINCT LEFT(column_name, prefix_length)) / COUNT(*) FROM table_na
 当n很大时，OR会慢很多。注意控制IN的个数，建议n小于200。
 
 {% note color:green 举例： select * from opp WHERE phone=‘12347856' or 
-phone=‘42242233' 
+phone=‘42242233' \\n
 select * from opp WHERE phone in ('12347856' , '42242233') %}
 
 ### 6. 改写OR为UNION
@@ -205,8 +190,7 @@ Select * from opp WHERE cellPhone='13800138000'; %}
 
 避免 % 前缀模糊查询: B+ Tree，不能使用索引，导致全表扫描，效率低。
 
-{% note color:green 举例： select * from post WHERE title like ‘北京%' ;
-298 rows in set (0.01 sec) %}
+{% note color:green 举例： select * from post WHERE title like ‘北京%'; %}
 
 ### 8. 少用count(*)
 
