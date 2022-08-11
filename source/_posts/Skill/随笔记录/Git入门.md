@@ -1,5 +1,5 @@
 ---
-title: Git配置和常用命令
+title: Git入门
 categories: 配置
 tags: [Git]
 cover: https://raw.sevencdn.com/prettywinter/dist/main/images/doc/git_command.jpg
@@ -23,6 +23,8 @@ Git 入门
   - [2. 远程操作](#2-远程操作)
   - [3. 常用操作](#3-常用操作)
 - [一张图](#一张图)
+- [Git Submodule](#git-submodule)
+  - [删除Submodule](#删除submodule)
 
 <!-- /code_chunk_output -->
 
@@ -214,3 +216,38 @@ $ git reset --soft 版本库ID
 ## 一张图
 
 {% image https://raw.sevencdn.com/prettywinter/dist/main/images/doc/git_command.jpg git常用命令小结 %}
+
+## Git Submodule
+
+`git submodule` 是一个很好的多项目使用共同类库的工具，它允许类库项目做为 repository,子项目做为一个单独的git项目存在父项目中，子项目可以有自己的独立的commit，push，pull。而父项目以Submodule的形式包含子项目，父项目可以指定子项目header，父项目中会的提交信息包含Submodule的信息，再clone父项目的时候可以把Submodule初始化。
+
+`git submodule` 命令用于初始化，更新或检查子模块。
+
+```bash
+git submodule [--quiet] add [<options>] [--] <repository> [<path>]
+git submodule [--quiet] status [--cached] [--recursive] [--] [<path>…​]
+git submodule [--quiet] init [--] [<path>…​]
+git submodule [--quiet] deinit [-f|--force] (--all|[--] <path>…​)
+git submodule [--quiet] update [<options>] [--] [<path>…​]
+git submodule [--quiet] summary [<options>] [--] [<path>…​]
+git submodule [--quiet] foreach [--recursive] <command>
+git submodule [--quiet] sync [--recursive] [--] [<path>…​]
+git submodule [--quiet] absorbgitdirs [--] [<path>…​]
+```
+
+如果要 clone 的仓库中包含子模块，那么在拉取仓库的时候使用 `git clone -r ....git` 命令即可获取到子模块。否则，子模块是一个 **空文件夹**，你必须运行两个命令：`git submodule init` 用来初始化本地配置文件，而 `git submodule update` 则从该项目中抓取所有数据并检出父项目中列出的合适的提交。
+
+### 删除Submodule
+
+git 并不支持直接删除 Submodule，需要手动删除对应的文件:
+
+```bash
+cd pod-project
+git rm --cached pod-library
+rm -rf pod-library
+rm .gitmodules
+# 更改git的配置文件config
+vim .git/config
+# 删除submodule相关的内容,然后提交到远程服务器
+git commit -a -m 'remove pod-library submodule'
+```

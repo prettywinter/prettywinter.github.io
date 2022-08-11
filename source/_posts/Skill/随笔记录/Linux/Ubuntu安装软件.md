@@ -83,7 +83,7 @@ sudo apt-get install docker-ce=<VERSION_STRING> docker-ce-cli=<VERSION_STRING> c
 
 ```bash
 # 下载解压安装
-wget https://github.com/aristocratos/btop/releases/download/v1.2.7/btop-x86_64-linux-musl.tbz
+wget https://github.com/aristocratos/btop/releases/download/v1.2.8/btop-x86_64-linux-musl.tbz
 mkdir btop && tar xvf btop-x86_64-linux-musl.tbz -C btop
 cd btop
 ./install.sh

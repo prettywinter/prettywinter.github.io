@@ -4,7 +4,7 @@ categories: skill
 tags: [Java, Spring Security]
 ---
 
-Spring Security 是一个功能强大且高度可定制的身份验证和访问控制框架。 它是保护基于 Spring 的应用程序的事实标准。
+[Spring Security](https://docs.spring.io/spring-security/reference/servlet/configuration/java.html) 是一个功能强大且高度可定制的身份验证和访问控制框架。 它是保护基于 Spring 的应用程序的事实标准。
 
 Spring Security 是一个专注于为 Java 应用程序提供身份验证和授权的框架。 像所有 Spring 项目一样，Spring Security 的真正强大之处在于它可以轻松扩展以满足自定义需求。
 
@@ -39,7 +39,7 @@ Spring Security 是一个专注于为 Java 应用程序提供身份验证和授�
 
 <!-- /code_chunk_output -->
 
-Spring Security 的版本在 2.7.0 版本之前（不包括）可以使用 WebSecurityConfigurerAdapter 来配置相关内容。2.7.0 版本之后有所改变（弃用状态，仍可使用）。[官网配置](https://docs.spring.io/spring-security/reference/servlet/configuration/java.html)
+Spring Security 在 Spring Boot 2.7.0 之前（不包括）可以使用 WebSecurityConfigurerAdapter 来配置相关内容。2.7.0 版本之后有所改变（弃用状态，但目前仍可使用）。2.7.0 之后的改变与使用参考 [2.7.0新版配置](https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter#ldap-authentication)。
 
 ## 核心类
 

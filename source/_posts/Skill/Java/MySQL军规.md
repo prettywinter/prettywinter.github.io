@@ -14,7 +14,7 @@ MySQL的优化原则，示项目具体情况而定。
 
 让数据库做它擅长的事情：尽量不在数据库做运算，复杂运算移到程序端，尽可能简单应用MySQL。
 
-{% note color:red 反例: md5()/Order by rand() %}
+{% note color:red 举例: md5()/Order by rand() %}
 
 ### 2. 控制单表数据量
 
@@ -51,12 +51,7 @@ MySQL的优化原则，示项目具体情况而定。
 
 ### 1. 用好数值类型
 
-TINYINT(1Byte)
-SMALLINT(2B)
-MEDIUMINT(3B)
-INT(4B)、BIGINT(8B)
-FLOAT(4B)、DOUBLE(8B)
-DECIMAL(M,D)、
+TINYINT(1Byte)、SMALLINT(2B)、MEDIUMINT(3B)、INT(4B)、BIGINT(8B)、FLOAT(4B)、DOUBLE(8)、DECIMAL(M,D)
 
 ### 2. 将字符类型转为数字类型
 
@@ -76,7 +71,11 @@ DECIMAL(M,D)、
 - ENUM占用1字节，转为数值运算；SET视节点定，最多占用8字节
 - 比较时需要加 `'` 单引号(即使是数值)
 
-{% note color:green 举例： `sex` enum('F','M') COMMENT '性别';\\n`c1` enum('0','1','2','3') COMMENT '职介审核' %}
+举例： 
+```sql
+`sex` enum('F','M') COMMENT '性别';
+`c1` enum('0','1','2','3') COMMENT '职介审核';
+```
 
 ### 4. 避免使用NULL字段
 
@@ -142,9 +141,7 @@ SELECT COUNT(DISTINCT LEFT(column_name, prefix_length)) / COUNT(*) FROM table_na
 
 ### 5. 尽量不用外键
 
-尽量不使用外键，由程序来保证约束，实际中确实很少使用。
-
-虽然外键可节省开发量，但是有额外开销：逐行操作，可‘到达’其它表，意味着锁；在高并发场景容易死锁。
+尽量不使用外键，由程序来保证约束，实际中确实很少使用。虽然外键可节省开发量，但是有额外开销：逐行操作，可‘到达’其它表，意味着锁；在高并发场景容易死锁。
 
 ## 四、SQL
 
@@ -154,35 +151,35 @@ SELECT COUNT(DISTINCT LEFT(column_name, prefix_length)) / COUNT(*) FROM table_na
 
 ### 3. 尽可能避免使用SP/TRIG/FUNC
 
-尽可能少用存储过程、触发器
-减用使用MySQL函数对结果进行处理，由客户端程序负责。
+尽可能少用存储过程、触发器；减用使用MySQL函数对结果进行处理，由客户端程序负责。
 
 ### 4. 尽量不用SELECT *，只取需要的数据列
 
 ### 5. 改写OR为IN()
 
-同一字段，将OR改写为IN()
-- OR效率：O(n)
-- IN 效率：O(Log n)
+同一字段，将OR改写为IN()。 OR效率：O(n)，IN 效率：O(Log n)
 
 当n很大时，OR会慢很多。注意控制IN的个数，建议n小于200。
 
-{% note color:green 举例： select * from opp WHERE phone=‘12347856' or 
-phone=‘42242233' \\n
-select * from opp WHERE phone in ('12347856' , '42242233') %}
+```sql
+select * from opp WHERE phone='12347856' or phone='42242233';
+select * from opp WHERE phone in ('12347856' , '42242233');
+```
 
 ### 6. 改写OR为UNION
 
 不同字段，将or改为union
 - 减少对不同字段进行 "or" 查询
-- Merge index往往很弱智，如果有足够信心：
-{% kbd set globaloptimizer_switch='index_merge=off'; %}
+- Merge index往往很弱智，如果有足够信心：{% kbd set globaloptimizer_switch='index_merge=off'; %}
 
-{% note color:green 举例： select * from opp WHERE phone='010-88886666' or 
-cellPhone='13800138000'; ==>
+```sql
+-- 原写法
+select * from opp WHERE phone='010-88886666' or cellPhone='13800138000';
+-- 优化写法
 Select * from opp WHERE phone='010-88886666' 
 union 
-Select * from opp WHERE cellPhone='13800138000'; %}
+Select * from opp WHERE cellPhone='13800138000';
+```
 
 ### 7. 避免负向查询和使用%前缀模糊查询
 
@@ -190,15 +187,16 @@ Select * from opp WHERE cellPhone='13800138000'; %}
 
 避免 % 前缀模糊查询: B+ Tree，不能使用索引，导致全表扫描，效率低。
 
-{% note color:green 举例： select * from post WHERE title like ‘北京%'; %}
+```sql
+select * from post WHERE title like '北京%'';
+```
 
 ### 8. 少用count(*)
 
 COUNT(*)的资源开销大，尽量少用。
 
 计数统计：
-- 实时统计：用memcache，双向更新，凌晨
-跑基准；
+- 实时统计：用memcache，双向更新，凌晨跑基准；
 - 非实时统计：尽量用单独统计表，定期重算。
 
 ### 9. LIMIT高效分页
@@ -241,8 +239,6 @@ MySQL> Select * from post WHERE post.id in (123,456,314,141)
 
 ### 12. GROUP BY去除排序
 
-GROUP BY 实现：分组、自劢排序
-
 - 无需排序：Order by NULL
 - 特定排序：Group by DESC/ASC
 
@@ -277,13 +273,11 @@ MySQL>SELECT `id`, `gift_code` FROM pool_gift WHERE `deal_id` = 640 AND remark='
 - 无索引时装载比索引装载更快
 - Insert values ,values，values 减少索引刷新
 - Load data 比 insert 快约20倍
-- 尽量不用 INSERT ... SELECT，可能会出现延迟
-、同步出错
+- 尽量不用 {% kbd INSERT ... SELECT %}，可能会出现延迟、同步出错
 
 ### 16. 打散大批量更新
 
-凌晨不限制
-白天上限默认为100条/秒（特殊再议）
+凌晨不限制；白天上限默认为100条/秒（特殊再议）
 
 ```sql
 update post set tag=1 WHERE id in (1,2,3);
@@ -336,5 +330,3 @@ MySQLsla
 
 - 索引命名默认为“idx_字段名”
 - 库名用缩写，尽量在2~7个字母
-
-> 本篇文章参考 MySQL 军规改写。
