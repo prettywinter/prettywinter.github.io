@@ -14,12 +14,12 @@ Spring Security 是一个专注于为 Java 应用程序提供身份验证和授�
 
 <!-- code_chunk_output -->
 
-- [核心类](#核心类)
+- [介绍](#介绍)
   - [认证常用三个类](#认证常用三个类)
   - [授权常用三个类](#授权常用三个类)
-  - [总结](#总结)
+  - [小结](#小结)
     - [AuthenticationManager ProviderManager AuthencationProvider关系](#authenticationmanager-providermanager-authencationprovider关系)
-      - [WebSecurityConfigurerAdapter](#websecurityconfigureradapter)
+      - [WebSecurityConfigurerAdapter（最新版本标为弃用）](#websecurityconfigureradapter最新版本标为弃用)
       - [UserDetailsService 用来修改默认认证的数据源信息](#userdetailsservice-用来修改默认认证的数据源信息)
 - [配置AuthenticationManager的两种方式](#配置authenticationmanager的两种方式)
 - [密码加密](#密码加密)
@@ -41,14 +41,17 @@ Spring Security 是一个专注于为 Java 应用程序提供身份验证和授�
 
 Spring Security 在 Spring Boot 2.7.0 之前（不包括）可以使用 WebSecurityConfigurerAdapter 来配置相关内容。2.7.0 版本之后有所改变（弃用状态，但目前仍可使用）。2.7.0 之后的改变与使用参考 [2.7.0新版配置](https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter#ldap-authentication)。
 
-## 核心类
+## 介绍
 
-[体系结构](https://docs.spring.io/spring-security/reference/servlet/authentication/architecture.html)
+{% link https://docs.spring.io/spring-security/reference/servlet/authentication/architecture.html 官方文档 %}
+
+Spring Security是基于一系列的 Filter 来完成的。核心分为认证、授权。
 
 ### 认证常用三个类
 
-- AuthenticationManager（authenticate()，返回 Authentication 表示认证成功，返回 AuthenticationException 认证失败）
-    > AuthenticationManager 主要实现类为 ProviderManager，在 ProviderManager 中管理了众多的 AuthenticationProvider 实例，在一次完整的认证流程中，允许存在多个 AuthenticationProvider，用来实现多种认证方式，这些 AuthenticationProvider 实例都是由 ProviderManager 统一管理的。
+- AuthenticationManager，认证的核心接口，是一个认证管理器，定义了 Spring Security 过滤器要执行的认证操作。
+  > AuthenticationManager 主要实现类为 ProviderManager，在 ProviderManager 中管理了众多的 AuthenticationProvider 实例，在一次完整的认证流程中，允许存在多个。AuthenticationProvider，用来实现多种认证方式，这些 AuthenticationProvider 实例都是由 ProviderManager 统一管理的。
+
 - Authentication（保存认证以及认证成功的信息）
 - SecurityContextHolder（取出用户信息）
   > 基于 threadLocal 线程绑定，请求时把 session 中的用户信息放入 SecurityContextHolder 中，请求结束后清空信息；之后的请求同理。
@@ -59,9 +62,6 @@ AccessDeclsionManager（访问决策管理器）此次请求是否放行资源
 AccessDecislonVoter（访问决定投票器）此次请求是否具有访问资源的权限
 ConfigAttribute（保存授权时的角色信息）
 
-ProviderManager 是一个接口
-AuthenticationProvider 是它的一个实现。
-DaoAuthenticationProvider 通过调用 retrieveUser() 认证。
 
 思考：
 
@@ -72,35 +72,35 @@ DaoAuthenticationProvider 通过调用 retrieveUser() 认证。
 - 为什么使用 user 和控制台打印的密码能登录，登录时验证数据源存在哪里呢？
   Spring Security中有一个基于内存（InMemoryUserDetailsManager）的默认用户实现。
 
-### 总结
+### 小结
 
 #### AuthenticationManager ProviderManager AuthencationProvider关系
 
-AuthenticationManager 全局的父接口，只有一个 authenticate 方法。需要 ProviderManager 实现。ProviderManager 遍历下面的 AuthencationProvider 认证，只要有一个认证通过即可。
+AuthenticationManager 有全局的和局部的，无论哪种，都是通过 ProviderManager 进行实现。需要 ProviderManager 实现。每一个 ProviderManager 中都代理一个 AuthenticationProvider列表，列表中每一个实现代表一种身份认证方式。认证时底层数据源调用 UserDetailsService来实现。
 
-##### WebSecurityConfigurerAdapter
+##### WebSecurityConfigurerAdapter（最新版本标为弃用）
 
 WebSecurityConfigurerAdapter 是 Spring Security 为我们提供的扩展类，方便我们重写默认配置，实现定制。
 
 ##### UserDetailsService 用来修改默认认证的数据源信息
 
-UserDetailsService接口下有许多的实现。同时，此接口也方便了我们以后的自定义数据源的扩展。
+UserDetailsService 接口下有许多的实现。同时，此接口也方便了我们以后的自定义数据源的扩展。
 
 ## 配置AuthenticationManager的两种方式
 
 1. 继承 WebSecurityConfigurerAdapter，springboot 对 security 默认配置中 在工厂默认创建 AuthenticationManager。
 
-    ```java{.line-numbres}
+    ```java
     // 默认配置会自动发现创建的 UserDetailService 的 Bean
     @Autowired
-    public void initialize(AuthenticationManagerBuilder builder) {
-        System.out.println("spring boot 默认配置");
+    public void initialize(AuthenticationManagerBuilder builder, DataSource datasource) {
+        System.out.println("spring boot 自动配置的全局 AuthenticationManager");
     }
     ```
 
 2. 自定义全局认证数据源
 
-    ```java{.line-numbres}
+    ```java
     // 自定义配置
     @Override
     public void configure(AuthenticationManagerBuilder builder) {
@@ -110,9 +110,9 @@ UserDetailsService接口下有许多的实现。同时，此接口也方便了�
 
 **总结：**
 
-1. 默认自动配置全局 AuthenticationManager 默认找当前项目中是否存在自定义 UserDetailService 实例，自动将当前项目的 UserDetailService 实例设置为数据源。
+1. 默认自动配置全局 AuthenticationManager 默认找当前项目中是否存在自定义 UserDetailService 实例，如果存在会自动将当前项目的 UserDetailService 实例设置为数据源。
 2. 默认自动配置全局 AuthenticationManager 在工厂中使用时直接在代码中注入即可。
-3. 一旦通过自定义的方式配置后，会自动覆盖默认的实现；并且需要在实现中指定自定义的数据源。
+3. 一旦通过自定义的方式配置后，会自动覆盖默认的实现；并且需要在实现中 **指定** 自定义的数据源。
 
 ## 密码加密
 
@@ -163,8 +163,8 @@ exposeHeaders:哪些响应头可以作为响应的一部分暴露出来。使用
 maxAge:预检查请求的有效期，有效期内不必再次发送预检请求，默认是100s。
 methods:允许的请求方法，`*` 表示所有方法。
 
-2. 进阶：addCrosMapping
-Spring MVC 提供：
+2. 进阶：addCrosMapping（Spring MVC 提供）
+
 ```java
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
@@ -180,8 +180,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 }
 ```
 
-1. CrosFilter
-Spring Web提供的跨域处理解决方案：
+3. CrosFilter（Spring Web提供的跨域处理解决方案）
+
 ```java
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Configuration;
@@ -211,9 +211,8 @@ public class WebMvcConfig {
 ```
 
 4. Spring Security中的跨域解决方案
-当项目中使用了Spring Security后，上面的方案有的会失效，有的可以继续使用，这是为什么？
-
-通过 `@CrossOrigin` 注解或者重写 `addCorsMappings` 方法配置的跨域解决方案，统统失效了（发送的预检请求会被 Spring Security 拦截）；通过 CorsFilter 配置的跨域，有没有失效则要看过滤器的优先级。如果过滤优先级高于 Spring Security 过滤器，即先于 Spring Security 过滤器执行，则 CorsFilter 所配置的跨域处理依然有效；如果优先级低于 Spring Security 过滤器，则 CorsFilter 所配置的跨域处理就会失效。
+**Q：** 当项目中使用了Spring Security后，上面的方案有的会失效，有的可以继续使用，这是为什么？
+**A：** 通过 `@CrossOrigin` 注解或者重写 `addCorsMappings` 方法配置的跨域解决方案，统统失效了（发送的预检请求会被 Spring Security 拦截）；通过 CorsFilter 配置的跨域，有没有失效则要看过滤器的优先级。如果过滤优先级高于 Spring Security 过滤器，即先于 Spring Security 过滤器执行，则 CorsFilter 所配置的跨域处理依然有效；如果优先级低于 Spring Security 过滤器，则 CorsFilter 所配置的跨域处理就会失效。
 
 ```java
 @Configuration
@@ -294,8 +293,13 @@ public class WebMvcConfig extends WebSecurityConfigurerAdapter {
 
 #### 基于URL权限管理
 
-mvcMatchers()
-antMatchers()
+- antMatchers()：最早出现的，用于任何 HttpMethod 请求列表。
+
+- mvcMatchers()：4.x 版本新增的，使用 Spring MVC 的匹配规则。例如，路径 `/path`，它会匹配 `/path`，`/path/`，`/path.html` 等。如果 Spring MVC 不会处理当前请求，会使用 antMatchers()。
+
+  两种方式本质上没有太大区别。mvcMatchers() 指定的话优先使用 MVC 匹配，如果匹配不到，会使用 antMatchers() 匹配。
+
+- regexMatchers()；支持正则表达式。
 
 #### 基于方法的权限管理
 
