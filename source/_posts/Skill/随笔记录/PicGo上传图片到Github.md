@@ -1,5 +1,5 @@
 ---
-title: Github图床使用PicGo实现快捷上传
+title: PicGo上传图片到Github
 categories: 配置
 tags: [Github, PicGo]
 ---

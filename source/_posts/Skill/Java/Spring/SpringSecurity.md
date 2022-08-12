@@ -4,9 +4,7 @@ categories: skill
 tags: [Java, Spring Security]
 ---
 
-[Spring Security](https://docs.spring.io/spring-security/reference/servlet/configuration/java.html) 是一个功能强大且高度可定制的身份验证和访问控制框架。 它是保护基于 Spring 的应用程序的事实标准。
-
-Spring Security 是一个专注于为 Java 应用程序提供身份验证和授权的框架。 像所有 Spring 项目一样，Spring Security 的真正强大之处在于它可以轻松扩展以满足自定义需求。
+[Spring Security](https://docs.spring.io/spring-security/reference/servlet/configuration/java.html) 是一个功能强大且高度可定制的身份验证和访问控制框架，专注于为 Java 应用程序提供身份验证和授权。Spring Security(5.7) 在 Spring Boot 2.7.0 之前（不包括）可以使用 WebSecurityConfigurerAdapter 来配置相关内容。2.7.0 版本之后有所改变（弃用状态，但目前仍可使用）。新版的改变与使用参考 [5.7新版配置](https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter#ldap-authentication)。
 
 <!-- more -->
 
@@ -14,24 +12,23 @@ Spring Security 是一个专注于为 Java 应用程序提供身份验证和授�
 
 <!-- code_chunk_output -->
 
-- [介绍](#介绍)
-  - [认证常用三个类](#认证常用三个类)
-  - [授权常用三个类](#授权常用三个类)
-  - [小结](#小结)
-    - [AuthenticationManager ProviderManager AuthencationProvider关系](#authenticationmanager-providermanager-authencationprovider关系)
+- [一、介绍](#一介绍)
+  - [1. 思考](#1-思考)
+- [二、认证](#二认证)
+  - [1. 常用扩展接口说明](#1-常用扩展接口说明)
+      - [AuthenticationManager ProviderManager AuthencationProvider关系](#authenticationmanager-providermanager-authencationprovider关系)
       - [WebSecurityConfigurerAdapter（最新版本标为弃用）](#websecurityconfigureradapter最新版本标为弃用)
       - [UserDetailsService 用来修改默认认证的数据源信息](#userdetailsservice-用来修改默认认证的数据源信息)
-- [配置AuthenticationManager的两种方式](#配置authenticationmanager的两种方式)
-- [密码加密](#密码加密)
-- [RememberMe](#rememberme)
-- [会话管理(SessionManagementFilter)](#会话管理sessionmanagementfilter)
-- [CORS](#cors)
-- [跨域问题](#跨域问题)
-- [异常处理](#异常处理)
-  - [1. 认证异常](#1-认证异常)
-  - [2. 授权异常](#2-授权异常)
-  - [自定义异常处理配置](#自定义异常处理配置)
-- [授权](#授权)
+  - [2. 配置AuthenticationManager的两种方式](#2-配置authenticationmanager的两种方式)
+  - [3. 密码加密](#3-密码加密)
+  - [4. RememberMe](#4-rememberme)
+  - [5. 会话管理(SessionManagementFilter)](#5-会话管理sessionmanagementfilter)
+  - [6. 跨域问题](#6-跨域问题)
+  - [7. 异常处理](#7-异常处理)
+    - [7.1 认证异常](#71-认证异常)
+    - [7.2 授权异常](#72-授权异常)
+    - [7.3 自定义异常处理配置](#73-自定义异常处理配置)
+- [二、授权](#二授权)
   - [两种权限管理策略](#两种权限管理策略)
     - [基于URL权限管理](#基于url权限管理)
     - [基于方法的权限管理](#基于方法的权限管理)
@@ -39,31 +36,13 @@ Spring Security 是一个专注于为 Java 应用程序提供身份验证和授�
 
 <!-- /code_chunk_output -->
 
-Spring Security 在 Spring Boot 2.7.0 之前（不包括）可以使用 WebSecurityConfigurerAdapter 来配置相关内容。2.7.0 版本之后有所改变（弃用状态，但目前仍可使用）。2.7.0 之后的改变与使用参考 [2.7.0新版配置](https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter#ldap-authentication)。
-
-## 介绍
+## 一、介绍
 
 {% link https://docs.spring.io/spring-security/reference/servlet/authentication/architecture.html 官方文档 %}
 
 Spring Security是基于一系列的 Filter 来完成的。核心分为认证、授权。
 
-### 认证常用三个类
-
-- AuthenticationManager，认证的核心接口，是一个认证管理器，定义了 Spring Security 过滤器要执行的认证操作。
-  > AuthenticationManager 主要实现类为 ProviderManager，在 ProviderManager 中管理了众多的 AuthenticationProvider 实例，在一次完整的认证流程中，允许存在多个。AuthenticationProvider，用来实现多种认证方式，这些 AuthenticationProvider 实例都是由 ProviderManager 统一管理的。
-
-- Authentication（保存认证以及认证成功的信息）
-- SecurityContextHolder（取出用户信息）
-  > 基于 threadLocal 线程绑定，请求时把 session 中的用户信息放入 SecurityContextHolder 中，请求结束后清空信息；之后的请求同理。
-
-### 授权常用三个类
-
-AccessDeclsionManager（访问决策管理器）此次请求是否放行资源
-AccessDecislonVoter（访问决定投票器）此次请求是否具有访问资源的权限
-ConfigAttribute（保存授权时的角色信息）
-
-
-思考：
+### 1. 思考
 
 - 为什么在引入 Spring Security 之后没有任何配置所有的请求就要认证呢？
   SpringBootWebSecurityConfiguration，自动配置类
@@ -72,9 +51,11 @@ ConfigAttribute（保存授权时的角色信息）
 - 为什么使用 user 和控制台打印的密码能登录，登录时验证数据源存在哪里呢？
   Spring Security中有一个基于内存（InMemoryUserDetailsManager）的默认用户实现。
 
-### 小结
+## 二、认证
 
-#### AuthenticationManager ProviderManager AuthencationProvider关系
+### 1. 常用扩展接口说明
+
+##### AuthenticationManager ProviderManager AuthencationProvider关系
 
 AuthenticationManager 有全局的和局部的，无论哪种，都是通过 ProviderManager 进行实现。需要 ProviderManager 实现。每一个 ProviderManager 中都代理一个 AuthenticationProvider列表，列表中每一个实现代表一种身份认证方式。认证时底层数据源调用 UserDetailsService来实现。
 
@@ -86,7 +67,7 @@ WebSecurityConfigurerAdapter 是 Spring Security 为我们提供的扩展类，�
 
 UserDetailsService 接口下有许多的实现。同时，此接口也方便了我们以后的自定义数据源的扩展。
 
-## 配置AuthenticationManager的两种方式
+### 2. 配置AuthenticationManager的两种方式
 
 1. 继承 WebSecurityConfigurerAdapter，springboot 对 security 默认配置中 在工厂默认创建 AuthenticationManager。
 
@@ -114,7 +95,7 @@ UserDetailsService 接口下有许多的实现。同时，此接口也方便了�
 2. 默认自动配置全局 AuthenticationManager 在工厂中使用时直接在代码中注入即可。
 3. 一旦通过自定义的方式配置后，会自动覆盖默认的实现；并且需要在实现中 **指定** 自定义的数据源。
 
-## 密码加密
+### 3. 密码加密
 
 常见加密方案：Hash算法+盐
 单向自适应函数（占用大量系统资源，每个认证请求都会大大降低应用程序的性能），开发者可以通过bcrypt、PBKDF2、sCrypt以及argon2来体验这种自适应单向函数加密。
@@ -123,7 +104,7 @@ UserDetailsService 接口下有许多的实现。同时，此接口也方便了�
 
 自定义密码加密有两种方式，一种是直接指定密码加密的方式（比如Bcrypt），另一种是使用自定义升级的方式。
 
-## RememberMe
+### 4. RememberMe
 
 RememberMe是一种服务端的行为，并非是把用户名密码保存在Cookie中的信息。传统的登录方式基于Session会话，一旦用户的会话过期，就要再次登录，这样就太过于繁琐。如果有一种机制，会话过期后，还能继续保持认证状态，就会方便很多,RememberMe就是为了解决这一需求而生的。
 
@@ -131,7 +112,7 @@ RememberMe是一种服务端的行为，并非是把用户名密码保存在Cook
 
 认证成功后写一段信息在Cookie中
 
-## 会话管理(SessionManagementFilter)
+### 5. 会话管理(SessionManagementFilter)
 
 会话并发管理：简单来说，就是多个客户端使用同一账户登录。默认情况下，同一账户可以再多少设备上登录并没有限制，我们可以在 Spring Security 中进行配置。
 
@@ -150,9 +131,7 @@ public void configure(HttpSecurity http) throw Exception {
 
 Spring Security 开启会话管理默认的是挤掉另一个客户端登录；我们可以设置为禁止其它客户端登录（当前用户登录成功，其它客户端无法使用当前的账户登录，除非当前用户注销退出）。集群下的会话管理可以使用 Redis 的Session 共享。
 
-## CORS
-
-## 跨域问题
+### 6. 跨域问题
 
 1. 入门：@CrossOrigin
 该注解由 Spring 框架提供，含有属性：
@@ -239,17 +218,17 @@ public class WebMvcConfig extends WebSecurityConfigurerAdapter {
 }
 ```
 
-## 异常处理
+### 7. 异常处理
 
-### 1. 认证异常
+#### 7.1 认证异常
 
 认证异常涉及的异常类型比较多，AuthenticationException 是所有认证异常的父类。
 
-### 2. 授权异常
+#### 7.2 授权异常
 
 相较于认证异常，权限异常类就要少了很多。在实际项目开发中，如果默认提供的异常无法满足需求，就需要根据实际需求自定义异常类。
 
-### 自定义异常处理配置
+#### 7.3 自定义异常处理配置
 
 ```java
 @Configuration
@@ -280,7 +259,7 @@ public class WebMvcConfig extends WebSecurityConfigurerAdapter {
 }
 ```
 
-## 授权
+## 二、授权
 
 权限很好理解，有权访问和无权访问，RBAC模式
 

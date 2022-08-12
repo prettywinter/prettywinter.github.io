@@ -1,7 +1,7 @@
 ---
-title: Github Action自动部署Hexo静态博客
+title: Github Action自动部署Hexo博客
 categories: 配置
-tags: [Github Action, Hexo, CD]
+tags: [Github Action,Hexo,CD]
 ---
 
 使用 Github Pages 服务和 Hexo 搭建的个人静态博客网站，集成 Github Action 完成自动部署。

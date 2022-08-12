@@ -1,14 +1,14 @@
 ---
-title: GithubPages+Hexo博客配置
+title: Hexo博客配置
 categories: 配置
-tags: [Github Pages, Hexo, 博客]
+tags: [Hexo,博客]
 ---
 
 某次操作中脑回路异常把 Github Pages 的库给删除了……
 
 <!-- more -->
 
-### 1. 使用 hexo d
+### 1. 使用hexo d
 
 使用该命令需要安装插件：{% copy width:max npm install --save hexo-deployer-git %}
 
@@ -22,23 +22,23 @@ tags: [Github Pages, Hexo, 博客]
 
 ### 3. 使用永久链接插件解决中文转义
 
-如果我们写的文章标题是中文的话，那么在进行链接的分享时是会进行转义的（**~~不是乱码~~**），至于为什么要转义，请自行百度。如果忍受不了可以使用插件去解决，生成一个永久性的链接。它会让你的博客链接变成类似这样：`https://xxx.xxx.com/posts/8ddf18fb.html`。注意这款插件并不会让你的中文正常显示，而是生成一串简短的字符串，毕竟中文url在转义后特别长。
+如果我们写的文章标题是中文的话，那么在进行链接的分享时是会进行转义的（**~~不是乱码~~**），至于为什么要转义，请自行百度。如果忍受不了可以使用插件去解决，生成一个永久性的链接。它会让你的博客链接变成类似这样：`https://xxx.xxx.com/posts/8ddf18fb.html`。注意：这款插件并不会让你的中文正常显示，而是生成一串简短的字符串，毕竟中文url在转义后特别长。
 
 安装插件：{% copy npm install hexo-abbrlink --save %}
 
-在博客目录的配置文件 `blog/_config.yml` 中找到对应 `permalink` 标签，修改即可。下面是示例：
+在 `blog/_config.yml` 中找到对应 `permalink` 标签，进行修改即可：
 
-  ```yml{.line-numbers}
+```yml blog/_config.yml
 # permalink: :year/:month/:day/:title/
 permalink: p/:abbrlink/
 abbrlink: 
-  alg: crc32  #算法： crc16(default) and crc32
-  rep: hex    #进制： dec(default) and hex
+alg: crc32  #算法： crc16(default) and crc32
+rep: hex    #进制： dec(default) and hex
 permalink_defaults:
 pretty_urls:
-  trailing_index: false # Set to false to remove trailing 'index.html' from permalinks
-  trailing_html: true # Set to false to remove trailing '.html' from permalinks
-  ```
+trailing_index: false # Set to false to remove trailing 'index.html' from permalinks
+trailing_html: true # Set to false to remove trailing '.html' from permalinks
+```
 
 不同算法、进制生成的链接格式如下：
 |算法|进制|生成链接示例|
@@ -50,7 +50,7 @@ pretty_urls:
 
 ### 4. 生成 RSS 页面
 
-一般都不需要这个需求，就不讲解了。RSS 就类似与关注、订阅功能。安装插件：
+一般不需要这个需求，RSS 就类似与关注、订阅功能。安装插件：
 {% copy npm install -save hexo-generator-feed %}
 
 配置示例：
@@ -96,11 +96,9 @@ mermaid: ## mermaid url https://github.com/knsv/mermaid
     #startOnload: true  // default true
 ```
 
-之后，还需要在主题文件中加入一些代码，具体的配置可以参考 [官网](https://github.com/webappdevelp/hexo-filter-mermaid-diagrams)。如果嫌弃配置麻烦或者实在不想配置，可以使用下面的懒人方法。
+之后，还需要在主题文件中加入一些代码，具体的配置可以参考 [官网](https://github.com/webappdevelp/hexo-filter-mermaid-diagrams)。如果嫌弃配置麻烦或者实在不想配置，可以使用下面的方法。
 
-可以采取另一种解决方案：[hexo-filter-kroki](https://github.com/miao1007/hexo-filter-kroki)，这个是使用 [Kroki.io](https://kroki.io/) 去生成图，然后把图片返回到你的博客中。
-
-官方解释：安装完成后，默认情况下，不需要进行任何配置，插件会将您的文本发送到 kroki.io 进行渲染，并且 base64 编码的图像内联在 html 中。在作者的仓库中也有高级配置，可以自行查看配置。
+另一种解决方案：[hexo-filter-kroki](https://github.com/miao1007/hexo-filter-kroki)，安装完成后，默认情况下，不需要进行任何配置，插件会将您的文本发送到 [Kroki.io](https://kroki.io/) 进行渲染，并将 base64 编码的图像内联在 html 中。在插件作者的仓库中也有高级配置，可以自行查看配置。
 
 ```bash
 # 懒人推荐
@@ -124,7 +122,7 @@ steps:
 
 ### 7. 数学公式渲染
 
-Hexo 默认的 markdown 渲染器是不支持公式渲染的，可以进行替换，可以使用的渲染器有很多，可以去网上查看不同，这里使用 hexo-renderer-markdown-it-plus 作为公式渲染器。
+Hexo 默认的 markdown 渲染器是不支持公式渲染的，可以进行替换，可以使用的渲染器有很多，这里使用 hexo-renderer-markdown-it-plus 作为公式渲染器。
 
 ```bash
 # 卸载默认的渲染器
@@ -133,4 +131,4 @@ npm uninstall hexo-renderer-marked
 npm install hexo-renderer-markdown-it-plus --save
 ```
 
-安装完成后，需要配置，一般在主题中有 katex 的设置项，开启即可。没有的话的可以根据 [官网 README](https://github.com/CHENXCHEN/hexo-renderer-markdown-it-plus) 进行配置。
+安装完成后，需要配置，一般在主题中有 katex 的设置项，开启即可。没有的话的可以根据 [README](https://github.com/CHENXCHEN/hexo-renderer-markdown-it-plus) 进行配置。
