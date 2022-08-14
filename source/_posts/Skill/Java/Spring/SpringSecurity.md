@@ -30,11 +30,13 @@ tags: [Java, Spring, Spring Security]
     - [7.1 认证异常](#71-认证异常)
     - [7.2 授权异常](#72-授权异常)
     - [7.3 自定义异常处理配置](#73-自定义异常处理配置)
+  - [8. CSRF（Cross-site request forgery）](#8-csrfcross-site-request-forgery)
 - [二、授权](#二授权)
-  - [两种权限管理策略](#两种权限管理策略)
-    - [基于URL权限管理](#基于url权限管理)
-    - [基于方法的权限管理](#基于方法的权限管理)
-  - [动态权限修改](#动态权限修改)
+  - [2.1 两种权限管理策略](#21-两种权限管理策略)
+    - [1. 基于URL权限管理](#1-基于url权限管理)
+    - [2. 基于方法的权限管理](#2-基于方法的权限管理)
+  - [2.2 动态权限修改](#22-动态权限修改)
+  - [2.3 RBAC(Role-Based Access Control)](#23-rbacrole-based-access-control)
 
 <!-- /code_chunk_output -->
 
@@ -284,19 +286,24 @@ public class WebMvcConfig extends WebSecurityConfigurerAdapter {
     }
 }
 ```
+### 8. CSRF（Cross-site request forgery）
+
+CSRF 即跨站请求伪造，是 web 常见的攻击方式之一。
+
+Spring Security 防止 CSRF 攻击的方式就是通过 csrf_token，前端发起请求的时候需要携带这个 csrf_token，后端会有过滤器进行校验，如果没有携带或者是伪造的就不允许访问。
+
+CSRF 攻击依靠的是 Cookie 中所携带的认证信息。但是在前后端分离的项目我们的认证信息是基于 Token，而 token 并不存储在 Cookie 中，我们的 token 是设置到请求头中的，所以 CSRF 攻击在前后端分离的项目中就失效了。
 
 ## 二、授权
 
-权限很好理解，有权访问和无权访问，RBAC模式
-
-### 两种权限管理策略
+### 2.1 两种权限管理策略
 
 - 基于过滤器的权限管理（FilterSecurityInterceptor）
 主要拦截Http请求，拦截下来后，根据Http请求地址进行权限校验
 - 基于方法的权限管理（MethodSecurityInterceptor）
 主要是用来处理方法级别的权限问题。当需要调用某一个方法时，基于 AOP 将操作拦截下来，然后判断用户是否具备相关的权限。
 
-#### 基于URL权限管理
+#### 1. 基于URL权限管理
 
 - antMatchers()：最早出现的，用于任何 HttpMethod 请求列表。
 
@@ -306,13 +313,21 @@ public class WebMvcConfig extends WebSecurityConfigurerAdapter {
 
 - regexMatchers()；支持正则表达式。
 
-#### 基于方法的权限管理
+#### 2. 基于方法的权限管理
 
 这种方式就是在 controller 层的方法上加上注解，指明需要哪些权限或者具有的角色才能访问对应的资源。
 
 首先，配置类中开启方法权限校验：@EnableGlobalMethodSecurity(prePostEnabled = true, SecuredEnable = true, jsr250Enabled = true)，~~（这里开启了三种方式，一般只用第一种）~~
 
 ```java
+// 开启配置 启用方法级别的权限认证
+@Configuration
+// 开启之后就可以使用 @preAuthorize 也是最常用的注解
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class SecurityConfig{
+  ...
+}
+
 // 前置校验
 @preAuthorize("hasAuthority("权限名称")")
 // 过滤 filterTarget 必须是数组 集合，不能过滤某个对象
@@ -332,10 +347,16 @@ public class WebMvcConfig extends WebSecurityConfigurerAdapter {
 
 项目中，一般前四个用的较多，后面几个功能较为单一。
 
-### 动态权限修改
+### 2.2 动态权限修改
 
 以上方式都是通过代码实现的，比较难以修改，可以使用动态的权限修改，比如从数据库层面实现，修改字段即可达到修改相应的权限的目的。
 
 实现 FilterInvocationSecurityMetaSource 接口，重写 getAttributes() 方法。
 
-之后再 Security 的配置类中，使用 http.apply() 方法，覆写里面的配置，setSecurityMetaSource() 改为实现 FilterInvocationSecurityMetaSource 接口的实现类即可。setRejectPublicInvocations() 设为 true/false，为 true 时拒绝 **公共资源**（没有权限管理的公共接口） 的访问。
+之后再 SecurityConfig 配置类中，使用 http.apply() 方法，覆写里面的配置，setSecurityMetaSource() 改为实现 FilterInvocationSecurityMetaSource 接口的实现类即可。setRejectPublicInvocations() 设为 true/false，为 true 时拒绝 **公共资源**（没有权限管理的公共接口） 的访问。
+
+### 2.3 RBAC(Role-Based Access Control)
+
+RBAC 即基于角色的权限控制。为什么说基于角色呢？
+
+想像一下，每次添加用户时都单独添加权限的话，那肯定是比较繁琐的。如果我们加入一个“角色”，把常用的一些权限分配给预定义的角色，然后在添加用户的时候直接把“角色”（比如 admin）设置给用户，这个用户就自动拥有对应的权限。这样就比较简单方便。

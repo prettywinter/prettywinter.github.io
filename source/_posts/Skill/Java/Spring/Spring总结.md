@@ -21,6 +21,7 @@ Spring使用总结
 - [五、Spring注入方式](#五spring注入方式)
   - [1. set注入的简化写法](#1-set注入的简化写法)
   - [2. 构造注入](#2-构造注入)
+  - [3. 循环依赖](#3-循环依赖)
 - [六、Spring工厂创建复杂对象的三种方式](#六spring工厂创建复杂对象的三种方式)
   - [1. FactoryBean 接口](#1-factorybean-接口)
   - [2. 实例工厂](#2-实例工厂)
@@ -66,6 +67,10 @@ Spring使用总结
 
 <!-- /code_chunk_output -->
 
+
+代理设计模式：额外功能的增强  可以通过动态字节码技术创建 包括JDK CGLIB ASM Javasist（MyBatis也支持）
+装饰器设计模式：本职功能的增强
+
 ## 一、Spring
 
 Spring 是一个轻量级的解决方案，它有两大核心内容：AOP 和反转控制。
@@ -96,9 +101,12 @@ ApplicationContext 包括：
 1. 创建工厂类型；
 2. 配置文件的配置 ApplicationContext.xml
 3. 通过工厂类获得对象
-  ApplicationContext
-    |-ClassPathXmlApplicationContext
-    |-WebXmlApplicationContext
+
+    ```bash
+      ApplicationContext
+        |- ClassPathXmlApplicationContext
+        |- WebXmlApplicationContext
+    ```
 
 什么是复杂对象？
 不能通过 **new** 关键字的构造方法创建的对象。例如，jdbc 的 **Connection** 对象，Mybatis 中的 **SqlSessionFactory** 等。
@@ -234,17 +242,41 @@ id 和 name 的不同：
 
     > 如果构造方法有重载，并且参数的个数相同，这个时候需要 `<constructor-arg type="">` 指明参数的类型才能完成注入。
 
+### 3. 循环依赖
+
+先说Spring解决循环引用的结论：两个对象都是 **单实例** 的情况下，且通 **过set方式** 进行注入才能成功。
+
+Spring AOP创建的代理是在 创建对象-> 属性填充 -> 初始化的时候执行的。
+
+思考：代理对象一定会在初始化的时候创建？
+不一定，如果涉及循环引用，创建->singletonFactries->lambda ->创建
+
+Spring解决循环依赖的步骤：
+步骤一：
+1.singletonObjects    null
+2.earlySingleObjects  null
+3.singletonFactories  null
+步骤二：
+1.singletonObjects    null
+2.earlySingleObjects  null
+3.singletonFactories  != null lambda getEarlyBeanRederence(beanName, mbd, bean) 创建代理 proxy，然后从 singletonFactories 中移除，proxy 放到 earlySingletonObjects 中。
+
+> 1. 先到 singletonObjects 中获取，如果null，则在 earlySingleObjects 中获取，如果还为 null，在 singletonFactories 中获取。
+> 2. 通过lambda getEarlyBeanRederence(beanName, mbd, bean) 创建代理，然后从 singletonFactories 中移除，把 proxy 放到 earlySingletonObjects 中。
+creationBean a(半成品)
+属性的填充：涉及 getBean("b")，过程和上面类似，在 b 中需要 a，上面过程中已经创建了 a，所以可以顺利拿到，进而创建 b。循环依赖就是“你中有我，我中有你” 的解决方法。
+
 ## 六、Spring工厂创建复杂对象的三种方式
 
 ### 1. FactoryBean 接口
 
-1. 实现 FactoryBean 接口的三个方法： getObject()，书写创建复杂对象的代码并返回复杂对象、getObjectType()，返回创建的复杂对象的 Class 对象、isSinglrton()，return true 只创建一个复杂对象，return false 每一次调用，都生成一个复杂对象。
+1. 实现 FactoryBean 接口的三个方法：getObject()，书写创建复杂对象的代码并返回复杂对象、getObjectType()，返回创建的复杂对象的 Class 对象、isSinglrton()，return true 只创建一个复杂对象，return false 每一次调用，都生成一个复杂对象。
 
 2. Spring 配置文件的配置
 
 ```xml
 <!-- 虽然配置是和简单对象是一样的，但是通过 id 获取的是这个类创建的复杂对象 Connection -->
-  <bean id="conn" class="com.xxx.ConnectionFactoryBean">
+<bean id="conn" class="com.xxx.ConnectionFactoryBean">
 ```
 
 如果想要获取 ConnectionFactoryBean 对象，需要 getBean("&conn")，就是在 id 的前面加上 `&`。
@@ -431,6 +463,8 @@ BeanPostProcess 作用： 对 Spring 工厂所创建的对象，进行再加工�
 
 1. AOP 如何创建动态代理类？（动态字节码技术）
 2. Spring 的工厂是如何加工创建代理对象？（通过原始对象的id值，获得代理对象）（BeanPostProcessor）
+
+SpringBoot中修改创建代理的方式，添加 `@EnableApsectJAutoProxy`，覆盖SpringBoot的内置设置。
 
 Spring AOP： 默认使用 JDK 代理
 SpringBoot AOP： 默认使用 CGlib 代理

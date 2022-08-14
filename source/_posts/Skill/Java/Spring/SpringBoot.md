@@ -13,12 +13,11 @@ Spring Boot 可以轻松创建可以“直接运行”的独立的、生产级�
 <!-- code_chunk_output -->
 
 - [Spring Boot](#spring-boot)
-  - [1. 注解](#1-注解)
+  - [1. @SpringBootApplication注解](#1-springbootapplication注解)
   - [2. SpringBoot 处理异常](#2-springboot-处理异常)
   - [3. 日志打印](#3-日志打印)
   - [4. Maven打包(打包之前先清理(clean)再打包(package))](#4-maven打包打包之前先清理clean再打包package)
   - [5. SpringBoot解决跨域问题](#5-springboot解决跨域问题)
-  - [6. Jasypt 加密](#6-jasypt-加密)
 
 <!-- /code_chunk_output -->
 
@@ -26,7 +25,7 @@ Spring Boot 可以轻松创建可以“直接运行”的独立的、生产级�
 
 使用 IDEA 工具创建 SpringBoot 项目时，可以使用阿里云的快速构建模板：`https://start.aliyun.com/`
 
-### 1. 注解
+### 1. @SpringBootApplication注解
 
 1. @SpringBootApplication注解：是一个组合注解，包含多个注解；
 特定注解：修饰注解的注解，@Target:指定注解的范围；@Retention:指定注解什么时候有效。
@@ -45,7 +44,7 @@ Spring Boot 可以轻松创建可以“直接运行”的独立的、生产级�
 
 ### 3. 日志打印
 
-Spring Boot自带日志插件可以用来输出SQL语句;Spring Boot默认是 info 级别的日志。可以使用 `logging.level` 修改日志级别。
+Spring Boot自带日志插件可以用来输出 SQL 语句;Spring Boot默认是 info 级别的日志。可以使用 `logging.level` 修改日志级别。
 
 ```yml
 # yml文件写法，properties也可以；
@@ -117,7 +116,7 @@ logging:
 ### 5. SpringBoot解决跨域问题
 
 1. @CrossOrigin 注解用在 Controller 类中，所有方法允许其它域中进行访问
-2. 全局配置：写一个配置类（正式项目一般都是此方式）
+2. 全局配置：写一个配置类
 
 ```java
 @Configuration
@@ -126,7 +125,6 @@ public class CorsConfig {
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-
         config.setAllowedOrigins("*");
         config.setAllowedHeaders("*");
         config.setAllowedMethods("*");
@@ -135,15 +133,4 @@ public class CorsConfig {
         return new CorsFilter(source);
     }
 }
-```
-
-### 6. Jasypt 加密
-
-引入相关依赖，编写加密配置；
-
-```properties
-<!-- 指定加密算法 -->
-jasypt.encryptor.algorithm=
-<!-- 指定密钥 -->
-jasypt.encryptor.password=
 ```
