@@ -5,7 +5,7 @@ tags: [Git]
 cover: https://raw.sevencdn.com/prettywinter/dist/main/images/doc/git_command.jpg
 ---
 
-Git 入门
+Git 入门总结。
 
 <!-- more -->
 

@@ -1,10 +1,10 @@
 ---
 title: Spring Security总结
 categories: skill
-tags: [Java, Spring Security]
+tags: [Java, Spring, Spring Security]
 ---
 
-[Spring Security](https://docs.spring.io/spring-security/reference/servlet/configuration/java.html) 是一个功能强大且高度可定制的身份验证和访问控制框架，专注于为 Java 应用程序提供身份验证和授权。Spring Security(5.7) 在 Spring Boot 2.7.0 之前（不包括）可以使用 WebSecurityConfigurerAdapter 来配置相关内容。2.7.0 版本之后有所改变（弃用状态，但目前仍可使用）。新版的改变与使用参考 [5.7新版配置](https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter#ldap-authentication)。
+[Spring Security](https://docs.spring.io/spring-security/reference/servlet/configuration/java.html) 是一个功能强大且高度可定制的身份验证和访问控制框架，专注于为 Java 应用程序提供身份验证和授权。
 
 <!-- more -->
 
@@ -12,13 +12,15 @@ tags: [Java, Spring Security]
 
 <!-- code_chunk_output -->
 
-- [一、介绍](#一介绍)
+- [一、官网学习](#一官网学习)
   - [1. 思考](#1-思考)
-- [二、认证](#二认证)
-  - [1. 常用扩展接口说明](#1-常用扩展接口说明)
+- [二、登录认证](#二登录认证)
+  - [1. 一些说明](#1-一些说明)
       - [AuthenticationManager ProviderManager AuthencationProvider关系](#authenticationmanager-providermanager-authencationprovider关系)
       - [WebSecurityConfigurerAdapter（最新版本标为弃用）](#websecurityconfigureradapter最新版本标为弃用)
-      - [UserDetailsService 用来修改默认认证的数据源信息](#userdetailsservice-用来修改默认认证的数据源信息)
+      - [UserDetails](#userdetails)
+      - [UserDetailsService用来修改默认认证的数据源信息](#userdetailsservice用来修改默认认证的数据源信息)
+      - [Authentication](#authentication)
   - [2. 配置AuthenticationManager的两种方式](#2-配置authenticationmanager的两种方式)
   - [3. 密码加密](#3-密码加密)
   - [4. RememberMe](#4-rememberme)
@@ -36,7 +38,7 @@ tags: [Java, Spring Security]
 
 <!-- /code_chunk_output -->
 
-## 一、介绍
+## 一、官网学习
 
 {% link https://docs.spring.io/spring-security/reference/servlet/authentication/architecture.html 官方文档 %}
 
@@ -51,21 +53,40 @@ Spring Security是基于一系列的 Filter 来完成的。核心分为认证、
 - 为什么使用 user 和控制台打印的密码能登录，登录时验证数据源存在哪里呢？
   Spring Security中有一个基于内存（InMemoryUserDetailsManager）的默认用户实现。
 
-## 二、认证
+## 二、登录认证
 
-### 1. 常用扩展接口说明
+登录
+
+1. 调用 ProviderManager 的方法进行认证，如果认证成功生成 jwt，把用户信息存入 redis。
+2. 自定义 UserDetailsService，查询数据库
+
+校验
+
+定义 jwt 认证过滤器，获取 token，解析 token 中的 userid，查询 redis 中是否存在相应的 userid 并获取用户信息，最后存入 SecurityContextHolder。
+
+### 1. 一些说明
 
 ##### AuthenticationManager ProviderManager AuthencationProvider关系
 
-AuthenticationManager 有全局的和局部的，无论哪种，都是通过 ProviderManager 进行实现。需要 ProviderManager 实现。每一个 ProviderManager 中都代理一个 AuthenticationProvider列表，列表中每一个实现代表一种身份认证方式。认证时底层数据源调用 UserDetailsService来实现。
+AuthenticationManager 有全局的和局部的，无论哪种，都是通过 ProviderManager 进行实现。每一个 ProviderManager 中都代理一个 AuthenticationProvider列表，列表中每一个实现代表一种身份认证方式。认证时底层数据源调用 UserDetailsService 来实现。
 
 ##### WebSecurityConfigurerAdapter（最新版本标为弃用）
 
 WebSecurityConfigurerAdapter 是 Spring Security 为我们提供的扩展类，方便我们重写默认配置，实现定制。
 
-##### UserDetailsService 用来修改默认认证的数据源信息
+Spring Security(5.7) 中的WebSecurityConfigurerAdapter 标记为弃用状态。新版的改变与使用参考 [5.7新版配置](https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter#ldap-authentication)，不同之处在于改变了写法，新版主要以配置 Bean 的方式使用。
 
-UserDetailsService 接口下有许多的实现。同时，此接口也方便了我们以后的自定义数据源的扩展。
+##### UserDetails
+
+提供核心用户信息，UserDetailsService#loadByUsername() 返回的就是一个 UserDetails 对象。
+
+##### UserDetailsService用来修改默认认证的数据源信息
+
+UserDetailsService 接口下有许多的实现。同时，此接口也方便了我们以后的自定义数据源的扩展。里面定义了一个根据用户名查询用户信息的方法。
+
+##### Authentication
+
+封装的用户信息，包括用户名和密码。
 
 ### 2. 配置AuthenticationManager的两种方式
 
@@ -82,18 +103,23 @@ UserDetailsService 接口下有许多的实现。同时，此接口也方便了�
 2. 自定义全局认证数据源
 
     ```java
-    // 自定义配置
+    // 自定义配置 AuthenticationManager
     @Override
     public void configure(AuthenticationManagerBuilder builder) {
-        
+      builder.userDetailsService(customerUserDetailsService())
+    }
+    // 暴露本地的 AuthenticationManager 自定义实例
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+      return super.authenticationManagerBean();
     }
     ```
 
-**总结：**
+**小结：**
 
 1. 默认自动配置全局 AuthenticationManager 默认找当前项目中是否存在自定义 UserDetailService 实例，如果存在会自动将当前项目的 UserDetailService 实例设置为数据源。
 2. 默认自动配置全局 AuthenticationManager 在工厂中使用时直接在代码中注入即可。
-3. 一旦通过自定义的方式配置后，会自动覆盖默认的实现；并且需要在实现中 **指定** 自定义的数据源。
+3. 一旦通过自定义的方式配置后，会 **自动覆盖** 默认的实现；并且需要在实现中 **指定** 自定义的数据源对象 UserDetailsService 实例，并且这个 AuthenticationManager 需要暴露出来（自定义的默认是本地的，不允许其它组件注入）。
 
 ### 3. 密码加密
 

@@ -268,10 +268,12 @@ Edge浏览器取代了传统的IE，也使用了 Chromium 内核，带来了很�
 ### 6. IDEA
 
 1. [作者博客地址](https://zhile.io)https://plugins.zhile.io reset(2021.2.2及以下版本很好用；2021.3以下（不含）堪堪能用，需要配合一些手法；2021.3版本开始正式失效，你可以卸载这个插件了！)
-2. log support lite 快速生成 logger 对象，只支持 log4j
-3. Translation（翻译）
+2. log support lite 只支持 slf4j
+3. Translation
 4. GsonFormatPlus(Json -> Java对象生成)
 5. Pojo To Json(Java对象 -> Json转换)
+6. GenerateAllSetter
+7. Free Mybatis Tool
 
 > IDEA 2021 之后的版本如果不需要多人协同可以关闭 Code With ME 和 Space 插件，提高运行速度。
 > IDEA 2021.3 ~ 最新版本食用方法：https://gitee.com/ja-netfilter/ja-netfilter
