@@ -31,7 +31,7 @@
   "config": {
     "commitizen": {
       "path": "cz-git",
-      "useEmoji": true
+      "czConfig": "./cz.config.js"
     }
   }
 }
