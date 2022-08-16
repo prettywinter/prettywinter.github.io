@@ -4,7 +4,7 @@ categories: 配置
 tags: [Github, PicGo]
 ---
 
-使用 Github 作为图床，并使用 PicGo 实现快捷上传。
+我们可以使用 Github 存储库可以作为免费的图床，当然也可以选择其它类型的图床，都是有一定免费空间的，可以自行选择。本文介绍使用 Github 作为图床，配置并使用 PicGo 实现快捷上传。
 
 <!-- more -->
 
@@ -12,7 +12,6 @@ tags: [Github, PicGo]
 
 PicGo 是图片上传到其它存储平台的助手。它支持多种图床：weibo, qiniu, tcyun, upyun, github, aliyun, imgur and SM.MS。
 我们在写文章的过程中，免不了要在文章内放置图片，如果实在第三方平台写文章（知乎，简书。CSDN等），这个问题就不需要考虑。但如果是自己搭建的博客，或者是自己编写 `md` 文档，那么图片的处理就比较麻烦了，截图、命名、存储等等都是问题。
-其中，使用 Github 作为图床是免费的，其它类型的图床有一定的免费空间。本文介绍 PicGo 配置 Github 图床使用。
 
 ### 1. 创建 Github Token
 

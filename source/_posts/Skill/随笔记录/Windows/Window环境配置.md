@@ -1,13 +1,13 @@
 ---
 title: Window环境配置
-categories: win
+categories: windows
 tags: [配置]
 cover: https://raw.githubusercontents.com/prettywinter/dist/main/images/blogcover/工欲善其事.jpg
 # 置顶
 pin: true
 ---
 
-Window环境配置整理。
+工欲善其事必先利其器，整理一下环境配置。
 
 <!-- more -->
 

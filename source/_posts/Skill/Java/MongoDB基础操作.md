@@ -1,10 +1,10 @@
 ---
-title: MongoDB总结整理
+title: MongoDB基础操作
 categories: skill
 tags: [MongoDB]
 ---
 
-MongoDB整理，5.x版本。与之前的版本有些许变化。
+MongoDB5.x版本基础操作整理，新版与之前的版本有些许变化。
 
 <!-- more -->
 

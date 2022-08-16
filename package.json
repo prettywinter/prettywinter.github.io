@@ -30,7 +30,8 @@
   },
   "config": {
     "commitizen": {
-      "path": "git-cz"
+      "path": "cz-git",
+      "useEmoji": true
     }
   }
 }

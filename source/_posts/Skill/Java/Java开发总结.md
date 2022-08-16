@@ -1,5 +1,5 @@
 ---
-title: Java开发错误总结
+title: Java开发总结
 categories: skill
 tags: [Java]
 ---

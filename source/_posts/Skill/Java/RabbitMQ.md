@@ -1,10 +1,10 @@
 ---
-title: RabbitMQ整理
+title: RabbitMQ
 categories: skill
-tags: [RabbitMQ]
+tags: [RabbitMQ, MQ]
 ---
 
-RabbitMQ整理
+RabbitMQ是轻量级的，在AMQP（Advanced Message Queuing Protocol ）基础上实现的，易于在本地和云中部署。它支持多种消息传递协议。RabbitMQ 可以部署在分布式和联合配置中，以满足高规模、高可用性的需求。
 
 <!-- more -->
 
@@ -12,10 +12,69 @@ RabbitMQ整理
 
 <!-- code_chunk_output -->
 
-- [RabbitMQ的常用命令](#rabbitmq的常用命令)
-- [镜像队列：（使用最多）](#镜像队列使用最多)
+- [一、介绍](#一介绍)
+  - [1. RabbitMQ的几种模型](#1-rabbitmq的几种模型)
+- [二、操作](#二操作)
+  - [RabbitMQ的常用命令](#rabbitmq的常用命令)
+  - [镜像队列：（使用最多）](#镜像队列使用最多)
 
-<!-- /code_chunk_output -->
+<!-- /code_chunk_output -->、
+
+## 一、介绍
+
+RabbitMQ 在许多操作系统和云环境上运行，并为大多数流行语言提供了广泛的开发人员工具。比如提供了 Java、Spring Framework、.NET、Ruby、Python、PHP、JS、GO等语言的客户端、适配器和工具。
+
+{% link https://www.rabbitmq.com/getstarted.html 官方学习教程 %}
+
+### 1. RabbitMQ的几种模型
+
+```mermaid
+graph LR
+%% 最简单的模型
+    subgraph 简单模型
+    producer((P)) --> queue[[消息队列]] --> consumer((C))
+    end
+
+%% 工作队列:在工作者之间分配任务（竞争使用者模式)
+    subgraph 工作队列
+    producer2((P)) --> 
+    queue2[[消息队列]] --> consumer2-1((C1))
+    queue2[[消息队列]] --> consumer2-2((C2))
+    end
+
+%% 发布订阅:一次向多个消费者发送消息
+    subgraph 发布/订阅
+    producer3((P)) --> exchange3((X))
+    exchange3 --> queue3-1[[消息队列]] --> consumer3-1((C1))
+    exchange3 --> queue3-2[[消息队列]] --> consumer3-2((C2))
+    end
+
+%% 路由:有选择地接收消息
+    subgraph 路由
+    producer4((P)) --> exchange4((X))
+    exchange4 --error--> queue4-1[[消息队列]] --> consumer4-1((C1))
+    exchange4 --info--> queue4-2[[消息队列]] --> consumer4-2((C2))
+    exchange4 --error--> queue4-2[[消息队列]] 
+    exchange4 --warning--> queue4-2[[消息队列]] 
+    end
+
+%% 主题:基于模式接收消息（主题）
+    subgraph 主题
+    producer5((P)) --> exchange5((X))
+    exchange5 --*.exchange--> queue5-1[[消息队列]] --> consumer5-1((C1))
+    exchange5 --> queue5-2[[消息队列]] --> consumer5-2((C2))
+    exchange5 --*.type1--> queue5-2[[消息队列]]
+    exchange5 --*.ly--> queue5-2[[消息队列]]
+    end
+
+%% RPC
+    subgraph RPC
+    producer6((P)) --> exchange6-1[request] --> queue6-1[[消息队列]] --> consumer6((C))
+    --> queue6-2[[消息队列]] --> exchange6-2[replay] --> producer6
+    end
+```
+
+## 二、操作
 
 ### RabbitMQ的常用命令
 
