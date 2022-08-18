@@ -1,5 +1,6 @@
 ---
 title: 主题标签效果
+categories: 主题效果
 ---
 
 居中引用：
@@ -81,6 +82,7 @@ Github 标签：
 {% codeblock lang:js %}
 let a = 123
 console.log("a的值：", a)
+{% endcodeblock %}
 {% endtabs %}
 
 最大轮播标签：

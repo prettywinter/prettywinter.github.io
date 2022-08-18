@@ -119,12 +119,14 @@ IPage是一个接口，Page是IPage的实现类，
 IPage<User> getUserList(Page<User> page,
                         @param("id") Integer id,
                         @Param("startTime") String startTime,@Param("endTime") String endTime);
+{% endcodeblock %}
 
 <!-- tab UserService.java -->
 {% codeblock lang:java %}
 IPage<User> selectUserList(Integer id, 
                            String startTime,
                            String endTime);
+{% endcodeblock %}
 
 <!-- tab UserServiceImpl.java -->
 {% codeblock lang:java %}
@@ -138,6 +140,7 @@ public IPage<User> selectUserList(Integer id, String startTime, String endTime) 
     IPage<User> ipage = userMapper.getUserList(page, id, startTime, endTime);
     return ipage;
 }
+{% endcodeblock %}
 
 <!-- tab UserController.java -->
 {% codeblock lang:java %}
@@ -148,7 +151,7 @@ private UserService userService;
 public IPage<User> selectUserList(Integer id, String startTime, String endTime) {
     return userService.selectUserList(id, startTime, endTime);
 }
-
+{% endcodeblock %}
 {% endtabs %}
 {% endgrid %}
 
