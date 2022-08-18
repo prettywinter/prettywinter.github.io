@@ -111,48 +111,48 @@ Mybatis Plus自带的分页：IPage、Page
 IPage是一个接口，Page是IPage的实现类，
 在使用时，可以使用Page创建一个对象实例，设置分页的一些参数；IPage对象用来存放自定义的分页规则和查询条件参数，比如以下简单例子：
 
-1. UserMapper.java
+{% grid %}
+{% tabs %}
+<!-- tab UserMapper.java -->
+{% codeblock lang:java %}
+//mapper中也可以使用 Page ，效果一样的
+IPage<User> getUserList(Page<User> page,
+                        @param("id") Integer id,
+                        @Param("startTime") String startTime,@Param("endTime") String endTime);
 
-    ```java
-    //mapper中也可以使用 Page ，效果一样的
-    IPage<User> getUserList(Page<User> page,@param("id") Integer id,@Param("startTime") String startTime,@Param("endTime") String endTime);
-    ```
+<!-- tab UserService.java -->
+{% codeblock lang:java %}
+IPage<User> selectUserList(Integer id, 
+                           String startTime,
+                           String endTime);
 
-2. UserService.java
+<!-- tab UserServiceImpl.java -->
+{% codeblock lang:java %}
+@Autowired
+private UserMapper userMapper;
+@Override
+public IPage<User> selectUserList(Integer id, String startTime, String endTime) {
+    Page<User> page = new Page<>();
+    // page.setXXX 设置自定义分页属性
 
-    ```java
-    IPage<User> selectUserList(Integer id, String startTime, String endTime);
-    ```
+    IPage<User> ipage = userMapper.getUserList(page, id, startTime, endTime);
+    return ipage;
+}
 
-3. UserServiceImpl.java
+<!-- tab UserController.java -->
+{% codeblock lang:java %}
+@Autowired
+private UserService userService;
 
-    ```java
-    @Autowired
-    private UserMapper userMapper;
-    @Override
-    public IPage<User> selectUserList(Integer id, String startTime, String endTime) {
-        Page<User> page = new Page<>();
-        // page.setXXX 设置自定义分页属性
+@GetMapping("/userList")
+public IPage<User> selectUserList(Integer id, String startTime, String endTime) {
+    return userService.selectUserList(id, startTime, endTime);
+}
 
-        IPage<User> ipage = userMapper.getUserList(page, id, startTime, endTime);
-        return ipage;
-    }
-    ```
-
-4. UserController.java
-
-    ```java
-    @Autowired
-    private UserService userService;
-
-    @GetMapping("/userList")
-    public IPage<User> selectUserList(Integer id, String startTime, String endTime) {
-        return userService.selectUserList(id, startTime, endTime);
-    }
-    ```
+{% endtabs %}
+{% endgrid %}
 
 上面的Page分页参数有两种设置方式如下：
-
 
 ![Page参数](https://raw.githubusercontents.com/prettywinter/dist/main/images/doc/Page参数.png "Page参数")
 
