@@ -206,6 +206,29 @@ Path：`%GOROOT%\bin`
 
 使用 Vscode 安装 Go 插件的话，速度感人，可以参考：https://goproxy.io/zh/
 
+### 10. [Rust](https://www.rust-lang.org/)
+
+先安装 [MSVC - VS 2019 C++ x64/x86 build tools](https://visualstudio.microsoft.com/visual-cpp-build-tools/)。安装时可自行修改缓存路径与安装路径，避免占用过多 C 盘空间。安装完成后，Rust 所需的 msvc 命令行程序需要手动添加到环境变量中，否则安装 Rust 时 rustup-init 会提示未安装 Microsoft C++ Build Tools，其位于：`%Visual Studio 安装位置%\VC\Tools\MSVC\%version%\bin\Hostx64\x64`（请自行替换其中的 %Visual Studio 安装位置%、%version% 字段）。
+
+`rust-init.exe` 安装工具会自动尝试加入环境变量。
+
+Linux 可以使用如下脚本安装。
+
+```bash
+# Linux 安装
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+
+cargo 下载依赖换为国内源：
+
+```toml xxx/.cargo/config.toml
+[source.crates-io]
+replace-with = 'ustc'
+
+[source.ustc]
+registry = "git://mirrors.ustc.edu.cn/crates.io-index"
+```
+
 ## 二、插件
 
 ### 1. 油猴插件
@@ -264,6 +287,8 @@ Edge浏览器取代了传统的IE，也使用了 Chromium 内核，带来了很�
 8. Vloar (前端Vue使用，支持语法高亮等)
 9. PicGo
 10. Paste JSON as Code（JSON格式转换为对应语言的“实体类”，emm，Java写多了，姑且这么叫，支持转换多种语言）
+11. rust-analyzer
+12. Even Better TOML
 
 ### 6. IDEA
 
