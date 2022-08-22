@@ -44,21 +44,22 @@ SSH-Key 主要用来和开源代码托管平台、公司内部、个人搭建的
 
 ```shell
 # Linux Mac
-$ ssh-keygen -t rsa -C 'xxx@xx.com' -f ~/.ssh/github_id_rsa
+$ ssh-keygen -t ed25519 -C 'xxx@xx.com' -f ~/.ssh/github_id_rsa
 # window
-$ ssh-keygen -t rsa -C 'xxx@xx.com' -f C:\Users\用户名\.ssh\github_id_rsa
+$ ssh-keygen -t ed25519 -C 'xxx@xx.com' -f C:\Users\用户名\.ssh\github_id_rsa
 ```
 
 ### 2. 生成gitee使用的SSH-Key
 
 ```bash
 # Linux Mac
-$ ssh-keygen -t rsa -C 'xxx@xx.com' -f ~/.ssh/gitee_id_rsa
+$ ssh-keygen -t ed25519 -C 'xxx@xx.com' -f ~/.ssh/gitee_id_rsa
 # window
-$ ssh-keygen -t rsa -C 'xxx@xx.com' -f C:\Users\用户名\.ssh\gitee_id_rsa
+$ ssh-keygen -t ed25519 -C 'xxx@xx.com' -f C:\Users\用户名\.ssh\gitee_id_rsa
 ```
 
 > 以上生成密钥的示例中，在 Git Bash 中使用 `~/.ssh/xxx_id_rsa` 路径就可以；在 Win 系统中如果使用 cmd/power shell/cmder等工具，使用该路径可能会报错“没有该路径文件”，这时候可以使用第二种方式。在下面 config 配置文件中指定路径时同理，一般同 Linux 就可以。
+> 2022-08-22 修改为 ed25519 密钥生成。
 
 ### 3. 配置
 

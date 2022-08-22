@@ -297,8 +297,8 @@ Edge浏览器取代了传统的IE，也使用了 Chromium 内核，带来了很�
 3. Translation
 4. GsonFormatPlus(Json -> Java对象生成)
 5. Pojo To Json(Java对象 -> Json转换)
-6. GenerateAllSetter
-7. Free Mybatis Tool
+6. [GenerateAllSetter](https://plugins.jetbrains.com/plugin/9360-generateallsetter)
+7. [Free Mybatis Tool](https://plugins.jetbrains.com/plugin/18617-free-mybatis-tool)
 
 > IDEA 2021 之后的版本如果不需要多人协同可以关闭 Code With ME 和 Space 插件，提高运行速度。
 > IDEA 2021.3 ~ 最新版本食用方法：https://gitee.com/ja-netfilter/ja-netfilter

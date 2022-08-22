@@ -27,6 +27,7 @@ cover: https://raw.githubusercontentS.com/prettywinter/dist/main/images/blogcove
 - [10. MariaDB](#10-mariadb)
 - [11. PostgreSQL#%E5%AE%89%E8%A3%85PostgreSQL)](#11-postgresql)
 - [12. VirtualBox](#12-virtualbox)
+- [zsh)或者git-shell](#zsh或者git-shell)
 - [开发工具](#开发工具)
 - [中文环境改变的问题](#中文环境改变的问题)
 
@@ -56,7 +57,7 @@ yay -S <package-name>
 yay -u package-name
 # 卸载该软件和没有被使用的依赖
 yay -Rs <package-name>
-# 清除缓存
+# 若要删除当前未安装的所有缓存包和未使用的同步数据库
 yay -Sc
 # 查找符合条件的安装包
 yay -Ss <package-name>
@@ -139,14 +140,14 @@ yay -S deepin-wine-qq
 ## 6. 小工具
 
 ```bash
-yay -S vokoscreen peek flameshot
+yay -S flameshot vokoscreen peek
 ```
 
 |安装包|说明|
 |--|--|
+|flameshot|火焰截图|
 |vokoscreen|录屏软件|
 |peek|动图录制工具|
-|flameshot|火焰截图|
 
 ## 7. WPS
 
@@ -210,6 +211,28 @@ createdb myDatabaseName
 ```bash
 yay -S virtualbox
 ```
+
+## [zsh](https://wiki.archlinux.org/title/Zsh_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87))或者git-shell
+
+```bash
+# 检查是否安装
+zsh
+# 安装
+yay -S zsh zsh-completions
+
+# 使用 git 终端
+# 查看可设置终端列表
+chsh -l
+# 设置终端路径
+chsh -s <full-path-to-shell>
+# 如果您使用的是 systemd-homed，请运行
+homectl update --shell=full-path-to-shell user
+```
+
+> 其中，full-path-to-shell 是 `chsh -l` 给出的完整路径。
+> 提示：chsh 用作参考。如果列表中不存在最近安装的 shell，则可以手动将其添加到此文件中:`/etc/shells`
+> 如果您要卸载 zsh，那么请您先更改默认的 shell 之后再进行卸载程序安装包。
+> Arch Wiki：https://wiki.archlinux.org/title/Command-line_shell#Changing_your_default_shell
 
 ## 开发工具
 

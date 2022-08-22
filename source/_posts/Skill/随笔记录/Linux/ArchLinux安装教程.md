@@ -37,7 +37,7 @@ ArchLinux，很不错的一款 Linux 发行版，不过的它的安装可能让�
 
 <!-- /code_chunk_output -->
 
-如果是懒人或者小白，可以直接使用 Manjaro 系统，它是 Arch 的子项目，安装简单，Arch有的功能它基本都有，背靠 Arch，可以使用 AUR 仓库，配置简单。安装就和 Window 或者其它的 Linux 一样，只需要一个 ISO 镜像就可以，浪子推荐 Manjaro-kde 版本。如果你的硬件配置过低，又想充分利用资源的话，推荐使用 Manjaro-xfce 版本。KDE 桌面美观，占用资源多；xfce占用资源低，详情可以自行百度。
+如果是懒人或者小白，可以直接使用 Manjaro 系统，它是 Arch 的子项目，安装简单，Arch有的功能它基本都有，背靠 Arch，可以使用 AUR 仓库，配置简单。安装就和 Window 或者其它的 Linux 一样，只需要一个 ISO 镜像就可以。如果你喜欢漂亮美观，并且个性化，浪子推荐 Manjaro-kde 版本。如果你需要漂亮的同时保持简单整洁，浪子推荐 Manjaro-gnome 版本。如果你的硬件配置较低低，又想充分利用资源的话，推荐使用 Manjaro-xfce 版本。
 
 ## 一、国内镜像列表
 
