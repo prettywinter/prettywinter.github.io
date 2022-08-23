@@ -30,6 +30,7 @@ cover: https://raw.githubusercontentS.com/prettywinter/dist/main/images/blogcove
 - [zsh)或者git-shell](#zsh或者git-shell)
 - [开发工具](#开发工具)
 - [中文环境改变的问题](#中文环境改变的问题)
+- [一次安装](#一次安装)
 
 <!-- /code_chunk_output -->
 
@@ -176,7 +177,7 @@ yay -S intellij-idea-community-edition
 yay -S mariadb
 ```
 
-> 普通用户在 kde 桌面的 zsh 终端中执行启动命令可能会弹出验证特殊身份的面板，该密码不是 root 用户的密码。如果验证失败（失败三次会锁定10分钟），执行启动命令推荐切换到 root（su - root） 用户下执行。
+> 普通用户在 kde 桌面的 zsh 终端中执行启动命令可能会弹出验证特殊身份的面板，该密码不是 root 用户的密码。如果验证失败（失败三次会锁定10分钟），此时切换到 root（su - root） 用户下执行。
 > 安装后不要直接启动，先执行以下命令：
 > mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
 > systemctl start mariadb.service
@@ -225,6 +226,7 @@ yay -S zsh zsh-completions
 chsh -l
 # 设置终端路径
 chsh -s <full-path-to-shell>
+
 # 如果您使用的是 systemd-homed，请运行
 homectl update --shell=full-path-to-shell user
 ```
@@ -261,4 +263,8 @@ locale
 
 这里只说了 KDE 桌面环境的解决办法，其它的环境在上面的链接里也是有的。如果各位少侠发现自己系统路径下没有 `/etc/locale.conf` 和 `/etc/locale.gen` 文件也不用慌，使用 `locale-gen` 命令后会自动生成，我们只需要编辑这些文件去修改为需要的语言环境就OK。
 
-随时补充……
+## 一次安装
+
+```bash
+yay -S visual-studio-code-bin microsoft-edge-stable-bin termius flameshot jdk8-openjdk jdk17-openjdk docker docker-compose fcitx5 fcitx5-chinese-addons fcitx5-gtk fcitx5-qt kcm-fcitx5 fcitx5-material-color fcitx5-lua wqy-bitmapfont wqy-microhei wqy-zenhei wqy-microhei-lite noto-fonts-cjk adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts ttf-fira-code woff2-fira-code woff-fira-code ttf-jetbrains-mono wps-office-cn ttf-wps-fonts wps-office-mui-zh-cn
+```
