@@ -27,10 +27,13 @@ cover: https://raw.githubusercontentS.com/prettywinter/dist/main/images/blogcove
 - [10. MariaDB](#10-mariadb)
 - [11. PostgreSQL#%E5%AE%89%E8%A3%85PostgreSQL)](#11-postgresql)
 - [12. VirtualBox](#12-virtualbox)
-- [zsh)或者git-shell](#zsh或者git-shell)
+- [13. zsh)或者git-shell](#13-zsh或者git-shell)
+- [14. 向日葵](#14-向日葵)
 - [开发工具](#开发工具)
 - [中文环境改变的问题](#中文环境改变的问题)
 - [一次安装](#一次安装)
+- [Github](#github)
+  - [1. 数据库可视化工具](#1-数据库可视化工具)
 
 <!-- /code_chunk_output -->
 
@@ -129,7 +132,9 @@ yay -S netease-cloud-music
 
 ```bash
 # 微信
-yay -S deepin-wine-wechat 
+yay -S deepin-wine-wechat
+# 如果上面的安装失败，可以安装 wechat-uos
+yay -S wechat-uos
 # Tim（可能会出现问题）
 yay -S deepin-wine-tim
 # QQ（浪子没有安装测试，这个在 aur 上安装最多，可自行测试）
@@ -137,6 +142,8 @@ yay -S deepin-wine-qq
 ```
 
 > 不推荐在 Linux 下直接安装，使用虚拟机安装体验较好。
+> manjaro 如果更新到最新（yay -Syu），那么安装微信将会 Build 失败。可以考虑安装 wechat-uos。
+> wechat-uos 虽然不是最新版本，但是基本的收发消息文件都是可以的。
 
 ## 6. 小工具
 
@@ -213,7 +220,7 @@ createdb myDatabaseName
 yay -S virtualbox
 ```
 
-## [zsh](https://wiki.archlinux.org/title/Zsh_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87))或者git-shell
+## 13. [zsh](https://wiki.archlinux.org/title/Zsh_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87))或者git-shell
 
 ```bash
 # 检查是否安装
@@ -235,6 +242,16 @@ homectl update --shell=full-path-to-shell user
 > 提示：chsh 用作参考。如果列表中不存在最近安装的 shell，则可以手动将其添加到此文件中:`/etc/shells`
 > 如果您要卸载 zsh，那么请您先更改默认的 shell 之后再进行卸载程序安装包。
 > Arch Wiki：https://wiki.archlinux.org/title/Command-line_shell#Changing_your_default_shell
+
+## 14. 向日葵
+
+```bash
+yay -S sunloginclient
+
+# 启动
+systemctl start runsunloginclient.service
+sunloginclient
+```
 
 ## 开发工具
 
@@ -268,3 +285,13 @@ locale
 ```bash
 yay -S visual-studio-code-bin microsoft-edge-stable-bin termius flameshot jdk8-openjdk jdk17-openjdk docker docker-compose fcitx5 fcitx5-chinese-addons fcitx5-gtk fcitx5-qt kcm-fcitx5 fcitx5-material-color fcitx5-lua wqy-bitmapfont wqy-microhei wqy-zenhei wqy-microhei-lite noto-fonts-cjk adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts ttf-fira-code woff2-fira-code woff-fira-code ttf-jetbrains-mono wps-office-cn ttf-wps-fonts wps-office-mui-zh-cn
 ```
+
+## Github
+
+### 1. 数据库可视化工具
+
+dbgate:
+{% copy width:max https://github.com/dbgate/dbgate %}
+
+meow-sql
+{% copy width:max https://github.com/ragnar-lodbrok/meow-sql %}
