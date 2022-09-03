@@ -243,10 +243,11 @@ git submodule [--quiet] absorbgitdirs [--] [<path>…​]
 git 并不支持直接删除 Submodule，需要手动删除对应的文件:
 
 ```bash
-cd pod-project
-git rm --cached pod-library
-rm -rf pod-library
-rm .gitmodules
+cd <name>
+git submodule deinit <submodulesname>
+git rm <submodulesname>
+git rm --cached <submodulesname>
+rm -rf .git/modules/<submodulesname>
 # 更改git的配置文件config
 vim .git/config
 # 删除submodule相关的内容,然后提交到远程服务器
