@@ -28,6 +28,7 @@ SSM框架使用整理。
   - [3.3 MP程序中获取新插入数据的Id](#33-mp程序中获取新插入数据的id)
   - [3.4 MP中的saveBatch()插入的性能问题](#34-mp中的savebatch插入的性能问题)
   - [3.5 MP中不能插入或更新null值](#35-mp中不能插入或更新null值)
+- [logback](#logback)
 
 <!-- /code_chunk_output -->
 
@@ -271,3 +272,33 @@ Mybatis Plus 中有批量插入的方法：saveBatch()，它可以保存一个�
     ```
 
 2. 可以开全局配置，在 `xxx.properties` 或者 `xxx.yml` 文件中注入配置 GlobalConfiguration 属性 fieldStrategy。
+
+## logback
+
+使用 logback 框架的时候，如果需要动态的去指定日志存放目录，可以使用以下方法：
+
+```java config/LogHomeConfig
+// 继承 PropertyDefinerBase 类，重写其中的 getPropertyValue 方法
+public class LogHomeConfig extends PropertyDefinerBase {
+    @Override
+    public String getPropertyValue() {
+        // 获取用户名
+        String username = System.getProperty("user.name");
+        // 获取操作系统
+        String os = System.getProperty("os.name");
+        // 路径常量可以放到常量类维护，这里说明问题即可
+        return os.toLowerCase().contains("window") ? "path" : "/home/" + username + "/logs";
+    }
+}
+```
+
+```xml logback.xml
+<configuration>
+    <!-- 日志存放路径，这里使用了 define 标签，class 定义为重写了 PropertyDefinerBase 类方法的配置类 -->
+    <!-- <property name="log.path" define="" value="/home/clf/market/logs"> -->
+    <define name="log.path" class="com.example.common.logs.LogHomeConfig"/>
+    ...
+</configuration>
+```
+
+这样，就可以根据不同的操作系统生成不同的路径。
