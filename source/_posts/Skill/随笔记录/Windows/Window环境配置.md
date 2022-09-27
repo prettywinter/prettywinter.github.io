@@ -280,15 +280,16 @@ Edge浏览器取代了传统的IE，也使用了 Chromium 内核，带来了很�
 1. Markdown All in One
 2. Markdown Preview Enhanced
 3. Live Server
-4. Auto Complete Tag
-5. Draw.io.Integration
+4. Auto Complete Tag(标签自闭合、修改)
+5. Draw.io.Integration(流程图)
 6. Chinese(中文环境)
-7. Shades of Purple (主题)
-8. Vloar (前端Vue使用，支持语法高亮等)
+7. Shades of Purple (浪子喜欢的主题)
+8. Vloar (Vue插件)
 9. PicGo
 10. Paste JSON as Code（JSON格式转换为对应语言的“实体类”，emm，Java写多了，姑且这么叫，支持转换多种语言）
-11. rust-analyzer
-12. Even Better TOML
+11. rust-analyzer(Rust插件)
+12. Even Better TOML(Rust插件)
+13. JavaScript (ES6) code snippets(js 快捷键)
 
 ### 6. IDEA
 
@@ -297,7 +298,7 @@ Edge浏览器取代了传统的IE，也使用了 Chromium 内核，带来了很�
 3. Translation
 4. GsonFormatPlus(Json -> Java对象生成)
 5. Pojo To Json(Java对象 -> Json转换)
-6. [GenerateAllSetter](https://plugins.jetbrains.com/plugin/9360-generateallsetter)
+6. [Generate All Getter And Setter](https://plugins.jetbrains.com/plugin/18969-generate-all-getter-and-setter)
 7. [Free Mybatis Tool](https://plugins.jetbrains.com/plugin/18617-free-mybatis-tool)
 
 > IDEA 2021 之后的版本如果不需要多人协同可以关闭 Code With ME 和 Space 插件，提高运行速度。

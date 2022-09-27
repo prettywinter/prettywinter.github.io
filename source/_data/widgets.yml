@@ -2,4 +2,4 @@ welcome:
   layout: markdown
   title: 公告
   content: | # support markdown
-    博客主题逐步迁移完成~
+    采用的 Github 作为图床，国内网络访问可能时常抽风。。。

@@ -1,10 +1,10 @@
 ---
-title: Node相关整理
+title: NodeJs
 categories: skill
 tags: Node
 ---
 
-Node相关总结
+NodeJs
 
 <!-- more -->
 
@@ -13,11 +13,13 @@ Node相关总结
 ## 一、常用命令
 
 ```shell
+# node version
+node -v
+# 后台启动 推荐使用 pm2
+nohup 脚本命令 &
+
 # 查看npm版本
 npm -v
-
-# 启动
-npm run start / npm start / npm run serve
 
 # 全局安装
 npm install <package-name> -g
@@ -69,7 +71,9 @@ npm prune
 > npm install 可简写为 npm i
 > npm run 相关：除了 npm run start 和 npm run test，其它的命令都不能省略 run。
 
-npm 是Node自带的包管理工具，使用起来很方便。也可以使用yarn，yarn是facebook发布的一款取代npm的包管理工具，[详情请戳](https://yarn.bootcss.com/) [yarn官网介绍](https://yarnpkg.com/getting-started/usage)
+## 二、Yarn
+
+npm 是 Node 自带的包管理工具，使用起来很方便。也可以使用 yarn，yarn 是 facebook 发布的一款取代npm的包管理工具，[详情请戳](https://yarn.bootcss.com/) [yarn官网介绍](https://yarnpkg.com/getting-started/usage)
 
 ```bash
 # 安装 yarn 包管理工具
@@ -84,8 +88,8 @@ yarn config set registry https://registry.npm.taobao.org --global
 yarn config set disturl https://npm.taobao.org/dist --global
 ```
 
-## 二、安装
+## 三、pnpm
 
-```bash
-npm i -g @vue/cli
-```
+pnpm 是微软发布的一款 Node 平台的包管理工具，用的人数也挺多的。默认使用 npm 的安装源。
+
+{% link https://pnpm.io/ 官方文档 %}
