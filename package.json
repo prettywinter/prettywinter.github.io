@@ -10,7 +10,7 @@
     "server": "hexo server"
   },
   "hexo": {
-    "version": ""
+    "version": "5.4.2"
   },
   "dependencies": {
     "hexo": "^5.0.0",
@@ -31,7 +31,7 @@
   },
   "config": {
     "commitizen": {
-      "path":"czg",
+      "path": "czg",
       "czConfig": "./cz.config.js"
     }
   }
