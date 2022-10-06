@@ -245,24 +245,41 @@ mysqld.exe --install mariadb
 # 初始化数据库，生成 data 文件夹以及配置信息
 mysql_install_db
 # 启动
-net start mariadb
+net start mariadb(如果上面安装的时起的名称)
 ```
 
 ```ini mariadb-10.9.3
 [mysqld]
 datadir=D:/software/mariadb-10.9.3/data
 port = 3333
+character-set-server = utf8
+collation-server = utf8_general_ci
+skip-character-set-client-handshake
+
 [client]
 plugin-dir=D:\software\mariadb-10.9.3/lib/plugin
+; 客户端连接端口
+port=3333
 
 [mariadb]
-; 解决不安装 FEEDBACK 插件报错的问题
 feedback=off
+; 指定端口
 port = 3333
+; 默认创建数据库的类型
+default-storage-engine = InnoDB
+; 最大连接数
+max_connections = 100
+; 慢查询
+slow_query_log_file = slow.log
+slow_query_log  = 0
+log_queries_not_using_indexes  = 1
+long_query_time = 0.5
+min_examined_row_limit = 100
 ```
 
 > 如果本机已经安装了 MySQL 数据库，那么使用这种方式安装在初始化数据库后，应该先修改 my.ini 文件，修改端口号，然后启动服务。
 > FEEDBACK 启动成功但是连接失败官方说明：https://mariadb.com/kb/en/feedback-plugin/
+> 配置文档：https://mariadb.com/kb/en/configuring-mariadb-with-option-files/
 
 ## 二、插件
 
