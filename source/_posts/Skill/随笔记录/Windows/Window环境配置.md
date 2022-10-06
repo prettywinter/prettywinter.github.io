@@ -229,6 +229,41 @@ replace-with = 'ustc'
 registry = "git://mirrors.ustc.edu.cn/crates.io-index"
 ```
 
+### 11. MariaDB
+
+这里使用[压缩包](https://mariadb.org/download/?t=mariadb&p=mariadb&r=10.9.3&os=windows&cpu=x86_64&pkg=zip&m=blendbyte)安装。
+
+变量名 `MARIA_HOME`，
+变量值示例：`D:\software\mariadb-10.9.3`
+Path：`%MARIA_HOME%\bin`
+
+以管理员身份运行 cmd、shell 等命令行工具：
+
+```bash
+# 名称自己起
+mysqld.exe --install mariadb
+# 初始化数据库，生成 data 文件夹以及配置信息
+mysql_install_db
+# 启动
+net start mariadb
+```
+
+```ini mariadb-10.9.3
+[mysqld]
+datadir=D:/software/mariadb-10.9.3/data
+port = 3333
+[client]
+plugin-dir=D:\software\mariadb-10.9.3/lib/plugin
+
+[mariadb]
+; 解决不安装 FEEDBACK 插件报错的问题
+feedback=off
+port = 3333
+```
+
+> 如果本机已经安装了 MySQL 数据库，那么使用这种方式安装在初始化数据库后，应该先修改 my.ini 文件，修改端口号，然后启动服务。
+> FEEDBACK 启动成功但是连接失败官方说明：https://mariadb.com/kb/en/feedback-plugin/
+
 ## 二、插件
 
 ### 1. 油猴插件
