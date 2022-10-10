@@ -110,6 +110,8 @@ $ ssh -T git@xyzgithub.com
 ### 1. 配置命令
 
 ```bash
+# 更新 git 到最新版本
+git update-git-for-windows
 # 配置个人信息，方便远程托管平台统计个人的贡献
 $ git config --global user.name "个人名称或昵称"
 $ git config --global user.email "你的邮箱"

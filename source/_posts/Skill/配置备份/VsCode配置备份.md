@@ -4,7 +4,7 @@ categories: 备份
 tags: [VsCode配置]
 ---
 
-浪子的 VsCode 配置备份。插件部分需安装对应的插件才可生效。
+浪子的 VsCode（1.72~lasted） 配置备份。插件部分需安装对应的插件才可生效。
 
 <!-- more -->
 
@@ -21,6 +21,11 @@ tags: [VsCode配置]
     "editor.lineHeight": 23,
     // 字母间像素
     "editor.letterSpacing": 0.5,
+    // 启用或禁用在 VS Code 中重命名或移动文件时自动更新导入路径的功能。
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    // 开启 markdown 的验证 无效链接将被警告或者错误
+    "markdown.validate.enabled": true,
+    
     // ########################## 彩色括号对 ###########################
     // 1.6x 版本之后 IDE 自带，不需要安装插件了
     "editor.bracketPairColorization.enabled": true,
@@ -53,9 +58,14 @@ tags: [VsCode配置]
     // 开启 markdown 的用户代码片段，在 md 中也可以使用代码片段啦
     "[markdown]": {
       "editor.renderWhitespace": "all",
-      "editor.quickSuggestions": true,
+      "editor.quickSuggestions": {
+        "comments": "on",
+        "strings": "on",
+        "other": "on"
+      },
       "editor.acceptSuggestionOnEnter": "on"
     },
+
 
 
     // ##########################################################################
@@ -109,7 +119,6 @@ tags: [VsCode配置]
     // maven settings 路径(java 相关插件)
     "java.configuration.maven.globalSettings": "/usr/local/maven-3.8.4/conf/settings.xml",
     "java.dependency.packagePresentation": "hierarchical",
-
 
 
     // ##########################################################################

@@ -65,8 +65,12 @@ yay -Rs <package-name>
 yay -Sc
 # 查找符合条件的安装包
 yay -Ss <package-name>
-# 查看安装的软件
+# 查看安装的软件 yay 信息
 yay -Ps
+# 查看 yay 默认配置
+yay -Pd
+# 查看 yay 当前设置
+yay -Pg
 ```
 
 ## 2. 中文输入法
