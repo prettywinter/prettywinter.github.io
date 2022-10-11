@@ -111,15 +111,21 @@ M2_HOME/conf/settings.xml
 
 官网下载安装版或者解压版，安装版一般不会有什么错误，环境变量如果安装的时候勾选加入 Path 中也不用手动配置了，比较简单，这里不说了。浪子比较喜欢解压版的，因为解压版的体积小，只包含了启动的服务，安装也是很方便的。
 
-两种方式，直接在 Path 里加入目录：`D:\software\MySQL8.0\bin`，或者变量名： `MYSQL_HOME`，变量值示例：`D:\software\MySQL8.0`，Path 添加 `%MYSQL_HOME%\bin`
+两种方式
+- 直接在 Path 里加入目录：`D:\software\MySQL8.0\bin`，
+- 或者变量名： `MYSQL_HOME`，变量值示例：`D:\software\MySQL8.0`，Path 添加 `%MYSQL_HOME%\bin`。
 
-以管理员的身份运行 cmd/powershell/cmder/gitbash 等命令行工具（否则会出现安装 MySQL 服务失败或者命令无效）：
+最好以管理员的身份运行 `cmd/powershell/cmder/gitbash` 等命令行工具（否则会出现安装 MySQL 服务失败或者命令无效）：
 
 ```bash
-# 安装 MySQL 服务
-mysqld -install
-# 初始化，建立date文件
-mysqld --initialize-insecure --user=mysql
+# 安装 MySQL 服务，service-name 可选，不写默认 mysql，安装多个版本时可以使用不同服务名称。
+# 安装一个版本推荐不写 service-name
+mysqld --install service-name
+# 使用不安全的初始化（不生成初始密码），建立 data 文件夹。
+# 如果需要生成初始化密码，使用 mysqld --initialize --console
+# --console 在控制台打印
+mysqld --initialize-insecure --user=mysql --console
+
 # 启动 MySQL 服务
 net start mysql
 # 进入 MySQL 的 bash 环境
@@ -129,9 +135,9 @@ mysql -u root -p
 alter user 'root'@'localhost' identified by '123456';
 
 
-# 如果你有其它的设置，后面不想要了
-# 那么可以移除 MySQL 服务
-mysqld -remove
+# 如果你想重新配置，手动删除 MySQL 安装目录的 data 文件
+# 然后移除 MySQL 服务
+mysqld --remove
 ```
 
 如果连接 sqlyog 报错，进入到 MySQL 的 bash 环境(mysql -u root -p)，然后执行命令：`ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';`
@@ -163,9 +169,9 @@ nodejs 默认的模块安装是在 C 盘下的，我们可以进行配置修改�
 以下配置中的 `node_cache` 和 `node_global` 文件夹就是提前建好的，默认安装完 nodejs 后是没有这两个文件夹的。
 
 - **修改全局安装路径：**
-{% copy width:max npm config set prefix "D:\software\nodejs\node_global" %}
+{% copy width:max npm config set prefix "D:\\software\\nodejs\\node_global" %}
 - **修改全局缓存路径：**
-{% copy width:max npm config set cache "D:\software\nodejs\node_cache" %}
+{% copy width:max npm config set cache "D:\\software\\nodejs\\node_cache" %}
 
 **检查是否修改成功：** `npm config ls -l`
 
@@ -226,7 +232,7 @@ cargo 下载依赖换为国内源：
 replace-with = 'ustc'
 
 [source.ustc]
-registry = "git://mirrors.ustc.edu.cn/crates.io-index"
+registry = "https://mirrors.ustc.edu.cn/crates.io-index"
 ```
 
 ### 11. MariaDB
