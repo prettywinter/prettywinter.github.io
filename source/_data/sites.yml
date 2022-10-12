@@ -18,25 +18,50 @@ mirrors:
       avatar:
       description:
 
-mac:
-  title: Mac 应用下载
+github:
+  title: Github开源项目
   description:
   items:
-    - title: MacWk
-      url: https://macwk.com/
-      screenshot: https://fastly.jsdelivr.net/gh/cdn-x/bookmark@1.0.1/mac/macwk-screenshot.jpg
-      avatar: https://fastly.jsdelivr.net/gh/cdn-x/bookmark@1.0.1/mac/macwk-icon.png
-      description: 精品mac软件下载
-    - title: MacBL
-      url: https://www.macbl.com
-      screenshot: https://fastly.jsdelivr.net/gh/cdn-x/bookmark@1.0.1/mac/macbl-screenshot.jpg
-      avatar: https://fastly.jsdelivr.net/gh/cdn-x/bookmark@1.0.1/mac/macbl-icon.png
-      description: 马可菠萝 - 分享你喜欢的MAC应用
-    - title: Xclient
-      url: https://xclient.info
-      screenshot: https://fastly.jsdelivr.net/gh/cdn-x/bookmark@1.0.1/mac/xclient-screenshot.jpg
-      avatar: https://fastly.jsdelivr.net/gh/cdn-x/bookmark@1.0.1/mac/xclient-icon.png
-      description: 精品MAC应用分享
+    - title: 文件蜈蚣
+      url: https://github.com/filecxx/FileCentipede
+      screenshot: 
+      avatar:
+      description: 一款多协议支持的下载器
+    - title: Motrix
+      url: https://github.com/agalwood/Motrix
+      screenshot: 
+      avatar:
+      description: 一款多协议支持的下载器
+    - title: Downkyi
+      url: https://github.com/leiurayer/downkyi
+      screenshot: 
+      avatar:
+      description: Bilibili下载器
+    - title: cmder
+      url: https://github.com/cmderdev/cmder
+      screenshot: 
+      avatar:
+      description: 可以替换 cmd 或者 powershell 的命令行软件，完美使用 Linux 的命令。
+
+# mac:
+#   title: Mac 应用下载
+#   description:
+#   items:
+#     - title: MacWk
+#       url: https://macwk.com/
+#       screenshot: https://fastly.jsdelivr.net/gh/cdn-x/bookmark@1.0.1/mac/macwk-screenshot.jpg
+#       avatar: https://fastly.jsdelivr.net/gh/cdn-x/bookmark@1.0.1/mac/macwk-icon.png
+#       description: 精品mac软件下载
+#     - title: MacBL
+#       url: https://www.macbl.com
+#       screenshot: https://fastly.jsdelivr.net/gh/cdn-x/bookmark@1.0.1/mac/macbl-screenshot.jpg
+#       avatar: https://fastly.jsdelivr.net/gh/cdn-x/bookmark@1.0.1/mac/macbl-icon.png
+#       description: 马可菠萝 - 分享你喜欢的MAC应用
+#     - title: Xclient
+#       url: https://xclient.info
+#       screenshot: https://fastly.jsdelivr.net/gh/cdn-x/bookmark@1.0.1/mac/xclient-screenshot.jpg
+#       avatar: https://fastly.jsdelivr.net/gh/cdn-x/bookmark@1.0.1/mac/xclient-icon.png
+#       description: 精品MAC应用分享
 
 # ios:
 #   title: 行业大佬
@@ -260,28 +285,3 @@ mac:
 #       screenshot:
 #       avatar:
 #       description:
-
-github:
-  title: Github
-  description:
-  items:
-    - title: 文件蜈蚣
-      url: https://github.com/filecxx/FileCentipede
-      screenshot: 
-      avatar:
-      description: 一款多协议支持的下载器
-    - title: Motrix
-      url: https://github.com/agalwood/Motrix
-      screenshot: 
-      avatar:
-      description: 一款多协议支持的下载器
-    - title: Downkyi
-      url: https://github.com/leiurayer/downkyi
-      screenshot: 
-      avatar:
-      description: Bilibili下载器
-    - title: 文件蜈蚣
-      url: https://github.com/cmderdev/cmder
-      screenshot: 
-      avatar:
-      description: 可以替换 cmd 或者 powershell 的命令行软件，完美使用 Linux 的命令。
