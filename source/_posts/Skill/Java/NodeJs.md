@@ -93,3 +93,9 @@ yarn config set disturl https://npm.taobao.org/dist --global
 pnpm 是微软发布的一款 Node 平台的包管理工具，用的人数也挺多的。默认使用 npm 的安装源。
 
 {% link https://pnpm.io/ 官方文档 %}
+
+## 四、安装常用
+
+```bash
+npm create vue@3
+```
