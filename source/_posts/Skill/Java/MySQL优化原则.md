@@ -1,10 +1,10 @@
 ---
-title: MySQL军规
+title: MySQL优化原则
 categories: skill
-tags: [MySQL]
+tags: [MySQL, database]
 ---
 
-MySQL的优化原则，示项目具体情况而定。
+MySQL的优化原则，视项目具体情况而定。
 
 <!-- more -->
 

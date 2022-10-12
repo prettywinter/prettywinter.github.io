@@ -1,7 +1,7 @@
 ---
-title: MySQL整理总结
+title: MySQL基础
 categories: skill
-tags: [MySQL]
+tags: [MySQL, database]
 ---
 
 MySQL数据库整理

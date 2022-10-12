@@ -1,7 +1,7 @@
 ---
 title: volatile关键字
 categories: skill
-tags: []
+tags: [Java]
 ---
 
 本篇文章需要掌握JMM（Java Memory Model）

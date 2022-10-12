@@ -1,7 +1,7 @@
 ---
 title: Redis数据库
 categories: skill
-tags: [Redis, 数据库]
+tags: [Redis, database]
 ---
 
 Redis 是一个 Key-Value 结构的开源（BSD）的非关系型数据库。

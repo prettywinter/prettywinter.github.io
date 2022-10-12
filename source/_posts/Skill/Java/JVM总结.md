@@ -1,10 +1,10 @@
 ---
-title: JVM
+title: JVM简单介绍
 categories: skill
 tags: [JVM]
 ---
 
-JVM
+JVM 简单理解就是运行 Java 等语言的“操作系统”，没有 JVM，Java 程序就无法运行。
 
 <!-- more -->
 
@@ -12,15 +12,15 @@ JVM
 
 <!-- code_chunk_output -->
 
-- [JVM内存模型](#jvm内存模型)
-- [调优命令](#调优命令)
-- [常见调优工具](#常见调优工具)
+- [一、JVM内存模型](#一jvm内存模型)
+- [二、调优命令](#二调优命令)
+- [三、常见调优工具](#三常见调优工具)
 - [Arthas](#arthas)
-- [垃圾收集算法](#垃圾收集算法)
+- [四、JVM垃圾收集算法](#四jvm垃圾收集算法)
 
 <!-- /code_chunk_output -->
 
-## JVM内存模型
+## 一、JVM内存模型
 
 {% image https://raw.sevencdn.com/prettywinter/dist/main/images/doc/JVM内存模型.png JVM内存模型图 %}
 
@@ -35,7 +35,7 @@ JVM
 > 说到方法区，不得不提一下“永久代”这个概念，尤其是在JDK8以前，许多Java程序员都习惯在HotSpot虚拟机上开发、部署程序，很多人都更愿意把方法区称呼为“永久代”（Permanent Generation），或将两者混为一谈。本质上这两者并不是等价的，因为仅仅是当时的HotSpot虚拟机设计团队选择把收集器的分代设计扩展至方法区，或者说使用永久代来实现方法区而已，这样使得 HotSpot的垃圾收集器能够像管理Java堆一样管理这部分内存，省去专门为方法区编写内存管理代码的工作。但现在回头来看，当年使用永久代来实现方法区的决定并不是一个好主意，这种设计导致了Java应用更容易遇到内存溢出的问题（永久代有-XX：MaxPermSize的上限，即使不设置也有默认大小，而J9和JRockit只要 没有触碰到进程可用内存的上限，例如32位系统中的4GB限制，就不会出问题），而且有极少数方法 （例如String::intern()）会因永久代的原因而导致不同虚拟机下有不同的表现。当Oracle收购BEA获得了JRockit的所有权后，准备把JRockit中的优秀功能，譬如Java Mission Control管理工具，移植到HotSpot虚拟机时，但因为两者对方法区实现的差异而面临诸多困难。**考虑到HotSpot未来的发展，在JDK 6的时候HotSpot开发团队就有放弃永久代，逐步改为采用本地内存（Native Memory）来实现方法区的计划了，到了JDK 7的HotSpot，已经把原本放在永久代的字符串常量池、静态变量等移出，而到了JDK 8，终于完全废弃了永久代的概念，改用与JRockit、J9一样在本地内存中实现的元空间（Meta-space）来代替，把JDK 7中永久代还剩余的内容（主要是类型信息）全部移到元空间中**。
 > 引自《深入理解Java虚拟机第二版》 周志明
 
-## 调优命令
+## 二、调优命令
 
 Sun JDK监控和故障处理命令有jps jstat jmap jhat jstack jinfo
 jps：JVM Process Status Tool,显示指定系统内所有的HotSpot虚拟机进程。
@@ -55,7 +55,7 @@ jstat -gc pid
 # 打印GC日志方法 %t：时间
 java ‐jar ‐Xloggc:./gc‐%t.log ‐XX:+PrintGCDetails ‐XX:+PrintGCDateStamps ‐XX:+PrintGCTimeStamps ‐XX:+PrintGCCause ‐XX:+UseGCLogFileRotation ‐XX:NumberOfGCLogFiles=10 ‐XX:GCLogFileSize=100M xxxx.jar
 ```
-## 常见调优工具
+## 三、常见调优工具
 
 常用调优工具分为两类,jdk自带监控工具：jconsole和jvisualvm，第三方有：MAT(Memory Analyzer Tool)、GChisto。
 jconsole，Java Monitoring and Management Console是从java5开始，在JDK中自带的java监控和管理控制台，用于对JVM中内存，线程和类等的监控
@@ -69,7 +69,7 @@ GChisto，一款专业分析gc日志的工具
 
 输入dashboard可以查看整个进程的运行情况，线程、内存、GC、运行环境信息。详细使用参照 [官方文档](https://arthas.aliyun.com/doc/)。
 
-## 垃圾收集算法
+## 四、JVM垃圾收集算法
 
 - 引用计数法
 - 根可达算法

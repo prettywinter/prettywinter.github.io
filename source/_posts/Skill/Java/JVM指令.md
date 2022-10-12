@@ -4,6 +4,10 @@ categories: skill
 tags: [JVM]
 ---
 
+JVM 指令表
+
+<!-- more -->
+
 |JVM指令码|助记符|说明|
 |--|--|--|
 |0x00| nop| 什么都不做 

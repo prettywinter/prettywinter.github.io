@@ -1,7 +1,7 @@
 ---
 title: PostgreSQL总结
 categories: skill
-tags: [数据库, PostgreSQL]
+tags: [database, PostgreSQL]
 ---
 
 PostgreSQL 是一个功能强大的开源对象关系数据库系统，它使用并扩展了 SQL 语言，并结合了许多可安全存储和扩展最复杂数据工作负载的特性。PostgreSQL 的起源可以追溯到 1986 年，作为POSTGRES项目的一部分，并在核心平台上进行了 30 多年的积极开发。
