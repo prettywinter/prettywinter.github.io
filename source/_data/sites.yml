@@ -41,7 +41,18 @@ github:
       url: https://github.com/cmderdev/cmder
       screenshot: 
       avatar:
-      description: 可以替换 cmd 或者 powershell 的命令行软件，完美使用 Linux 的命令。
+      description: 可以替换 cmd 或者 powershell 的命令行软件，完美使用 Linux 的命令
+    - title: MQTTX
+      url: https://github.com/emqx/MQTTX
+      screenshot: 
+      avatar:
+      description: 一款开源的 MQTT 测试客户端
+    - title: antares
+      url: https://github.com/antares-sql/antares
+      screenshot: 
+      avatar:
+      description: 支持 MySQL/MariaDB、PostgreSQL、SQLite 数据库的客户端
+
 
 # mac:
 #   title: Mac 应用下载

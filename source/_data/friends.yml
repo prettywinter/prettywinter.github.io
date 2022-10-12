@@ -3,7 +3,7 @@ group1:
   description: 感谢人生旅途中的每一份真挚的友谊，按结识先后顺序：
   items:
     - title: Azhe
-      url: http://blog.lollipopazhe.xyz/
+      url: https://lollipopazhe.github.io/
       avatar: https://s3.bmp.ovh/imgs/2022/08/04/35f6ddf1240a85c0.jpg
 
 # 可以设置 api、repo 来显示 GitHub Issues 中的数据：
