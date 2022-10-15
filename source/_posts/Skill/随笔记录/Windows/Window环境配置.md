@@ -169,9 +169,9 @@ nodejs 默认的模块安装是在 C 盘下的，我们可以进行配置修改�
 以下配置中的 `node_cache` 和 `node_global` 文件夹就是提前建好的，默认安装完 nodejs 后是没有这两个文件夹的。
 
 - **修改全局安装路径：**
-{% copy width:max npm config set prefix \"D:\\software\\nodejs\\node_global\" %}
+{% copy width:max npm config set prefix \\"D:\\software\\nodejs\\node_global\\" %}
 - **修改全局缓存路径：**
-{% copy width:max npm config set cache \"D:\\software\\nodejs\\node_cache\" %}
+{% copy width:max npm config set cache \\"D:\\software\\nodejs\\node_cache\\" %}
 
 **检查是否修改成功：** `npm config ls -l`
 
