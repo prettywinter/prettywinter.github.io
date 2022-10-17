@@ -53,6 +53,30 @@ github:
       avatar:
       description: 支持 MySQL/MariaDB、PostgreSQL、SQLite 数据库的客户端
 
+fonts:
+  title: 常用开源字体
+  description:
+  items:
+    - title: 文泉驿系列
+      url: https://github.com/keqingrong/wqy
+      screenshot: 
+      avatar:
+      description: 文泉驿微米黑、正黑、等宽体等
+    - title: 思源黑体系列
+      url: https://github.com/adobe-fonts/source-han-sans
+      screenshot: 
+      avatar:
+      description: 思源黑体是一套 OpenType/CFF 泛中日韩字体
+    - title: FiraCode
+      url: https://github.com/tonsky/FiraCode
+      screenshot: 
+      avatar:
+      description: Free monospaced font with programming ligatures
+    - title: JetBrains Mono
+      url: https://github.com/JetBrains/JetBrainsMono
+      screenshot: 
+      avatar:
+      description: JetBrains Mono the free and open-source typeface for developers
 
 # mac:
 #   title: Mac 应用下载
