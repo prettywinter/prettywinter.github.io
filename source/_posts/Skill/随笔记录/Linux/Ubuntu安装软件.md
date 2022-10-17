@@ -8,7 +8,9 @@ Ubuntu 中提供了方便的包管理工具 [apt-get](https://www.computerhope.c
 
 <!-- more -->
 
-## apt-get命令
+## 基础工具
+
+### 1. apt-get
 
 ```bash
 # 查看所有的安装软件
@@ -22,7 +24,28 @@ apt list --upgradeable
 sudo apt autoremove
 ```
 
+### 2. wget、curl
+
 如果你想了解一下 wget VS curl 的区别：`https://www.geeksforgeeks.org/difference-between-wget-vs-curl/`
+
+### 3. 其它
+
+修改时区：
+
+```bash
+# 当然也可以使用 tzselect，根据提示选择 Asia/Shanghai
+date -R
+cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+date -R
+```
+
+查找 apt 安装的软件的路径，以 jdk 为例
+
+```bash
+which java
+# 多次执行，直到最后打印出一些系统信息
+file 上一条命令打印的路径
+```
 
 ## Redis
 
