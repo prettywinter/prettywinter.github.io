@@ -47,6 +47,21 @@ which java
 file 上一条命令打印的路径
 ```
 
+开放端口：
+
+```bash
+# 启动防火墙
+systemctl start firewalld
+# --zone 作用域 --add-port 格式 端口/通讯协议 --permanent 永久生效
+firewall-cmd --zone=public --add-port=1935/tcp --permanent
+# 重启
+firewall-cmd --reload
+# 查看当前所有tcp端口
+netstat -ntlp
+# 查看所有1935端口使用情况 
+netstat -ntulp | grep 1935
+```
+
 ## Redis
 
 ```bash
