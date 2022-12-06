@@ -1,0 +1,19 @@
+#################################### wiki 项目配置 ##################################
+测试项目:
+  title: 测试项目   # Wiki 项目标题
+  subtitle: 'my first open source project | 我的首个开源项目'   # 副标题，在项目标题下面展示（小小的一行说明）
+  tags: 我的开源    # Wiki 项目分类
+  repo: jhlzlove/market   # 仓库，有这一项就会在项目目录下展示仓库标签
+  cover: true   # 设置为 true 可以自定义下面的属性，也可以不设置
+    # logo: logo 地址
+    # src: 图片地址
+    # small: 120px
+    # large: 240px
+  # 自定义侧边栏组件
+  # sidebar: [toc]
+  # 项目目录
+  sections:
+    '简介与部署': [0, 99]       # '分页类目': [分页 order 起始设置]
+    '问题及想法': [100, 199]
+
+  
