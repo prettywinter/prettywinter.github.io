@@ -191,9 +191,6 @@ docker ps
 yay -S nodejs npm
 # 设置淘宝源
 npm config set registry https://registry.npmmirror.com
-# 授权 npm 安装的访问权限（以下是默认路径，如果进行了修改改下路径即可）
-sudo chmod 777 -R /usr/bin
-sudo chmod 777 -R /usr/lib/node_modules/
 ```
 
 ## 8. VirtualBox
