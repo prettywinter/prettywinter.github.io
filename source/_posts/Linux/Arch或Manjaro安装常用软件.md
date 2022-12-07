@@ -55,7 +55,7 @@ yay -Pg
 ### 2.1 kde、xfce推荐 [fcitx5+rime](https://wiki.archlinux.org/title/Fcitx5_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87))
 
 ```bash
-yay -S fcitx5-im fcitx-rime fcitx5-chinese-addons
+yay -S fcitx5-im fcitx5-rime fcitx5-chinese-addons
 ```
 
 编辑 `/etc/environment` 文件，没有这个文件的话可以手动创建，然后添加以下内容，之后重启电脑：
