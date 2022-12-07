@@ -15,7 +15,6 @@ tags:
 
 下面的安装脚本是针对 Manjaro-KDE 版本，如果各位少侠是使用的 Gnome 的话，输入法不推荐 fcitx5，推荐使用 Ibus。下面的安装工具可以在我的另一篇文章中找到：
 
-
 ```sh
 #!/bin/bash
 # yay，下面的所有命令都使用 yay 安装
