@@ -5,7 +5,11 @@ tags:
   - hexo
   - stellar主题效果
 cover: theme
+poster:
+  headline: Stellar主题标签效果测试
+  color: red
 title: Stellar主题标签效果测试
+abbrlink: f320e422
 ---
 
 Stellar 主题标签的效果测试。
@@ -20,13 +24,23 @@ Stellar 主题标签的效果测试。
 
 {% quot 一、Note标签测试（带标题与不带标题） el:h1 %}
 
-{% note color:green 我的普普通通的一生 我这一辈子，苦没有真正苦过，爱没有用力爱过。每天受着信息大潮的冲击，三观未定又备受曲折。贫穷不再是正义，又妄图不让金钱成为唯一的追求。过早看到了更大的世界，勤奋却又不过三天。热血透不过键盘和屏幕，回忆止于游戏和高考。像一群没有根的孩子，在别人的经历和精神里吵闹 %}
+{% note color:green 我这一辈子，苦没有真正苦过，爱没有用力爱过。每天受着信息大潮的冲击，三观未定又备受曲折。贫穷不再是正义，又妄图不让金钱成为唯一的追求。过早看到了更大的世界，勤奋却又不过三天。热血透不过键盘和屏幕，回忆止于游戏和高考。像一群没有根的孩子，在别人的经历和精神里吵闹 %}
 
-{% note note标题空格测试 空格： &nbsp; 显示了几个？我打了两个，一个正常，一个转义的 nbsp; %}
+{% note color:green 换行测试 
+我这一辈子，苦没有真正苦过，爱没有用力爱过。
+每天受着信息大潮的冲击，三观未定又备受曲折。
+贫穷不再是正义，又妄图不让金钱成为唯一的追求。
+过早看到了更大的世界，勤奋却又不过三天。
+热血透不过键盘和屏幕，回忆止于游戏和高考。
+像一群没有根的孩子，在别人的经历和精神里吵闹 %}
 
-{% quot 二、Border标签测试 %}
+{% note color:orange 这 是标题 有人居庙堂，有人守边疆。 %}
 
-{% border border标签测试 color:green %}
+> 个人推荐使用 ablock 标签代替 note，如果很简单的情况：例如 md 文件的引用 > 可以使用 note.
+
+{% quot 二、ablock标签测试 %}
+
+{% ablock ablock标签测试 color:green %}
 我这一辈子，苦没有真正苦过，爱没有用力爱过。
 
 每天受着信息大潮的冲击，三观未定又备受曲折。
@@ -38,9 +52,9 @@ Stellar 主题标签的效果测试。
 热血透不过键盘和屏幕，回忆止于游戏和高考。
 
 像一群没有根的孩子，在别人的经历和精神里吵闹。
-{% endborder %}
+{% endablock %}
 
-{% border %}
+{% ablock %}
 {% tabs %}
 <!-- tab 代码 -->
 {% codeblock rust lang:rs %}
@@ -57,30 +71,29 @@ impl User {
 
 <!-- tab 彩色代码块 -->
 
-{% border child:codeblock color:green %}
+{% ablock child:codeblock color:green %}
 {% codeblock lang:js %}
 async function getResponse() {
     ...
 }
 {% endcodeblock %}
-{% endborder %}
+{% endablock %}
 
-{% border child:codeblock color:green %}
+{% ablock child:codeblock color:green %}
 {% codeblock lang:java %}
 public static final ConcurrentHashMap map = null;
 {% endcodeblock %}
-{% endborder %}
+{% endablock %}
 
 {% endtabs %}
-{% endborder %}
+{% endablock %}
 
 
 {% quot 三、分侧标签 el:h1 %}
 
-{% split bg:block %}
+{% grid bg:block %}
 
 <!-- cell -->
-block分区展示
 <center>任凭世人笑我癫</center>
 <center>狂叹红尘游世间</center>
 
@@ -89,12 +102,12 @@ block分区展示
 <center>空悬北斗点将勺</center>
 <center>运筹群星指天枢</center>
 
-{% endsplit %}
+{% endgrid %}
 
 
 {% quot 三、分侧标签 el:h1 %}
 
-{% split bg:card %}
+{% grid bg:card %}
 
 <!-- cell -->
 card分区展示
@@ -104,7 +117,7 @@ card分区展示
 
 <center>神蛊温皇要毁，不但要毁掉过去，还有现在、未来。</center>
 
-{% endsplit %}
+{% endgrid %}
 
 {% quot 四、折叠块标签测试 el:h1 %}
 

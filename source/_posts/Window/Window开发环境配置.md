@@ -7,6 +7,7 @@ tags:
   - win
   - 环境配置
 pin: true
+abbrlink: a35e2b34
 ---
 
 Window 开发环境配置整理。
@@ -51,10 +52,10 @@ ps 测试安装是否成功：`mvn -version`
 
 ```xml .../maven-3.8.6/maven/conf/setting.xml
 <mirror>
-    <id>aliyunmaven</id>
-    <mirrorOf>*</mirrorOf>
-    <name>阿里云公共仓库</name>
-    <url>https://maven.aliyun.com/repository/public</url>
+  <id>aliyunmaven</id>
+  <mirrorOf>*</mirrorOf>
+  <name>阿里云公共仓库</name>
+  <url>https://maven.aliyun.com/repository/public</url>
 </mirror>
 ```
 

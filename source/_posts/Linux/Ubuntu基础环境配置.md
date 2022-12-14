@@ -7,6 +7,7 @@ tags:
   - linux
   - ubuntu
 cover: 'linux,ubuntu'
+abbrlink: af7fa1dd
 ---
 
 Linux基础配置，Linxu 环境配置得当，使用起来特别舒服~，一般开发办公体验完全不输 Window。安装可以选用 Ubuntu、Manjaro 等系统，受众较多，问题容易解决。

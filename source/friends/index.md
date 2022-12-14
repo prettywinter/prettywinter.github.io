@@ -3,4 +3,4 @@ menu_id: more
 title: 友链
 ---
 
-<!-- {% friends group1 %} -->
+<!--  -->

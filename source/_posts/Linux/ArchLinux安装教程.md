@@ -7,6 +7,7 @@ tags:
   - linux
   - arch
 cover: 'https://fastly.jsdelivr.net/gh/prettywinter/dist/images/blogcover/arch.jpeg'
+abbrlink: a5e4683b
 ---
 
 ArchLinux，很不错的一款 Linux 发行版，不过的它的安装可能让很多人望而却步，不过还有背靠 Arch 的另一个子系统，Manjaro，它的安装就和 Window 一样，简单容易。本篇文章仅作参考。
@@ -14,7 +15,7 @@ ArchLinux，很不错的一款 Linux 发行版，不过的它的安装可能让�
 
 <!-- more -->
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=5 orderedList=true}-->
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=5 orderedList=true} -->
 
 <!-- code_chunk_output -->
 
@@ -309,8 +310,8 @@ sudo pacman -S alsa alsa-utils pulseaudio pulseaudio-alsa
 
 ```bash
 sudo pacman -S cinnamon gnome gnome-extra
-之后一路回车，出现选项选择 y
-等待安装完成。
+#之后一路回车，出现选项选择 y
+#等待安装完成。
 
 sudo pacman -S sddm
 
@@ -320,7 +321,7 @@ sudo pacman -S way-microhei way-zenhei ttf-dejavu
 
 sudo pacman -S google-chrome
 
-现在就可以重启了，让我们怀着高兴紧张又期待的心情输入 reboot 回车吧！
+#现在就可以重启了，让我们怀着高兴紧张又期待的心情输入 reboot 回车吧！
 ```
 
 ### 15. 尾声

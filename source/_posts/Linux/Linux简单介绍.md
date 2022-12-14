@@ -4,6 +4,7 @@ categories: Linux
 tags:
   - linux
 cover: 'https://fastly.jsdelivr.net/gh/prettywinter/dist/images/blogcover/linux.jpeg'
+abbrlink: 509e306a
 ---
 
 Linux 常用命令总结。这些东西还是要常敲的，记住的总会忘记。

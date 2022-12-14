@@ -1,10 +1,9 @@
 ---
-abbrlink: '0'
----
----
 title: 使用commitizen规范Git提交
-categories: 配置
+categories: Git
 tags: git
+abbrlink: 29b207cf
+---
 
 使用 commitizen 规范 Git 提交信息。
 

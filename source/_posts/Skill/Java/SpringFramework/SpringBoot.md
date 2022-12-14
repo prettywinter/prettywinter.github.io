@@ -6,6 +6,7 @@ categories:
 tags:
   - java
   - springboot
+abbrlink: a541262a
 ---
 
 SpringBoot 集成各种第三方库（jar包）及常见问题解决方式。
@@ -207,7 +208,7 @@ jar 包比较简单，SpringBoot 默认就是 jar 包，这里不在介绍，只
 
 ### 5. 解决跨域问题
 
-{% border %}
+{% ablock %}
 {% tabs %}
 <!-- tab 注解方式 -->
 {% codeblock 注解方式解决跨域 lang:java %}
@@ -258,7 +259,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 }
 {% endcodeblock %}
 {% endtabs %}
-{% endborder %}
+{% endablock %}
 
 ### 6. [Excel文件导出时中文被转义](https://blog.csdn.net/qq_28869233/article/details/87979552?spm=1035.2023.3001.6557&utm_medium=distribute.pc_relevant_bbs_down.none-task-blog-2~default~OPENSEARCH~default-6.nonecase&depth_1-utm_source=distribute.pc_relevant_bbs_down.none-task-blog-2~default~OPENSEARCH~default-6.nonecase)
 

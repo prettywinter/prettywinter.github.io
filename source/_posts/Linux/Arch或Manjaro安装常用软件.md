@@ -9,6 +9,7 @@ tags:
   - manjaro
   - 软件安装
 cover: 'https://fastly.jsdelivr.net/gh/prettywinter/dist/images/blogcover/arch.jpeg'
+abbrlink: ae78c405
 ---
 
 整理一些 ArchLinux/Manjaro 中常用的软件。浪子更加推荐去 [Arch Wiki](https://wiki.archlinux.org/) 寻找安装方法进行安装，包括在使用中的一些问题也可以在此找到解决办法。
@@ -192,6 +193,8 @@ yay -S nodejs npm
 # 设置淘宝源
 npm config set registry https://registry.npmmirror.com
 ```
+
+> 如果使用的是普通用户，无法直接使用 npm install -g xxx 进行全局安装（/usr/lib、/usr/bin普通用户没有写入权限）。不建议修改相关目录的权限，全局安装建议使用 sudo npm install -g xxx，安装后普通用户也可以直接使用相关命令.
 
 ## 8. VirtualBox
 

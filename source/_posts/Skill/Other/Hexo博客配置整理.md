@@ -1,15 +1,12 @@
 ---
 title: Hexo博客配置整理
 categories:
-  - Skill
   - Hexo
 tags:
   - hexo
   - 配置
 abbrlink: 9b42c073
 ---
-
-https://loafing.cn/posts/hexo-tags.html
 
 使用 Hexo + Github/其他平台提供的 Pages 服务打造自己简单的博客的话，还是需要安装一些插件来辅助的，不仅可以美化排版，还能提升用户体验。一起看看有哪些用着不错的插件吧~
 
@@ -18,6 +15,8 @@ https://loafing.cn/posts/hexo-tags.html
 ## 一、插件
 
 {% link https://hexo.io/docs/one-command-deployment hexo官网部署插件 %}
+
+其它推荐：https://loafing.cn/posts/hexo-tags.html
 
 ### 1. hexo d
 

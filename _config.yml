@@ -134,3 +134,20 @@ deploy:
   message: Automatic deploy by Github Action： {{ now('YYYY-MM-DD HH:mm:ss') }}
 
 favicon: https://fastly.jsdelivr.net/gh/prettywinter/dist/images/favicon/favicon-32x32.png
+
+# feed:
+#   enable: true
+#   type: 
+#     - atom
+#     - rss2
+#   path: 
+#     - atom.xml
+#     - rss2.xml
+#   limit: 20
+#   hub:
+#   content: false
+#   content_limit: 140
+#   content_limit_delim: ' '
+#   order_by: -date
+#   icon: icon.png
+#   autodiscovery: true

@@ -9,6 +9,7 @@ tags:
   - hadoop
   - hive
 cover: linux
+abbrlink: 6d9315fe
 ---
 
 Ubuntu 搭建 Hadoop + Hive 环境实例。

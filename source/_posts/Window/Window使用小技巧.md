@@ -1,6 +1,7 @@
 ---
 title: Window使用小技巧
 categories: Window
+abbrlink: f085fb33
 ---
 
 Windows 使用小窍门，可以帮助你提高效率。

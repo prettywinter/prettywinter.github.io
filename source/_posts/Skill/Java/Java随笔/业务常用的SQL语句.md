@@ -4,6 +4,7 @@ categories:
   - Skill
 tags:
   - sql
+abbrlink: 44d4a5e6
 ---
 
 一些常用的业务 SQL。

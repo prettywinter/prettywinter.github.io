@@ -5,6 +5,7 @@ categories:
 tags:
   - git
 cover: 'https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/git_command.jpg'
+abbrlink: dd41b753
 ---
 
 Git配置及常用操作
@@ -26,7 +27,7 @@ Git配置及常用操作
   - [3. 常用操作](#3-常用操作)
 - [一张图](#一张图)
 - [Git Submodule](#git-submodule)
-  - [删除Submodule](#删除submodule)
+  - [删除submodule](#删除submodule)
 
 <!-- /code_chunk_output -->
 
@@ -238,14 +239,22 @@ git submodule [--quiet] sync [--recursive] [--] [<path>…​]
 git submodule [--quiet] absorbgitdirs [--] [<path>…​]
 ```
 
-如果要 clone 的仓库中包含子模块，那么在拉取仓库的时候使用 `git clone -r ....git` 命令即可获取到子模块。否则，子模块是一个 **空文件夹**，你必须运行两个命令：`git submodule init` 用来初始化本地配置文件，而 `git submodule update` 则从该项目中抓取所有数据并检出父项目中列出的合适的提交。
-
-### 删除Submodule
-
-git 并不支持直接删除 Submodule，需要手动删除对应的文件:
+如果要 clone 的仓库中包含子模块，那么在拉取仓库的时候使用 `git clone -r ....git` 命令即可获取到子模块，否则，子模块将是一个 **空文件夹**。
+你必须运行两个命令：
 
 ```bash
-cd <name>
+#  用来初始化本地配置文件
+git submodule init
+# 从该项目中抓取所有数据并检出父项目中列出的合适的提交
+git submodule update
+```
+
+### 删除submodule
+
+git 并不支持直接删除 submodule，需要手动删除对应的文件:
+
+```bash
+cd <repo-name>
 git submodule deinit <submodulesname>
 git rm <submodulesname>
 

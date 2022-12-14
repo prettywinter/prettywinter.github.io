@@ -214,23 +214,23 @@ big hash：可以讲数据分段存储，比如一个大的key，假设存了1�
 
 
 
-{% border %}
+{% ablock %}
 {% tabs %}
 <!-- tab 正例 -->
-{% border child:codeblock color:green %}
+{% ablock child:codeblock color:green %}
 {% codeblock lang:bash %}
 hmset user:1 name tom age 19 favor football
 {% endcodeblock %}
-{% endborder %}
+{% endablock %}
 
 <!-- tab 反例 -->
-{% border child:codeblock color:red %}
+{% ablock child:codeblock color:red %}
 {% codeblock lang:bash %}
 set user:1:age 19 3 
 set user:1:favor football
 set user:1:name tom
 {% endcodeblock %}
-{% endborder %}
+{% endablock %}
 
 {% endtabs %}
-{% endborder %}
+{% endablock %}

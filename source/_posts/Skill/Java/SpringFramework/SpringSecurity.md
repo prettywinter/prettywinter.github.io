@@ -7,6 +7,7 @@ tags:
   - java
   - spring
   - spring security
+abbrlink: 95588d77
 ---
 
 [Spring Security](https://docs.spring.io/spring-security/reference/servlet/configuration/java.html) 是一个功能强大且高度可定制的身份验证和访问控制框架，专注于为 Java 应用程序提供身份验证和授权。

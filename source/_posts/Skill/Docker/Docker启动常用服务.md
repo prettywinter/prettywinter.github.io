@@ -6,6 +6,7 @@ categories:
 tags:
   - docker
 cover: 'https://fastly.jsdelivr.net/gh/prettywinter/dist/images/blogcover/docker.jpeg'
+abbrlink: 1ca431ad
 ---
 
 使用 Docker 安装常用服务，可以在 [Docker Hub](https://registry.hub.docker.com/) 上搜索镜像以及版本进行拉取/下载。带有 `offical image` 标签的都是官方镜像。

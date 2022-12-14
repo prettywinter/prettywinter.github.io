@@ -5,6 +5,7 @@ categories:
 tags:
   - linux
   - manjaro脚本
+abbrlink: 5b9e7c7c
 ---
 
 每次重装 manjaro 后都需要安装一些环境，刚开始还好，后面就变得懒了，写一个脚本帮助完成安装。

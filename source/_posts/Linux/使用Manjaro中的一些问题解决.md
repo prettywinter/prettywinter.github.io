@@ -6,6 +6,7 @@ tags:
   - linux
   - manjaro
 cover: 'https://fastly.jsdelivr.net/gh/prettywinter/dist/images/blogcover/arch.jpeg'
+abbrlink: e40c328c
 ---
 
 ## 中文环境改变的问题

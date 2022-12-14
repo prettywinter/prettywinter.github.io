@@ -1,5 +1,5 @@
 ############################### 友链数据源 #################################
-group1:
+'group1':
   title: 盛放的年华
   description: 海内存知己 天涯若比邻
   items:
@@ -7,7 +7,7 @@ group1:
       url: https://lollipopazhe.github.io/
       avatar: https://s3.bmp.ovh/imgs/2022/08/04/35f6ddf1240a85c0.jpg
 
-group2:
+'group2':
   title: 来自 GitHub 的朋友
   description: '以下友链通过 [GitHub Issue](https://github.com/jhlzlove/blog-api/issues) 提交，按 issue 最后更新时间排序：'
   api: https://hexo-friends-api.vercel.app

@@ -7,7 +7,7 @@ title: 关于
 
 只要不失你的崇高，全世界都会向你敞开。
 
-{% border %}
+{% ablock %}
 {% tabs %}
 <!-- tab 爱好 -->
 
@@ -31,7 +31,7 @@ title: 关于
 |古剑奇谭|★★★★☆|
 
 {% endtabs %}
-{% endborder %}
+{% endablock %}
 
 
 {% quot 一些工具 icon:hashtag  %}
