@@ -18,12 +18,12 @@ Window 开发环境配置整理。
 
 ## 环境配置
 
-Window 的环境变量配置非常简单。它分为用户变量和系统变量，配置系统变量使用任何用户登录系统都可以使用相关的命令；如果添加的是用户变量，那么只有添加变量的当前用户才能使用该命令，{% emp 本文都以配置系统变量为例 %}。
+Window 的环境变量配置非常简单。它分为用户变量和系统变量，配置系统变量使用任何用户登录系统都可以使用相关的命令；如果添加的是用户变量，那么只有添加变量的当前用户才能使用该命令，本文都以配置{% emp 系统变量 %}为例。
 
 配置系统变量一般有两种方式：
 
 - 直接在 {% kbd Path %} 里配置（一般配置到 bin 目录）。
-- 新建一个系统变量，设置 key-value，之后在 {% kbd Path %} 中引用 `%key%`。
+- 新建一个系统变量，设置 key-value，之后在 {% kbd Path %} 中引用 {% kbd %key% %} 。
 
 ### 1. JDK
 
@@ -227,7 +227,7 @@ Path：`%CATALINA_HOME%\bin`。
 
 安装 NodeJs 后，Window 需要修改安装目录的权限，不然只有管理员才能对目录下的文件等进行操作，对于当前用户是非常不方便的。而且当你使用 npm 的时候会报错，提示没有权限。
 
-在安装目录的 `root` 文件夹，点击右键，选择属性，点击 “安全” 标签，选择 “User” 用户，点击编辑，把权限都勾上，保存退出。
+在安装目录即 `nodejs` 文件夹，点击右键，选择属性，点击 “安全” 标签，选择 “User” 用户，点击编辑，把权限都勾上，保存退出。
 
 ```bash
 # 配置阿里镜像源
@@ -301,13 +301,12 @@ registry = "https://mirrors.ustc.edu.cn/crates.io-index"
 
 ### 2. Edge
 
-1. [AdGuard](https://microsoftedge.microsoft.com/addons/detail/adguard-%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E5%99%A8/pdffkfellgipmhklpdmokmckkkfcopbh)
-2. [可可翻译](https://microsoftedge.microsoft.com/addons/detail/%E5%8F%AF%E5%8F%AF%E7%BF%BB%E8%AF%91/ebkimaahhkeiplegpghijhgmlcdkeppf)
-3. [JSON Formatter for Edge](https://microsoftedge.microsoft.com/addons/detail/json-formatter-for-edge/njpoigijhgbionbfdbaopheedbpdoddi)
-4. [Greenhub绿墙—网络出海工具](https://microsoftedge.microsoft.com/addons/detail/greenhub%E7%BB%BF%E5%A2%99%E2%80%94%E7%BD%91%E7%BB%9C%E5%87%BA%E6%B5%B7%E5%B7%A5%E5%85%B7/hholdpohidinjmkoanabdchniingdfac)
-5. [文件蜈蚣（需要安装对应的软件）](https://microsoftedge.microsoft.com/addons/detail/jeekmibdibcjeihbjnjgbegjalfelhon)
-6. [图片下载](https://microsoftedge.microsoft.com/addons/detail/fatkun%E5%9B%BE%E7%89%87%E6%89%B9%E9%87%8F%E4%B8%8B%E8%BD%BD-pro/dammmokdamnimedflemdaoamhldmldff)
-7. [Replace Google CDN](https://microsoftedge.microsoft.com/addons/detail/replace-google-cdn/cojepngjobmaiajphkijbdcdjnnjhpjc)
+1. [可可翻译](https://microsoftedge.microsoft.com/addons/detail/%E5%8F%AF%E5%8F%AF%E7%BF%BB%E8%AF%91/ebkimaahhkeiplegpghijhgmlcdkeppf)
+2. [JSON Formatter for Edge](https://microsoftedge.microsoft.com/addons/detail/json-formatter-for-edge/njpoigijhgbionbfdbaopheedbpdoddi)
+3. [Greenhub绿墙—网络出海工具](https://microsoftedge.microsoft.com/addons/detail/greenhub%E7%BB%BF%E5%A2%99%E2%80%94%E7%BD%91%E7%BB%9C%E5%87%BA%E6%B5%B7%E5%B7%A5%E5%85%B7/hholdpohidinjmkoanabdchniingdfac)
+4. [文件蜈蚣（需要安装对应的软件）](https://microsoftedge.microsoft.com/addons/detail/jeekmibdibcjeihbjnjgbegjalfelhon)
+5. [图片下载](https://microsoftedge.microsoft.com/addons/detail/fatkun%E5%9B%BE%E7%89%87%E6%89%B9%E9%87%8F%E4%B8%8B%E8%BD%BD-pro/dammmokdamnimedflemdaoamhldmldff)
+6. [Replace Google CDN](https://microsoftedge.microsoft.com/addons/detail/replace-google-cdn/cojepngjobmaiajphkijbdcdjnnjhpjc)
 
 > 细滚动条设置（默认长方形）：打开 Edge，URL地址输入 “edge://flags”，进入页面搜索 “Windows 11 fluent scrollbars.”，点击选择框选择 Enabled，重启浏览器（仅限 win 平台）。
 
@@ -324,4 +323,4 @@ registry = "https://mirrors.ustc.edu.cn/crates.io-index"
 3. [MyBatisPlus](https://plugins.jetbrains.com/plugin/12670-mybatisplus)
 4. Translation
 
-> 推荐 2021.2.2 及以下版本
+> 推荐使用 2021.2.2 及以下版本。
