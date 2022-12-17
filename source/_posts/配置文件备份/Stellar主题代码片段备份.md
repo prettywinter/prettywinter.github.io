@@ -1,5 +1,5 @@
 ---
-title: vsocde配置备份
+title: Stellar主题代码片段备份
 categories:
   - 配置备份
 cover: vscode

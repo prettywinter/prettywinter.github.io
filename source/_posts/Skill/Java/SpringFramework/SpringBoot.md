@@ -277,9 +277,9 @@ response.setHeader("Content-disposition", "attachment;filename="+fileNameURL+";"
 1. 切入点表达式
     - 方法级别的切入点表达式：`execution(* com.XXX.*.*(..))`，第一个 * 号代表可以返回任意类型值。
     - 类级别的切入点表达式：`within(com.XXX.*)`
-    - 自定义拦截器：`@annotation(com.XXX)`
+    - 自定义注解表达式：`@annotation(com.XXX)`
 2. 增强方式
-    - 前置增强、后置增强、环绕增强
+    - 前置增强 (@Befor)、后置增强(@After)、环绕增强 (@Arround)、后置返回增强 (@AfterReturning)、异常增强 (@AfterThrowing)
     - 前置和后置都没有返回值，方法参数都是JointPoint
     - 环绕增强中，需要调用proceed()才能继续处理业务逻辑(类似拦截器)，该方法返回值为业务的返回值，因此环绕增强的返回类型设置为 Object 比较推荐。
     - 环绕增强的方法参数是ProceedingJointPoint
@@ -364,7 +364,7 @@ public class LogHomeConfig extends PropertyDefinerBase {
         // 获取操作系统
         String os = System.getProperty("os.name");
         // 路径常量可以放到常量类维护，这里说明问题即可
-        return os.toLowerCase().contains("window") ? "path" : "/home/" + username + "/logs";
+        return os.toLowerCase().contains("window") ? "./logs" : "/home/" + username + "/logs";
     }
 }
 ```
