@@ -6,6 +6,7 @@ tags:
   - stellar主题效果
 cover: theme
 poster:
+  topic: 测试一下
   headline: Stellar主题标签效果测试
   color: red
 abbrlink: f320e422

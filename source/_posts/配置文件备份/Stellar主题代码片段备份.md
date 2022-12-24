@@ -3,6 +3,7 @@ title: Stellar主题代码片段备份
 categories:
   - 配置备份
 cover: vscode
+abbrlink: 92bbe64e
 ---
 
 Hexo 博客使用的 Stellar 主题，该主题简洁大方，深得我意。该主题提供了许多标签，写出来的效果很不错，写文章时经常用到，为此，写了一些常用的代码片段，备份一下。

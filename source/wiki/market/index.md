@@ -7,11 +7,15 @@ title: 项目介绍
 
 ## 项目介绍
 
-this is a open source project, it for ...
+this is an open source project, it for ...
 
 ## dev-tools
 
-java
+Jdk17
+SpringBoot3.0（Spring6）
+Postgresql15
 
+## Notice
 
-## other
+- 使用构造注入
+- 减少依赖项
