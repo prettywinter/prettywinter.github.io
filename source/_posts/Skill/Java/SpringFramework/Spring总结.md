@@ -1,5 +1,5 @@
 ---
-title: Spring使用总结
+title: Spring总结
 categories:
   - Skill
   - Java

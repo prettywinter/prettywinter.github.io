@@ -1,11 +1,10 @@
 ---
-title: CentOS Server基础配置
+title: CentOS 服务器配置
 categories:
   - Linux
 tags:
   - centos
 cover: 'https://fastly.jsdelivr.net/gh/prettywinter/dist/images/blogcover/linux.jpeg'
-abbrlink: 9132900f
 ---
 
 此篇文章以后随缘更新，这个系统的相关问题网上一般都有答案，浪子个人已不再使用 CentOS 系统。

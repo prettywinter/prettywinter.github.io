@@ -12,7 +12,7 @@ poster:
 abbrlink: f320e422
 ---
 
-Stellar 主题标签的效果测试。此效果与写法格式为 Stellar 1.18.0 版本。
+Stellar 主题标签的效果测试。此效果与写法格式为 Stellar 1.18.5  版本。
 
 <!-- more -->
 
