@@ -156,7 +156,7 @@ tag_plugins:
     blobcat: https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/${name}.png
   # {% image %}
   image:
-    fancybox: # true, false
+    fancybox: true # true, false
   # {% timeline %}
   timeline:
     max-height: 80vh
