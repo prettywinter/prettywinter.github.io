@@ -50,7 +50,7 @@ timedatectl set-timezone Asia/Shanghai
 timedatectl
 ```
 
-## 语言设置
+### 语言设置
 
 ```bash
 # 列出所有启用的区域设置
@@ -230,15 +230,6 @@ tar -zxvf nginx-1.22.0.tar.gz -C nginx && cd nginx
 > 修改配置文件再次启动报错：`[emerg]: bind() to 0.0.0.0:80 failed (80: Address already in use)`，执行命令：sudo fuser -k 80/tcp，然后 ./nginx
 
 ## 四、其它
-
-### 时区
-
-```bash
-# 当然也可以使用 tzselect，根据提示选择 Asia/Shanghai
-date -R
-cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-date -R
-```
 
 ### 查找apt安装的软件的路径
 

@@ -4,7 +4,7 @@ categories:
 tags:
   - hexo
   - stellar主题效果
-cover: theme
+cover: test
 poster:
   topic: 测试一下
   headline: Stellar主题标签效果测试
