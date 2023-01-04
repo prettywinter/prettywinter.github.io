@@ -21,6 +21,8 @@ Linux基础配置，Linxu 环境配置得当，使用起来特别舒服~，一�
 ```bash
 # 查看所有的安装软件
 dpkg --list
+# 更新系统
+sudo apt-get update && sudo apt-get upgrade
 
 # 卸载指定软件并删除配置文件
 sudo apt-get --purge remove 包名

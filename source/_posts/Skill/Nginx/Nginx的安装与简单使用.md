@@ -34,6 +34,9 @@ Nginx 有几个模块，实际中非常实用，但在编译安装的时候默�
 那么这里就以更新为主喽，新安装的比较简单，编译完成后直接安装（make install）。
 
 ```bash
+# 安装依赖包
+sudo apt-get install libpcre3 libpcre3-dev zlib1g-dev libssl-dev build-essential
+
 # 下载新的源文件
 wget https://nginx.org/download/nginx-1.22.1.tar.gz
 # 解压后进入解压目录
