@@ -32,7 +32,7 @@ apt list --upgradeable
 sudo apt autoremove
 ```
 
-## 一、基本配置
+## 二、基本配置
 
 ### 时区设置
 
