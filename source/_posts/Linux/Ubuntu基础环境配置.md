@@ -48,6 +48,28 @@ timedatectl set-timezone Asia/Shanghai
 timedatectl
 ```
 
+## 语言设置
+
+```bash
+# 列出所有启用的区域设置
+locale -a
+
+# 编辑 locale.gen 文件，
+# 取消 zh_CN.UTF-8 UTF-8 en_US.UTF-8 UTF-8 两行的注释
+vim /etc/locale.gen
+
+# 编辑保存后，执行以下命令
+locale-gen
+# 显示正在使用的 Locale 和相关的环境变量
+locale
+# 设置整个系统使用的区域设置
+localectl set-locale LANG=zh_CN.UTF-8
+# 立即生效
+unset LANG
+```
+
+> 如果使用上面的立即生效命令仍然有问题，没有生效，请重启计算机。
+
 ### 下载工具
 
 Linux 下载工具有很多，比如 Motrix、文件蜈蚣等跨平台的免费开源下载器，而且还有许多命令行下载器，如果喜欢命令行可以使用 wget 或者 curl。
