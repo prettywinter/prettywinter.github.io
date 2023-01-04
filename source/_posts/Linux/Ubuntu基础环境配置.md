@@ -32,6 +32,22 @@ sudo apt autoremove
 
 ## 一、基本配置
 
+### 时区设置
+
+Ubuntu 可以使用内置的 timedatectl 设置系统的时区。
+
+```bash
+# 查看当前的时区
+timedatectl
+# 查看支持的时区列表
+timedatectl list-timezones
+# 设置中国时区
+timedatectl set-timezone Asia/Shanghai
+
+# 无需重启，再次查看
+timedatectl
+```
+
 ### 下载工具
 
 Linux 下载工具有很多，比如 Motrix、文件蜈蚣等跨平台的免费开源下载器，而且还有许多命令行下载器，如果喜欢命令行可以使用 wget 或者 curl。
