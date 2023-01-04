@@ -114,17 +114,15 @@ Window 下的常用的工具软件，一锅炖了，节省篇幅给主要内容�
 # 网易云音乐
 yay -S netease-cloud-music
 
-# Tim（可能会出现问题）
-yay -S deepin-wine-tim
-# QQ（浪子没有安装测试，这个在 aur 上安装最多，可自行测试）
-yay -S deepin-wine-qq
+# linux 3.0版qq已经开始公测（基于 Electron 开发），推荐使用
+# 浪子不推荐 wine 版，如果机器硬件特别好，使用虚拟机也没问题！
+# 顺带说一下，新版 linuxqq 已经支持 qq 频道的功能啦！
+yay -S linuxqq
 
 # 微信
 yay -S deepin-wine-wechat
 # 如果上面的安装失败，可以安装 wechat-uos 试试
 yay -S wechat-uos
-# electronic 版微信
-yay -S electronic-wechat-uos-bin
 
 # 腾讯会议
 yay -S wemeet-bin

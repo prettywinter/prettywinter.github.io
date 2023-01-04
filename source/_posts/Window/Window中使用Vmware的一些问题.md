@@ -1,6 +1,7 @@
 ---
 title: Window中使用VMware的一些常见问题
 categories: Window
+abbrlink: 13fda3d
 ---
 
 虽然 Win 下的 WSL 非常好用，但是浪子还是比较喜欢使用 Vmware 创建 Linux 环境，虽然它很吃内存。。。

@@ -94,6 +94,7 @@ abbrlink: 9e8f8686
 
     // Draw.io Integration 配置：添加自定义字体选项、设置默认主题（Draw.io Integration插件）
     "hediet.vscode-drawio.customFonts": [
+        "JetBrains Mono",
         "Fira Code",
         "文泉驿微米黑"
     ],
@@ -127,7 +128,7 @@ abbrlink: 9e8f8686
           },
     ],
     // maven settings 路径(java 相关插件)
-    "java.configuration.maven.globalSettings": "/usr/local/maven-3.8.4/conf/settings.xml",
+    "java.configuration.maven.globalSettings": "/usr/local/maven-3.8.6/conf/settings.xml",
     "java.dependency.packagePresentation": "hierarchical",
 
 

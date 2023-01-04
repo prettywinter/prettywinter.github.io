@@ -6,7 +6,12 @@ categories:
 tags:
   - java
   - jpa
+abbrlink: '2219457'
 ---
+
+Spring Data Jpa 整理。
+
+<!-- more -->
 
 ## Spring Data Jpa
 

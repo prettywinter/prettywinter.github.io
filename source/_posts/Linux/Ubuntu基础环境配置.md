@@ -56,9 +56,9 @@ timedatectl
 # 列出所有启用的区域设置
 locale -a
 
-# 编辑 locale.gen 文件，
-# 取消 zh_CN.UTF-8 UTF-8 en_US.UTF-8 UTF-8 两行的注释
+# 编辑 locale.gen 文件
 vim /etc/locale.gen
+# 取消 zh_CN.UTF-8 UTF-8 en_US.UTF-8 UTF-8 两行的注释
 
 # 编辑保存后，执行以下命令
 locale-gen
