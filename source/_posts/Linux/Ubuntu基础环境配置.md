@@ -255,3 +255,57 @@ netstat -ntlp
 # 查看所有1935端口使用情况 
 netstat -ntulp | grep 1935
 ```
+
+### ftp服务搭建
+
+[下载](https://pkgs.org/download/vsftpd) 完成后上传至服务器，执行以下命令安装
+
+```bash
+dpkg -i xxx.deb
+```
+
+安装完成后编辑 `/etc/vsftpd.conf` 文件：
+
+```conf
+listen=NO
+listen_ipv6=YES
+anonymous_enable=NO
+local_enable=YES
+write_enable=YES
+local_umask=022
+dirmessage_enable=YES
+use_localtime=YES
+xferlog_enable=YES
+connect_from_port_20=YES
+chroot_local_user=YES
+secure_chroot_dir=/var/run/vsftpd/empty
+pam_service_name=vsftpd
+rsa_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+rsa_private_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+ssl_enable=NO
+# 新增
+pasv_enable=Yes
+pasv_min_port=10000
+pasv_max_port=10100
+allow_writeable_chroot=YES
+```
+
+更新防火墙：`sudo ufw allow from any to any port 20,21,10000:10100 proto tcp`
+
+重启服务：`sudo systemctl restart vsftpd`
+
+创建新用户并设置密码：
+
+```bash
+sudo useradd -m ftptest
+sudo passwd ftptest
+New password: 
+Retype new password: 
+passwd: password updated successfully
+```
+
+添加文件(连接 ftp 时展示的目录为登录的用户的主目录，所以为了安全我们使用新建的用户)：
+
+`sudo echo "this is a simple file" > /home/ftptest/test.txt`
+
+然后就可以连接测试了：`ftp://ip`

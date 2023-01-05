@@ -9,7 +9,7 @@ cover: 'https://fastly.jsdelivr.net/gh/prettywinter/dist/images/blogcover/docker
 abbrlink: 1ca431ad
 ---
 
-使用 Docker 安装常用服务，可以在 [Docker Hub](https://registry.hub.docker.com/) 上搜索镜像以及版本进行拉取/下载。带有 `offical image` 标签的都是官方镜像。
+使用 Docker 安装常用服务，可以在 [Docker Hub](https://registry.hub.docker.com/) 上搜索镜像以及版本进行拉取/下载。带有 `offical image` 标签的都是官方镜像。并且相应的镜像里都有启动说明可以参照，本文只是水文。
 
 <!-- more -->
 
@@ -46,17 +46,18 @@ abbrlink: 1ca431ad
 docker run -d -p 3306:3306 --name mysql<自定义服务名> -v /data/docker-service/mysql/conf:/etc/mysql -v /data/docker-service/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -v MYSQL_DATABASE=要创建的数据库名称 --restart=always mysql:5.7.32
 ```
 
-启动完成后，进入 MySQL 的 bash 环境: `docker exec -it mysql bash`，执行下面的命令开启远程连接：
+启动完成后，进入 MySQL 的 bash 环境: `docker exec -it mysql bash`，执行下面两条命令开启远程连接：
 
 ```bash
 # password 根据自身情况修改
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'password' WITH GRANT OPTION;
+# 刷新权限
 FLUSH PRIVILEGES;
 ```
 
-如果需要导入之前的数据库备份到此容器中，可以使用 `docker cp /data/docker-service/mysql/data/test.sql mysql:/var/lib/mysql`，然后使用 `source test.sql;` 加载数据。
+如果需要导入之前的数据库备份文件到此容器中，可以使用 `docker cp /data/docker-service/mysql/data/备份文件.sql mysql:/var/lib/mysql`，然后使用 `source 备份文件.sql;` 加载数据到容器。
 
-> 如果本机使用可视化连接出现以下错误：Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock'，请使用 127.0.0.1 连接，不要使用 localhost。
+> 如果本机使用可视化工具（dbeaver、navicat）连接出现以下错误：Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock'，请使用 127.0.0.1 连接，不要使用 localhost。
 
 ## 2. Redis
 
@@ -65,7 +66,7 @@ Redis默认开启的是快照模式(RDB)，可以开启AOF持久化(最多丢1s�
 ### 指定配置文件并开启AOF持久化后台启动
 
 ```bash
-docker run -p 6379:6379 --name redis -v /data/docker-service/redis/conf:/etc/redis/redis.conf  -v /data/docker-service/redis/data:/data -d redis:6.2.5 redis-server /etc/redis/redis.conf --appendonly yes
+docker run -p 6379:6379 --name redis -v /data/docker-service/redis/conf:/usr/local/etc/redis -v /data/docker-service/redis/data:/data -d redis:6.2.5 redis-server /usr/local/etc/redis/redis.conf --appendonly yes
 ```
 
 ## 3. Nginx
