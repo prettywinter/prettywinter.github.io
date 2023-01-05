@@ -43,14 +43,20 @@ abbrlink: 1ca431ad
 ### 使用自定义的配置文件启动MySQL并且在启动时创建一个数据库
 
 ```bash
-docker run -d -p 3306:3306 --name mysql -v /root/docker/mysql:/etc/mysql/conf.d -v /root/docker/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -v MYSQL_DATABASE=数据库名称 --restart=always mysql:5.7.32
+docker run -d -p 3306:3306 --name mysql<自定义服务名> -v /data/docker-service/mysql/conf:/etc/mysql -v /data/docker-service/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -v MYSQL_DATABASE=要创建的数据库名称 --restart=always mysql:5.7.32
 ```
 
-> 导入备份数据到容器：docker cp /root/docker/test.sql 容器名称:/path
-> 进入 MySQL 的 bash 环境: docker exec -it mysql bash
-> 登录数据库，并选择数据库加载数据： mysql -u root -p && use test
-> 加载数据：source test.sql;
-> 如果出现以下错误：Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock'，请使用 127.0.0.1 连接，不要使用 localhost
+启动完成后，进入 MySQL 的 bash 环境: `docker exec -it mysql bash`，执行下面的命令开启远程连接：
+
+```bash
+# password 根据自身情况修改
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'password' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+```
+
+如果需要导入之前的数据库备份到此容器中，可以使用 `docker cp /data/docker-service/mysql/data/test.sql mysql:/var/lib/mysql`，然后使用 `source test.sql;` 加载数据。
+
+> 如果本机使用可视化连接出现以下错误：Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock'，请使用 127.0.0.1 连接，不要使用 localhost。
 
 ## 2. Redis
 
@@ -59,7 +65,7 @@ Redis默认开启的是快照模式(RDB)，可以开启AOF持久化(最多丢1s�
 ### 指定配置文件并开启AOF持久化后台启动
 
 ```bash
-docker run -p 6379:6379 --name redis -v /data/redis/conf:/etc/redis/redis.conf  -v /data/redis/data:/data -d redis:6.2.5 redis-server /etc/redis/redis.conf --appendonly yes
+docker run -p 6379:6379 --name redis -v /data/docker-service/redis/conf:/etc/redis/redis.conf  -v /data/docker-service/redis/data:/data -d redis:6.2.5 redis-server /etc/redis/redis.conf --appendonly yes
 ```
 
 ## 3. Nginx
@@ -67,20 +73,20 @@ docker run -p 6379:6379 --name redis -v /data/redis/conf:/etc/redis/redis.conf  
 ### 使用自定义配置文件启动
 
 ```bash
-docker run --name nginx -d -p 80:80 -v /data/nginx/nginx.conf:/etc/nginx/nginx.conf nginx:1.20
+docker run --name nginx -p 80:80 -v /data/docker-service/nginx/nginx.conf:/etc/nginx/nginx.conf:ro -d nginx:1.22
 ```
 
 > 注意：nginx的配置文件必须和版本一致。
 > `ro` 代表只读(read only): 外部的改变能够影响内部，内部的改变不会影响外部。
 
-复制容器内部的配置文件到宿主机：`docker cp nginx:/etc/nginx/nginx.conf /data/nginx.conf`
+复制容器内部的配置文件到宿主机：`docker cp nginx:/etc/nginx/nginx.conf /data/docker-service/nginx/nginx.conf`
 
 ## 4. RabbitMQ
 
 ### 使用自定义配置信息启动
 
 ```bash
-docker run -d --name RabbitMQ -p 15672:15672 -p 5672:5672 -v /data/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf rabbitmq:3.8-management
+docker run -d --name RabbitMQ -p 15672:15672 -p 5672:5672 -v /data/docker-service/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf rabbitmq:3.8-management
 ```
 
 5672 端口是与程序进行通信的，比如Java。rabbitmq:3.8-management 连带服务和管理界面的插件一并启动(默认的账号密码：guest/guest)，而 rabbitmq:3.8 是没有管理界面的。
@@ -127,13 +133,13 @@ docker run -d --name elasticsearch -p 9200:9200 -p 9300:9300 elasticsearch:7.0
 ### 6.2 使用自定义配置启动
 
 ```bash
-docker run -d --name es -p 9200:9200 -p 9300:9300 -v /data/es/data:/usr/share/elasticsearch/data -v /data/es/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml elasticsearch:7.0
+docker run -d --name es -p 9200:9200 -p 9300:9300 -v /data/docker-service/es/data:/usr/share/elasticsearch/data -v /data/docker-service/es/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml elasticsearch:7.0
 ```
 
 ### 6.3 加载 IK 分词器启动
 
 ```bash
-docker run -d --name es -p 9200:9200 -p 9300:9300 -v /data/es/data:/usr/share/elasticsearch/data -v /data/es/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml -v /data/es/ik:/usr/share/elasticsearch/plugins/ik elasticsearch:7.0
+docker run -d --name es -p 9200:9200 -p 9300:9300 -v /data/docker-service/es/data:/usr/share/elasticsearch/data -v /data/docker-service/es/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml -v /data/docker-service/es/ik:/usr/share/elasticsearch/plugins/ik elasticsearch:7.0
 ```
 
 ## 7. Kibana
@@ -141,5 +147,5 @@ docker run -d --name es -p 9200:9200 -p 9300:9300 -v /data/es/data:/usr/share/el
 ### 指定自定义配置文件启动
 
 ```bash
-docker run -d --name kibana -p 5601:5601 -v /data/kibana.yml:/usr/share/kibana/config/kibana.yml Kibana:7.0
+docker run -d --name kibana -p 5601:5601 -v /data/docker-service/Kibana/kibana.yml:/usr/share/kibana/config/kibana.yml Kibana:7.0
 ```

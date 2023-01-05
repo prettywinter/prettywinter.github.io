@@ -4,10 +4,11 @@ categories:
 tags:
   - hexo
   - stellar主题效果
-poster:
-  topic: 测试一下
-  headline: Stellar主题标签效果测试
-  color: red
+title: Stellar主题标签效果测试
+# poster:
+#   topic: 测试一下
+#   headline: Stellar主题标签效果测试
+#   color: red
 abbrlink: f320e422
 ---
 

@@ -18,9 +18,10 @@ abbrlink: '89826705'
 <!-- code_chunk_output -->
 
 - [一、Docker入门](#一docker入门)
-- [二、准备配置](#二准备配置)
-  - [1. 命令行设置国内镜像源](#1-命令行设置国内镜像源)
-  - [2. 编辑配置文件设置镜像加速](#2-编辑配置文件设置镜像加速)
+- [二、准备](#二准备)
+  - [镜像源配置](#镜像源配置)
+    - [1. 命令行设置国内镜像源](#1-命令行设置国内镜像源)
+    - [2. 编辑配置文件设置镜像加速](#2-编辑配置文件设置镜像加速)
 - [三、常用命令](#三常用命令)
 - [四、Docker进阶](#四docker进阶)
   - [1. Docker为什么提供网络功能？](#1-docker为什么提供网络功能)
@@ -35,19 +36,23 @@ abbrlink: '89826705'
 
 ## 一、Docker入门
 
-一个镜像可以去创建多个容器，各个容器之间互不干扰。
+镜像与容器概念？
+
+用重装系统来解释的话，镜像（images）就是我们要装的系统（win7、win10、manjaro 等 iso 文件），容器好比是 U 盘。我们可以把系统放进各种容量足够的 U 盘里，那么这个 U 盘就是一个容器，当我们需要重装系统的时候，就使用（启动）这个 U 盘（容器）。
+
+因此，一个镜像可以去创建多个容器，各个容器之间互不干扰。
 
 Q：docker 拉取的镜像为什么比我们直接下载的文件体积大？
 A：一个镜像不仅仅是原来的软件包，它还包含了软件包运行所需的操作系统依赖、软件自身依赖等。所以随着我们的使用，使用的镜像越多，新的镜像下载会越来越快，因为有些依赖已经存在，后续的镜像如果对存在的依赖有使用的话，它会复用已经存在的依赖，而不会去再次下载。
 
-## 二、准备配置
+## 二、准备
 
-为了避免使用普通用户运行 docker 的相关命令时出现报错，我们可以在docker命令前加上sudo去运行，但是每次都加显然很麻烦。那么在安装完docker后，可以运行以下命令：
+为了避免使用普通用户运行 docker 的相关命令时出现报错，我们可以在docker命令前加上sudo去运行，但是每次都加显然很麻烦。那么在安装完docker后，可以使用以下命令：
 
 ```bash
 # 创建 docker 用户组
 sudo groupadd docker
-# 将普通用户加入 docker 组中
+# 将当前普通用户加入 docker 组中
 sudo gpasswd -a $USER docker
 # 更新 docker 组
 newgrp docker
@@ -55,13 +60,17 @@ newgrp docker
 docker ps
 ```
 
-### 1. 命令行设置国内镜像源
+### 镜像源配置
+
+有两种方法修改镜像源，一种是命令行命令，另一种是修改相关文件。
+
+#### 1. 命令行设置国内镜像源
 
 ```bash
 dockerd --registry-mirror=https://registry.docker-cn.com
 ```
 
-### 2. 编辑配置文件设置镜像加速
+#### 2. 编辑配置文件设置镜像加速
 
 ```json /etc/docker/daemon.json
 {
@@ -80,14 +89,14 @@ dockerd --registry-mirror=https://registry.docker-cn.com
 }
 ```
 
-> 设置完毕重启docker。
+> 设置完毕重启 docker 服务。
 
-|加速源|url|是否需要注册|
-|--|--|--|
-|Docker官方的中国镜像加速地址|https://registry.docker-cn.com|需要|
-|中科大的镜像加速器|https://docker.mirrors.ustc.edu.cn/|不用注册（推荐)
-|阿里云的镜像加速器|登录阿里云的容器hub服务，镜像加速器那一栏里会为你独立分配一个加速器地址|需要注册|
-|DaoCloud的镜像加速器|登录DaoCloud的加速器获取脚本，该脚本可以将加速器添加到守护进程的配置文件中。|需要注册|
+| 加速源                       | url                                                                          | 是否需要注册    |
+| ---------------------------- | ---------------------------------------------------------------------------- | --------------- |
+| Docker官方的中国镜像加速地址 | https://registry.docker-cn.com                                               | 需要            |
+| 中科大的镜像加速器           | https://docker.mirrors.ustc.edu.cn/                                          | 不用注册（推荐) |
+| 阿里云的镜像加速器           | 登录阿里云的容器hub服务，镜像加速器那一栏里会为你独立分配一个加速器地址      | 需要注册        |
+| DaoCloud的镜像加速器         | 登录DaoCloud的加速器获取脚本，该脚本可以将加速器添加到守护进程的配置文件中。 | 需要注册        |
 
 ## 三、常用命令
 
@@ -137,19 +146,12 @@ docker search mysql
 docker pull mysql:8.0.20
 
 # 查看拉取的镜像
-docker images -a
+docker images
 
 # 创建并运行容器 MYSQL_ROOT_PASSWORD 该项在启动时必须指定，不然容器启动失败
-docker run -d -p 3306:3306 --name mysql8 -v /docker-data/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 mysql:8.0.20 --restart=always
-# 创建容器时，最后的 mysql:8.0.20 就是使用刚刚下载的镜像创建容器；
-# 如果不写也可以，docker会自动在本地检测有没有最新的，如果没有会自动下载。
+# mysql:8.0.20 就是使用刚刚下载的镜像创建容器；如果不写会自动下载最新版本的镜像
+docker run -d -p 9999:3306 --name mysql8 -v /docker-data/mysql/data:/var/lib/mysql -v /docker-data/mysql/conf:/etc/mysql -e MYSQL_ROOT_PASSWORD=123456 --restart=always mysql:8.0.20
 
-#    run              运行一个docker容器
-#    --name           生成的容器的名字 mysql8
-#    -p 3306:3306     设置端口映射：宿主机映射端口:容器运行端口；客户端工具(例如navicat)连接时可以通过 3306 端口进行连接
-#    -e               代表添加环境变量 MYSQL_ROOT_PASSWORD=123456 初始化root用户的密码
-#    -d               表示使用守护进程运行，即服务挂在后台运行
-    
 # 查看 mysql8 容器是否运行
 docker ps
 
@@ -158,7 +160,7 @@ docker inspect mysql8
 
 # 进入容器
 docker exec -it mysql8 bash
-# 进入 mysql 命令行
+# 进入 mysql 命令行，登录 mysql
 mysql -u root -p
 # 退出 bash，退出容器
 exit
@@ -169,7 +171,7 @@ docker stop mysql8
 # 再次查看正在运行的容器
 docker ps
 
-# 查看本地所有的容器
+# 查看本地所有的容器（启动成功和启动失败的都会显示）
 docker ps -a
 # 删除容器
 docker rm mysql8
@@ -182,7 +184,18 @@ docker rmi mysql:8.0.20
 docker images
 ```
 
-使用 `--restart=always` 参数可以在 Docker 服务启动时自动启动对应的docker容器。如果在 docker 容器已经启动后，想要设置容器跟随 docker 服务自启动，可以使用更新的命令：`docker update --restart=always 容器名称`，比如我想让MySQL容器自动启动，那么命令就是`docker update --restart=always mysql`，这样，容器名称为 `mysql` 的容器就会跟随Docker服务而自启动了。
+| 选项             | 说明                                                                                               |
+| ---------------- | -------------------------------------------------------------------------------------------------- |
+| run              | 运行一个docker容器                                                                                 |
+| --name           | 生成的容器的名字 mysql8                                                                            |
+| -p 9999:3306     | 设置端口映射：宿主机映射端口:容器运行端口；客户端工具(例如navicat)连接时可以通过 9999 端口进行连接 |
+| -e               | 代表添加环境变量 MYSQL_ROOT_PASSWORD=123456 初始化root用户的密码为 123456                          |
+| -d               | 表示使用守护进程运行，即服务挂在后台运行                                                           |
+| -v               | 数据卷映射，前面的是本地目录，后面的为容器内目录。删除容器映射的本地目录内容仍然存在               |
+| --restart=always | 在 docker 容器已经启动后，自动运行该容器服务                                                       |
+
+> 如果已经运行的服务想要设置跟随  docker 服务启动，使用下面的命令
+> docker update --restart=always name/id
 
 ## 四、Docker进阶
 
