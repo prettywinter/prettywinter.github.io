@@ -7,7 +7,7 @@ cover: 'https://fastly.jsdelivr.net/gh/prettywinter/dist/images/blogcover/linux.
 abbrlink: 509e306a
 ---
 
-Linux 常用命令总结。这些东西还是要常敲的，记住的总会忘记。
+Linux 简单介绍。
 
 <!-- more -->
 

@@ -38,3 +38,8 @@ systemctl restart network
 ## 虚拟机可以ping通本机，本机ping不通虚拟机
 
 如果使用的是 NAT 模式，首先，确保虚拟机的 IP 网段和本机是同一个网段。因为当你的网络连接变了之后（从连 wifi 到使用网线），本机的 IP 网络也会随之更改，所以需要确认一边。设置完成记得重启。
+
+## 使用其它SSH工具连接虚拟机
+
+如果是 22.04 版本的 ubuntu-server 版本，其内置了 ufw 工具（最小安装可能没有）。可以使用 `sudo ufw disable` 关闭防火墙，或者开放 22 端口：`sudo ufw allow 22`。
+
