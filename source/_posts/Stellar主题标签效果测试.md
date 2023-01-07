@@ -90,7 +90,7 @@ public static final ConcurrentHashMap map = null;
 
 {% quot 四、单独 codeblock 标签测试 el:h1 %}
 
-{% codeblock lang:java %}
+{% codeblock lang:java color:red %}
 public static final ConcurrentHashMap map = null;
 {% endcodeblock %}
 
