@@ -62,3 +62,33 @@ ps 有四种策略：
 ## Git-Bash中使用tree命令
 
 [下载二进制文件](http://gnuwin32.sourceforge.net/package/tree.htm) 后解压，复制 bin 目录下的 `tree.exe` 文件到 Git 安装目录的 `xxx\Git\usr\bin\` 目录下即可。
+
+## WSL 相关问题
+
+帮助命令 `wsl -h`，感觉还是比较清楚的。
+
+### 安装后root用户密码
+
+安装后默认是没有 root 用户密码的，使用 `sudo passwd` 去指定。
+
+### docker
+
+WSL 中使用 docker 必须下载 [Docker Desktop](https://docs.docker.com/desktop/windows/wsl/)。
+
+### 有关路径存储设置
+
+不论是 WSL 安装的 Linux 发行版还是使用 Docker Desktop，默认的安装路径都在 `C:\User\xxx\AppData\Local`，可以设置为其它路径。
+
+```bash
+# 1.查看wsl安装哪些分支
+wsl -l -v
+# 2.关闭所有的分支及wsl2
+wsl --shutdown
+# 3.导出相关分支
+wsl --export Ubuntu D:\ubuntu.tar
+# 4.注销分发并删除根文件系统。
+wsl --unregister Ubuntu
+# 5.将指定的 tar 文件作为新分发导入
+wsl --import Ubuntu D:\WSL\Ubuntu D:\ubuntu.tar
+# 之后重启
+```
