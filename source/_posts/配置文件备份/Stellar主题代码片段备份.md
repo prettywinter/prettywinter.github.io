@@ -34,7 +34,7 @@ Hexo 博客使用的 Stellar 主题，该主题简洁大方，深得我意。该
 		"scope": "markdown",
 		"prefix": "label",
 		"body": [
-			"{% $1 %} $2",
+			"{% ${1:label-name} %} $2",
 		],
 		"description": "generator stellar theme label template"
 	},
@@ -42,7 +42,7 @@ Hexo 博客使用的 Stellar 主题，该主题简洁大方，深得我意。该
 		"scope": "markdown",
 		"prefix": "md-img",
 		"body": [
-			"{% image ${1:src} ${2:desc} %}",
+			"{% image ${1:src} ${2:desc} width:${3:宽度（可选）} bg:${4:背景（可选）} %}",
 		],
 		"description": "generator stellar theme image template"
 	},
@@ -58,9 +58,27 @@ Hexo 博客使用的 Stellar 主题，该主题简洁大方，深得我意。该
 		"scope": "markdown",
 		"prefix": "md-cp",
 		"body": [
-			"{% copy $1 %}",
+			"{% copy ${1:content} %}",
 		],
 		"description": "generator stellar theme link template"
+	},
+	"hexo-stellar-mark": {
+		"scope": "markdown",
+		"prefix": "md-mark",
+		"body": [
+			"{% mark ${1:content} color:${2:green} %}",
+		],
+		"description": "generator stellar theme mark template, support red|orange|yellow|green|cyan青|blue蓝|purple|light|dark|warning|error"
+	},
+	"hexo-stellar-poetry": {
+		"scope": "markdown",
+		"prefix": "md-poetry",
+		"body": [
+			"{% poetry ${1:title} author:${2:author} footer:${3:页脚} %}",
+			"$4",
+			"{% endpoetry %}"
+		],
+		"description": "generator stellar theme poetry template"
 	}
 }
 ```

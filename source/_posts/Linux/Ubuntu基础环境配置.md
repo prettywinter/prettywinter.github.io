@@ -10,7 +10,7 @@ cover: 'linux,ubuntu'
 abbrlink: af7fa1dd
 ---
 
-Ubuntu 基础配置，Linxu 环境配置得当，使用起来特别舒服~，一般开发办公体验完全不输 Window。安装可以选用 Ubuntu、Manjaro 等系统，受众较多，问题容易解决。
+Ubuntu/Ubuntu-Server 基础配置，桌面版应该也能用，如果你喜欢命令的话，应该都没问题。
 
 <!-- more -->
 
@@ -21,6 +21,9 @@ Ubuntu 基础配置，Linxu 环境配置得当，使用起来特别舒服~，一
 ```bash
 # 查看所有的安装软件
 dpkg --list
+# 安装已经下载好的 deb 安装包
+dpkg -i 安装包
+
 # 更新所有可更新的软件包
 sudo apt update && sudo apt upgrade
 
@@ -86,7 +89,7 @@ curl cip.cc
 
 ### Vim
 
-如果 Vim 配置的好，编写代码将会轻松拿捏，加上插件的辅助，老手的效率不输使用IDE。
+如果 Vim 配置的好，那么日常编辑文件是非常流畅的。很多大佬用 Vim 写代码，当然，浪子做不到 QAQ。
 
 Vim 的全局配置文件在 `/etc/vim/vimrc` 或者 `/etc/vimrc`，对所有用户生效；用户的配置文件一般在 `~/.vimrc` 中。
 

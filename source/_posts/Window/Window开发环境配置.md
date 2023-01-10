@@ -313,8 +313,7 @@ registry = "https://mirrors.ustc.edu.cn/crates.io-index"
 ### 3. 火狐
 
 1. [TWP - Translate Web Pages](https://addons.mozilla.org/zh-CN/firefox/addon/traduzir-paginas-web/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search)
-2. [Cloudopt AdBlocker](https://addons.mozilla.org/zh-CN/firefox/addon/cloudoptlab/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search)
-3. [ScriptCat](https://addons.mozilla.org/zh-CN/firefox/addon/scriptcat/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search)
+2. [Browse.live](https://addons.mozilla.org/zh-CN/firefox/addon/browse-live/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search)
 
 ### 4. IDEA
 
