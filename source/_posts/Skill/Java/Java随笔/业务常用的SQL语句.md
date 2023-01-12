@@ -15,7 +15,7 @@ abbrlink: 44d4a5e6
 
 ```sql
 -- 增加递增列
-select @rank:=@rank + 1 AS num from @rank=0
+select @rank:=@rank + 1 AS num from (select @rank:=0) a
 -- 构建近12个月的月份虚拟表
 SELECT DATE_FORMAT(@cdate := date_add( @cdate, INTERVAL - 1 MONTH ),'%Y-%m') as date
 FROM (SELECT @cdate := date_add(now(), INTERVAL 1 MONTH ) FROM table_name LIMIT 12) d ORDER BY date
