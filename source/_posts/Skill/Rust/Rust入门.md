@@ -5,6 +5,7 @@ categories:
   - Rust
 tags:
   - rust
+abbrlink: dba35a1e
 ---
 
 Rust 是一颗新星，世界各地的开发人员都在注视着，这款以安全著称的语言你不试试吗？
