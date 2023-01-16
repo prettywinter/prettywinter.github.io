@@ -36,4 +36,4 @@ title: 关于
 
 {% quot 一些工具 icon:hashtag  %}
 
-{% sites mirrors github fonts tools %}
+{% sites tools %}
