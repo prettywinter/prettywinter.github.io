@@ -48,7 +48,7 @@ SpringBoot 集成各种第三方库（jar包）及常见问题解决方式。
 
 对于使用 SpringBoot 2.7.x 以上版本，或者遵循 Open Api3.0 的推荐使用 [Spring Doc](https://springdoc.org/)，尤其是准备使用 SpringBoot3.0 的。
 
-而且使用的过程中，你会发现 Spring Doc 的标签属性比 swagger 的清晰（因为doc少），虽少但是齐全够用。
+而且使用的过程中，你会发现 Spring Doc 的标签属性比 swagger 的清晰（因为doc标签属性少），虽少但是齐全够用。
 
 ```xml pom.xml
 <dependency>
@@ -175,7 +175,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 ### 3. [Excel文件导出时中文被转义](https://blog.csdn.net/qq_28869233/article/details/87979552?spm=1035.2023.3001.6557&utm_medium=distribute.pc_relevant_bbs_down.none-task-blog-2~default~OPENSEARCH~default-6.nonecase&depth_1-utm_source=distribute.pc_relevant_bbs_down.none-task-blog-2~default~OPENSEARCH~default-6.nonecase)
 
 ```java
-response.setHeader("Content-disposition", "attachment;filename="+fileNameURL+";"+"filename*=utf-8''"+fileNameURL);
+String fileName = URLEncode.encode(name, "UTF-8");
+response.setHeader("Content-disposition", "attachment;filename="+fileName+";"+"filename*=utf-8''" + fileName);
 ```
 
 ### 4. 切面、拦截器、过滤器

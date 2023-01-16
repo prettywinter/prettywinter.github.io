@@ -32,6 +32,15 @@ implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 public class SysMenu extends BaseEntity {
 
     /**
+     * 主键 id 必须使用 @Id 注解
+     * GeneratedValue 
+     * GenerationType.IDENTITY 代表使用数据库的自增模式，最好不要使用默认的 auto 策略
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    /**
      * 菜单名称
      */
     private String menuName;
@@ -56,13 +65,7 @@ public abstract class BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * 主键 id，必须有
-     * GeneratedValue 代表使用数据库的自增模式，最好不要使用默认的 auto 策略
-     */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    
     /**
      * 创建者
      */
@@ -92,7 +95,7 @@ public abstract class BaseEntity implements Serializable {
 
 ### 2. 持久层
 
-持久层类可以实现两个接口：JpaRepository<T, O>, CrudRepository<T, O>，开发中任意选择。
+持久层类可以实现两个接口：`JpaRepository<T, O>`, `CrudRepository<T, O>`，开发中任意选择。
 
 如果点进去看这两个接口源码的话，你会发现 JpaRepository 其实是 CrudRepository 的孙子类：JpaRepository 继承了接口 PagingAndSortingRepository 和 QueryByExampleExecutor。而PagingAndSortingRepository 又继承 CrudRepository。所以，JpaRepository 接口同时拥有了基本 CRUD 功能以及分页功能。
 
