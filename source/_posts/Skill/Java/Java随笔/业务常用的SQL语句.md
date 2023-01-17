@@ -32,6 +32,35 @@ DATE_FORMAT( DATE( DATE_SUB( CURRENT_DATE, INTERVAL @s DAY ) ), '%Y-%m-%d' ) AS 
 FROM table_name, ( SELECT @s := -1 ) temp
 WHERE @s < 30 
 ORDER BY dates
+
+-- 查询今天的数据
+select * from table_name where TO_DAYS(create_time) = TO_DAYS(NOW());
+-- 查询当前一周的数据
+SELECT * FROM table_name WHERE YEARWEEK(date_format(create_time,'%Y-%m-%d'), 1) = YEARWEEK(NOW());
+-- 查询本月的数据
+SELECT * FROM table_name WHERE DATE_FORMAT(create_time, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m');
+
+-- 查询最近七天的数据(当前日期往前推七天)
+SELECT a.mode_date AS mday, b.other
+FROM (
+    SELECT CURDATE() AS mode_date
+    UNION ALL
+    SELECT DATE_SUB(CURDATE(), INTERVAL 1 DAY) AS mode_date
+    UNION ALL
+    SELECT DATE_SUB(CURDATE(), INTERVAL 2 DAY) AS mode_date
+    UNION ALL
+    SELECT DATE_SUB(CURDATE(), INTERVAL 3 DAY) AS mode_date
+    UNION ALL
+    SELECT DATE_SUB(CURDATE(), INTERVAL 4 DAY) AS mode_date
+    UNION ALL
+    SELECT DATE_SUB(CURDATE(), INTERVAL 5 DAY) AS mode_date
+    UNION ALL
+    SELECT DATE_SUB(CURDATE(), INTERVAL 6 DAY) AS mode_date
+) a LEFT JOIN (
+  SELECT DATE(create_time) AS c_time, other
+  FROM table_name WHERE TYPE = 2 
+  GROUP BY DATE(create_time)
+) b ON a.mode_date = b.c_time ORDER BY mday;
 ```
 
 ## Oracle
@@ -54,3 +83,9 @@ WHERE ROWNUM <= 12;
 ```
 
 [hive、oracle、mysql内建函数对照表](https://help.aliyun.com/document_detail/96342.html)
+
+## PG
+
+```sql
+
+```
