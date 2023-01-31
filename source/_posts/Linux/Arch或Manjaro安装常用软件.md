@@ -162,13 +162,15 @@ yay -S visual-studio-code-bin
 yay -S microsoft-edge-stable-bin
 yay -S termius
 yay -S google-chrome
-# jdk
-yay -S jdk8-openjdk jdk17-openjdk
+# jdk 以及源码（如果不安装 src 是没有 .java 源码文件的）
+yay -S jdk8-openjdk jdk17-openjdk openjdk8-src openjdk17-src
 # 如果有多个版本，设置某个 JDK 版本为默认版本
 sudo archlinux-java set java-11-openjdk
 # docker
 yay -S docker docker-compose
 ```
+
+> java 的源码下载后，需要在使用的 IDE 中添加 `src.zip` 所在的目录，一般都在 /usr/jvm/jdk-version/lib/ 路径下
 
 docker 安装完成后普通用户不能使用相关命令，需要进行一些修改：
 
