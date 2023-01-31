@@ -257,7 +257,7 @@ netstat -ntlp
 netstat -ntulp | grep 1935
 ```
 
-### ftp服务搭建
+### [ftp服务搭建](https://www.geeksforgeeks.org/how-to-setup-and-configure-an-ftp-server-in-linux/)
 
 [下载](https://pkgs.org/download/vsftpd) 完成后上传至服务器，执行以下命令安装
 
@@ -303,6 +303,16 @@ sudo passwd ftptest
 New password: 
 Retype new password: 
 passwd: password updated successfully
+
+ 
+# 出于安全考虑，限定用户ftpuser不能登录，只能ftp
+usermod -s /sbin/nologin ftpuser
+
+# 出于安全考虑，我们将禁用此用户的 ssh 权限。输入
+
+sudo vim /etc/ssh/sshd_config
+# 在此文件中添加以下行，然后重启 SSH sudo systemctl restart sshd
+DenyUsers ftpuser
 ```
 
 添加文件(连接 ftp 时展示的目录为登录的用户的主目录，所以为了安全我们使用新建的用户)：
