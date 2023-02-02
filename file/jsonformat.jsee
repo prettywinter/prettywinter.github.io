@@ -1,0 +1,2 @@
+document.selection.SelectAll();
+document.selection.Text = JSON.stringify(JSON.parse(document.selection.Text), null, '\t');
