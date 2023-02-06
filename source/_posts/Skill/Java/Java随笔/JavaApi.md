@@ -1,5 +1,5 @@
 ---
-title: 一些好用的JavaApi
+title: JavaApi
 categories:
   - Skill
   - Java
