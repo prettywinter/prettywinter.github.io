@@ -279,6 +279,8 @@ Path：`%GOROOT%\bin`
 
 ### 11. [Rust](https://www.rust-lang.org/)
 
+Rust 安装参考：https://course.rs/first-try/installation.html
+
 替换下载依赖源：
 
 ```toml .../.cargo/config.toml

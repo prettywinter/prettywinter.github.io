@@ -47,7 +47,7 @@ Git的官网下载比较慢，可以去 [这里](https://npm.taobao.org/mirrors/
 # Linux Mac
 $ ssh-keygen -t ed25519 -C 'xxx@xx.com' -f ~/.ssh/github_id_rsa
 # window
-$ ssh-keygen -t ed25519 -C 'xxx@xx.com' -f C:\Users\用户名\.ssh\github_id_rsa
+$ ssh-keygen -t ed25519 -C 'xxx@xx.com' -f C:/Users/用户名/.ssh/github_id_rsa
 ```
 
 ### 2. 生成gitee使用的SSH-Key
@@ -56,10 +56,9 @@ $ ssh-keygen -t ed25519 -C 'xxx@xx.com' -f C:\Users\用户名\.ssh\github_id_rsa
 # Linux Mac
 $ ssh-keygen -t ed25519 -C 'xxx@xx.com' -f ~/.ssh/gitee_id_rsa
 # window
-$ ssh-keygen -t ed25519 -C 'xxx@xx.com' -f C:\Users\用户名\.ssh\gitee_id_rsa
+$ ssh-keygen -t ed25519 -C 'xxx@xx.com' -f C:/Users/用户名/.ssh/gitee_id_rsa
 ```
 
-> 以上生成密钥的示例中，在 Git Bash 中使用 `~/.ssh/xxx_id_rsa` 路径就可以；在 Win 系统中如果使用 cmd/power shell/cmder等工具，使用该路径可能会报错“没有该路径文件”，这时候可以使用第二种方式。
 > 2022-08-22 修改为 ed25519 密钥生成。
 
 ### 3. 配置
