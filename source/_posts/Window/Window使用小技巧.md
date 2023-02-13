@@ -59,10 +59,6 @@ ps 有四种策略：
 | RemoteSigned | 要求从网络上下载的脚本和配置文件由可信者发布签名，不要求本地计算机上编写的脚本进行签名 |
 | Unrestricted | 可以运行未签名的脚本                                                                   |
 
-## Git-Bash中使用tree命令
-
-[下载二进制文件](http://gnuwin32.sourceforge.net/package/tree.htm) 后解压，复制 bin 目录下的 `tree.exe` 文件到 Git 安装目录的 `xxx\Git\usr\bin\` 目录下即可。
-
 ## WSL 相关问题
 
 帮助命令 `wsl -h`，感觉还是比较清楚的。

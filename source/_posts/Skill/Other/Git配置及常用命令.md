@@ -28,6 +28,7 @@ Git配置及常用操作
 - [一张图](#一张图)
 - [Git Submodule](#git-submodule)
   - [删除submodule](#删除submodule)
+- [Git-Bash中配置tree命令](#git-bash中配置tree命令)
 
 <!-- /code_chunk_output -->
 
@@ -260,3 +261,7 @@ git rm <submodulesname>
 
 git commit -m "delete submodule submodulesname"
 ```
+
+## Git-Bash中配置tree命令
+
+[下载tree的二进制文件](http://gnuwin32.sourceforge.net/package/tree.htm) 后解压，把 `bin` 目录下的 tree.exe 文件复制到 Git 安装目录 `xxx\Git\usr\bin\` 下即可。
