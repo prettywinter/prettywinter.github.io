@@ -120,7 +120,7 @@ mysqld --remove service-name
 
 # 使用不安全的初始化（即不生成初始密码）
 mysqld --initialize-insecure --user=mysql --console
-# 如果需要生成初始化密码，执行以下命令。--console 选项把生成的密码打印到控制台
+# 如果需要生成初始化密码，则使用以下命令。--console 选项把生成的密码打印到控制台
 mysqld --initialize --user=mysql --console
 
 # 启动 MySQL 服务
