@@ -304,11 +304,12 @@ registry = "https://mirrors.ustc.edu.cn/crates.io-index"
 ### 2. Edge
 
 1. [可可翻译](https://microsoftedge.microsoft.com/addons/detail/%E5%8F%AF%E5%8F%AF%E7%BF%BB%E8%AF%91/ebkimaahhkeiplegpghijhgmlcdkeppf)
-2. [JSON Formatter for Edge](https://microsoftedge.microsoft.com/addons/detail/json-formatter-for-edge/njpoigijhgbionbfdbaopheedbpdoddi)
-3. [Greenhub绿墙—网络出海工具](https://microsoftedge.microsoft.com/addons/detail/greenhub%E7%BB%BF%E5%A2%99%E2%80%94%E7%BD%91%E7%BB%9C%E5%87%BA%E6%B5%B7%E5%B7%A5%E5%85%B7/hholdpohidinjmkoanabdchniingdfac)
-4. [文件蜈蚣（需要安装对应的软件）](https://microsoftedge.microsoft.com/addons/detail/jeekmibdibcjeihbjnjgbegjalfelhon)
-5. [图片下载](https://microsoftedge.microsoft.com/addons/detail/fatkun%E5%9B%BE%E7%89%87%E6%89%B9%E9%87%8F%E4%B8%8B%E8%BD%BD-pro/dammmokdamnimedflemdaoamhldmldff)
-6. [Replace Google CDN](https://microsoftedge.microsoft.com/addons/detail/replace-google-cdn/cojepngjobmaiajphkijbdcdjnnjhpjc)
+2. [JSON Beautifier & Editor](https://microsoftedge.microsoft.com/addons/detail/json-beautifier-editor/kpfjmbnldfjpgbglcdcmlkekajbcjlem)
+3. [AdGuard 广告拦截器](https://microsoftedge.microsoft.com/addons/detail/adguard-%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E5%99%A8/pdffkfellgipmhklpdmokmckkkfcopbh)
+4. [Greenhub绿墙—网络出海工具](https://microsoftedge.microsoft.com/addons/detail/greenhub%E7%BB%BF%E5%A2%99%E2%80%94%E7%BD%91%E7%BB%9C%E5%87%BA%E6%B5%B7%E5%B7%A5%E5%85%B7/hholdpohidinjmkoanabdchniingdfac)
+5. [文件蜈蚣（需要安装对应的软件）](https://microsoftedge.microsoft.com/addons/detail/jeekmibdibcjeihbjnjgbegjalfelhon)
+6. [图片下载](https://microsoftedge.microsoft.com/addons/detail/fatkun%E5%9B%BE%E7%89%87%E6%89%B9%E9%87%8F%E4%B8%8B%E8%BD%BD-pro/dammmokdamnimedflemdaoamhldmldff)
+7. [Replace Google CDN](https://microsoftedge.microsoft.com/addons/detail/replace-google-cdn/cojepngjobmaiajphkijbdcdjnnjhpjc)
 
 > 细滚动条设置（默认长方形）：打开 Edge，URL地址输入 “edge://flags”，进入页面搜索 “Windows 11 fluent scrollbars.”，点击选择框选择 Enabled，重启浏览器（仅限 win 平台）。
 

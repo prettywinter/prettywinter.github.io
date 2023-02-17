@@ -74,7 +74,7 @@ docker run -p 6379:6379 --name redis -v /data/docker-service/redis/conf:/usr/loc
 ### 使用自定义配置文件启动
 
 ```bash
-docker run --name nginx -p 80:80 -v /data/docker-service/nginx/nginx.conf:/etc/nginx/nginx.conf:ro -d nginx:1.22
+docker run --name nginx -p 80:80 -v /data/docker-service/nginx/nginx.conf:/etc/nginx/nginx.conf:ro -v /data/docker-service/nginx/html:/usr/share/nginx/html -v /data/docker-service/nginx/log:/var/log/nginx -v /data/docker-service/nginx/conf.d:/etc/nginx/conf.d -d nginx:1.22
 ```
 
 > 注意：nginx的配置文件必须和版本一致。

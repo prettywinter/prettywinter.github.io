@@ -124,6 +124,10 @@ docker logs name/id    # 查看容器服务运行日志
 docker logs -f name/id # 实时监听服务运行日志
 docker logs -t name/id # 为服务运行日志加入时间戳
 
+# 复制容器内部的配置文件到宿主机
+# docker cp name/id:源文件source 宿主机目录target
+docker cp nginx:/etc/nginx/nginx.conf /data/docker-service/nginx/nginx.conf
+
 
 # 进入容器
 docker exec -it name/id bash
