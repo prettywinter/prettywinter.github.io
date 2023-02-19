@@ -5,6 +5,7 @@ tags:
   - skill
   - podman
 title: 初识 Podman
+abbrlink: b800dc19
 ---
 
 [Podman](https://podman.io/) 和 Docker 一样，也是一个容器化技术的一种实现。它是全开源的。但是它们的底层架构是不同的，Podman 不需要使用 `root` 用户创建容器，也没有 `deamon` 进程，所以 Podman 不支持`--restart` 策略。但是为了迁移方便，Podman 团队采用了和 Docker 类似的命令。
