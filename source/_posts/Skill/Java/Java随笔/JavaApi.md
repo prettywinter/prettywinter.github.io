@@ -5,6 +5,7 @@ categories:
   - Java
 tags:
   - java
+abbrlink: 21beeb42
 ---
 
 <!-- more -->

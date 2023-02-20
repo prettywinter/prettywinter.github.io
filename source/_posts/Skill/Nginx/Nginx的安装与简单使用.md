@@ -8,7 +8,7 @@ tags:
 abbrlink: 14259ba7
 ---
 
-## 安装
+## 一、安装
 
 [官网下载](https://nginx.org/en/download.html)所需要的版本，解压。
 
@@ -50,7 +50,7 @@ make
 
 经过以上步骤后，在该目录下会多出来一个 `objs` 的目录，该目录下有一个 `nginx` 文件，这个就是新编译可执行文件。现在有两种选择：备份目前正在使用的 `.../sbin/nginx` 文件，然后拷贝这个新的到该目录下；或者直接替换旧的（最好版本一致时这样做）。
 
-## 命令
+## 二、命令
 
 ```bash
 # 停止
@@ -60,7 +60,9 @@ make
 ./nginx -s reload
 ```
 
-## 配置反向代理
+## 三、配置
+
+### 1. 配置反向代理
 
 ```conf conf/nginx.conf
 http {
@@ -85,9 +87,9 @@ http {
 
 重新启动Nginx，`./nginx -s reload`，然后用浏览器输入：localhost，回车。
 
-## 配置负载均衡
+### 2. 配置负载均衡
 
-```conf
+```conf conf/nginx.conf
 http {
     include       mime.types;
     default_type  application/octet-stream;
@@ -151,7 +153,7 @@ http {
 }
 ```
 
-## 映射资源文件目录
+### 3. 映射资源文件目录
 
 我们可以在服务器上使用Nginx映射出一个目录作为共享的目录，然后访问该可以进行下载。有许多网站使用了该技术。
 
@@ -189,7 +191,7 @@ server {
 > 以这里的配置为例。那么我访问的地址应该是 `xxx.com:8181/share`，我的共享目录是 `/root/share`。
 
 
-## 使用不同的端口号部署多个项目
+### 4. 使用不同的端口号部署多个项目
 
 ```conf
 server {
