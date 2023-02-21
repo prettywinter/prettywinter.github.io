@@ -19,7 +19,7 @@ Linux 简单介绍。
 - [二、命令](#二命令)
 - [三、VIM常用命令](#三vim常用命令)
 - [四、权限](#四权限)
-- [五、Shell脚本组成命令](#五shell脚本组成命令)
+- [五、Shell](#五shell)
 - [六、用户、用户组命令](#六用户用户组命令)
 - [七、tar包常用命令](#七tar包常用命令)
 - [八、任务计划(Crontab)命令](#八任务计划crontab命令)
@@ -164,72 +164,9 @@ umount 设备 挂载目录
   chown :newGroup file
   ```
 
-## 五、Shell脚本组成命令
+## 五、Shell
 
-shell 文件格式：
-
-```bash
-#!/bin/bash
-#filename:score  代表这个 shell 程序需要键盘接收
-
-reda SCORE
-```
-
-1. if 条件判断语句
-
-    ```bash
-    if 条件
-    then 
-        语句块
-    else 
-        语句块
-    fi
-    ```
-
-2. for 循环语句
-
-    运算时使用 let
-
-    ```bash
-    for 条件
-    do  
-        语句块
-    done
-    其中：
-    for ad in 1 2 3 4
-    for ab in `seq 1 4`
-    for ((ab = 1; ab < 4; ab++))
-    这三种写法的意思都是相同的，需要特别注意的是，
-    第二行那个符号不是单引号，而是 Tab 上面，Esc 下面的那个键。因为使用的时候不容易看懂，不推荐使用。
-    推荐第三种写法，注意有两个括号。
-    ```
-
-3. while循环语句
-
-    ```bash
-    while 条件
-    do 
-        语句块
-    done
-    ```
-
-4. until 循环语句
-
-    和while循环同样，不同的是判断循环的条件，while条件为真时循环，until 条件为假时循环。
-
-    ```bash
-    until 条件
-    do 
-        语句块
-    done
-    ```
-
-**注意：** 条件比较大小时，需要使用以下的内容： 
-| 等于  | 大于等于 | 小于等于 | 不等于 | 大于  | 小于  |
-| :---: | :------: | :------: | :----: | :---: | :---: |
-|  -eq  |   -ge    |   -le    |  -ne   |  -gt  |  -lt  |
-
-另外，定义变量后引用需要加上 `$` 符号，例如 `sum` 变量，输出时 `$sum` 这样使用。
+Shell 参见：https://www.geeksforgeeks.org/conditional-statements-shell-script
 
 ## 六、用户、用户组命令
 

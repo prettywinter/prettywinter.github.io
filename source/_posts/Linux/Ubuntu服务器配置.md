@@ -1,5 +1,5 @@
 ---
-title: Ubuntu基础环境配置
+title: Ubuntu 服务器配置
 categories:
   - Linux
   - Ubuntu
@@ -10,7 +10,7 @@ cover: 'linux,ubuntu'
 abbrlink: af7fa1dd
 ---
 
-Ubuntu/Ubuntu-Server 基础配置，桌面版应该也能用，如果你喜欢命令的话，应该都没问题。
+Ubuntu-Server 配置，桌面版应该也能用，如果你喜欢命令的话，应该都没问题。
 
 <!-- more -->
 
@@ -35,7 +35,7 @@ sudo apt autoremove
 
 ## 二、基本配置
 
-### 时区设置
+### 1. 时区设置
 
 Ubuntu 可以使用内置的 timedatectl 设置系统的时区。
 
@@ -51,7 +51,7 @@ timedatectl set-timezone Asia/Shanghai
 timedatectl
 ```
 
-### 语言设置
+### 2. 语言设置
 
 ```bash
 # 列出所有启用的区域设置
@@ -73,27 +73,26 @@ unset LANG
 
 > 如果使用上面的立即生效命令仍然有问题，没有生效，请重启计算机。
 
-### 下载工具
+### 3. 下载工具
 
 Linux 下载工具有很多，比如 Motrix、文件蜈蚣等跨平台的免费开源下载器，而且还有许多命令行下载器，如果喜欢命令行可以使用 wget 或者 curl。
 
 如果你想了解一下 wget VS curl 的区别：可以访问这篇文章：`https://www.geeksforgeeks.org/difference-between-wget-vs-curl/`
 
-### 查看本机所属公网信息
-
 ```bash
 # 查看本机基础信息
 curl ipinfo.io
+# 本机公网
 curl cip.cc
 ```
 
-### Vim
+### 4. Vim 配置
 
 如果 Vim 配置的好，那么日常编辑文件是非常流畅的。很多大佬用 Vim 写代码，当然，浪子做不到 QAQ。
 
 Vim 的全局配置文件在 `/etc/vim/vimrc` 或者 `/etc/vimrc`，对所有用户生效；用户的配置文件一般在 `~/.vimrc` 中。
 
-编辑 {% mark ~/vimrc color:green %} 文件，没有的话可以手动创建一个。下面给了一些简单的基本配置。
+我们修改全局的配置，编辑 {% mark /etc/vim/vimrc color:green %} 文件，没有的话可以手动创建一个。下面给了一些简单实用的配置。
 
 ```bashrc .vimrc
 " 自动缩进
@@ -244,6 +243,8 @@ file 上一条命令打印的路径
 
 ### 开放指定端口
 
+随着 Ubuntu 的更新，它的各种软件也在更新，以前用 `firewall`，新版本（22.04）已经默认使用 `ufw`，相比较而言，[UFW](https://help.ubuntu.com/community/UFW) command more easily，不过具体使用这里就不详细写了，可以参考官网的说明，很简单。
+
 ```bash
 # 启动防火墙
 systemctl start firewalld
@@ -255,6 +256,19 @@ firewall-cmd --reload
 netstat -ntlp
 # 查看所有1935端口使用情况 
 netstat -ntulp | grep 1935
+
+# 启用 ufw
+ufw enable
+# 禁用 ufw
+ufw disable
+# 查看状态
+ufw status verbose
+# 放行端口
+ufw allow port/协议（TCP|UDP）
+# 关闭端口
+ufw deny port/协议
+# 允许特定 IP 访问
+ufw allow from IP
 ```
 
 ### [ftp服务搭建](https://www.geeksforgeeks.org/how-to-setup-and-configure-an-ftp-server-in-linux/)
