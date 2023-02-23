@@ -2,6 +2,7 @@
 title: CentOS 服务器配置
 categories:
   - Linux
+  - CentOS
 tags:
   - centos
 cover: 'https://fastly.jsdelivr.net/gh/prettywinter/dist/images/blogcover/linux.jpeg'

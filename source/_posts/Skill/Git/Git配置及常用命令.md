@@ -1,7 +1,6 @@
 ---
 title: Git配置及常用操作
 categories:
-  - 配置
   - Git
 tags:
   - git

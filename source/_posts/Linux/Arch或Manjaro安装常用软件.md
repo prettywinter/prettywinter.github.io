@@ -146,11 +146,11 @@ sunloginclient
 yay -S flameshot simplescreenrecorder peek
 ```
 
-|安装包|说明|
-|--|--|
-|flameshot|火焰截图|
-|simplescreenrecorder|录屏软件|
-|peek|动图录制工具|
+| 安装包               | 说明         |
+| -------------------- | ------------ |
+| flameshot            | 火焰截图     |
+| simplescreenrecorder | 录屏软件     |
+| peek                 | 动图录制工具 |
 
 ## 6. 开发工具
 
@@ -228,6 +228,11 @@ homectl update --shell=<full-path-to-shell> user
 > 提示：chsh 用作参考。如果列表中不存在最近安装的 shell，则可以手动将其添加到此文件中:`/etc/shells`
 > 如果您要卸载 zsh，那么请您先更改默认的 shell 之后再进行卸载程序安装包。
 > Arch Wiki：https://wiki.archlinux.org/title/Command-line_shell#Changing_your_default_shell
+
+
+## 10. snap
+
+https://snapcraft.io/docs/installing-snapd
 
 ## 数据库
 

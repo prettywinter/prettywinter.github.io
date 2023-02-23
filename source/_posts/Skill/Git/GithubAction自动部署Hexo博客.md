@@ -1,6 +1,8 @@
 ---
 title: Github Action自动部署Hexo博客
-categories: 配置
+categories: 
+  - Git
+  - Github Action
 tags:
   - hexo
   - github action

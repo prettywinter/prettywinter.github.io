@@ -2,6 +2,7 @@
 title: 使用Manjaro中的一些问题解决
 categories:
   - Linux
+  - Manjaro
 tags:
   - linux
   - manjaro

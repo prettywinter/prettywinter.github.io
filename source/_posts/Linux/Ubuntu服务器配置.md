@@ -352,7 +352,7 @@ DenyUsers ftpuser
 Ubuntu version 22.04
 Docker version 23.0.1
 Docker Compose version v2.16.0
-安装 Docker 工具：snap
+安装 Docker 工具：[snap](https://snapcraft.io/docs)
 错误原因：
 ```bash
 Cannot Connect to the Docker Daemon at ‘unix:///var/run/docker.sock’

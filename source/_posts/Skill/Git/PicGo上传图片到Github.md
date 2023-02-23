@@ -1,6 +1,6 @@
 ---
 title: PicGo上传图片到Github
-categories: 配置
+categories: 其它
 tags:
   - picgo
   - github
@@ -73,7 +73,7 @@ PicGo 是图片上传到其它存储平台的助手。它支持多种图床：we
 
 ### 3. 在VsCode中使用
 
-OS|从剪切板上传|从资源管理器上传图像（打开文件夹选择上传）|从输入框上传图像|
-|--|--|--|--|
-Windows/Unix|Ctrl + Alt + U|Ctrl + Alt + E|Ctrl + Alt + O|
-OsX|Cmd + Opt + U|Cmd + Opt + E|Cmd + Opt + O|
+| OS           | 从剪切板上传   | 从资源管理器上传图像（打开文件夹选择上传） | 从输入框上传图像 |
+| ------------ | -------------- | ------------------------------------------ | ---------------- |
+| Windows/Unix | Ctrl + Alt + U | Ctrl + Alt + E                             | Ctrl + Alt + O   |
+| OsX          | Cmd + Opt + U  | Cmd + Opt + E                              | Cmd + Opt + O    |
