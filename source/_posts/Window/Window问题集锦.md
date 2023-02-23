@@ -1,5 +1,5 @@
 ---
-title: Window使用小技巧
+title: Window问题集锦
 categories: Window
 abbrlink: f085fb33
 ---
@@ -8,7 +8,7 @@ Windows 使用小窍门，可以帮助你提高效率。
 
 <!-- more -->
 
-## 快捷方式
+## 一、快捷方式
 
 | 目标     | 操作                             |
 | -------- | -------------------------------- |
@@ -18,21 +18,11 @@ Windows 使用小窍门，可以帮助你提高效率。
 | 服务     | win + r 输入 `services.msc` 回车 |
 | 电脑信息 | win + r 输入 `winver` 回车       |
 
-## 删除开机多余启动项
+## 二、删除开机多余启动项
 
-{% kbd Win %} + {% kbd R %}，输入 `msconfig`，点击确定，选择 “引导”，删除非当前OS 选项，点击“应用”，按照提示重启即可。
+{% kbd Win %} + {% kbd R %}，输入 `msconfig`，点击确定，选择 “引导” 标签，选择 **非当前OS** 记录，点击删除并应用，按照提示重启即可。
 
-## 永久关闭自动更新
-{% kbd Win %} + {% kbd R %} ，输入 `gpedit.msc` 回车，调出 “本地计算机策略”。依次点击：
-
-```mermaid
-graph LR
-
-root(计算机配置) --> r1(管理模板) --> r2(Windows组件) --> r3(Windows更新) --> r4(双击配置自动更新) --> r5(禁用) --> r6(关掉本地策略编辑器 重启电脑)
-
-```
-
-## 删除多余启动项
+管理员方式进入 ps：
 
 ```bash
 # 查看启动项
@@ -41,7 +31,7 @@ efibootmgr
 efibootmgr -b 0001(序号) -B
 ```
 
-## PowerShell运行脚本
+## 三、PowerShell运行脚本
 
 管理员身份运行ps，
 
@@ -59,9 +49,9 @@ ps 有四种策略：
 | RemoteSigned | 要求从网络上下载的脚本和配置文件由可信者发布签名，不要求本地计算机上编写的脚本进行签名 |
 | Unrestricted | 可以运行未签名的脚本                                                                   |
 
-## WSL 相关问题
+## 附：WSL 相关问题
 
-帮助命令 `wsl -h`，感觉还是比较清楚的。
+用不习惯，浪子已弃坑。帮助命令 `wsl -h`，感觉还是比较清楚的。
 
 ### 安装后root用户密码
 
@@ -70,6 +60,20 @@ ps 有四种策略：
 ### docker
 
 WSL 中使用 docker 必须下载 [Docker Desktop](https://docs.docker.com/desktop/windows/wsl/)。
+
+#### Docker-Desktop启动ElasticSearch失败
+
+在 Windows 下，使用 Docker 启动 ES 服务可能会遇到内存不足的问题，调整的方式是通过命令行的 `wsl` 命令进入 docker-desktop 的终端，然后通过 `sysctl` 命令调整系统参数。
+
+```bash
+# 使用 cmd 进入 docker
+wsl -d docker-desktop
+# 调整相应的参数，docker 启动 ES 服务时会有打印，修改为指定的即可
+sysctl -w vm.max_map_count=262144
+```
+
+也可以编辑文件 `vi /etc/sysctl.conf` 加入 `vm.max_map_count=262144`，保存退出执行 `sysctl -p` 后重启 es 服务即可。
+
 
 ### 有关路径存储设置
 

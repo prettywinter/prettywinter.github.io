@@ -9,7 +9,7 @@ cover: 'https://fastly.jsdelivr.net/gh/prettywinter/dist/images/blogcover/docker
 abbrlink: 1ca431ad
 ---
 
-使用 Docker 安装常用服务，可以在 [Docker Hub](https://registry.hub.docker.com/) 上搜索镜像以及版本进行拉取/下载。带有 `offical image` 标签的都是官方镜像。并且相应的镜像里都有启动说明可以参照，本文只是水文。
+[Docker Hub](https://registry.hub.docker.com/) 上可以搜索并查看镜像以及版本，选择合适的进行拉取/下载。相应的镜像里都有官方的的启动说明可以参考，本文只是水文。
 
 <!-- more -->
 
@@ -18,32 +18,37 @@ abbrlink: 1ca431ad
 <!-- code_chunk_output -->
 
 - [1. MySQL](#1-mysql)
-  - [使用自定义的配置文件启动MySQL并且在启动时创建一个数据库](#使用自定义的配置文件启动mysql并且在启动时创建一个数据库)
 - [2. Redis](#2-redis)
-  - [指定配置文件并开启AOF持久化后台启动](#指定配置文件并开启aof持久化后台启动)
 - [3. Nginx](#3-nginx)
-  - [使用自定义配置文件启动](#使用自定义配置文件启动)
 - [4. RabbitMQ](#4-rabbitmq)
-  - [使用自定义配置信息启动](#使用自定义配置信息启动)
-- [5. MongoDB](#5-mongodb)
-- [6. ES](#6-es)
-  - [Docker-Desktop启动ElasticSearch失败](#docker-desktop启动elasticsearch失败)
-  - [6.1 直接启动](#61-直接启动)
-  - [6.2 使用自定义配置启动](#62-使用自定义配置启动)
-  - [6.3 加载 IK 分词器启动](#63-加载-ik-分词器启动)
-- [7. Kibana](#7-kibana)
-  - [指定自定义配置文件启动](#指定自定义配置文件启动)
+- [5. ElasticSeach And Kibana](#5-elasticseach-and-kibana)
 
 <!-- /code_chunk_output -->
 
+Docker Hub 上的镜像有三种标签是可以信任的：
+
+1. DOCKER OFFICIAL IMAG：Docker 官方镜像，是一组精心策划的 Docker 开源和即插即用解决方案存储库。
+2. Verified Publisher：Docker验证镜像，来自 Docker 验证的出版商的高质量镜像。这些产品由商业实体直接发布和维护。这些镜像不受速率限制。
+3. Sponsored OSS：Docker 赞助的开源软件镜像。这些镜像由 Docker 通过开源计划赞助的开源项目发布和维护。
+
 ## 1. MySQL
 
-镜像拉取：`docker pull mysql:5.7.32`
-
-### 使用自定义的配置文件启动MySQL并且在启动时创建一个数据库
-
 ```bash
-docker run -d -p 3306:3306 --name mysql<自定义服务名> -v /data/docker-service/mysql/conf:/etc/mysql -v /data/docker-service/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -v MYSQL_DATABASE=要创建的数据库名称 --restart=always mysql:5.7.32
+# 创建所需目录
+mkdir -p /data/docker-service/mysql/conf.d
+mkdir -p /data/docker-service/mysql/data
+cd /data/docker-service/mysql
+# 拉取镜像
+docker pull mysql:8.0.30
+# 启动一个简单的基础镜像（只是用来复制配置文件，用完就删除）
+docker run --name mysql-test -e MYSQL_ROOT_PASSWORD=root -d mysql:8.0.30
+docker cp mysql-test:/etc/my.cnf conf.d/
+
+# 删除镜像
+docker rm mysql-test
+
+# 使用自定义的配置文件启动MySQL并且在启动时创建一个数据库
+docker run -d -p 3306:3306 --name mysql -v /data/docker-service/mysql/conf.d:/etc/mysql/conf.d -v /data/docker-service/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -v MYSQL_DATABASE=要创建的数据库名称 --restart=always mysql:8.0.30
 ```
 
 启动完成后，进入 MySQL 的 bash 环境: `docker exec -it mysql bash`，执行下面两条命令开启远程连接：
@@ -61,32 +66,51 @@ FLUSH PRIVILEGES;
 
 ## 2. Redis
 
-Redis默认开启的是快照模式(RDB)，可以开启AOF持久化(最多丢1s内数据):
-
-### 指定配置文件并开启AOF持久化后台启动
+Redis默认开启的是快照模式(RDB)，可以开启AOF持久化(最多丢1s内数据)
 
 ```bash
-docker run -p 6379:6379 --name redis -v /data/docker-service/redis/conf:/usr/local/etc/redis -v /data/docker-service/redis/data:/data -d redis:6.2.5 redis-server /usr/local/etc/redis/redis.conf --appendonly yes
+# 创建所需目录
+mkdir -p /data/docker-service/redis/conf
+mkdir -p /data/docker-service/redis/data
+cd /data/docker-service/redis
+
+# 此处如果使用自定义配置文件，在 conf 文件中建立 redis.conf 文件添加内容即可
+
+# 指定配置文件并开启AOF持久化后台启动
+docker run -p 6379:6379 --name redis -v /data/docker-service/redis/conf:/usr/local/etc/redis -v /data/docker-service/redis/data:/data -d redis:6 redis-server /usr/local/etc/redis/redis.conf --appendonly yes
 ```
 
 ## 3. Nginx
 
-### 使用自定义配置文件启动
-
 ```bash
-docker run --name nginx -p 80:80 -v /data/docker-service/nginx/nginx.conf:/etc/nginx/nginx.conf:ro -v /data/docker-service/nginx/html:/usr/share/nginx/html -v /data/docker-service/nginx/log:/var/log/nginx -v /data/docker-service/nginx/conf.d:/etc/nginx/conf.d -d nginx:1.22
+# 创建所需目录
+mkdir -p /data/docker-service/nginx/conf.d
+mkdir -p /data/docker-service/nginx/html
+mkdir -p /data/docker-service/nginx/log
+cd /data/docker-service/nginx
+
+# 拉取镜像
+docker pull nginx:1.22.1
+# 启动一个简单的基础镜像（只是用来复制配置文件，用完就删除）
+# 如果自己复制文件内容，此步可以跳过
+docker run --name nginx-test -d nginx:1.22.1
+docker cp nginx-test:/etc/nginx/nginx.conf ./
+docker cp nginx-test:/etc/nginx/conf.d/default.conf conf.d/
+
+# 删除镜像
+docker stop nginx-test && docker rm nginx-test
+
+# 启动
+docker run --name nginx -p 80:80 -v /data/docker-service/nginx/nginx.conf:/etc/nginx/nginx.conf:ro -v /data/docker-service/nginx/html:/usr/share/nginx/html -v /data/docker-service/nginx/log:/var/log/nginx -v /data/docker-service/nginx/conf.d:/etc/nginx/conf.d -d nginx:1.22.1
 ```
 
 > 注意：nginx的配置文件必须和版本一致。
 > `ro` 代表只读(read only): 外部的改变能够影响内部，内部的改变不会影响外部。
 
-复制容器内部的配置文件到宿主机：`docker cp nginx:/etc/nginx/nginx.conf /data/docker-service/nginx/nginx.conf`
-
 ## 4. RabbitMQ
 
-### 使用自定义配置信息启动
-
 ```bash
+# 使用自定义配置信息启动
 docker run -d --name RabbitMQ -p 15672:15672 -p 5672:5672 -v /data/docker-service/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf rabbitmq:3.8-management
 ```
 
@@ -94,59 +118,17 @@ docker run -d --name RabbitMQ -p 15672:15672 -p 5672:5672 -v /data/docker-servic
 
 如果在启动时指定用户名、密码可以加上以下内容。
 
-```bash{.line-numbers}
+```bash
 -e RABBITMQ_DEFAULT_VHOST=/ems
 -e RABBITMQ_DEFAULT_USER=root
 -e RABBITMQ_DEFAULT_PASS=root
 ```
 
-## 5. MongoDB
+## 5. ElasticSeach And Kibana
 
-```bash
-docker run --name mongo -d -p 27017:27017  mongo:5.0.5
-```
-
-## 6. ES
-
-### Docker-Desktop启动ElasticSearch失败
-
-在Windows下，使用 Docker 启动 ES 服务，如果遇到内存不足的问题。调整的方式是通过命令行的 `wsl` 命令进入 docker-desktop 的终端，然后通过 `sysctl` 命令调整系统参数。
-
-```bash
-# 使用 cmd 进入 docker
-wsl -d docker-desktop
-# 调整相应的参数，docker 启动 ES 服务时会有打印，修改为指定的即可
-sysctl -w vm.max_map_count=262144
-```
-
-也可以编辑文件 `vi /etc/sysctl.conf` 加入 `vm.max_map_count=262144`，保存退出执行 `sysctl -p` 后重启 es 服务即可。
-
-### 6.1 直接启动
-
-```bash
-docker run -d --name elasticsearch -p 9200:9200 -p 9300:9300 elasticsearch:7.0
-```
+ElasticSeach 官方指导教程：https://www.elastic.co/guide/en/elasticsearch/reference/7.5/docker.html
+Kibana 官方教程传送：https://www.elastic.co/guide/en/kibana/current/docker.html
 
 > 直接启动 ES 容器会报错，解决方案：
 > 1.编辑宿主机 vim /etc/sysctl.conf 加入 `vm.max_map_count=262144`，保存退出
 > 2.sysctl -p
-
-### 6.2 使用自定义配置启动
-
-```bash
-docker run -d --name es -p 9200:9200 -p 9300:9300 -v /data/docker-service/es/data:/usr/share/elasticsearch/data -v /data/docker-service/es/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml elasticsearch:7.0
-```
-
-### 6.3 加载 IK 分词器启动
-
-```bash
-docker run -d --name es -p 9200:9200 -p 9300:9300 -v /data/docker-service/es/data:/usr/share/elasticsearch/data -v /data/docker-service/es/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml -v /data/docker-service/es/ik:/usr/share/elasticsearch/plugins/ik elasticsearch:7.0
-```
-
-## 7. Kibana
-
-### 指定自定义配置文件启动
-
-```bash
-docker run -d --name kibana -p 5601:5601 -v /data/docker-service/Kibana/kibana.yml:/usr/share/kibana/config/kibana.yml Kibana:7.0
-```

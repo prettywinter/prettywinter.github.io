@@ -44,6 +44,8 @@ Ubuntu 可以使用内置的 timedatectl 设置系统的时区。
 timedatectl
 # 查看支持的时区列表
 timedatectl list-timezones
+# 是否含有中国时区
+timedatectl list-timezones | grep Asia/Shanghai
 # 设置中国时区
 timedatectl set-timezone Asia/Shanghai
 
@@ -54,6 +56,14 @@ timedatectl
 ### 2. 语言设置
 
 ```bash
+# 查看当前系统的语言配置
+locale
+# 如果使用的 Ubuntu 22.04 以上使用这个命令将更加简单容易，选择完成之后注销重启
+sudo dpkg-reconfigure locales
+# 再次查看配置
+locale
+
+# 下面的适用旧版本
 # 列出所有启用的区域设置
 locale -a
 
@@ -121,7 +131,7 @@ set completeopt=preview,menu
 " 增强模式中的命令行自动完成操作
 set wildmenu
 
-" 我的状态行显示的内容（包括文件类型和解码）
+" 状态行显示的内容（包括文件类型和解码）
 set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
 set statusline=[%F]%y%r%m%*%=[Line:%l/%L,Column:%c][%p%%]
 " 总是显示状态行
@@ -334,3 +344,34 @@ DenyUsers ftpuser
 `sudo echo "this is a simple file" > /home/ftptest/test.txt`
 
 然后就可以连接测试了：`ftp://ip`
+
+## 五、一些问题
+
+### 1. Docker
+
+Ubuntu version 22.04
+Docker version 23.0.1
+Docker Compose version v2.16.0
+安装 Docker 工具：snap
+错误原因：
+```bash
+Cannot Connect to the Docker Daemon at ‘unix:///var/run/docker.sock’
+```
+
+解决参考：https://appuals.com/cannot-connect-to-the-docker-daemon-at-unix-var-run-docker-sock/
+
+如果不能解决，尝试下面的方法：
+
+```bash
+# 停止 docker
+systemctl stop docker.socket
+systemctl stop docker
+
+# 查看 snap 管理的 docker 状态
+snap services
+# 停止服务
+snap stop docker
+
+# 然后重启
+systemctl start docker
+```

@@ -1,13 +1,11 @@
 ---
-title: Linux简单介绍
+title: Linux 入门
 categories: Linux
 tags:
   - linux
 cover: 'https://fastly.jsdelivr.net/gh/prettywinter/dist/images/blogcover/linux.jpeg'
 abbrlink: 509e306a
 ---
-
-Linux 简单介绍。
 
 <!-- more -->
 
@@ -46,31 +44,20 @@ Linux 简单介绍。
 
 ## 二、命令
 
+命令部分不会写很详细，网上已经有很多教程参考了。
+
+普通用户是 `$` 标识，root 用户是 `#` 标识，
+
 ```bash
-# 普通用户是 $ 标识，root 用户是 # 标识，
-# 切换到 root 用户，但不切换 shell 环境
-su root
-# 如果中间加入 - ，代表连用户的 shell 环境一起切换
-su - root
 # 查看系统用户名称
 hostname
-# 创建链接文件，
-# -s 创建软链接，相当于 win 下的快捷方式，不加 -s 选项为硬链接。
-ln -s 源文件 新的链接文件名
-# 显示计算机及操作系统的所有信息
+# 查看当前系统版本
+lsb_release -a
+# 显示计算机内核及操作系统的所有信息
 uname -a | cat /proc/version
-# 查看内存信息,-g 以G为单位，-m 以MB为单位
-free
-# 查看磁盘空间,如果查看目录文件的大小，命令后跟指定目录或者文件即可
-df -h 或者 du -h
-# 查看所有进程
-ps -ef
-# 查看所有监听端口 
-netstat -lntp
-# 查看所有已经建立的连接
-netstat -antp
-# 查看网络统计信息进程
-netstat -s
+
+# 查看当前用户
+whoami
 # 查看活动用户
 w
 # 查看用户登录日志
@@ -79,13 +66,36 @@ last
 cut -d: -f1 /etc/passwd
 # 查看系统所有组
 cut -d: -f1 /etc/group
-# 列出所有系统服务
-chkconfig –list
-# 列出所有启动的系统服务程序
-chkconfig –list | grep on
+
+# 查看磁盘空间大小
+# 查看磁盘空间，不写路径为主要分区空间
+df -h <path>
+# 查看目录文件大小，不写路径默认为当前路径
+du -h <path>
+
+
+# 创建链接文件
+# -s 创建软链接，相当于 win 下的快捷方式，不加 -s 选项为硬链接。
+ln -s 源文件 新的链接文件名
+
+# 查看内存信息,-g 以G为单位，-m 以MB为单位
+free
+
+# 查看进程
+ps -ef
+ps -aux
+
 # 挂载、卸载设备
 mount 设备 挂载目录
 umount 设备 挂载目录
+
+########################### 安装工具使用 ########################## 
+# 查看所有监听端口 
+netstat -lntp
+# 查看所有已经建立的连接
+netstat -antp
+# 查看网络统计信息进程
+netstat -s
 ```
 
 > `su root` 和 `su - root` 的区别：
@@ -113,6 +123,42 @@ umount 设备 挂载目录
 | :q!         | 强制退出                                       |
 
 > VI 和 Vim 的键盘输入略有不同，推荐使用 Vim，服务器等一些最小安装的版本一般需要手动安装。
+
+推荐一个浪子的 VIM 配置，这里修改的全局配置，也可以只为某个用户配置（文件在 `~/.vimrc`）：
+
+```bash /etc/vim/vimrc
+" 自动缩进
+set autoindent
+" 语法高亮
+set syntax=on
+" Tab键的宽度
+set tabstop=4
+" 突出显示当前行
+set cursorline
+" 搜索忽略大小写
+set ignorecase
+" 去掉输入错误的提示声音
+set noeb
+" 高亮显示匹配的括号
+set showmatch
+" 总是显示行号
+set nu
+
+" 侦测文件类型
+filetype on
+" 打开文件类型检测, 加了这句才可以用智能补全
+set completeopt=longest,menu
+"代码补全 
+set completeopt=preview,menu
+" 增强模式中的命令行自动完成操作
+set wildmenu
+
+" 状态行显示的内容（包括文件类型和解码）
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
+set statusline=[%F]%y%r%m%*%=[Line:%l/%L,Column:%c][%p%%]
+" 总是显示状态行
+set laststatus=2
+```
 
 ## 四、权限
 

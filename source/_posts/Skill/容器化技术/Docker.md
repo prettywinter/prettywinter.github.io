@@ -284,7 +284,7 @@ docker-compose 和 Dockerfile 很相似，都是需要我们写一个文件，�
 
 和 docker 的不同：docker是面向容器的，而 docker-compose 是面向服务的，这也是两者本质区别。
 
-另外，如果是 Window 系统，安装 Docker for Window 后就包括了 dcoker-compose 工具；如果是 Linux 系统，那么额外需要安装 docker-compose 插件，没错，docker-compose 是 docker 的一个插件。
+另外，如果是 Window 系统，安装 Docker for Window 后就包括了 dcoker-compose 工具；如果是 Linux 系统，那么额外需要安装 docker-compose 插件。没错，docker-compose 是 docker 的一个插件。
 
 {% link https://docs.docker.com/compose/install/ docker-compose官网安装说明 %}
 
