@@ -131,6 +131,8 @@ mysql -u root -p
 alter user 'root'@'localhost' identified by '';
 ```
 
+> **TIP**：安装多个 MySQL 版本记得修改端口号再初始化（即生成 data 目录）
+
 ### 5. MariaDB
 
 依然使用 [压缩包](https://mariadb.org/download/?t=mariadb&p=mariadb&r=10.9.3&os=windows&cpu=x86_64&pkg=zip&m=blendbyte) 安装。
