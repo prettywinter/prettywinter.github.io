@@ -60,3 +60,24 @@ where s.longitude = #{longitude} and s.latitude = #{latitude}
 后来又使用 `${}` 去测试，发现修改后的代码又不生效了。。。
 
 于是我就明白了：使用 `${}` 时，参数为 List 类型需要我们手动为每个元素加入单引号，使用单引号包裹才会生效；而使用 `#{}` 类型时参数为 List 类型则不需要加入英文单引号。
+
+### 接口传参报错
+
+错误信息：
+```bash
+No primary or default constructor found for interface java.util.List]
+```
+
+前端传参都是通过数组的形式传递多个参数值，所以 controller 接口直接使用 `List<String>` 会报错，需要添加 `@RequestParam`  才能接收，或者直接使用 `String[]` 类型接收。当然也是可以使用 `@RequestBody` 的，这种情况浪子没有测试过，理论上是行的通的，如果不行就把 `List<String>` 封装到接收的对象参数中。
+
+```java
+// 方式一
+public Page list(@RequestParam(value = "params", required = false) List<String> params,
+                 Object obj) {
+  return null;
+}
+// 方式二
+public Page list(String[] params, Object obj) {
+  return null;
+}
+```

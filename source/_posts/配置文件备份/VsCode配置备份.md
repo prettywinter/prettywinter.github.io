@@ -26,16 +26,18 @@ abbrlink: 9e8f8686
     "editor.lineHeight": 23,
     // 字母间像素
     "editor.letterSpacing": 0.5,
+    // tab 缩进大小
+    "editor.tabSize": 2,
+    // 保存时自动格式化
+    "editor.formatOnSave": true,
+    // 彩色括号对 1.6x 版本之后 IDE 自带，不需要安装插件了
+    "editor.bracketPairColorization.enabled": true,
+    "editor.guides.bracketPairs": "active",
+    "editor.suggestSelection": "first",
     // 启用或禁用在 VS Code 中重命名或移动文件时自动更新导入路径的功能。
     "javascript.updateImportsOnFileMove.enabled": "always",
     // 开启 markdown 的验证 无效链接将被警告或者错误
     "markdown.validate.enabled": true,
-    
-    // ########################## 彩色括号对 ###########################
-    // 1.6x 版本之后 IDE 自带，不需要安装插件了
-    "editor.bracketPairColorization.enabled": true,
-    "editor.guides.bracketPairs": "active",
-    "editor.suggestSelection": "first",
 
     // ########################### 终端设置 ###########################
     // 光标样式
