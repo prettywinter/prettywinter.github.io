@@ -8,6 +8,8 @@ tags:
 abbrlink: 14259ba7
 ---
 
+<!-- more -->
+
 ## 一、安装
 
 [官网下载](https://nginx.org/en/download.html)所需要的版本，解压。
