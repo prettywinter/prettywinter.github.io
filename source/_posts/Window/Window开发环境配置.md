@@ -68,7 +68,7 @@ ps 测试安装是否成功：`gradle -version`
 
 配置下载源；
 
-```gradle .../gradle-7.5/init.d/init.gradle
+```gradle .../gradle-7.6/init.d/init.gradle
 allprojects {
 	repositories {
         // 本地仓库
@@ -98,6 +98,8 @@ GRADLE_USER_HOME/init.d/*.gradle
 M2_HOME/conf/settings.xml
 ~/.m2/repository
 ```
+
+> 由于 IDEA 中的 Gradle 经常自动下载，建议设置环境变量 `GRADLE_USER_HOME`，这样自动下载的 gradle 就会自动安装到这个目录。
 
 ### 4. MySQL
 
