@@ -1,5 +1,5 @@
 ---
-title: vsocde配置备份
+title: Vsocde、Fleet配置备份
 categories:
   - 配置备份
 cover: vscode
@@ -10,7 +10,9 @@ abbrlink: 9e8f8686
 
 <!-- more -->
 
-```json setting.json
+## VsCode
+
+```json settings.json
 {   
     // #################################################################
     // ########################### 编辑器配置 ############################
@@ -139,5 +141,48 @@ abbrlink: 9e8f8686
     // ############################# 插件配置 end ################################
     // ##########################################################################
     // ##########################################################################
+}
+```
+## Fleet
+
+配置参见官网：https://www.jetbrains.com/help/fleet/settings.html#user-settings
+
+```json settings.json
+{
+    // 主题
+    "theme": "dark_purple",
+    // 字体大小
+    "editor.fontSize": 16.0,
+    // 保存时格式化文本
+    "editor.formatOnSave": true,
+    // 使用组合键键时显示所用组合键
+    "showShortcuts": true,
+    // 快捷键映射，这里采用了 vscode 的
+    "keymap": "pc-vscode",
+    
+    // ###### 终端配置 ######
+    "terminal.profiles": [
+        {
+            "program": "D:\\software\\Git\\bin\\bash.exe",
+            "args": [], // optional
+            "name": "git-bash" // optional
+        }
+    ],
+    // 终端：复制选中文本
+    "terminal.copyOnSelection": true,
+    // 终端字体大小
+    "terminal.fontSize": 15.0,
+
+    // ############# Java ##############
+    "maven.user.settings": [
+        {
+            "path": "D:\\xxx\\Java\\maven-3.9.0\\conf\\settings.xml"
+        }
+    ],
+    "java.runtimes": [
+        {
+            "path": "D:\\xxx\\Java\\jdk1.8.0_361"
+        }
+    ],
 }
 ```

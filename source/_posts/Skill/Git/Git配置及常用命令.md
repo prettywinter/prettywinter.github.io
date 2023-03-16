@@ -172,7 +172,9 @@ $ git push -u origin 分支名称
 # 将当前目录所有文件添加到git暂存区，也可以一次提交多个文件，使用空格分开
 $ git add .
 # 提交到版本库并备注提交信息
-$ git commit -m "my first commit" 
+$ git commit -m "my first commit"
+# 如果第一次提交的内容写的不好或者还有新的相关文件未提交，可以使用下面的命令覆盖之前一次的 commit
+$ git commit --amend -m "override first commit"
 # 推送到远程仓库,如果本地和远程的分支名称相同，只写一个分支名称即可
 # 第一个 master 是本地分支，后面的一个是远程分支
 $ git push origin local_branch:remote_branch
