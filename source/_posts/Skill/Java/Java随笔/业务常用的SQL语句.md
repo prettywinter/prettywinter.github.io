@@ -14,6 +14,10 @@ abbrlink: 44d4a5e6
 ## MySQL
 
 ```sql
+-- 重置表 ID 从 1 开始自增; id_key 为自增 id
+alter table table_name drop id_key;
+alter table table_name add id_key int not null primary key auto_increment first;
+
 -- 增加递增列
 SELECT @rank:=@rank + 1 AS num FROM (SELECT @rank:=0) a
 -- 构建近 12 个月的月份虚拟表
