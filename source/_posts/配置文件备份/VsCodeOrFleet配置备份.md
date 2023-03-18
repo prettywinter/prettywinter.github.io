@@ -13,10 +13,8 @@ abbrlink: 9e8f8686
 ## VsCode
 
 ```json settings.json
-{   
-    // #################################################################
+{
     // ########################### 编辑器配置 ############################
-    // #################################################################
 
     // 字体及字体大小，设置的字体本机需要安装才能生效
     // 如果有空格或者中文，尽量使用 单引号 括住
@@ -29,17 +27,20 @@ abbrlink: 9e8f8686
     // 字母间像素
     "editor.letterSpacing": 0.5,
     // tab 缩进大小
-    "editor.tabSize": 2,
-    // 保存时自动格式化
+    "editor.tabSize": 4,
+    // 保存时自动格式化内容
     "editor.formatOnSave": true,
-    // 彩色括号对 1.6x 版本之后 IDE 自带，不需要安装插件了
+    // 彩色括号对
     "editor.bracketPairColorization.enabled": true,
     "editor.guides.bracketPairs": "active",
     "editor.suggestSelection": "first",
-    // 启用或禁用在 VS Code 中重命名或移动文件时自动更新导入路径的功能。
-    "javascript.updateImportsOnFileMove.enabled": "always",
-    // 开启 markdown 的验证 无效链接将被警告或者错误
-    "markdown.validate.enabled": true,
+
+    // ########################### 文件配置 ###########################
+
+    // 1s 后自动保存文件内容 
+    "files.autoSave": "afterDelay",
+    // 要想 autoSaveDelay 生效，上面的设置必须为 afterDelay，否则不生效
+    "files.autoSaveDelay": 1000,
 
     // ########################### 终端设置 ###########################
     // 光标样式
@@ -65,7 +66,15 @@ abbrlink: 9e8f8686
     // 此处填写上面的自定义名称 Git-Bash
     "terminal.integrated.defaultProfile.windows": "Git-Bash",
 
-    // ########################### 开启 md 文件的代码片段 ##########################
+    // ########################### JavaScript ###########################
+
+    // 启用或禁用在 VS Code 中重命名或移动文件时自动更新导入路径的功能。always：一直自动更新
+    "javascript.updateImportsOnFileMove.enabled": "always",
+
+    // ########################### md ###########################
+
+    // 开启 markdown 的验证 无效链接将被警告或者错误
+    "markdown.validate.enabled": true,
     // 开启 markdown 的用户代码片段，在 md 中也可以使用代码片段啦
     "[markdown]": {
       "editor.renderWhitespace": "all",
@@ -77,9 +86,7 @@ abbrlink: 9e8f8686
       "editor.acceptSuggestionOnEnter": "on"
     },
 
-    // #################################################################
     // ########################### 编辑器配置 end ########################
-    // #################################################################
 
 
     // ##########################################################################
@@ -88,10 +95,10 @@ abbrlink: 9e8f8686
     // ##########################################################################
     // ##########################################################################
     
-    // vscode 主题设置(Shades of Purple插件)
+    // vscode 主题设置 (Shades of Purple插件)
     "workbench.colorTheme": "Shades of Purple",
 
-    // markdown-preview-enhanced 配置(Markdown Preview Enhanced插件)
+    // markdown-preview-enhanced 配置 (Markdown Preview Enhanced插件)
     "markdown-preview-enhanced.codeBlockTheme": "default.css",
     "markdown-preview-enhanced.previewTheme": "vue.css",
     "markdown-preview-enhanced.printBackground": true,
@@ -124,17 +131,45 @@ abbrlink: 9e8f8686
     // 上传路径
     "picgo.picBed.github.path": "",
 
-    // Java 相关配置(java 相关插件)
+    // Java 配置
     "java.configuration.runtimes": [
         {
-            "name": "JavaSE-17",
-            "path": "/usr/local/jdk-17",
-          },
+          // 名称，随便起，多个的话必须唯一
+          "name": "JavaSE-17",
+          // jdk 路径，配置环境变量的路径
+          "path": "/usr/lib/jvm/java-17-openjdk",
+          // 源码路径
+          "sources": "/usr/lib/jvm/java-17-openjdk/lib/src.zip",
+          // VsCode 默认使用这个版本的 jdk
+          "default": true,
+        },
+        {
+          "name": "JavaSE-1.8",
+          "path": "/usr/lib/jvm/java-8-openjdk",
+          "sources": "/usr/lib/jvm/java-8-openjdk/src.zip"
+        },  
     ],
-    // maven settings 路径(java 相关插件)
-    "java.configuration.maven.globalSettings": "/usr/local/maven-3.8.6/conf/settings.xml",
+    // java 文件自动组织导入的包
+    "java.saveActions.organizeImports": true,
+    // vscode 包结构展示效果 flat：平面；hierarchical：分层
     "java.dependency.packagePresentation": "hierarchical",
+    // 不使用 gradle-wrapper.properties 的 gradle
+    "java.import.gradle.wrapper.enabled": false,
+    // 设置默认的 gradle 版本
+    "java.import.gradle.version": "7.6",
+    // 本地 gradle 路径
+    "java.import.gradle.home": "/home/clf/software/gradle-7.6",
+    "java.import.gradle.java.home": "/usr/lib/jvm/java-17-openjdk",
+    // GRADLE_USER_HOME 路径
+    "java.import.gradle.user.home": "/home/clf/software/gradle-repo/",
 
+    // ########################### Maven 配置 ###########################
+    // settings.xml 路径
+    "java.configuration.maven.globalSettings": "/home/clf/software/maven-3.9.0/conf/settings.xml",
+    // maven 执行文件路径
+    "maven.executable.path": "/home/clf/software/maven-3.9.0/bin/",
+    // maven 命令默认选项
+    "maven.executable.options": "-o -DskipTests",
 
     // ##########################################################################
     // ##########################################################################
