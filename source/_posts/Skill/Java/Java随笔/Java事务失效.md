@@ -1,4 +1,16 @@
+---
+title: Java事务失效
+categories:
+  - Skill
+  - Java
+tags:
+  - java
+  - transactional
+---
 
+
+
+<!-- more -->
 
 https://blog.csdn.net/hanjiaqian/article/details/120501741
 

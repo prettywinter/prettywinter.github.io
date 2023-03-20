@@ -31,9 +31,7 @@ abbrlink: 9e8f8686
     // 保存时自动格式化内容
     "editor.formatOnSave": true,
     // 彩色括号对
-    "editor.bracketPairColorization.enabled": true,
     "editor.guides.bracketPairs": "active",
-    "editor.suggestSelection": "first",
 
     // ########################### 文件配置 ###########################
 

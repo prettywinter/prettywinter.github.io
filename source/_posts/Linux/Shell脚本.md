@@ -6,6 +6,7 @@ categories:
 tags:
   - linux
   - shell
+abbrlink: dccc50f5
 ---
 
 <!-- more -->

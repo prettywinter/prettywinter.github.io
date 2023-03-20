@@ -5,6 +5,7 @@ categories:
 tags:
   - idea plugin
   - easycode
+abbrlink: 50f4489
 ---
 
 <!-- more -->
