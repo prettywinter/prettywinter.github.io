@@ -112,7 +112,7 @@ abbrlink: 9e8f8686
     // 安装 PicGo 软件，使用 PicGo 插件只需要配置一个 configPath
     // 本机安装了 PicGo 客户端第一次启动后会自动生成 json 文件
     // "picgo.configPath": "C:\\Users\\你的用户名\\AppData\\Roaming\\picgo\\data.json",
-    // 上面的选项如果配置了，下面的无须配置。
+    // 上面的选项如果配置了，下面的无须配置（前提是安装了客户端软件）。
 
     // 只使用 VsCode PicGo 插件，需要配置以下信息
     // 当前使用图床 可选：weibo, qiniu, tcyun, upyun, github, aliyun, imgur and SM.MS
@@ -156,16 +156,16 @@ abbrlink: 9e8f8686
     // 设置默认的 gradle 版本
     "java.import.gradle.version": "7.6",
     // 本地 gradle 路径
-    "java.import.gradle.home": "/home/clf/software/gradle-7.6",
+    "java.import.gradle.home": "/home/xxx/software/gradle-7.6",
     "java.import.gradle.java.home": "/usr/lib/jvm/java-17-openjdk",
     // GRADLE_USER_HOME 路径
-    "java.import.gradle.user.home": "/home/clf/software/gradle-repo/",
+    "java.import.gradle.user.home": "/home/xxx/software/gradle-repo/",
 
     // ########################### Maven 配置 ###########################
     // settings.xml 路径
-    "java.configuration.maven.globalSettings": "/home/clf/software/maven-3.9.0/conf/settings.xml",
+    "java.configuration.maven.globalSettings": "/home/xxx/software/maven-3.9.0/conf/settings.xml",
     // maven 执行文件路径
-    "maven.executable.path": "/home/clf/software/maven-3.9.0/bin/",
+    "maven.executable.path": "/home/xxx/software/maven-3.9.0/bin/",
     // maven 命令默认选项
     "maven.executable.options": "-o -DskipTests",
 
@@ -193,7 +193,7 @@ abbrlink: 9e8f8686
     // 快捷键映射，这里采用了 vscode 的
     "keymap": "pc-vscode",
     
-    // ###### 终端配置 ######
+    // ############# 终端配置 #############
     "terminal.profiles": [
         {
             "program": "D:\\software\\Git\\bin\\bash.exe",
