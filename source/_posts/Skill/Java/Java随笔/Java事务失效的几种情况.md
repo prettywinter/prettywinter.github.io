@@ -1,5 +1,5 @@
 ---
-title: Java事务失效
+title: Java事务失效的几种情况
 categories:
   - Skill
   - Java
@@ -9,11 +9,9 @@ tags:
 abbrlink: 9375486d
 ---
 
-
+Java 事务失效的几种情况。
 
 <!-- more -->
-
-https://blog.csdn.net/hanjiaqian/article/details/120501741
 
 ## 一、Spring 声明式事务失效的几种情况
 
@@ -23,23 +21,21 @@ Spring 的声明式事务非常的好用，但是使用不当的话事务会失�
 
 权限修饰符和 final 的情况不用说了，如果使用 IDE 的话基本上都会提示错误。
 
-### 1. 同一个Service、同一个方法内
-
-#### ① 自行 try-catch
+### 1. 自行 try-catch，吞掉异常
 
 ```java
 @Override
 @Transactional(rollbackFor = Exception.class)
 public void saveBatch(List<User> list) {
-  try{
-    saveBatch(list);
-  } catch (Exception e) {
-    log.error("保存失败：{}", e.getMessage());
-  }
+    try{
+        saveBatch(list);
+    } catch (Exception e) {
+        log.error("保存失败：{}", e.getMessage());
+    }
 }
 ```
 
-如果是这种情况，虽然添加了事务，那么也不会生效。解决的办法就是在 **catch** 中抛出异常。如下代码：
+如果是这种情况，虽然添加了事务，那么也不会生效。解决的办法就是在 **catch** 中抛出异常，Spring 事务回滚默认是捕获 RuntimeException 和 Error，当然 Spring 也提供了 `rollbackFor` 属性捕获其它异常，开发中最好指定异常。如下代码：
 
 ```java
 @Override
@@ -53,37 +49,24 @@ public void saveBatch(List<User> list) {
   }
 }
 ```
-#### ② 非事务方法调用事务方法
 
-### 2. 同一个Service、不同的方法
+### 2. 同一服务类的方法相互调用
 
-一般使用 **声明式事务** 遇到的最多失效的原因就是这种情况了。
-
-以下面的方法为例：
+不论是事务方法调用事务方法，还是非事务方法调用事务方法，一般使用 **声明式事务** 失效的情况以此类居多。
 
 ```java
-// 事务方法或者非事务方法
 @Override
 public void importExcel(List<User> list) {
     // do something parser
     saveBatch(list);
 }
-// 事务方法
+
 @Override
-@Transactional(rollbackFor = Exception.class)
+@Transactional(propagation = Propagation.NESTED)
 public void saveBatch(List<User> list) {
-    userMapper.saveBatch(list);
+    // do something
 }
 ```
-
-#### ① 事务方法调用事务方法
-
-虽然不一定失效，但是概率比较低（如果涉及多个表操作，会发生有的表回滚，有的表产生脏数据），测试时需要严格测试。
-
-#### ② 非事务方法调用事务方法
-
-这个肯定是会失效的。
-
 
 解决办法有下面几种：
 1. 使用 Spring 提供的 ` AopContext.currentProxy()` （简单方便）；
@@ -116,3 +99,52 @@ public void saveBatch(List<User> list) {
     userMapper.saveBatch(list);
 }
 ```
+
+### 3. 嵌套调用
+
+事务嵌套调用时，有时候我们希望这种场景：里面的事务方法如果发生异常回滚，但我不希望外面的回滚：
+
+```java
+@Override
+@Transactional(rollbackFor = Exception.class)
+public void importExcel(List<User> list) {
+    // do something parser
+    updateSome(user);
+    saveBatch(list);
+}
+
+@Override
+@Transactional(propagation = Propagation.NESTED)
+public void saveBatch(List<User> list) {
+    // do something
+}
+```
+
+上面的例子中，当 `saveBatch` 发生异常时，我希望它回滚，但是我不希望之前的 `updateSome` 回滚。但是事实确实都回滚了。原因就是如果下面的 `saveBatch` 发生异常时会向上抛，以至于外层也发生了异常，所以解决办法也很简单，直接 try-catch。
+
+```java
+@Override
+@Transactional(rollbackFor = Exception.class)
+public void importExcel(List<User> list) {
+    // do something parser
+    updateSome(user);
+    try {
+      saveBatch(list);
+    } catch (Exception e) {
+      // TODO: handle exception
+    }
+}
+
+@Override
+@Transactional(propagation = Propagation.NESTED)
+public void saveBatch(List<User> list) {
+    // do something
+}
+```
+
+## 二、事务优化
+
+使用事务时最好指定回滚异常，设置事务传播属性；
+尽量避免大事务连接，可以考虑使用上面的解决办法把事务方法抽离出来，进行内部调用。
+
+> 本文参考：https://blog.csdn.net/hanjiaqian/article/details/120501741。
