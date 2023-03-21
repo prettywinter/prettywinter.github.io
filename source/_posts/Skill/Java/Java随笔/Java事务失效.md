@@ -6,6 +6,7 @@ categories:
 tags:
   - java
   - transactional
+abbrlink: 9375486d
 ---
 
 
