@@ -375,3 +375,7 @@ snap stop docker
 # 然后重启
 systemctl start docker
 ```
+
+## MySQL
+
+apt-get安装：https://blog.lanluo.cn/8662
