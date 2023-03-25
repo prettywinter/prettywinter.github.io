@@ -37,13 +37,15 @@ abbrlink: fa20a4d7
   - [1. Node](#1-node)
   - [2. MongoDB](#2-mongodb)
   - [3. MySQL](#3-mysql)
-    - [密码正确但是进不去 bash 环境](#密码正确但是进不去-bash-环境)
-    - [预读处理](#预读处理)
-    - [Can‘t connect to local MySQL server through socket ‘/tmp/mysql.sock‘ (2)](#cant-connect-to-local-mysql-server-through-socket-tmpmysqlsock-2)
+    - [问题一：密码正确但是进不去 bash 环境](#问题一密码正确但是进不去-bash-环境)
+    - [问题二：预读处理](#问题二预读处理)
+    - [问题三：Can‘t connect to local MySQL server through socket ‘/tmp/mysql.sock‘ (2)](#问题三cant-connect-to-local-mysql-server-through-socket-tmpmysqlsock-2)
 - [Some Questions](#some-questions)
   - [1. 关于源码编译安装失败](#1-关于源码编译安装失败)
   - [虚拟机](#虚拟机)
   - [防火墙](#防火墙)
+    - [CentOS 7 firewall 基础使用](#centos-7-firewall-基础使用)
+    - [CentOS 6 iptables 基础使用](#centos-6-iptables-基础使用)
 
 <!-- /code_chunk_output -->
 
@@ -546,7 +548,7 @@ flush privileges;
 
 > 记录日志最末尾位置 `root@localhost:` 后的字符串，此字符串为mysql管理员临时登录密码。
 
-#### 密码正确但是进不去 bash 环境
+#### 问题一：密码正确但是进不去 bash 环境
 
 ```bash
 ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES/NO) 
@@ -559,7 +561,7 @@ ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: Y
 3. 使用密码登录数据库 mysql -u root -p 并切换到 mysql 数据库
 4. 执行命令：`update user set host='%' where user='root';`
 
-#### 预读处理
+#### 问题二：预读处理
 
 ```bash
 mysql> use dbname;
@@ -574,7 +576,7 @@ You can turn off this feature to get a quicker startup with -A
 no-auto-rehash
 ```
 
-#### Can‘t connect to local MySQL server through socket ‘/tmp/mysql.sock‘ (2)
+#### 问题三：Can‘t connect to local MySQL server through socket ‘/tmp/mysql.sock‘ (2)
 
 这是 `my.cnf` 的配置问题，下面的三块内容必须都要设置，不然就会使用默认的 socket，位于 `/tmp/mysql.sock` 目录，因此我们最好配置一下：
 
@@ -633,120 +635,106 @@ systemctl restart network
 
 ### 防火墙
 
-CentOS 7 使用的 firewall 
-开放端口
+CentOS 版本不同采用的防火墙管理也不同（当然，我们部署后可以安装）。CentOS 6 使用的 **iptables**，CentOS 7 使用的 **firewall**。
+
+#### CentOS 7 firewall 基础使用
+
+```bash
+# 查询开放端口
 firewall-cmd --list-port
-开放端口
+# 开放端口
 firewall-cmd --zone=public --add-port=8080/tcp --permanent
-重新加载
-firewall-cmd --reload
-禁用端口
+# 禁用端口
 firewall-cmd --zone=public --remove-port=8083/tcp --permanent
+# 重新加载
+firewall-cmd --reload
+# 再次查询开放端口
+firewall-cmd --list-port
+```
 
+#### CentOS 6 iptables 基础使用
 
+```bash
+# 启动
+service iptables start
 
-Centos 6 iptables
-3.1 iptables的基本使用
-启动：service iptables start
+# 关闭
+service iptables stop
 
-关闭：service iptables stop
+# 查看状态
+service iptables status
 
-查看状态：service iptables status
+# 开机禁用
+chkconfig iptables off
 
-开机禁用：chkconfig iptables off
+# 开机启用
+chkconfig iptables on
+# 允许本地回环接口（即运行本机访问本机） -A和-I参数分别为添加到规则末尾和规则最前面。
+iptables -A INPUT -i lo -j ACCEPT
+# 允许已建立的或相关联的通行
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+# 允许所有本机向外的访问
+iptables -P INPUT ACCEPTiptables -A OUTPUT -j ACCEPT
 
-开机启用：chkconfig iptables on
-
-3.2 开放指定端口语句
-1）允许本地回环接口（即运行本机访问本机）：iptables -A INPUT -i lo -j ACCEPT
-
-注：-A和-I参数分别为添加到规则末尾和规则最前面。
-
-2）允许已建立的或相关联的通行：iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
-
-3）允许所有本机向外的访问：iptables -P INPUT ACCEPTiptables -A OUTPUT -j ACCEPT
-
-4）允许访问22端口：
-
+# 允许访问22端口 -s后可以跟 IP 段或指定 IP 地址，如果有其他端口的话，规则也类似。
 iptables -A INPUT -p tcp --dport 22 -j ACCEPT
 iptables -A INPUT -p tcp -s 10.159.1.0/24 --dport 22 -j ACCEPT  
-注：-s后可以跟 IP 段或指定 IP 地址，如果有其他端口的话，规则也类似。
 
-5）允许ping：iptables -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
+# 允许ping
+iptables -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT
 
-6）禁止其他未允许的规则访问：
-
+# 禁止其他未允许的规则访问
 iptables -A INPUT -j REJECT 
-
 iptables -A FORWARD -j REJECT
 
-注：如果 22 端口未加入允许规则，SSH链接会直接断开。
+# 屏蔽单个IP
+iptables -I INPUT -s 123.45.6.7 -j DROP
+# 封整个段即从123.0.0.1到123.255.255.254
+iptables -I INPUT -s 123.0.0.0/8 -j DROP
+# 封IP段即从123.45.0.1到123.45.255.254
+iptables -I INPUT -s 124.45.0.0/16 -j DROP
+# 封IP段即从123.45.6.1到123.45.6.254
+iptables -I INPUT -s 123.45.6.0/24 -j DROP
 
-3.3 屏蔽 IP
-1）屏蔽单个IP：iptables -I INPUT -s 123.45.6.7 -j DROP
+# 查看已有规则 -n：只显示IP地址和端口号，不将 IP 解析为域名
+iptables -L -n
 
-2）封整个段即从123.0.0.1到123.255.255.254：iptables -I INPUT -s 123.0.0.0/8 -j DROP
+# 将所有 iptables 以序号标记显示
+iptables -L -n --line-numbers
 
-3）封IP段即从123.45.0.1到123.45.255.254：iptables -I INPUT -s 124.45.0.0/16 -j DROP
-
-4）封IP段即从123.45.6.1到123.45.6.254：iptables -I INPUT -s 123.45.6.0/24 -j DROP
-
-3.4 iptables 规则
-查看已有规则：iptables -L -n
-
-N：只显示IP地址和端口号，不将 IP 解析为域名
-
-将所有 iptables 以序号标记显示，执行：iptables -L -n --line-numbers
-
-添加规则
-
-iptables -A和iptables -I
-
-1）iptables -A
-
-添加的规则是添加在最后面。如针对 INPUT 链增加一条规则，接收从 eth0 口进入且源地址为192.168.0.0/16网段发往本机的数据：
-
+# 添加规则
+# 添加的规则是添加在最后面。如针对 INPUT 链增加一条规则，接收从 eth0 口进入且源地址为192.168.0.0/16网段发往本机的数据
 iptables -A INPUT -i eth0 -s 192.168.0.0/16 -j ACCEPT
 
-2）iptables -I 
+# 删除规则
+iptables -D
+# 删除所有规则
+iptables -F
 
-添加的规则默认添加至第一条。如果要指定插入规则的位置，则使用iptables -I时指定位置序号即可。
+# 备份规则
+iptables-save > /etc/sysconfig/iptables.save
+# 使用规则
+iptables-restore < /etc/sysconfig/iptables.save
 
-删除规则
+# 重启生效
+service iptables save
+service iptables restart
+```
 
-如果删除指定规则，使用iptables -D命令。命令后可接序号或iptables -D接详细定义。
+开放端口步骤
 
-如果想把所有规则都清除掉，可使用iptables -F。
-
-3.5 规则的保存与恢复
-备份iptables rules
-
-使用 iptables-save 命令，如：iptables-save > /etc/sysconfig/iptables.save
-
-恢复iptables rules
-
-使用 iptables 命令，如：iptables-restore < /etc/sysconfig/iptables.save
-
-iptables 配置保存
-
-做的配置修改，在设备重启后，配置将丢失。可使用service iptables save进行保存。
-
-重启 iptables 的服务使其生效：service iptables save   
-
-添加规则后保存重启生效：service iptables restart
-
-
-3.6 开放端口步骤
-3.6.1 方法一：通过命令行
+方法一：通过命令行
+```bash
 iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 service iptables save
 service iptables restart
-3.6.2 方法二：编辑配置文件
-iptables的配置文件为/etc/sysconfig/iptables
+```
 
-编辑配置文件：vi /etc/sysconfig/iptables
+方法二：编辑配置文件
 
-1）配置文件中添加：
+编辑配置文件：`vi /etc/sysconfig/iptables`，添加：
 
--A INPUT -p tcp --dport 80 -j ACCEPT
-2）执行service iptables restart，重启生效。
+```bash
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+service iptables restart
+```
