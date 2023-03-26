@@ -8,6 +8,8 @@ tags:
 abbrlink: 14259ba7
 ---
 
+Nginx的安装与简单使用。
+
 <!-- more -->
 
 ## 一、安装
@@ -183,8 +185,9 @@ http {
     #}
 
 }
-
 ```
+
+> 修改配置文件再次启动报错：`[emerg]: bind() to 0.0.0.0:80 failed (80: Address already in use)`，执行命令：sudo fuser -k 80/tcp，然后 ./nginx
 
 ### 1. 基础配置
 

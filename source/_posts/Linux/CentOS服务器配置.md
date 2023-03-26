@@ -17,39 +17,35 @@ abbrlink: fa20a4d7
 
 <!-- code_chunk_output -->
 
-- [CentOS7最小安装](#centos7最小安装)
+- [一、CentOS7最小安装](#一centos7最小安装)
   - [1、配置网卡](#1配置网卡)
   - [2、关闭防火墙以及 Linux 的一些安全策略](#2关闭防火墙以及-linux-的一些安全策略)
   - [3、配置本地 yum 源](#3配置本地-yum-源)
   - [4、安装常用工具](#4安装常用工具)
   - [5、安装依赖关系](#5安装依赖关系)
   - [6、修改yum源](#6修改yum源)
-  - [rpm命令](#rpm命令)
-- [安装软件](#安装软件)
+  - [7. rpm命令](#7-rpm命令)
+  - [8. lrzsz：文件上传下载](#8-lrzsz文件上传下载)
+- [二、部署服务](#二部署服务)
   - [1. Redis](#1-redis)
-  - [2. Git](#2-git)
-  - [3. RabbitMQ](#3-rabbitmq)
-  - [4. Python](#4-python)
-  - [5. Nginx](#5-nginx)
-  - [6. Btop++](#6-btop)
-  - [7. FFmpeg](#7-ffmpeg)
-- [Linux通用二进制文件安装](#linux通用二进制文件安装)
-  - [1. Node](#1-node)
-  - [2. MongoDB](#2-mongodb)
-  - [3. MySQL](#3-mysql)
+  - [2. RabbitMQ](#2-rabbitmq)
+  - [3. Python](#3-python)
+  - [4. Nginx](#4-nginx)
+  - [5. Btop++](#5-btop)
+  - [6. FFmpeg](#6-ffmpeg)
+  - [7. MySQL（解压版）](#7-mysql解压版)
     - [问题一：密码正确但是进不去 bash 环境](#问题一密码正确但是进不去-bash-环境)
     - [问题二：预读处理](#问题二预读处理)
     - [问题三：Can‘t connect to local MySQL server through socket ‘/tmp/mysql.sock‘ (2)](#问题三cant-connect-to-local-mysql-server-through-socket-tmpmysqlsock-2)
-- [Some Questions](#some-questions)
+- [三、附](#三附)
   - [1. 关于源码编译安装失败](#1-关于源码编译安装失败)
-  - [虚拟机](#虚拟机)
-  - [防火墙](#防火墙)
+  - [2. 防火墙](#2-防火墙)
     - [CentOS 7 firewall 基础使用](#centos-7-firewall-基础使用)
     - [CentOS 6 iptables 基础使用](#centos-6-iptables-基础使用)
 
 <!-- /code_chunk_output -->
 
-## CentOS7最小安装
+## 一、CentOS7最小安装
 
 ### 1、配置网卡
 
@@ -193,15 +189,31 @@ enabled=0
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 ```
 
-### rpm命令
+### 7. rpm命令
 
-安装：rpm -ivh xxx.rpm
-卸载：rpm -evh xxx.rpm
-更新：rpm -Uvh xxx.rpm
-显示所有已安装软件：rpm -qa
-CentOS安装lrzsz工具：sz下载，rz上传
+```bash
+# 安装
+rpm -ivh xxx.rpm
+# 卸载
+rpm -evh xxx.rpm
+# 更新
+rpm -Uvh xxx.rpm
+# 显示所有已安装软件
+rpm -qa
+```
 
-## 安装软件
+### 8. lrzsz：文件上传下载
+
+```bash
+# 安装
+yum install -y lrzsz
+# 下载
+sz
+# 上传
+rz
+```
+
+## 二、部署服务
 
 ### 1. Redis
 
@@ -218,34 +230,7 @@ make install PREFIX=/usr/local/redis
 
 > Redis 的默认的配置文件在源码解压后的目录中
 
-### 2. Git
-
-{% link https://github.com/git/git/tags 官网源码下载 %}
-
-```bash
-# 安装编译 Git 源码的工具和依赖
-yum install curl-devel expat-devel gettext-devel openssl-devel zlib-devel gcc perl-ExtUtils-MakeMaker
-
-# 卸载旧版 Git
-yum -y remove git
-
-# 编译 Git 源码
-make
-
-# 安装git至指定的路径
-make prefix=/usr/local/git install
-
-# 配置环境变量： 编辑文件 vi /etc/profile 
-export PATH=$PATH:/usr/local/git/bin
-
-# 刷新环境变量
-source /etc/profile
-
-# 查看Git是否安装完成
-git --version
-```
-
-### 3. RabbitMQ
+### 2. RabbitMQ
 
 RabbitMQ 是使用 Erlang 语言编写的中间件，联想一下 Java，我们可以猜到它需要先搭建 Erlang 环境。主要是这个环境需要编译源码，RabbitMQ 本身官网提供了二进制压缩包。
 
@@ -293,7 +278,7 @@ export PATH=$PATH:/usr/local/rabbitmq/sbin
 source /etc/profile
 ```
 
-### 4. Python
+### 3. Python
 
 Linux 下基本不需要配置 Python 的环境，有个别的 ISO 镜像版本比较老，比如 CentOS7 的 mini ISO 镜像是2.x的，我们可以通过各大系统的包管理工具进行安装，也可以自己通过源码编译安装。
 
@@ -324,7 +309,7 @@ ln -s /usr/local/python3/bin/python3.8 /usr/bin/python3
 ln -s /usr/local/python3/bin/pip3.8 /usr/bin/pip3
 ```
 
-### 5. Nginx
+### 4. Nginx
 
 {% link https://nginx.org/en/ 官网源码下载 %}
 
@@ -344,7 +329,7 @@ cd /usr/local/nginx
 ./nginx -s reload
 ```
 
-### 6. Btop++
+### 5. Btop++
 
 Btop++ 是一个 Linux 资源监视器，显示处理器、内存、磁盘、网络和进程的使用情况和统计资料，界面美观，使用简单。这里使用了源码编译安装，但是浪子推荐下载 Github 仓库的二进制包解压运行 install.sh 脚本安装。
 
@@ -365,7 +350,7 @@ cd btop
 make && make install
 ```
 
-### 7. FFmpeg
+### 6. FFmpeg
 
 {% link http://www.ffmpeg.org/ FFmpeg使用 %}
 
@@ -385,93 +370,11 @@ make && make install
 cd /usr/local/ffmpeg
 ```
 
-## Linux通用二进制文件安装
+### 7. MySQL（解压版）
 
-通用二进制文件一般使用包管理工具即可快速安装使用，是非常方便的。
+yum 方式安装：https://zhuanlan.zhihu.com/p/87069388
 
-### 1. Node
-
-{% link https://nodejs.org/en/download/ 二进制包下载 %}
-
-Node 可以直接下载二进制文件，解压配置环境变量即可。
-
-```bash
-# 官网下载二进制压缩包是 xz 结尾的，和下面的镜像站下载的略有不同
-tar -Jvxf node-v16.15.0-linux-x64.tar.xz -C /usr/local/
-cd /usr/local/
-mv node-v16.15.0-linux-x64/ nodejs
-ln -s /usr/local/nodejs/bin/node /usr/local/bin
-ln -s /usr/local/nodejs/bin/npm /usr/local/bin
-```
-
-如果嫌弃官网下载速度慢可以到这里 {% copy width:max https://registry.npmmirror.com/binary.html?path=node/latest-v16.x/ %} 选择合适的版本下载。
-
-### 2. MongoDB
-
-{% link https://www.mongodb.com/try/download/community 二进制包下载 %}
-
-```bash
-# 解压
-tar -xvzf mongodb-linux-x86_64-rhel62-3.4.22.tgz
-mv mongodb-linux-x86_64-rhel62-3.4.22 /usr/local/mongodb
-
-# 创建数据存储目录、工作目录以及日志目录
-cd /usr/local/mongodb/
-mkdir conf
-mkdir data
-mkdir logs
-
-# 添加环境变量: vim /etc/profile
-export MONGODB_HOME=/usr/local/mongodb  
-export PATH=$PATH:$MONGODB_HOME/bin
-
-# 使环境变量生效
-source /etc/profile
-```
-
-顺带说一下配置，编辑 MongoDB 的配置文件 `mongodb.conf`，修改以下内容：
-
-```bash
-# 数据存储目录
-dbpath = /usr/local/mongodb/data/db
-# 日志存储目录
-logpath = /usr/local/mongodb/logs/mongodb.log
-# 指定端口号
-port = 27017
-# 以守护进程的方式启动，即后台运行
-fork = true
-# 可以连接的地址，开启远程登录
-bind_ip = 0.0.0.0
-# 启用密码验证，可根据实际情况配置
-# auth = true
-```
-
-mongodb安装好后第一次启动服务是不需要密码的，也没有任何用户，通过shell命令可直接进入，cd到mongodb目录下的bin文件夹，执行命令 `./mongo` 即可。如果配置了环境变量，可以在任意路径执行 `mongo` 也可以。
-
-```bash
-# 指定配置文件启动服务
-./mongod --config /usr/local/mongodb/conf/mongodb.conf
-# 进入系统数据库
-use admin
-# 创建 root 用户
-db.createUser( {user: "root",pwd: "xxx",roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]});
-# 查看创建的用户(以下两个命令二选一)
-show users;
-db.system.users.find();
-# 关闭服务
-db.shutdownServer();
-
-# 启动时开启密码验证，也可以在配置文件中加入 auth = true 在启动时开启验证，这样就不用 --auth 选项了
-./mongod --config /usr/local/mongodb/conf/mongodb.conf --auth
-```
-
-### 3. MySQL
-
-MySQL 说实话我觉得通用的二进制文件包安装较为简单，卸载是最简单的，比使用包管理工具安装的简单的多。下面给两个包管理工具安装的参考链接，我没怎么用过，仅作参考。
-
-yum安装：https://zhuanlan.zhihu.com/p/87069388
-
-接下来进入正题，使用通用的 MySQL8.x 版本的二进制压缩包进行安装。至于卸载，就把有关 MySQL 创建的几个文件夹删掉就行了，`/etc/my.cnf` 是默认自带的，卸载的时候删不删都没有问题，如果默认没有这个文件也不必担心，可以手动添加。
+使用通用的 MySQL8.x 版本的二进制压缩包进行安装。至于卸载，就把有关 MySQL 创建的几个文件夹删掉就行了，`/etc/my.cnf` 是默认自带的，卸载的时候删不删都没有问题，如果默认没有这个文件也不必担心，可以手动添加。
 
 ```bash
 # 检查mysql用户组和用户是否存在，如果没有，则创建
@@ -602,7 +505,7 @@ socket=/usr/local/mysql/mysql.sock
 ln -s /usr/local/mysql/mysql.sock /tmp/mysql.sock
 ```
 
-## Some Questions
+## 三、附
 
 ### 1. 关于源码编译安装失败
 
@@ -615,25 +518,7 @@ make distclean
 make
 ```
 
-### 虚拟机
-
-centos7问题描述：
-用的好好的虚拟机，之前内网都通，突然xshell连不上虚拟机了也连不上外网了，这时候怎么办呢？
-> 解决方法：
-1.将networkmanager服务停掉
-systemctl stop NetworkManager
-systemctl disable NetworkManager
-2.重启网卡
-systemctl restart network
-如上操作，就可以啦
-
-{% link https://blog.csdn.net/weixin_44695793/article/details/108089356 参考博客地址 %}
-<!-- [原博客地址](https://blog.csdn.net/weixin_44695793/article/details/108089356) -->
-
-**TIPS：** 如果下面的命令不是使用超级用户执行的话，可能不能安装成功，这个时候可以添加 `sudo` 选项进行重试。
-
-
-### 防火墙
+### 2. 防火墙
 
 CentOS 版本不同采用的防火墙管理也不同（当然，我们部署后可以安装）。CentOS 6 使用的 **iptables**，CentOS 7 使用的 **firewall**。
 
@@ -721,9 +606,10 @@ service iptables save
 service iptables restart
 ```
 
-开放端口步骤
+开放端口
 
 方法一：通过命令行
+
 ```bash
 iptables -A INPUT -p tcp --dport 80 -j ACCEPT
 service iptables save

@@ -10,7 +10,7 @@ cover: 'linux,ubuntu'
 abbrlink: af7fa1dd
 ---
 
-Ubuntu-Server 配置，桌面版应该也能用，如果你喜欢命令的话，应该都没问题。
+Ubuntu Server 22.04 配置，桌面版应该也能用，如果你喜欢使用命令行的话，应该都没问题。
 
 <!-- more -->
 
@@ -140,26 +140,21 @@ set laststatus=2
 
 ## 三、常用软件
 
-### Redis
+### 1. Redis
 
 ```bash
 wget https://download.redis.io/redis-stable.tar.gz
 tar -xzvf redis-stable.tar.gz
 cd redis-stable
 make && make install
-redis-server
+redis-server &
 ```
 
-### PostgreSQL
+### 2. MySQL
 
-```bash
-sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
-sudo apt-get update
-sudo apt-get -y install postgresql
-```
+apt-get安装：https://blog.lanluo.cn/8662
 
-### [Docker](https://docs.docker.com/engine/install/ubuntu/)
+### 3. [Docker](https://docs.docker.com/engine/install/ubuntu/)
 
 ```bash
 # 卸载旧版本
@@ -195,7 +190,7 @@ apt-cache madison docker-ce
 sudo apt-get install docker-ce=<VERSION_STRING> docker-ce-cli=<VERSION_STRING> containerd.io docker-compose-plugin
 ```
 
-### [btop++](https://github.com/aristocratos/btop)
+### 4. [btop++](https://github.com/aristocratos/btop)
 
 ```bash
 # 下载解压安装
@@ -207,7 +202,7 @@ cd btop
 btop
 ```
 
-### [Nodejs](https://github.com/nodesource/distributions/blob/master/README.md)
+### 5. [Nodejs](https://github.com/nodesource/distributions/blob/master/README.md)
 
 ```bash
 # Using Ubuntu
@@ -215,33 +210,15 @@ curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
 sudo apt-get install -y nodejs
 ```
 
-### [最新版稳定Git](https://git-scm.com/download/linux)
-
-```bash
-sudo add-apt-repository ppa:git-core/ppa
-sudo apt update
-sudo apt install -y git
-```
-
-### [open-jdk](https://openjdk.org/install/)
+### 6. [open-jdk](https://openjdk.org/install/)
 
 ```bash
 sudo apt-get install openjdk-8-jdk
 ```
 
-### [Nginx](https://nginx.org/download/nginx-1.22.0.tar.gz)
-
-```bash
-wget https://github.com/PCRE2Project/pcre2/releases/download/pcre2-10.40/pcre2-10.40.tar.gz
-wget https://nginx.org/download/nginx-1.22.0.tar.gz
-tar -zxvf nginx-1.22.0.tar.gz -C nginx && cd nginx
-```
-
-> 修改配置文件再次启动报错：`[emerg]: bind() to 0.0.0.0:80 failed (80: Address already in use)`，执行命令：sudo fuser -k 80/tcp，然后 ./nginx
-
 ## 四、其它
 
-### 查找apt安装的软件的路径
+### 1. 查找apt安装的软件的路径
 
 这里以jdk为例
 
@@ -251,7 +228,7 @@ which java
 file 上一条命令打印的路径
 ```
 
-### 开放指定端口
+### 2. 开放指定端口
 
 随着 Ubuntu 的更新，它的各种软件也在更新，以前用 `firewall`，新版本（22.04）已经默认使用 `ufw`，相比较而言，[UFW](https://help.ubuntu.com/community/UFW) command more easily，不过具体使用这里就不详细写了，可以参考官网的说明，很简单。
 
@@ -281,7 +258,7 @@ ufw deny port/协议
 ufw allow from IP
 ```
 
-### [ftp服务搭建](https://www.geeksforgeeks.org/how-to-setup-and-configure-an-ftp-server-in-linux/)
+### 3. [ftp服务搭建](https://www.geeksforgeeks.org/how-to-setup-and-configure-an-ftp-server-in-linux/)
 
 [下载](https://pkgs.org/download/vsftpd) 完成后上传至服务器，执行以下命令安装
 
@@ -375,7 +352,3 @@ snap stop docker
 # 然后重启
 systemctl start docker
 ```
-
-## MySQL
-
-apt-get安装：https://blog.lanluo.cn/8662
