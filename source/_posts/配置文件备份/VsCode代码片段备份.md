@@ -40,6 +40,20 @@ VsCode 代码片段备份。
 			"log.debug(\"$1\", $2)"
 		],
 		"description": "generator java log.debug()"
-	}
+	},
+	"java doc": {
+		"scope": "java",
+		"prefix": "jdoc",
+		"body": [
+			"/**",
+			" *",
+			" * @author ${1:user}",
+			" * @since 1.0.0",
+			" */"
+		],
+		"description": "generator java class basic info"
+	},
 }
 ```
+
+> 生成时间方式：`@date ${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE} ${CURRENT_HOUR}:${CURRENT_MINUTE}:${CURRENT_SECOND}`
