@@ -319,9 +319,12 @@ registry = "https://mirrors.ustc.edu.cn/crates.io-index"
 
 ### 3. 火狐
 
-1. [TWP - Translate Web Pages](https://addons.mozilla.org/zh-CN/firefox/addon/traduzir-paginas-web/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search)
+1. [沉浸式翻译](https://addons.mozilla.org/zh-CN/firefox/addon/immersive-translate/?utm_content=addons-manager-reviews-link&utm_medium=firefox-browser&utm_source=firefox-browser)
 2. [可可翻译](https://addons.mozilla.org/zh-CN/firefox/addon/sctranslator/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search)
 3. [Browse.live](https://addons.mozilla.org/zh-CN/firefox/addon/browse-live/?utm_source=addons.mozilla.org&utm_medium=referral&utm_content=search)
+4. [Circle 阅读助手基础版](https://addons.mozilla.org/zh-CN/firefox/addon/circle-reader-mini/?utm_content=addons-manager-reviews-link&utm_medium=firefox-browser&utm_source=firefox-browser)
+
+> 火狐新版本默认在当前标签页中选择收藏夹的标签单击打开会覆盖当前页，浪子还是喜欢以前的打开新标签页，可以进行设置：地址栏输入 `about:config` 回车，查询 `browser.search.openintab`、`browser.urlbar.openintab`、`browser.tabs.loadBookmarksInTabs` 三个选项的值都设置为 true 即可。
 
 ### 4. IDEA
 
