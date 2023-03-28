@@ -334,3 +334,13 @@ registry = "https://mirrors.ustc.edu.cn/crates.io-index"
 4. Translation
 
 > 推荐使用 2021.2.2 及以下版本。
+
+### 5. Git-Bash 使用 tree 命令
+
+[下载tree的二进制文件](http://gnuwin32.sourceforge.net/package/tree.htm) 后解压，把 `bin` 目录下的 tree.exe 文件复制到 Git 安装目录 `xxx\Git\usr\bin\` 下即可。
+
+如果想要在 git-bash 中使用 `ll` 命令，可以在 `C:\Users\yourname` 下创建新文件 `.bashrc`，有的话就不用创建了，在该文件中加入以下内容保存退出：
+
+```bash .bashrc
+alias ll='ls -al'
+```
