@@ -22,9 +22,9 @@ yay -S podman podman-compose
 # 2. 查看当前用户名称
 whoami
 # 3. 把用户名称加入到 `/etc/subuid、/etc/subgid` 两个文件中
-sudo vim /etc/subuid
-sudo vim /etc/subgid
-# 4. 测试
+usermod --add-subuids 100000-165535 --add-subgids 100000-165535 username
+# 执行命令并测试
+podman system migrate
 podman -v
 
 # 使用搜索命令，会发现没有任何结果。这是因为需要配置一下
