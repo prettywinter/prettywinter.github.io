@@ -100,9 +100,14 @@ pnpm 是微软发布的一款 Node 平台的包管理工具，用的人数也挺
 
 {% link https://pnpm.io/ 官方文档 %}
 
-## 四、安装常用
+## 四、Node 版本过高
 
-```bash
-# 
-npm create vue@3
+`package.json` 里在运行命令中加入以下内容再运行就可以了
+
+```json
+...
+"scripts": {
+    "dev": "set NODE_OPTIONS=--openssl-legacy-provider && vue-cli-service serve",
+  },
+...
 ```
