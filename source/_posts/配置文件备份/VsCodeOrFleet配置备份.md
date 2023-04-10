@@ -129,7 +129,7 @@ abbrlink: 9e8f8686
     // 上传路径
     "picgo.picBed.github.path": "",
 
-    // Java 配置
+    // Java 配置 Extension Pack for Java、Gradle for Java、Spring Boot Tools、Spring Initializr Java Support 插件
     "java.configuration.runtimes": [
         {
           // 名称，随便起，多个的话必须唯一
@@ -166,7 +166,7 @@ abbrlink: 9e8f8686
     "java.configuration.maven.globalSettings": "/home/xxx/software/maven-3.9.0/conf/settings.xml",
     // maven 执行文件路径
     "maven.executable.path": "/home/xxx/software/maven-3.9.0/bin/",
-    // maven 命令默认选项
+    // maven 命令默认选项：跳过测试
     "maven.executable.options": "-o -DskipTests",
 
     // ##########################################################################
