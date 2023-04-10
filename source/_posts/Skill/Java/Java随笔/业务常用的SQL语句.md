@@ -7,7 +7,7 @@ tags:
 abbrlink: 44d4a5e6
 ---
 
-一些常用的业务 SQL。
+一些常用的业务 SQL，另外数据库推荐使用日期格式：`%Y-%m-%d %H:%i:%s`。
 
 <!-- more -->
 
@@ -22,20 +22,20 @@ alter table table_name add id_key int not null primary key auto_increment first;
 SELECT @rank:=@rank + 1 AS num FROM (SELECT @rank:=0) a
 -- 构建近 12 个月的月份虚拟表
 -- 注意：table_name 中的数据记录条数必须 >= 12 
-SELECT DATE_FORMAT(@cdate := date_add( @cdate, INTERVAL - 1 MONTH ),'%Y-%m') as date
-FROM (SELECT @cdate := date_add(now(), INTERVAL 1 MONTH ) FROM table_name LIMIT 12) d ORDER BY date
+SELECT DATE_FORMAT(@cdate := date_add( @cdate, INTERVAL - 1 MONTH ),'%Y-%m') AS cdate
+FROM (SELECT @cdate := date_add(NOW(), INTERVAL 1 MONTH ) FROM table_name LIMIT 12) a ORDER BY cdate
 -- 构建近 30 天的天数虚拟表
--- 注意：table_name 中的数据记录条数必须 >= 30 
-SELECT DATE_FORMAT(@cdate := date_add( @cdate, INTERVAL - 1 DAY ),'%Y-%m-%d') as date
-FROM (SELECT @cdate := date_add(now(), INTERVAL 1 DAY ) FROM event e  LIMIT 30) d ORDER BY date
+-- 注意：table_name 中的数据记录条数必须 >= 30
+SELECT DATE_FORMAT(@cdate := date_add( @cdate, INTERVAL - 1 DAY ),'%Y-%m-%d') AS cdate
+FROM (SELECT @cdate := date_add(now(), INTERVAL 1 DAY ) FROM table_name LIMIT 30) a ORDER BY cdate
 
 -- 构建近 30 天的日期虚拟表，此种写法 indexs 不能去掉，必须查询，适合有这种需求的使用
 -- 同样，table_name 中的数据记录条数必须 >= 30
-SELECT @s := @s + 1 AS indexs,
-DATE_FORMAT( DATE( DATE_SUB( CURRENT_DATE, INTERVAL @s DAY ) ), '%Y-%m-%d' ) AS dates 
-FROM table_name, ( SELECT @s := -1 ) temp
-WHERE @s < 30 
-ORDER BY dates
+SELECT @cdate := @cdate + 1 AS indexs,
+DATE_FORMAT( DATE( DATE_SUB( CURRENT_DATE, INTERVAL @s DAY ) ), '%Y-%m-%d' ) AS cdate 
+FROM table_name, ( SELECT @cdate := -1 ) temp
+WHERE @cdate < 30
+ORDER BY cdate
 
 -- 查询今天的数据
 select * from table_name where TO_DAYS(create_time) = TO_DAYS(NOW());
@@ -45,26 +45,26 @@ SELECT * FROM table_name WHERE YEARWEEK(date_format(create_time,'%Y-%m-%d'), 1) 
 SELECT * FROM table_name WHERE DATE_FORMAT(create_time, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m');
 
 -- 查询最近七天的数据(当前日期往前推七天)
-SELECT a.mode_date AS mday, b.other
+SELECT a.cdate AS mday
 FROM (
-    SELECT CURDATE() AS mode_date
+    SELECT CURDATE() AS cdate
     UNION ALL
-    SELECT DATE_SUB(CURDATE(), INTERVAL 1 DAY) AS mode_date
+    SELECT DATE_SUB(CURDATE(), INTERVAL 1 DAY) AS cdate
     UNION ALL
-    SELECT DATE_SUB(CURDATE(), INTERVAL 2 DAY) AS mode_date
+    SELECT DATE_SUB(CURDATE(), INTERVAL 2 DAY) AS cdate
     UNION ALL
-    SELECT DATE_SUB(CURDATE(), INTERVAL 3 DAY) AS mode_date
+    SELECT DATE_SUB(CURDATE(), INTERVAL 3 DAY) AS cdate
     UNION ALL
-    SELECT DATE_SUB(CURDATE(), INTERVAL 4 DAY) AS mode_date
+    SELECT DATE_SUB(CURDATE(), INTERVAL 4 DAY) AS cdate
     UNION ALL
-    SELECT DATE_SUB(CURDATE(), INTERVAL 5 DAY) AS mode_date
+    SELECT DATE_SUB(CURDATE(), INTERVAL 5 DAY) AS cdate
     UNION ALL
-    SELECT DATE_SUB(CURDATE(), INTERVAL 6 DAY) AS mode_date
+    SELECT DATE_SUB(CURDATE(), INTERVAL 6 DAY) AS cdate
 ) a LEFT JOIN (
   SELECT DATE(create_time) AS c_time, other
-  FROM table_name WHERE TYPE = 2 
+  FROM table_name
   GROUP BY DATE(create_time)
-) b ON a.mode_date = b.c_time ORDER BY mday;
+) b ON a.cdate = b.c_time ORDER BY mday;
 ```
 
 ## Oracle
