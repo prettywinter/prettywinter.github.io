@@ -38,9 +38,9 @@ WHERE @cdate < 30
 ORDER BY cdate
 
 -- 查询今天的数据
-select * from table_name where TO_DAYS(create_time) = TO_DAYS(NOW());
--- 查询当前一周的数据
-SELECT * FROM table_name WHERE YEARWEEK(date_format(create_time,'%Y-%m-%d'), 1) = YEARWEEK(NOW());
+SELECT * FROM table_name WHERE TO_DAYS(create_time) = TO_DAYS(NOW());
+-- 查询当前一周的数据 1 表示一周的第一天从星期一开始
+SELECT * FROM table_name WHERE YEARWEEK(DATE_FORMAT(create_time,'%Y-%m-%d'), 1) = YEARWEEK(NOW(), 1);
 -- 查询本月的数据
 SELECT * FROM table_name WHERE DATE_FORMAT(create_time, '%Y-%m') = DATE_FORMAT(CURDATE(), '%Y-%m');
 
