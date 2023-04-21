@@ -91,5 +91,10 @@ WHERE ROWNUM <= 12;
 ## PG
 
 ```sql
-
+-- 生成指定的一段时间的连续日期，学了这个我感觉 MySQL5.7 是个什么垃圾！！！
+select to_char(cdate,'YYYY-MM-DD') as date from
+generate_series(to_timestamp('2023-03-27','YYYY-MM-DD'), to_timestamp('2023-04-01','YYYY-MM-DD'),'1 days') as cdate
+order by date
 ```
+
+> PG 的 generate_series 函数可以学习一下，非常 nice：https://www.cnblogs.com/mchina/archive/2013/04/03/2997722.html
