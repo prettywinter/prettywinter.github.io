@@ -31,6 +31,7 @@ abbrlink: '89826705'
   - [1. 常用命令](#1-常用命令)
   - [2. docker-compose.yml示例](#2-docker-composeyml示例)
   - [3. 使用portainer可视化工具](#3-使用portainer可视化工具)
+  - [4. 卸载 Docker](#4-卸载-docker)
 
 <!-- /code_chunk_output -->
 
@@ -154,7 +155,7 @@ docker images
 
 # 创建并运行容器 MYSQL_ROOT_PASSWORD 该项在启动时必须指定，不然容器启动失败
 # mysql:8.0.20 就是使用刚刚下载的镜像创建容器；如果不写会自动下载最新版本的镜像
-docker run -d -p 9999:3306 --name mysql8 -v /docker-data/mysql/data:/var/lib/mysql -v /docker-data/mysql/conf:/etc/mysql -e MYSQL_ROOT_PASSWORD=123456 --restart=always mysql:8.0.20
+docker run -d -p 9999:3306 --name mysql8 -v /docker-data/mysql/data:/var/lib/mysql -v /docker-data/mysql/conf:/etc/mysql/conf.d -e MYSQL_ROOT_PASSWORD=123456 --restart=always mysql:8.0.20
 
 # 查看 mysql8 容器是否运行
 docker ps
@@ -413,3 +414,12 @@ networks:
 2. 启动 portanier，需要开放两个端口，8000 为监听服务的端口，9000 为向外部提供服务的端口。
     `docker -d -p 8000:8000 -p 9000:9000 --name portanier --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer`
 3. 浏览器访问 http://localhost:9000
+
+### 4. 卸载 Docker
+
+```bash
+sudo apt-get purge docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-ce-rootless-extras
+
+sudo rm -rf /var/lib/docker
+sudo rm -rf /var/lib/containerd
+```

@@ -436,8 +436,8 @@ use mysql;
 # 允许所有主机，都可以通过用户为root用户，密码为默认数据库登录密码，进行数据库操作
 update user set host='%' where user='root';
 
-# ① 适用于 MySQL 8.0之前的版本，可以直接授权
-# grant all privileges on *.* to 'root'@'%' identified by 'root' with grant option;
+# ① 适用于 MySQL 8.0之前的版本，可以直接授权 password 为自己设置的密码
+# grant all privileges on *.* to 'root'@'%' identified by 'password' with grant option;
 
 # ② 适用于 MySQL 8.0之后的版本，需要先创建一个用户，再进行授权【推荐方式②】
 create user dev@'%' identified by '123456';

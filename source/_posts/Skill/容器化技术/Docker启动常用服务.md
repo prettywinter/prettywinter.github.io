@@ -48,16 +48,24 @@ docker cp mysql-test:/etc/my.cnf conf.d/
 docker rm mysql-test
 
 # 使用自定义的配置文件启动MySQL并且在启动时创建一个数据库
-docker run -d -p 3306:3306 --name mysql -v /data/docker-service/mysql/conf.d:/etc/mysql/conf.d -v /data/docker-service/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -v MYSQL_DATABASE=要创建的数据库名称 --restart=always mysql:8.0.30
+docker run -d -p 3306:3306 --name mysql -v /data/docker-service/mysql/conf:/etc/mysql/conf.d -v /data/docker-service/mysql/data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -v MYSQL_DATABASE=要创建的数据库名称 --restart=always mysql:8.0.30
 ```
 
-启动完成后，进入 MySQL 的 bash 环境: `docker exec -it mysql bash`，执行下面两条命令开启远程连接：
+启动完成后，进入 MySQL 的 bash 环境: `docker exec -it mysql bash`，执行下面几个条命令开启远程连接：
 
 ```bash
+use mysql;
+
+# MySQL8.0 之前授权远程连接
 # password 根据自身情况修改
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'password' WITH GRANT OPTION;
 # 刷新权限
 FLUSH PRIVILEGES;
+
+# MySQL8.0 之后授权远程连接
+create user root@'%' identified by 'password';
+grant all privileges on *.* to 'root'@'%' with grant option;
+flush privileges;
 ```
 
 如果需要导入之前的数据库备份文件到此容器中，可以使用 `docker cp /data/docker-service/mysql/data/备份文件.sql mysql:/var/lib/mysql`，然后使用 `source 备份文件.sql;` 加载数据到容器。
@@ -79,6 +87,9 @@ cd /data/docker-service/redis
 # 指定配置文件并开启AOF持久化后台启动
 docker run -p 6379:6379 --name redis -v /data/docker-service/redis/conf:/usr/local/etc/redis -v /data/docker-service/redis/data:/data -d redis:6 redis-server /usr/local/etc/redis/redis.conf --appendonly yes
 ```
+
+> Redis6.2 配置文件：https://raw.githubusercontent.com/redis/redis/6.2/redis.conf
+> https://redis.io/docs/management/config/
 
 ## 3. Nginx
 
