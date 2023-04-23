@@ -7,20 +7,22 @@ cover: 'https://fastly.jsdelivr.net/gh/prettywinter/dist/images/blogcover/linux.
 abbrlink: 509e306a
 ---
 
+Linux 简单入门，这是一个 Linux 的命令学习网站：https://www.linuxshelltips.com/，类似于菜鸟学习网站，只是这个多了一些其它的东西。
+
 <!-- more -->
 
 <!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=true} -->
 
 <!-- code_chunk_output -->
 
-- [一、目录](#一目录)
-- [二、命令](#二命令)
-- [三、VIM常用命令](#三vim常用命令)
-- [四、权限](#四权限)
-- [五、Shell](#五shell)
-- [六、用户、用户组命令](#六用户用户组命令)
-- [七、tar包常用命令](#七tar包常用命令)
-- [八、任务计划(Crontab)命令](#八任务计划crontab命令)
+1. [一、目录](#一-目录)
+2. [二、命令](#二-命令)
+3. [三、VIM常用命令](#三-vim常用命令)
+4. [四、权限](#四-权限)
+5. [五、Shell](#五-shell)
+6. [六、用户、用户组命令](#六-用户-用户组命令)
+7. [七、tar包常用命令](#七-tar包常用命令)
+8. [八、任务计划(Crontab)命令](#八-任务计划crontab命令)
 
 <!-- /code_chunk_output -->
 
