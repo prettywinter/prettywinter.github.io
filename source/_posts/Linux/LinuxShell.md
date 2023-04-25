@@ -134,7 +134,7 @@ else
 sudo touch /$name/test/111.txt 
 # 对文件写入内容
 echo "自古星耀晦明时，不持太阿误剑诗" | tee /$name/test/111.txt
-# 追加内容
+# -a 追加内容
 echo "无边落木萧萧下，不尽长江滚滚滚来" | tee -a /$name/test/111.txt
 ```
 

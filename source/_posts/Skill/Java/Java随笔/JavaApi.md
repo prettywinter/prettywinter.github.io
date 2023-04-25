@@ -86,4 +86,9 @@ com.example.model.Model2
 
 然后运行上面的测试代码，就可以看到结果啦~
 
-## 
+## Java 异步
+
+https://www.callicoder.com/java-8-completablefuture-tutorial/
+https://www.callicoder.com/java-concurrency-multithreading-basics/
+
+https://www.codedemo.club/spring-security-async-principal-propagation/

@@ -1,30 +1,59 @@
 ---
-title: 使用MyBatis和MP的错误整理
+title: Java开发问题集锦
 categories:
   - Skill
+  - Java
 tags:
-  - mybatis
-  - mp
+  - java开发问题
+  - 经验
 abbrlink: 681be5a
 ---
 
-整理一波 MP 使用的一些错误点。
+Java 开发遇到的问题以及解决方案整理。
 
 <!-- more -->
 
-## 系统报错
+- [一、Spring](#一spring)
+  - [Spring Security](#spring-security)
+- [二、MyBatis/MyBatis Plus（MP）](#二mybatismybatis-plusmp)
+  - [2.1 系统错误](#21-系统错误)
+    - [错误一：Result Maps collection does not contain value for ……](#错误一result-maps-collection-does-not-contain-value-for-)
+    - [错误二：Parameter index out of range (2 \> number of parameters, which is 1).](#错误二parameter-index-out-of-range-2--number-of-parameters-which-is-1)
+  - [2.2 SQL XML错误](#22-sql-xml错误)
+    - [foreach标签](#foreach标签)
+    - [接口传参报错](#接口传参报错)
 
-### 错误一：Result Maps collection does not contain value for ……
+
+## 一、Spring
+
+### Spring Security
+
+使用 Spring Security 时，如果采用异步方法获取用户信息是获取不到的，这样的话有些请求无法顺利执行，可以在 Spring Boot 启动类主方法添加：
+
+```java
+public static void main(String[] args) {
+    SpringApplication.run(Application.class, args);
+    // 开启本地线程共享
+    SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
+    log.info("启动");
+}
+```
+
+## 二、MyBatis/MyBatis Plus（MP）
+
+### 2.1 系统错误
+
+#### 错误一：Result Maps collection does not contain value for ……
 
 在 SQL 文件中如果使用 `resultType="java.util.map"`，并且使用不止一处的话，那么凡是使用 `resultType` 或者使用 `resultMap` 这种属性的标签，不能有属性指向错误，否则就会报错： “Result Maps collection does not contain value for ……”
 
-### 错误二：Parameter index out of range (2 > number of parameters, which is 1).
+#### 错误二：Parameter index out of range (2 > number of parameters, which is 1).
 
 尽量不要在 mybatis 的 `sql.xml` 中的 sql 标签中注释 sql 语句，如果注释的语句中 {% mark 带有参数 color:red %}，那么就会报这个错误。所以如果有想要注释的语句，尽量在 mybatis 标签外面使用`<!-- 注释 sql 内容 -->` 注释。
 
-## 手写SQL错误
+### 2.2 SQL XML错误
 
-### foreach标签
+#### foreach标签
 
 具体语句省略，请注意筛选条件。
 
@@ -61,7 +90,7 @@ where s.longitude = #{longitude} and s.latitude = #{latitude}
 
 于是我就明白了：使用 `${}` 时，参数为 List 类型需要我们手动为每个元素加入单引号，使用单引号包裹才会生效；而使用 `#{}` 类型时参数为 List 类型则不需要加入英文单引号。
 
-### 接口传参报错
+#### 接口传参报错
 
 错误信息：
 ```bash
