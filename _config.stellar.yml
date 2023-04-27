@@ -64,12 +64,13 @@ article:
   # 文章许可协议
   license: '本文采用 [署名-非商业性使用-相同方式共享 4.0 国际](https://creativecommons.org/licenses/by-nc-sa/4.0/) 许可协议，转载请注明出处。'
   # 分享
-  share: [wechat, weibo, email, link]
+  share: # [wechat, weibo, email, link]
   # 相关文章，需要安装插件 (for layout: post)
   # npm i hexo-related-popular-posts
   related_posts:
     enable: false
     max_count: 5
+
 
 search:
   service: local_search # local_search, todo...
@@ -168,6 +169,45 @@ tag_plugins:
     default_color: yellow # red, orange, yellow, green, cyan, blue, purple
 
 
+######## Tag Plugins ########
+tag_plugins:
+  # {% ablock %} / {% note %}
+  note:
+    default_color: '' # light, dark, red, orange, yellow, green, cyan, blue, purple, warning, error
+    border: true # true / false
+  # {% checkbox %}
+  checkbox:
+    interactive: false # enable interactive for user
+  # {% quot %}
+  quot:
+    default: # 可以自行配置多种图标方案
+      prefix: https://bu.dusays.com/2022/10/24/63567d3e092ff.png
+      suffix: https://bu.dusays.com/2022/10/24/63567d3e0ab55.png
+    hashtag:
+      prefix: https://bu.dusays.com/2022/10/24/63567d3e07da3.png
+  # {% emoji %}
+  emoji:
+    default: https://gcore.jsdelivr.net/gh/cdn-x/emoji/qq/${name}.gif
+    twemoji: https://gcore.jsdelivr.net/gh/twitter/twemoji/assets/svg/${name}.svg
+    qq: https://gcore.jsdelivr.net/gh/cdn-x/emoji/qq/${name}.gif
+    aru: https://gcore.jsdelivr.net/gh/cdn-x/emoji/aru-l/${name}.gif
+    tieba: https://gcore.jsdelivr.net/gh/cdn-x/emoji/tieba/${name}.png
+    blobcat: https://gcore.jsdelivr.net/gh/norevi/waline-blobcatemojis@1.0/blobs/${name}.png
+  # {% image %}
+  image:
+    fancybox: # true, false
+    replace_original:  #把markdown格式的图片解析成图片标签
+      enable: false
+  # {% timeline %}
+  timeline:
+    max-height: 80vh
+  # {% mark %}
+  mark:
+    default_color: dark # light, dark, red, orange, yellow, green, cyan, blue, purple, warning, error
+  # {% tag %}
+  tag:
+    default_color: yellow # red, orange, yellow, green, cyan, blue, purple
+
 ######## JS Plugins ########
 plugins:
   ## required plugins ##
@@ -185,7 +225,7 @@ plugins:
     weibo: /js/plugins/weibo.js
 
   marked: https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js
-  
+
   ## optional plugins ##
   # preload
   preload:
