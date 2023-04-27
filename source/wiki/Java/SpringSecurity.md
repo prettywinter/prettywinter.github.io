@@ -1,5 +1,5 @@
 ---
-title: Spring Security总结
+title: Spring Security
 categories:
   - Skill
   - Java

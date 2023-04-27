@@ -1,12 +1,8 @@
 ---
-title: Spring总结
-categories:
-  - Skill
-  - Java
-tags:
-  - java
-  - spring
-abbrlink: 7df1d0c4
+layout: wiki
+wiki: Java
+title: Spring
+order: 52
 ---
 
 Spring使用总结

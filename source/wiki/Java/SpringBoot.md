@@ -1,26 +1,21 @@
 ---
-title: Spring Boot
-categories:
-  - Skill
-  - Java
-tags:
-  - java
-  - springboot
-abbrlink: a541262a
+layout: wiki
+wiki: Java
+title: SpringBoot
+order: 51
 ---
 
 SpringBoot 集成各种第三方库（jar包）及常见问题解决方式。
 
 <!-- more -->
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=4 orderedList=false} -->
+<!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=3 orderedList=false} -->
 
 <!-- code_chunk_output -->
 
 - [一、Spring Boot 项目构建](#一spring-boot-项目构建)
 - [二、常用配置](#二常用配置)
   - [1. Swagger（不建议，新项目推荐 Spring Doc）](#1-swagger不建议新项目推荐-spring-doc)
-    - [常见错误: 集成 swagger 的同时使用 `ResponseBodyAdvice` 对 controller 的结果做统一封装](#常见错误-集成-swagger-的同时使用-responsebodyadvice-对-controller-的结果做统一封装)
   - [2. 跨域问题](#2-跨域问题)
   - [3. Excel文件导出时中文被转义](#3-excel文件导出时中文被转义)
   - [4. 切面、拦截器、过滤器](#4-切面拦截器过滤器)
@@ -85,7 +80,7 @@ public class SwaggerConfig {
 }
 ```
 
-#### 常见错误: 集成 swagger 的同时使用 `ResponseBodyAdvice` 对 controller 的结果做统一封装
+常见错误: 集成 swagger 的同时使用 `ResponseBodyAdvice` 对 controller 的结果做统一封装
 
 如果在项目中实现 `ResponseBodyAdvice` 接口统一封装 controller 返回的接口，使用 swagger 访问出现 `Unable to infer base url. This is common when using dynamic servlet registration or when the API is behind an API Gateway` 的问题。
 
