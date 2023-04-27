@@ -16,25 +16,28 @@ Git配置及常用操作
 
 <!-- code_chunk_output -->
 
-- [Git配置多个SSH密钥](#git配置多个ssh密钥)
+- [一、Git配置多个SSH密钥](#一git配置多个ssh密钥)
   - [1. 生成Github用的SSH-Key](#1-生成github用的ssh-key)
   - [2. 生成gitee使用的SSH-Key](#2-生成gitee使用的ssh-key)
   - [3. 配置](#3-配置)
   - [4. 测试是否配置成功](#4-测试是否配置成功)
-- [Git常用命令](#git常用命令)
+  - [5.Windows 中 Git-Bash 中配置 tree 命令和 ll 命令](#5windows-中-git-bash-中配置-tree-命令和-ll-命令)
+    - [5.1 tree](#51-tree)
+    - [5.1 ll](#51-ll)
+- [二、Git常用命令](#二git常用命令)
   - [1. 配置命令](#1-配置命令)
   - [2. 远程操作](#2-远程操作)
   - [3. 常用操作](#3-常用操作)
-- [一张图](#一张图)
-- [Git Submodule](#git-submodule)
-  - [删除submodule](#删除submodule)
-- [Git-Bash中配置tree命令](#git-bash中配置tree命令)
+  - [4. 一张图总结](#4-一张图总结)
+- [三、Git 进阶](#三git-进阶)
+  - [1. Git Submodule](#1-git-submodule)
+  - [2. 删除submodule](#2-删除submodule)
 
 <!-- /code_chunk_output -->
 
 {% link https://git-scm.com/book/zh/v2 Git官方文档 %}
 
-## Git配置多个SSH密钥
+## 一、Git配置多个SSH密钥
 
 Git的官网下载比较慢，可以去 [这里](https://npm.taobao.org/mirrors/git-for-windows/) 选择合适的版本进行下载。
 
@@ -106,7 +109,21 @@ $ ssh -T git@xyzgithub.com
 
 ![sucess](https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/20221118211700.png)
 
-## Git常用命令
+### 5.Windows 中 Git-Bash 中配置 tree 命令和 ll 命令
+
+#### 5.1 tree
+
+[下载tree的二进制文件](http://gnuwin32.sourceforge.net/package/tree.htm) 后解压，把 `bin` 目录下的 tree.exe 文件复制到 Git 安装目录 `xxx\Git\usr\bin\` 下即可。
+
+#### 5.1 ll
+
+在用户的根目录下 `C:\Users\jhlz` 新建一个 `.bashrc` 文件（如果有的话就不需要了），熟悉的少侠应该这个文件是做什么的以及如何配置。在该文件中加入以下内容，保存退出:
+
+```bash .bashrc
+alias ll='ls -al'
+```
+
+## 二、Git常用命令
 
 ### 1. 配置命令
 
@@ -219,50 +236,47 @@ $ git reset --mixed 版本ID
 $ git reset --soft 版本库ID
 ```
 
-## 一张图
+### 4. 一张图总结
 
 {% image https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/git_command.jpg git常用命令小结 %}
 
-## Git Submodule
+## 三、Git 进阶
 
-`git submodule` 是一个很好的多项目使用共同类库的工具，它允许类库项目做为 repository,子项目做为一个单独的git项目存在父项目中，子项目可以有自己的独立的commit，push，pull。而父项目以Submodule的形式包含子项目，父项目可以指定子项目header，父项目中会的提交信息包含Submodule的信息，再clone父项目的时候可以把Submodule初始化。
+### 1. Git Submodule
 
-`git submodule` 命令用于初始化，更新或检查子模块。
+`git submodule` 是一个很好的多项目使用共同类库的工具，它允许类库项目做为 repository，子项目做为一个单独的git项目存在父项目中，子项目可以有自己的独立的commit，push，pull。而父项目以Submodule的形式包含子项目，父项目可以指定子项目header，父项目中会的提交信息包含Submodule的信息，再clone父项目的时候可以把Submodule初始化。
 
-```bash
-git submodule [--quiet] add [<options>] [--] <repository> [<path>]
-git submodule [--quiet] status [--cached] [--recursive] [--] [<path>…​]
-git submodule [--quiet] init [--] [<path>…​]
-git submodule [--quiet] deinit [-f|--force] (--all|[--] <path>…​)
-git submodule [--quiet] update [<options>] [--] [<path>…​]
-git submodule [--quiet] summary [<options>] [--] [<path>…​]
-git submodule [--quiet] foreach [--recursive] <command>
-git submodule [--quiet] sync [--recursive] [--] [<path>…​]
-git submodule [--quiet] absorbgitdirs [--] [<path>…​]
-```
+说人话就是一个 Git 仓库内部包含其它 Git 仓库，把外面的成为 Git 仓库，里面的称之为 Git 子仓库/子模块。常用的命令也是添加、更新、删除。
 
-如果要 clone 的仓库中包含子模块，那么在拉取仓库的时候使用 `git clone -r ....git` 命令即可获取到子模块，否则，子模块将是一个 **空文件夹**。
-你必须运行两个命令：
+如果是初次添加子模块：
 
 ```bash
-#  用来初始化本地配置文件
-git submodule init
-# 从该项目中抓取所有数据并检出父项目中列出的合适的提交
-git submodule update
+git submodule add [repository-url] [custom-directory-path]
 ```
 
-### 删除submodule
+如果是 clone 一个含有 submodule 的仓库，直接 clone 后子模块是一个空的文件夹，当然也支持直接 clone 子模块：
+
+```bash
+# 直接 clone 仓库以及子仓库
+git clone --recurse-submodules [repository-url]
+
+# clone 后单独 clone 子模块
+git clone [repository-url]
+cd [repository-path]/[submodule-path]
+git submodule init && git submodule update
+
+# init 和 update 也可以使用一个命令
+git submodule update --init --recursive
+```
+
+### 2. 删除submodule
 
 git 并不支持直接删除 submodule，需要手动删除对应的文件:
 
 ```bash
-cd <repo-name>
-git submodule deinit <submodulesname>
-git rm <submodulesname>
-
-git commit -m "delete submodule submodulesname"
+cd [repository-path]
+git submodule deinit [submodule-path]
+git rm -r [submodule-path]
+git commit -m "delete submodule"
+git push
 ```
-
-## Git-Bash中配置tree命令
-
-[下载tree的二进制文件](http://gnuwin32.sourceforge.net/package/tree.htm) 后解压，把 `bin` 目录下的 tree.exe 文件复制到 Git 安装目录 `xxx\Git\usr\bin\` 下即可。
