@@ -134,6 +134,8 @@ deploy:
   message: Automatic deploy by Github Action： {{ now('YYYY-MM-DD HH:mm:ss') }}
 
 favicon: https://fastly.jsdelivr.net/gh/prettywinter/dist/images/favicon/favicon-32x32.png
+# wiki 页面返回时返回到所有 wiki 项目，若不指定则会直接返回到主页
+wiki_dir: wiki
 
 # feed:
 #   enable: true
