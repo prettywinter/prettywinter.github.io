@@ -1,5 +1,7 @@
 ---
-menu_id: more
-title: 友链
+menu_id: friends
 ---
 
+## 诗酒趁年华
+
+{% friends 诗酒趁年华 %}

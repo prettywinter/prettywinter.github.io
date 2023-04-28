@@ -1,12 +1,8 @@
 ---
-title: volatile关键字
-categories:
-  - Skill
-  - Java
-tags:
-  - java
-  - volatile
-abbrlink: 111e02e0
+layout: wiki
+wiki: Java
+title: volatile 关键字
+order: 154
 ---
 
 本篇文章需要掌握JMM（Java Memory Model）

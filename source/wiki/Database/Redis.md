@@ -1,13 +1,8 @@
 ---
+wiki: Database
+layout: wiki
 title: Redis
-categories:
-  - Skill
-  - DB
-tags:
-  - redis
-  - nosql
-  - database
-abbrlink: bae4ff13
+order: 6
 ---
 
 Redis 是一个 Key-Value 结构的开源（BSD）的非关系型数据库。

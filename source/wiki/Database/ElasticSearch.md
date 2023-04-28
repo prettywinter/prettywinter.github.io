@@ -1,11 +1,8 @@
 ---
 title: ElasticSearch + Kibana
-categories:
-  - Skill
-  - ELK
-tags:
-  - ELK
-abbrlink: aab921f9
+layout: wiki
+wiki: Database
+order: 3
 ---
 
 ES 简单如个门，浪子最近使用 PG 作为数据库，一般的业务用不上 ES。先了解一下简单的操作。
@@ -27,20 +24,20 @@ ES 简单如个门，浪子最近使用 PG 作为数据库，一般的业务用�
   - [3. 映射操作](#3-映射操作)
   - [4. 文档操作](#4-文档操作)
 - [高级查询](#高级查询)
-  - [1. 关键字查询\<term>](#1-关键字查询term)
-  - [2. 范围查询\<range>](#2-范围查询range)
-  - [3. 前缀查询\<prefix>](#3-前缀查询prefix)
-  - [4. 通配符查询\<wildcard>](#4-通配符查询wildcard)
-  - [5. 多id查询\<ids>](#5-多id查询ids)
-  - [6. 模糊查询\<fuzzy>](#6-模糊查询fuzzy)
-  - [7. 布尔查询\<bool>](#7-布尔查询bool)
-  - [8. 多字段查询<multi_match>](#8-多字段查询multi_match)
-  - [9. 默认字段分词查询<query_string>](#9-默认字段分词查询query_string)
-  - [10. 高亮查询\<highlight>](#10-高亮查询highlight)
-  - [11. 返回指定条数\<size>](#11-返回指定条数size)
-  - [12. 分页查询\<form>](#12-分页查询form)
-  - [13. 排序\<sort>](#13-排序sort)
-  - [14. 返回指定字段<_source>](#14-返回指定字段_source)
+  - [1. 关键字查询\<term\>](#1-关键字查询term)
+  - [2. 范围查询\<range\>](#2-范围查询range)
+  - [3. 前缀查询\<prefix\>](#3-前缀查询prefix)
+  - [4. 通配符查询\<wildcard\>](#4-通配符查询wildcard)
+  - [5. 多id查询\<ids\>](#5-多id查询ids)
+  - [6. 模糊查询\<fuzzy\>](#6-模糊查询fuzzy)
+  - [7. 布尔查询\<bool\>](#7-布尔查询bool)
+  - [8. 多字段查询\<multi\_match\>](#8-多字段查询multi_match)
+  - [9. 默认字段分词查询\<query\_string\>](#9-默认字段分词查询query_string)
+  - [10. 高亮查询\<highlight\>](#10-高亮查询highlight)
+  - [11. 返回指定条数\<size\>](#11-返回指定条数size)
+  - [12. 分页查询\<form\>](#12-分页查询form)
+  - [13. 排序\<sort\>](#13-排序sort)
+  - [14. 返回指定字段\<\_source\>](#14-返回指定字段_source)
 - [分词器](#分词器)
   - [1. ES 内置分词器](#1-es-内置分词器)
   - [2. 中文分词器](#2-中文分词器)

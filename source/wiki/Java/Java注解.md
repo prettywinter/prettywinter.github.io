@@ -1,12 +1,8 @@
 ---
+layout: wiki
+wiki: Java
 title: Java使用的注解整理
-categories:
-  - Skill
-  - Java
-tags:
-  - java
-  - 注解
-abbrlink: 11df8ded
+order: 2
 ---
 
 注解的相关说明都扔到这里吧。

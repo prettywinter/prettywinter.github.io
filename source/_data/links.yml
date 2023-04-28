@@ -1,158 +1,128 @@
 ############################### 友链数据源 #################################
-'group1':
-  title: 盛放的年华
-  description: 海内存知己 天涯若比邻
-  items:
-    - title: Azhe
-      url: https://lollipopazhe.github.io/
-      avatar: https://s3.bmp.ovh/imgs/2022/08/04/35f6ddf1240a85c0.jpg
-
-'group2':
-  title: 来自 GitHub 的朋友
-  description: '以下友链通过 [GitHub Issue](https://github.com/jhlzlove/blog-api/issues) 提交，按 issue 最后更新时间排序：'
-  api: https://hexo-friends-api.vercel.app
-  repo: jhlzlove/blog-api
+'诗酒趁年华':
+  - title: Azhe
+    url: https://lollipopazhe.github.io/
+    avatar: https://s3.bmp.ovh/imgs/2022/08/04/35f6ddf1240a85c0.jpg
+    screenshot:
+    description:
 
 ################################# 网站 ##################################
 
-mirrors:
-  title: 国内镜像站
-  items:
-    - title: 清华大学开源软件镜像站
-      url: https://mirrors.tuna.tsinghua.edu.cn
-      screenshot: https://bu.dusays.com/2021/07/04/6f214fd127e65.png
-      avatar: https://bu.dusays.com/2021/07/04/0e5faae4d59b0.png
-      description:
-    - title: 阿里云官方镜像站
-      url: https://developer.aliyun.com/mirror/
-      screenshot: https://bu.dusays.com/2021/07/04/3e669b4780254.png
-      avatar: https://bu.dusays.com/2021/07/04/53979dab9a153.png
-      description:
-    - title: Git国内镜像仓库
-      url: https://npm.taobao.org/mirrors/git-for-windows/
-      screenshot:
-      avatar:
-      description:
+'mirrors':
+  - title: 北京外国语大学开源软件镜像站
+    url: https://mirrors.bfsu.edu.cn/
+    screenshot:
+    avatar: 
+    description: 北京外国语大学开源软件镜像站
+  - title: 阿里云官方镜像站
+    url: https://developer.aliyun.com/mirror/
+    screenshot: https://bu.dusays.com/2021/07/04/3e669b4780254.png
+    avatar: https://bu.dusays.com/2021/07/04/53979dab9a153.png
+    description:
+  - title: Git淘宝镜像仓库
+    url: https://npm.taobao.org/mirrors/git-for-windows/
+    screenshot:
+    avatar:
+    description:
+  
 
-github:
-  title: Github开源项目
-  description:
-  items:
-    - title: 文件蜈蚣
-      url: https://github.com/filecxx/FileCentipede
-      screenshot: 
-      avatar:
-      description: 一款多协议支持的下载器
-    - title: Motrix
-      url: https://github.com/agalwood/Motrix
-      screenshot: 
-      avatar:
-      description: 一款多协议支持的下载器
-    - title: Downkyi
-      url: https://github.com/leiurayer/downkyi
-      screenshot: 
-      avatar:
-      description: Bilibili下载器
-    - title: MQTTX
-      url: https://github.com/emqx/MQTTX
-      screenshot: 
-      avatar:
-      description: 一款开源的 MQTT 测试客户端
-    - title: antares
-      url: https://github.com/antares-sql/antares
-      screenshot: 
-      avatar:
-      description: 支持 MySQL/MariaDB、PostgreSQL、SQLite 数据库的客户端
-    - title: meow-sql
-      url: https://github.com/ragnar-lodbrok/meow-sql
-      screenshot: 
-      avatar:
-      description: 开源的数据库的客户端
+'github':
+  - title: 文件蜈蚣
+    url: https://github.com/filecxx/FileCentipede
+    screenshot: 
+    avatar:
+    description: 一款多协议支持的下载器
+  - title: Motrix
+    url: https://github.com/agalwood/Motrix
+    screenshot: 
+    avatar:
+    description: 一款多协议支持的下载器
+  - title: Downkyi
+    url: https://github.com/leiurayer/downkyi
+    screenshot: 
+    avatar:
+    description: Bilibili下载器
+  - title: MQTTX
+    url: https://github.com/emqx/MQTTX
+    screenshot: 
+    avatar:
+    description: 一款开源的 MQTT 测试客户端
 
-fonts:
-  title: 常用开源字体
-  description:
-  items:
-    - title: 文泉驿系列
-      url: https://github.com/keqingrong/wqy
-      screenshot: 
-      avatar:
-      description: 文泉驿微米黑、正黑、等宽体等
-    - title: 思源黑体系列
-      url: https://github.com/adobe-fonts/source-han-sans
-      screenshot: 
-      avatar:
-      description: 思源黑体是一套 OpenType/CFF 泛中日韩字体
-    - title: FiraCode
-      url: https://github.com/tonsky/FiraCode
-      screenshot: 
-      avatar:
-      description: Free monospaced font with programming ligatures
-    - title: JetBrains Mono
-      url: https://github.com/JetBrains/JetBrainsMono
-      screenshot: 
-      avatar:
-      description: JetBrains Mono the free and open-source typeface for developers
+'fonts':
+  - title: 文泉驿系列
+    url: https://github.com/keqingrong/wqy
+    screenshot: 
+    avatar:
+    description: 文泉驿微米黑、正黑、等宽体等
+  - title: 思源黑体系列
+    url: https://github.com/adobe-fonts/source-han-sans
+    screenshot: 
+    avatar:
+    description: 思源黑体是一套 OpenType/CFF 泛中日韩字体
+  - title: FiraCode
+    url: https://github.com/tonsky/FiraCode
+    screenshot: 
+    avatar:
+    description: Free monospaced font with programming ligatures
+  - title: JetBrains Mono
+    url: https://github.com/JetBrains/JetBrainsMono
+    screenshot: 
+    avatar:
+    description: JetBrains Mono the free and open-source typeface for developers
 
-learn:
-  title: 学习网站
-  description:
-  items:
-    - title: stackshare
-      url: https://stackshare.io/
-      screenshot: 
-      avatar:
-      description: 
-    - title: stackoverflow
-      url: https://stackoverflow.com/
-      screenshot: 
-      avatar:
-      description: 
-    - title: stackoverflow
-      url: https://stackoverflow.com/
-      screenshot: 
-      avatar:
-      description: 
+'learn':
+  - title: stackshare
+    url: https://stackshare.io/
+    screenshot: 
+    avatar:
+    description: 
+  - title: stackoverflow
+    url: https://stackoverflow.com/
+    screenshot: 
+    avatar:
+    description: 
+  - title: stackoverflow
+    url: https://stackoverflow.com/
+    screenshot: 
+    avatar:
+    description: 
 
-tools:
-  title: 在线工具
-  description:
-  items:
-    - title: shields.io
-      url: https://shields.io/
-      screenshot: 
-      avatar:
-      description: 生成 md 个性标签，例如 Github 的 README 文件的小标签
-    - title: 语音转 Base64
-      url: https://protobuf-decoder.netlify.app/
-      screenshot: 
-      avatar:
-      description: 
-    - title: 个性文字
-      url: http://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
-      screenshot: 
-      avatar:
-      description: 
-    - title: 图片转文字
-      url: https://www.degraeve.com/img2txt.php
-      screenshot: 
-      avatar:
-      description: 
-    - title: color.oulu.me
-      url: http://color.oulu.me/
-      screenshot: 
-      avatar:
-      description: 渐变颜色选择器
-    - title: png转icon
-      url: https://png2icojs.com/zh/
-      screenshot: 
-      avatar:
-      description: png转icon
-    - title: 调整图片大小
-      url: https://www.iloveimg.com/zh-cn/resize-image
-      screenshot: 
-      avatar:
-      description: 在线调整图片大小
+'tools':
+  - title: shields.io
+    url: https://shields.io/
+    screenshot: 
+    avatar:
+    description: 生成 md 个性标签，例如 Github 的 README 文件的小标签
+  - title: 语音转 Base64
+    url: https://protobuf-decoder.netlify.app/
+    screenshot: 
+    avatar:
+    description: 
+  - title: 个性文字
+    url: http://patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
+    screenshot: 
+    avatar:
+    description: 
+  - title: 图片转文字
+    url: https://www.degraeve.com/img2txt.php
+    screenshot: 
+    avatar:
+    description: 
+  - title: color.oulu.me
+    url: http://color.oulu.me/
+    screenshot: 
+    avatar:
+    description: 渐变颜色选择器
+  - title: png转icon
+    url: https://png2icojs.com/zh/
+    screenshot: 
+    avatar:
+    description: png转icon
+  - title: 调整图片大小
+    url: https://www.iloveimg.com/zh-cn/resize-image
+    screenshot: 
+    avatar:
+    description: 在线调整图片大小
 
 
 # design:

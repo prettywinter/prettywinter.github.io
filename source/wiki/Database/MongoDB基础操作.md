@@ -1,11 +1,8 @@
 ---
+wiki: Database
+layout: wiki
 title: MongoDB基础操作
-categories:
-  - Skill
-  - DB
-tags:
-  - MongoDB
-abbrlink: 288eee59
+order: 4
 ---
 
 MongoDB5.x版本基础操作整理，新版与之前的版本有些许变化。

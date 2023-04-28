@@ -1,11 +1,8 @@
 ---
+layout: wiki
+wiki: Java
 title: JVM
-categories:
-  - Skill
-  - Java
-tags:
-  - jvm
-abbrlink: 66c016fb
+order: 201
 ---
 
 JVM 简单理解就是运行 Java 等语言的“操作系统”，没有 JVM，Java 程序就无法运行。本篇文章就来整理一下，没有用到的就不写进来了，用过的或者学习的整理进来。

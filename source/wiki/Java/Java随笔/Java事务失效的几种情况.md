@@ -1,12 +1,8 @@
 ---
-title: Java事务失效的几种情况
-categories:
-  - Skill
-  - Java
-tags:
-  - java
-  - transactional
-abbrlink: 9375486d
+layout: wiki
+wiki: Java
+title: Java事务失效
+order: 152
 ---
 
 Java 事务失效的几种情况。

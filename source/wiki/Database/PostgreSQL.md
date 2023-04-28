@@ -1,13 +1,8 @@
 ---
+wiki: Database
+layout: wiki
 title: PostgreSQL
-categories:
-  - Skill
-  - DB
-tags:
-  - database
-  - postgresql
-cover: 'database,postgresql'
-abbrlink: cb97b83b
+order: 2
 ---
 
 PostgreSQL：最先进的开源数据库。

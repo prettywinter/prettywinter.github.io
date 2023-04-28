@@ -1,12 +1,8 @@
 ---
-title: MySQL优化原则
-categories:
-  - Skill
-  - DB
-tags:
-  - MySQL优化
-  - database
-abbrlink: ca52534d
+wiki: Database
+layout: wiki
+title: MySQL优化
+order: 5
 ---
 
 MySQL: 最流行的开源数据库。MySQL的优化原则，视项目具体情况而定。

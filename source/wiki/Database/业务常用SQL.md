@@ -1,10 +1,8 @@
 ---
-title: 一些业务常用SQL
-categories:
-  - Skill
-tags:
-  - sql
-abbrlink: 44d4a5e6
+layout: wiki
+wiki: Database
+title: 业务常用SQL
+order: 1
 ---
 
 一些常用的业务 SQL，另外数据库推荐使用日期格式：`%Y-%m-%d %H:%i:%s`。

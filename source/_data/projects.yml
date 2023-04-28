@@ -28,6 +28,8 @@ Java:
     'Java': [0, 50]
     'Spring': [51, 100]
     'MyBatis/MyBatisPlus(MP)': [101, 150]
+    'Java随笔': [151, 200]
+    'JVM': [201, 220]
   tags: 知识总结
   # 开启封面
   cover: true

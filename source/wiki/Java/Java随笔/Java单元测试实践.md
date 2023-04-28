@@ -1,12 +1,8 @@
 ---
-title: Java单元测试实践
-categories:
-  - Skill
-  - Java
-tags:
-  - java
-  - 单元测试
-abbrlink: a5306aee
+layout: wiki
+wiki: Java
+title: Java单元测试
+order: 153
 ---
 
 对于开发来说，单元测试是非常重要的。本篇文章就来记录 Java 中一个较好的单元测试开发实践。

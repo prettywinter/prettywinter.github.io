@@ -1,8 +1,8 @@
 ---
-title: 无法访问Github解决办法
-categories: GitHub
-tags: github
-abbrlink: '73e96015'
+wiki: Git
+layout: wiki
+title: git
+order: 0
 ---
 
 在三、四、五、六线城市以及像浪子所在的偏远小山村中想要直接使用浏览器访问 GitHub 是有问题的，输入网址后按下回车键，这个页面都不带刷新的，直接出现 “无法访问该网站” 的错误。解决办法之一就是修改 hosts 文件。

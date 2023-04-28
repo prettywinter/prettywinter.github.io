@@ -1,11 +1,8 @@
 ---
-title: JavaApi
-categories:
-  - Skill
-  - Java
-tags:
-  - java
-abbrlink: 21beeb42
+layout: wiki
+wiki: Java
+title: Java API
+order: 151
 ---
 
 <!-- more -->
