@@ -22,7 +22,7 @@ sidebar:
     post: '[btn.blog](/)'
     wiki: '[btn.wiki](/wiki/)'
     friends: '[友链](/friends/)'
-    more: '[更多](/about/)'
+    more: '[关于](/about/)'
   # Sidebar widgets
   widgets:
     #### 自动生成的页面 ####
@@ -325,3 +325,4 @@ api_host:
   ghapi: https://api.github.com
   ghraw: https://raw.githubusercontent.com
   gist: https://gist.github.com
+
