@@ -11,7 +11,7 @@ Java 开发遇到的问题以及解决方案整理。
 
 ## 一、Spring
 
-### Spring Security跨线程获取用户信息
+### 1. Spring Security跨线程获取用户信息
 
 使用 Spring Security 时，如果采用异步方法获取用户信息是获取不到的，它采用 ThreadLocal 存储，这样的话有些请求无法顺利执行，可以在 Spring Boot 启动类主方法添加：
 

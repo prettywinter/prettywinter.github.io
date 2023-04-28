@@ -9,7 +9,7 @@ Git 提交信息规范是一个好的习惯，这样团队合作的时候，如�
 
 ## 一、commitizen简介
 
-commitizen：基于Node.js的 `git commit` 命令行工具，辅助生成标准化规范化的 commit message。
+commitizen：基于 Node.js 的 `git commit` 命令行工具，辅助生成标准化规范化的 commit message。
 
 cz-git、git-cz、cz-customizable、cz-conventional-changelog 等是 commitizen 的适配器：提交时选择的交互式页面，依赖于 commitizen 工作。你可以全部安装体验，找到自己喜欢的使用，使用哪个适配器在 `package.json` 中配置即可。
 
