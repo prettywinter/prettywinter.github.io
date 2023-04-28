@@ -96,8 +96,7 @@ on:
       
 jobs:
   build: 
-    runs-on: ubuntu-latest 
-        
+    runs-on: ubuntu-latest
     steps:
     # check it to your workflow can access it
     # from: https://github.com/actions/checkout
@@ -150,53 +149,6 @@ jobs:
         hexo clean
         hexo generate 
         hexo deploy
-```
-
-使用其它作者的脚本文件：
-
-```yml .github/workflows/xxx.yml
-name: CI
-
-on: [push]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    name: A job to deploy blog.
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-      with:
-        submodules: true # Checkout private submodules(themes or something else).
-        fetch-depth: 0
-    
-    # Caching dependencies to speed up workflows. (GitHub will remove any cache entries that have not been accessed in over 7 days.)
-    - name: Cache node modules
-      uses: actions/cache@v1
-      id: cache
-      with:
-        path: node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-    - name: Install Dependencies
-      if: steps.cache.outputs.cache-hit != 'true'
-      run: npm i
-    
-    # Deploy hexo blog website.
-    - name: Deploy
-      id: deploy
-      # 原使用仓库：sma11black/hexo-action@v1.0.3，由于原作者的 node 环境较低，不支持浪子使用的主题，浪子对其进行了修改，上传到了自己的仓库，未发布 marketplace，该脚本遵循 MIT 协议。
-      uses: jhlzlove/hexo-deploy-node16@main
-      with:
-        deploy_key: ${{ secrets.ACCESS_TOKEN }}  # ssh private key
-        user_name: xxx  # (or delete this input setting to use bot account)
-        user_email: xxxx@qq.com # (or delete this input setting to use bot account)
-        commit_msg: ${{ github.event.head_commit.message }}  # (or delete this input setting to use hexo default settings)
-    # Use the output from the `deploy` step(use for test action)
-    - name: Get the output
-      run: |
-        echo "${{ steps.deploy.outputs.notify }}"
 ```
 
 ### 3. 测试
