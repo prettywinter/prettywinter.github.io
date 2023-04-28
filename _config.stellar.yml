@@ -81,20 +81,22 @@ search:
 
 ######## Comments ########
 comments:
-  service: beaudar # beaudar, utterances, twikoo, waline
-  # beaudar
-  # https://beaudar.lipk.org/
-  beaudar:
-    repo: prettywinter/blog-comments
-    issue-term: pathname
-    issue-number:
-    theme: preferred-color-scheme
-    label: comment
-    input-position: top # top/bottom 评论框位置
-    comment-order: desc # desc 排序
-    keep-theme: # true/false
-    loading: false
-    branch: main
+  service: giscus
+  # https://giscus.app/zh-CN
+  giscus:
+    data-repo: prettywinter/blog-about # [在此输入仓库]
+    data-repo-id: R_kgDOJcVqNA # [在此输入仓库 ID]
+    data-category: Announcements # [在此输入分类名]
+    data-category-id: DIC_kwDOJcVqNM4CWHBg
+    data-mapping: pathname
+    data-strict: 0
+    data-reactions-enabled: 1
+    data-emit-metadata: 0
+    data-input-position: top # top, bottom
+    data-theme: preferred_color_scheme
+    data-lang: zh-CN
+    data-loading: lazy
+    crossorigin: anonymous
 
 ######## Footer ########
 footer:
