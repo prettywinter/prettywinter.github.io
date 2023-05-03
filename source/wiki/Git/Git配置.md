@@ -112,3 +112,12 @@ $ ssh -T git@xyzgithub.com
 ```bash .bashrc
 alias ll='ls -al'
 ```
+
+#### 5.3 配置编码为 utf-8
+
+修改 Git 安装目录下的 `/etc/bash.bashrc` 文件，在最后加入下面的内容，保存退出，重启 git-bash 即可。
+
+```bash D:\xxx\Git\etc\bash.bashrc
+export LANG="zh_CN.UTF-8"
+export LC_ALL="zh_CN.UTF-8"
+```

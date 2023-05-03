@@ -1,7 +1,7 @@
 ---
 wiki: Git
 layout: wiki
-title: git
+title: Git
 order: 0
 ---
 
