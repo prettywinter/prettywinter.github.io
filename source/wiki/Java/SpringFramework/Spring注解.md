@@ -1,8 +1,8 @@
 ---
 layout: wiki
 wiki: Java
-title: Java使用的注解整理
-order: 2
+title: Spring注解
+order: 52
 ---
 
 注解的相关说明都扔到这里吧。
@@ -14,9 +14,8 @@ order: 2
 <!-- code_chunk_output -->
 
 - [Spring 注解](#spring-注解)
-- [一些注解说明](#一些注解说明)
   - [@SpringBootApplication](#springbootapplication)
-  - [@Component 衍生注解（本质就是 @Component 注解）：](#component-衍生注解本质就是-component-注解)
+  - [@Component](#component)
   - [@MapperScan](#mapperscan)
   - [@ControllerAdvice、@RestControllerAdvice](#controlleradvicerestcontrolleradvice)
   - [@ResponseBody、@RequestBody、@Controller](#responsebodyrequestbodycontroller)
@@ -27,8 +26,6 @@ order: 2
 ## Spring 注解
 
 ![Spring注解](https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/Spring注解总结.png "Spring注解总结")
-
-## 一些注解说明
 
 ### @SpringBootApplication
 
@@ -47,22 +44,22 @@ order: 2
 @ComponentScan
 ```
 
-### @Component 衍生注解（本质就是 @Component 注解）：
+### @Component
 
 - @Repository/@Mapper DAO类型
 - @Service  Service类型
 - @Controller Controller 类型
 
-是的，你没看错，上面的都是 @Component 的衍生注解，使用它们可以更加准确的表达一个类型的作用。
+上面的注解的本质就是 @Component 注解，使用它们可以更加准确的表达一个类型的作用。
 顺带一提：@Configuration 可以创建多个 Bean 对象，而 @Component 只能创建单个 Bean 对象。
 
 ### @MapperScan
 
-该注解是 Mybatis 提供的，作用是扫描 Dao 层接口，交给 Spring 工厂去创建对象（和在 Dao 接口加 @Mapper 注解效果一样），这个相当于扫描全部，不需要在每个类标识。
+该注解是 Mybatis 提供的，作用是扫描 Dao 层接口，交给 Spring 工厂去创建对象（和在 Dao 接口加 @Mapper 注解效果一样），这个相当于扫描指定的包中所有的文件交给 Spring 管理，不需要在每个类中标识。
 
 ### @ControllerAdvice、@RestControllerAdvice
 
-顾名思义，这两个类都是对 controller 层做增强处理。这两个注解可以用来对 controller 的返回值做统一包装（下面有一个小栗子），也可以和另一个注解 @ExceptionHandler 一起作为全局的系统异常处理。
+顾名思义，这两个类都是对 controller 层做增强处理。这两个注解可以用来对 controller 的返回值做统一包装（下面有一个小栗子），也可以和另一个注解 @ExceptionHandler 一起作为全局的系统异常处理（项目常用）。
 
 ```java
 // @RestControllerAdvice 
@@ -95,7 +92,7 @@ public class ResultResponseHandler implements ResponseBodyAdvice {
 
 ### @ResponseBody、@RequestBody、@Controller
 
-这三个注解通常只在 controller 中使用：`@RestController = @ResponseBody + @Controller`.
+这三个注解通常只在 controller 层使用：`@RestController = @ResponseBody + @Controller`.
 所以对于目前常见的前后端分离的项目，一般我们直接使用 @RestController 注解即可。
 
 另外我们已经知道，Spring 中使用了 `jaskon` 作为 json 工具，所以相关的注解底层运作也使用了 jaskon。比如 @ResponseBody、@RequestBody 等。
@@ -104,7 +101,7 @@ public class ResultResponseHandler implements ResponseBodyAdvice {
 
 ### @Async
 
-Spring 提供了异步执行的代码的功能,能让我们以多线程的方式执行,但是spring 中自带的 @Async 注解执行异步时并没有使用线程池的概念, 导致如果同时执行多个任务可能出现把系统资源耗尽的情况。对此,spingBoot 做好了优化，默认使用线程池执行任务。
+Spring 提供了异步执行的代码的功能,能让我们以多线程的方式执行,但是 Spring 中自带的 @Async 注解执行异步时并没有使用线程池的概念, 如果同时执行多个任务可能会把系统资源耗尽的情况。对此，SpingBoot 做好了优化，默认使用线程池执行任务。
 
 只需要在 SpringBoot 项目中需要异步执行的代码上加上注解 `@Async`,同时在启动类上加上 `@EnableAsync` 即可，如下：
 

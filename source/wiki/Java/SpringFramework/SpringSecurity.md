@@ -2,7 +2,7 @@
 layout: wiki
 wiki: Java
 title: SpringSecurity
-order: 52
+order: 55
 ---
 
 [Spring Security](https://docs.spring.io/spring-security/reference/servlet/configuration/java.html) 是一个功能强大且高度可定制的身份验证和访问控制框架，专注于为 Java 应用程序提供身份验证和授权。

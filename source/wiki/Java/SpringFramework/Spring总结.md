@@ -5,7 +5,7 @@ title: Spring
 order: 53
 ---
 
-Spring使用总结
+Spring 笔记整理。
 
 <!-- more -->
 
@@ -49,7 +49,10 @@ Spring使用总结
   - [3. 基于注解的AOP开发](#3-基于注解的aop开发)
   - [4. AOP开发过程中的坑](#4-aop开发过程中的坑)
   - [5. AOP总结](#5-aop总结)
-- [十四、Spring的事务管理](#十四spring的事务管理)
+- [十四、拦截器、过滤器](#十四拦截器过滤器)
+  - [1. 拦截器](#1-拦截器)
+  - [2. 过滤器](#2-过滤器)
+- [十五、Spring的事务管理](#十五spring的事务管理)
   - [1. 事务并发产生的问题](#1-事务并发产生的问题)
     - [1.1 脏读](#11-脏读)
     - [1.2 不可重复读](#12-不可重复读)
@@ -59,7 +62,7 @@ Spring使用总结
     - [2.2 超时属性(timeout)](#22-超时属性timeout)
     - [2.3 异常属性(rollbackFor)](#23-异常属性rollbackfor)
     - [2.4 事务属性常见配置总结](#24-事务属性常见配置总结)
-- [十五、Spring MVC](#十五spring-mvc)
+- [十六、Spring MVC](#十六spring-mvc)
   - [1. 为什么要整合MVC框架](#1-为什么要整合mvc框架)
   - [2. Spring 可以整合那些 MVC 框架](#2-spring-可以整合那些-mvc-框架)
   - [3. Spring整合MVC框架的核心思路](#3-spring整合mvc框架的核心思路)
@@ -67,10 +70,6 @@ Spring使用总结
   - [4. Spring工厂创建对象的优先级](#4-spring工厂创建对象的优先级)
 
 <!-- /code_chunk_output -->
-
-
-代理设计模式：额外功能的增强  可以通过动态字节码技术创建 包括JDK CGLIB ASM Javasist（MyBatis也支持）
-装饰器设计模式：本职功能的增强
 
 ## 一、Spring
 
@@ -109,10 +108,10 @@ ApplicationContext 包括：
         |- WebXmlApplicationContext
     ```
 
-什么是复杂对象？
+- 什么是复杂对象？
 不能通过 **new** 关键字的构造方法创建的对象。例如，jdbc 的 **Connection** 对象，Mybatis 中的 **SqlSessionFactory** 等。
 
-什么是简单对象？
+- 什么是简单对象？
 可以直接通过 **new** 构造方法创建对象，这样的对象叫做简单对象。
 
 接口加反射，什么都能做。Spring 工厂是可以调用对象私有的构造方法创建对象，其中大量使用反射来获取信息帮助我们创建对象，这就是 Spring 工厂比我们自己创造的简易工厂强大的地方。
@@ -160,12 +159,12 @@ id 和 name 的不同：
 
 ## 五、Spring注入方式
 
-|名称|举例|所属|说明|
-|--|--|--|--|
-|setter注入|setxxx()|
-|自动注入|@Autowired|Spring提供|默认根据类型注入|
-|自动注入|@Resource|JavaEE规范|默认根据名称注入|
-|构造方法注入|public xxxConstruct()||
+| 名称         | 举例                  | 所属       | 说明             |
+| ------------ | --------------------- | ---------- | ---------------- |
+| setter注入   | setxxx()              |
+| 自动注入     | @Autowired            | Spring提供 | 默认根据类型注入 |
+| 自动注入     | @Resource             | JavaEE规范 | 默认根据名称注入 |
+| 构造方法注入 | public xxxConstruct() |            |
 
 对于 @Autowired 和 @Resource，如果按照默认的类型找不到目标类的话，会自动使用另一种方式去查找。
 
@@ -262,10 +261,10 @@ Spring解决循环依赖的步骤：
 2.earlySingleObjects  null
 3.singletonFactories  != null lambda getEarlyBeanRederence(beanName, mbd, bean) 创建代理 proxy，然后从 singletonFactories 中移除，proxy 放到 earlySingletonObjects 中。
 
-> 1. 先到 singletonObjects 中获取，如果null，则在 earlySingleObjects 中获取，如果还为 null，在 singletonFactories 中获取。
+> 1. 先到 singletonObjects 中获取，如果为 null，则在 earlySingleObjects 中获取，如果还为 null，在 singletonFactories 中获取。
 > 2. 通过lambda getEarlyBeanRederence(beanName, mbd, bean) 创建代理，然后从 singletonFactories 中移除，把 proxy 放到 earlySingletonObjects 中。
 creationBean a(半成品)
-属性的填充：涉及 getBean("b")，过程和上面类似，在 b 中需要 a，上面过程中已经创建了 a，所以可以顺利拿到，进而创建 b。循环依赖就是“你中有我，我中有你” 的解决方法。
+属性的填充：涉及 getBean("b")，过程和上面类似，在 b 中需要 a，上面过程中已经创建了 a，所以可以顺利拿到，进而创建 b。循环依赖就是 “你中有我，我中有你” 的解决方法。
 
 ## 六、Spring工厂创建复杂对象的三种方式
 
@@ -440,9 +439,12 @@ BeanPostProcess 作用： 对 Spring 工厂所创建的对象，进行再加工�
 
 ## 十二、静态、动态代理的概念
 
+代理设计模式的作用就是额外功能的增强，可以通过动态字节码技术创建 包括JDK CGLIB ASM Javasist（MyBatis也支持）
+装饰器设计模式：本职功能的增强
+
 ### 1. 静态代理
 
-静态代理：为每一个原始类，手工编写一个代理类（有.java 和 .class文件）
+静态代理：为每一个原始类，手工编写一个代理类（有 `.java` 和 `.class` 文件）
 
 由此我们可以知道静态代理存在的问题：
 
@@ -451,7 +453,7 @@ BeanPostProcess 作用： 对 Spring 工厂所创建的对象，进行再加工�
 
 ### 2. 动态代理
 
-1. JDK 动态代理 Proxy.newProxyInstance() 通过接口创建代理的实现类。
+1. JDK 动态代理 `Proxy.newProxyInstance()` 通过接口创建代理的实现类。
 2. CGlib 动态代理 Enhancer 通过继承父类创建的代理类。
 
 ## 十三、Spring AOP（Aspect Oriented Programing） 编程
@@ -526,6 +528,19 @@ Spring 配置文件加入：
     </aop:config>
     ```
 
+编写一个 Aop 配置类：导入 aop 依赖；在 Aop 配置类上加上 @Aspect、@Configuration 注解；编写切面增强方法。
+
+1. 切入点表达式
+    - 方法级别的切入点表达式：`execution(* com.XXX.*.*(..))`，第一个 * 号代表可以返回任意类型值。
+    - 类级别的切入点表达式：`within(com.XXX.*)`
+    - 自定义注解表达式：`@annotation(com.XXX)`
+2. 增强方式
+    - 前置增强 (@Befor)、后置增强(@After)、环绕增强 (@Arround)、后置返回增强 (@AfterReturning)、异常增强 (@AfterThrowing)
+    - 前置和后置都没有返回值，方法参数都是 JointPoint
+    - 环绕增强中，需要调用 `proceed()` 才能继续处理业务逻辑(类似拦截器)，该方法返回值为业务的返回值，因此环绕增强的返回类型比较推荐设置为 Object。
+    - 环绕增强的方法参数是 ProceedingJointPoint
+
+
 ### 4. AOP开发过程中的坑
 
 在同一个的业务类中，进行业务方法间的相互调用，只有最外层方法才加入了额外功能，内部的方法通过普通的方式调用，调用的都是原始方法。如果想让内层的方法也通过代理对象调用，必须实现 ApplicationContextAware 接口获得工厂，进而获得代理对象。
@@ -534,7 +549,69 @@ Spring 配置文件加入：
 
 ![AOP 总结](https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/AOP总结.png)
 
-## 十四、Spring的事务管理
+## 十四、拦截器、过滤器
+
+### 1. 拦截器
+
+1. 实现 HandlerInterceptor 接口；
+2. 重写 preHandle、postHandle、afterCompletion 方法，其中 preHandle 方法中返回 true 代表放行，返回 false 代表中断。
+
+preHandle 返回值为 true 时，执行控制器中的方法，当控制器方法执行完成后会返回拦截器中执行拦截器中的 postHandle 方法，postHandle 执行完成之后响应请求。在响应请求完成后会执行 afterCompletion 方法，该方法无论执行 **成功** 或者 **失败** 都会执行。
+
+    ```java CustomerInterceptor.class
+    public class CustomerInterceptor implements HandlerInterceptor {
+        /**
+        * 先执行
+        */
+        @Override
+        public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+            return HandlerInterceptor.super.preHandle(request, response, handler);
+        }
+
+        /**
+        * 上面结果为 true 时执行
+        */
+        @Override
+        public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+            HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
+        }
+
+        /**
+        * 最后都会执行
+        */
+        @Override
+        public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+            HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
+        }
+    }
+    ```
+
+3. 配置拦截器：实现 WebMvcConfigurer 接口；重写 addInterceptors 方法，添加编写的拦截器。
+
+   ```java
+   @Configuration
+    public class WebMvcConfig implements WebMvcConfigurer {
+        @Override
+        public void addInterceptors(InterceptorRegistry registry) {
+            registry.addInterceptor(customerInterceptor());
+        }
+    }
+   ```
+
+> 拦截器只能拦截 controller 相关请求，不能拦截 jsp 静态资源文件；
+> 拦截器可以中断请求轨迹；
+> 请求之前如果该请求配置了拦截器，请求会先经过拦截器，放行之后执行请求的 controller，controller 执行完成后会回到拦截器继续执行拦截器代码。
+> 如果配置了多个拦截器，默认执行的顺序和栈结构是一样的；但是也可以通过 `order()` 方法修改，里面填 int 类型的数字，数字大的优先执行。
+
+### 2. 过滤器
+
+关于过滤器，它和拦截器比较像，编写方式也非常简单，实现 Filter 接口即可。但是要清楚：过滤器是 Java 提供的，拦截器是 Spring 提供的。下面的内容引用 Spring 的原文：
+
+> HandlerInterceptor is basically similar to a Servlet Filter, but in contrast to the latter it just allows custom pre-processing with the option of prohibiting the execution of the handler itself, and custom post-processing. Filters are more powerful, for example they allow for exchanging the request and response objects that are handed down the chain. Note that a filter gets configured in web.xml, a HandlerInterceptor in the application context.
+>
+> 汉译一下：HandlerInterceptor基本上类似于Servlet Filter，但与后者不同的是，它只允许自定义预处理(带有禁止执行处理程序本身的选项)和自定义后处理。过滤器更强大，例如，它们允许交换沿链传递的请求和响应对象。注意，过滤器是在web.xml中配置的，HandlerInterceptor是在应用程序上下文中配置的。
+
+## 十五、Spring的事务管理
 
 Spring 管理事物的方式：
 
@@ -575,14 +652,14 @@ Spring 管理事物的方式：
 概念：它描述了事务解决嵌套问题的特征。
 什么是事务的嵌套：它指的是一个大的事务中，包含了若干个小的事务。
 问题：大事务中融入了很多小的事务，它们彼此影响，最终就会导致外部大的事务失败，丧失了事务的原子性。
-|属性名称|外部不存在事务|外部存在事务|用法|备注|
-|--|--|--|--|--|
-|REQUIRED|开启事务|融合到外部事务中|@Transactional(Propagation.REQUIRED)|增删改|
-|SUPPORTS|不开启事务|融合到外部事务中|@Transactional(Propagation.SUPPORTS)|查询|
-|REQUIRES_NEW|开启新的事务|挂起外部事务，开启新的事务|@Transactional(propagation.REQUIRES_NEW)|日志记录|
-|NOT_SUPPORTED|不开启事务|挂起外部事务|@Transactional(Propagation.NOT_SUPPORTED)|极其不常用|
-|NEVER|不开启事务|抛出异常|@Transactional(Propagation.NEVER)|极其不常用|
-|MANDATORY|抛出异常|融合到外部事务|@Transactional(Propagation.MANDATORY)|极其不常用|
+| 属性名称      | 外部不存在事务 | 外部存在事务               | 用法                                      | 备注       |
+| ------------- | -------------- | -------------------------- | ----------------------------------------- | ---------- |
+| REQUIRED      | 开启事务       | 融合到外部事务中           | @Transactional(Propagation.REQUIRED)      | 增删改     |
+| SUPPORTS      | 不开启事务     | 融合到外部事务中           | @Transactional(Propagation.SUPPORTS)      | 查询       |
+| REQUIRES_NEW  | 开启新的事务   | 挂起外部事务，开启新的事务 | @Transactional(propagation.REQUIRES_NEW)  | 日志记录   |
+| NOT_SUPPORTED | 不开启事务     | 挂起外部事务               | @Transactional(Propagation.NOT_SUPPORTED) | 极其不常用 |
+| NEVER         | 不开启事务     | 抛出异常                   | @Transactional(Propagation.NEVER)         | 极其不常用 |
+| MANDATORY     | 抛出异常       | 融合到外部事务             | @Transactional(Propagation.MANDATORY)     | 极其不常用 |
 
 #### 2.1 只读属性(readOnly)
 
@@ -614,7 +691,7 @@ noRollbackFor = RuntimeException.class
 增删改操作  @Transaction
 查询操作  @Transaction(propagation=Propagation.SUPPORTS, readOnly=true)
 
-## 十五、Spring MVC
+## 十六、Spring MVC
 
 ### 1. 为什么要整合MVC框架
 
