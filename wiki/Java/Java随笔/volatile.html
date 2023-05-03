@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+  <meta name="generator" content="Hexo 6.3.0">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://gcore.jsdelivr.net'>
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin>
+  <link rel='dns-prefetch' href='//unpkg.com'>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>Java: volatile 关键字 - 浮萍一叶</title>
+
+  
+    <meta name="description" content="本篇文章需要掌握JMM（Java Memory Model）">
+<meta property="og:type" content="website">
+<meta property="og:title" content="volatile 关键字">
+<meta property="og:url" content="https://prettywinter.github.io/wiki/Java/Java%E9%9A%8F%E7%AC%94/volatile">
+<meta property="og:site_name" content="浮萍一叶">
+<meta property="og:description" content="本篇文章需要掌握JMM（Java Memory Model）">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/20220727094203.png">
+<meta property="article:published_time" content="2023-05-02T05:07:22.274Z">
+<meta property="article:modified_time" content="2023-05-02T05:07:22.274Z">
+<meta property="article:author" content="江湖浪子">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/20220727094203.png">
+  
+  
+  
+  
+
+  <!-- feed -->
+  
+    <link rel="alternate" href="/atom.xml" title="浮萍一叶" type="application/atom+xml">
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+    <link rel="shortcut icon" href="https://fastly.jsdelivr.net/gh/prettywinter/dist/images/favicon/favicon-32x32.png">
+  
+
+  
+
+  
+
+
+  
+</head>
+
+<body>
+  
+
+
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left' layout='wiki'>
+    
+
+  
+
+
+
+
+<div class="widgets"><widget class="widget-wrapper logo-wrap wiki"><div class="widget-body"><a style="filter: grayscale(100%)" class="wiki-home cap" href="/wiki"><svg aria-hidden="true" viewBox="0 0 16 16" width="1rem" height="1rem" fill="currentColor"><path fill-rule="evenodd" d="M7.78 12.53a.75.75 0 01-1.06 0L2.47 8.28a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 1.06L4.81 7h7.44a.75.75 0 010 1.5H4.81l2.97 2.97a.75.75 0 010 1.06z"></path></svg>All Products</a><a class="title" href="/wiki/Java/index.html"><div class="main" ff="title">Java</div></a></div></widget>
+<widget class="widget-wrapper search"><div class="widget-body"><div class="search-wrapper" id="search"><form class="search-form"><input type="text" class="search-input" id="search-input" data-filter="/wiki/Java/" placeholder="Search in /wiki/Java/"><svg t="1670596976048" class="icon search-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2676" width="200" height="200"><path d="M938.2 832.6L723.8 618.1c-2.5-2.5-5.3-4.4-7.9-6.4 36.2-55.6 57.3-121.8 57.3-193.1C773.3 222.8 614.6 64 418.7 64S64 222.8 64 418.6c0 195.9 158.8 354.6 354.6 354.6 71.3 0 137.5-21.2 193.2-57.4 2 2.7 3.9 5.4 6.3 7.8L832.5 938c14.6 14.6 33.7 21.9 52.8 21.9 19.1 0 38.2-7.3 52.8-21.8 29.2-29.1 29.2-76.4 0.1-105.5M418.7 661.3C284.9 661.3 176 552.4 176 418.6 176 284.9 284.9 176 418.7 176c133.8 0 242.6 108.9 242.6 242.7 0 133.7-108.9 242.6-242.6 242.6" p-id="2677"></path></svg></form><div id="search-result"></div><div class="search-no-result">No Results!</div></div></div></widget>
+
+
+
+
+<widget class="widget-wrapper toc multi" id="data-toc"><div class="widget-header cap dis-select"><span class="name">Java</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Java/index.html#start"><span class="toc-text">Java开发总结、踩坑记录等乱七八糟的</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Java/Java%E5%BC%80%E5%8F%91%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93"><span class="toc-text">Java开发问题总结</span></a></div></div><div class="widget-header cap dis-select"><span class="name">Spring</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Java/SpringFramework/%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="toc-text">微服务</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Java/SpringFramework/Spring%E6%B3%A8%E8%A7%A3"><span class="toc-text">Spring注解</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Java/SpringFramework/Spring%E6%80%BB%E7%BB%93"><span class="toc-text">Spring</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Java/SpringFramework/SpringBoot"><span class="toc-text">SpringBoot</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Java/SpringFramework/SpringSecurity"><span class="toc-text">SpringSecurity</span></a></div></div><div class="widget-header cap dis-select"><span class="name">MyBatis/MyBatisPlus(MP)</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Java/ORM/MyBatis"><span class="toc-text">MyBatis、MyBatis Plus（MP）</span></a></div></div><div class="widget-header cap dis-select"><span class="name">Java随笔</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Java/Java%E9%9A%8F%E7%AC%94/JavaApi"><span class="toc-text">Java API</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Java/Java%E9%9A%8F%E7%AC%94/Java%E4%BA%8B%E5%8A%A1%E5%A4%B1%E6%95%88%E7%9A%84%E5%87%A0%E7%A7%8D%E6%83%85%E5%86%B5"><span class="toc-text">Java事务失效</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Java/Java%E9%9A%8F%E7%AC%94/Java%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%AE%9E%E8%B7%B5"><span class="toc-text">Java单元测试</span></a></div><div class="doc-tree active"><a class="doc-tree-link active" href="/wiki/Java/Java%E9%9A%8F%E7%AC%94/volatile"><span class="toc-text">volatile 关键字</span></a><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#happens-before%E8%A7%84%E5%88%99"><span class="toc-text">happens-before规则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#happens-before%E7%9A%84%E5%87%A0%E4%B8%AA%E8%A7%84%E5%88%99"><span class="toc-text">happens-before的几个规则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#volatile%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">volatile使用场景</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#volatile%E4%B8%8Esynchronized"><span class="toc-text">volatile与synchronized</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Java/Java%E9%9A%8F%E7%AC%94/%E5%89%8D%E7%AB%AF%E7%9B%B8%E5%85%B3"><span class="toc-text">前端相关</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Java/Java%E9%9A%8F%E7%AC%94/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E6%A8%A1%E6%9D%BF%E6%B6%88%E6%81%AF%E6%B5%8B%E8%AF%95%E6%8E%A8%E9%80%81"><span class="toc-text">业务常用SQL</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Java/Java%E9%9A%8F%E7%AC%94/Maven"><span class="toc-text">Maven</span></a></div><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Java/Java%E9%9A%8F%E7%AC%94/%E8%AE%A4%E8%AF%86%E7%A8%8B%E5%BA%8F%E4%B8%AD%E7%9A%84%E9%94%81"><span class="toc-text">程序的锁</span></a></div></div><div class="widget-header cap dis-select"><span class="name">JVM</span></div><div class="widget-body fs14"><div class="doc-tree"><a class="doc-tree-link" href="/wiki/Java/JVM/JVM"><span class="toc-text">JVM</span></a></div></div></widget>
+
+
+
+<widget class="widget-wrapper related"><div class="widget-header cap theme dis-select"><span class="name">More 知识总结</span></div><div class="widget-body related-posts"><a class="item wiki" href="/wiki/Git/index.html"><span class="title">Git总结</span></a><a class="item wiki" href="/wiki/Database/index.html"><span class="title">数据库总结</span></a></div></widget>
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+  
+  
+<div class="bread-nav fs12"><div id="breadcrumb"><a class="cap breadcrumb" id="home" href="/">Home</a><span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki/">Wiki</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/Java/index.html">Java</a></div><div id="post-meta">Updated on&nbsp;<time datetime="2023-05-02T05:07:22.274Z">2023-05-02</time></div></div>
+
+  <article class='md-text content wiki'>
+  <h1 class="article-title"><span>volatile 关键字</span></h1>
+  <p>本篇文章需要掌握JMM（Java Memory Model）</p>
+<span id="more"></span>
+
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>volatile 在多线程环境下可以保证共享数据的可见性，但不保证数据操作的原子性（线程不安全）。要想保证线程安全，还是需要锁机制或者使用原子类（原子类内部已使用 volatile 保证了可见性）。</p>
+<p>为了提高 CPU 的运行效率，JVM 会对一些代码进行重新排序。volatile 修饰变量可以实现禁止指令重排序，修正重排序带来的并发安全问题。</p>
+<div class="tag-plugin image"><div class="image-bg"><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/20220727094203.png" alt="20220727094203" fancybox="true"/></div><div class="image-meta"><span class="image-caption center">20220727094203</span></div></div>
+
+<h2 id="happens-before规则"><a href="#happens-before规则" class="headerlink" title="happens-before规则"></a>happens-before规则</h2><p>我们知道为了提高处理速度，JVM 会进行指令重排序优化，在并发编程下可能会带来一些安全隐患，比如 <strong>重排序导致的多个线程之间的不可见性</strong>。如果让程序员去了解这些底层的实现以及具体的规则，那么我们的负担就太重了，会影响并发编程的效率。<br>从 JDK5 开始，提出了 happens-before 概念：如果一个操作的执行结果需要对另一个操作可见，那么这两个操作之间必须存在 happens-before 关系。简单来说，就是前一个操作的结果可以被后续的操作获取。</p>
+<p>happens-before 规则可以理解为对 JVM 的约束规则。它在编译优化的同时，依然保证了多线程的可见性。</p>
+<h3 id="happens-before的几个规则"><a href="#happens-before的几个规则" class="headerlink" title="happens-before的几个规则"></a>happens-before的几个规则</h3><ol>
+<li>程序顺序原则：同一个线程中前面所有的写操作都对后续操作可见（一个线程内保证语义的串行性）。</li>
+<li>锁规则：在线程1解锁之前的所有写操作都对后续加锁的线程可见（unlock必然发生在随后的加锁lock前）。</li>
+<li>volatile 规则：如果线程1写入 volatile 变量v，接着线程2读取了这个值，线程1写入 v 之前的写操作都对线程2可见（volatile 变量的写先发生于读，保证了 volatile 变量的可见性）。</li>
+<li>传递性：如果 A happens-before B，B happens-before C，那么 A happens-before C。</li>
+<li>start() 规则：如果在线程 A 中启动线程 B，那么在线程 B 启动之前，线程 A 中对共享变量的修改都对线程 B 可见。需要注意的是，在线程 B 启动之后，线程 A 再对变量的修改线程 B 未必可见。线程的 start() 方法先于他的每一个动作。</li>
+<li>join() 规则：对于线程 A 写入的所有变量，如果任一线程调用 A.join() 或者 A.isAlive() 成功返回后，那么 A 写入的变量都对该线程可见。线程的所有操作先于线程的终结。</li>
+<li>线程的中断先于被中断线程的代码。</li>
+<li>对象的构造函数执行、结束先于 finalize() 方法。</li>
+</ol>
+<p>这些原则都是保证指令重排不会破环原有的语义结构。例如第二条锁原则，unlock必然发生在随后的lock前。如果对一个锁解锁后，再加锁，那么加锁的动作绝对不能重排在解锁前。</p>
+<h2 id="volatile使用场景"><a href="#volatile使用场景" class="headerlink" title="volatile使用场景"></a>volatile使用场景</h2><p>适合纯赋值操作，不适合类似 a++ 操作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">VolatileTest</span> <span class="keyword">implements</span> <span class="title class_">Runnable</span> &#123;</span><br><span class="line">    <span class="comment">// 使用 public 是为了测试获取到结果值</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">volatile</span> <span class="type">boolean</span> <span class="variable">flag</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">AtomicInteger</span> <span class="variable">atomicInteger</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">AtomicInteger</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">10000</span>; i++) &#123;</span><br><span class="line">            <span class="comment">// 修改 flag 的值</span></span><br><span class="line">            switchFlag();</span><br><span class="line">            <span class="comment">// +1</span></span><br><span class="line">            atomicInteger.incrementAndGet();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">switchFlag</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="comment">// 纯赋值操作符合预期</span></span><br><span class="line">        flag = <span class="literal">true</span>;</span><br><span class="line">        <span class="comment">// 不符合预期，可能为 true</span></span><br><span class="line">        <span class="comment">// flag = !flag;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Test03</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException &#123;</span><br><span class="line">        <span class="type">VolatileTest</span> <span class="variable">v</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">VolatileTest</span>();</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">t1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(v);</span><br><span class="line">        <span class="type">Thread</span> <span class="variable">t2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Thread</span>(v);</span><br><span class="line">        t1.start();</span><br><span class="line">        t2.start();</span><br><span class="line">        t1.join();</span><br><span class="line">        t2.join();</span><br><span class="line"></span><br><span class="line">        System.out.println(v.flag);</span><br><span class="line">        System.out.println(v.atomicInteger.get());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>volatile 可以适合做多线程中的纯赋值操作，如果一个共享变量自始至终只被各个线程赋值，而没有其它的操作，那么就可以用 volatile 来代替 synchronized 或者代替原子变量，因为赋值自身是有原子性的，而 volatile 又保证了可见性，所以 足以保证线程安全。</p>
+<h2 id="volatile与synchronized"><a href="#volatile与synchronized" class="headerlink" title="volatile与synchronized"></a>volatile与synchronized</h2><ul>
+<li>volatile 只能修饰 <strong>实例变量</strong> 和 <strong>类变量</strong>，而 synchronized 可以修饰方法以及代码块。</li>
+<li>volatile 保证数据的可见性，但是不保证原子性（多线程进行写操作，不保证线程安全）；而 synchronized 是一种排它（互斥）的机制。</li>
+<li>volatile 用于禁止指令重排序，可以解决单例双重检查对象初始化代码执行乱序问题。</li>
+<li>volatile 可以看作是轻量版的 synchronized，volatile 不保证原子性，但是如果对一个共享变量进行直接赋值而没有其它的操作，那么就可以用 volatile 来代替 synchronized，因为赋值本身是有原子性的，而 volatile 又保证了可见性，所以就可以保证线程安全了。</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>volatile 修饰符适用于以下场景，某个属性被多个线程共享，其中一个修改了此属性，其它线程可以立即得到修改后的值；或者作为触发器，实现轻量级同步。</li>
+<li>volatile 属性的读写操作都是无锁的，它不能代替 synchronized，因为它没有提供原子性和互斥性。因为无锁，不需要花费时间在获取锁和释放锁，所以它是低成本的。</li>
+<li>volatile 只能作用于属性，修饰的属性不会被 compilers 做指令重排序。</li>
+<li>volatile 提供了可见性，任一个线程修改值后将立即对其它线程可见，volatile 属性不会被线程缓存，始终从主存中读取。</li>
+<li>volatile 提供了 happens-before，保证其修饰的变量在写入 happens-before 后其它线程后续对该变量的读操作。</li>
+<li>volatile 可以使得 long 和 double 的赋值是原子的。</li>
+<li>volatile 可以在单例双重检查中实现可见性和禁止指令重排序，从而保证安全性。</li>
+</ol>
+
+  
+
+
+  </article>
+  
+<div class="related-wrap reveal" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">Prev</div><a href="/wiki/Java/Java%E9%9A%8F%E7%AC%94/Java%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E5%AE%9E%E8%B7%B5">Java单元测试</a></div><div class="item" id="next"><div class="note">Next</div><a href="/wiki/Java/Java%E9%9A%8F%E7%AC%94/%E5%89%8D%E7%AB%AF%E7%9B%B8%E5%85%B3">前端相关</a></div></section></div>
+
+  
+
+  <div class='related-wrap md-text reveal' id="comments">
+    <section class='header cmt-title cap theme'>
+      Join the discussion
+    </section>
+    <section class='body cmt-body giscus'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="giscus" data-repo="prettywinter/blog-about" data-repo-id="R_kgDOJcVqNA" data-category="Announcements" data-category-id="DIC_kwDOJcVqNM4CWHBg" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="preferred_color_scheme" data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous"></div>
+
+    </section>
+  </div>
+
+
+
+
+      
+<footer class="page-footer reveal fs12"><hr><div class="text"><p>本站由 <a href="/">@prettywinter</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar">Stellar</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only blur' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" style="width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="15301"><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 2.3 26.8 24.6 47.5 51.6 47.6h416.5v4z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15302"></path><path d="M566.407 808.3c26.9-0.1 49.3-20.8 51.6-47.6-1.9-27.7-23.9-49.7-51.6-51.6h-412.6c-28.2-1.4-52.6 19.5-55.5 47.6 1.9 27.7 23.9 49.7 51.6 51.6h416.5z m309.3-249.9c26.9-0.1 49.3-20.8 51.6-47.6-2.2-26.8-24.6-47.5-51.6-47.6h-721.9c-27.7-2.8-52.5 17.4-55.3 45.1-0.1 0.8-0.1 1.7-0.2 2.5 0.9 27.2 23.6 48.5 50.7 47.6H875.707z m-103.1-245.9c26.9-0.1 49.3-20.8 51.6-47.6-0.4-28.3-23.2-51.1-51.5-51.6h-618.9c-29.5-1.1-54.3 21.9-55.5 51.4v0.2c1.4 27.8 25.2 49.2 53 47.8 0.8 0 1.7-0.1 2.5-0.2h618.8z" p-id="15303"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  const stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')){
+        src = stellar.config.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.version = '1.18.5';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
+  stellar.config = {
+    date_suffix: {
+      just: 'Just',
+      min: 'minutes ago',
+      hour: 'hours ago',
+      day: 'days ago',
+      month: 'months ago',
+    },
+    root : '/',
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://gcore.jsdelivr.net/npm/jquery@3.6.2/dist/jquery.min.js'
+  };
+
+  if ('local_search') {
+    stellar.search = {};
+    stellar.search.service = 'local_search';
+    if (stellar.search.service == 'local_search') {
+      let service_obj = Object.assign({}, {"field":"all","path":"/search.json","content":true,"sort":"-date"});
+      stellar.search[stellar.search.service] = service_obj;
+    }
+  }
+
+  // stellar js
+  stellar.plugins.stellar = Object.assign({"sites":"/js/plugins/sites.js","friends":"/js/plugins/friends.js","ghinfo":"/js/plugins/ghinfo.js","timeline":"/js/plugins/timeline.js","linkcard":"/js/plugins/linkcard.js","fcircle":"/js/plugins/fcircle.js","weibo":"/js/plugins/weibo.js"});
+
+  stellar.plugins.marked = Object.assign("https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js");
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/vanilla-lazyload@17.8.3/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css","js":"https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://gcore.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://gcore.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://gcore.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.fancybox = Object.assign({"enable":true,"js":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js","css":"https://gcore.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css","selector":".swiper-slide img"});
+  }
+  if ('false' == 'true') {
+    stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function loadJS() {
+    const els = document.querySelectorAll("#comments #giscus");
+    if (els.length === 0) return;
+    els.forEach((el, i) => {
+      try {
+        el.innerHTML = '';
+      } catch (error) {
+        console.log(error);
+      }
+      var script = document.createElement('script');
+      script.src = 'https://giscus.app/client.js';
+      script.async = true;
+      for (let key of Object.keys(el.attributes)) {
+        let attr = el.attributes[key];
+        if (['class', 'id'].includes(attr.name) === false) {
+          script.setAttribute(attr.name, attr.value);
+        }
+      }
+      el.appendChild(script);
+    });
+  }
+  window.addEventListener('DOMContentLoaded', (event) => {
+    loadJS();
+  });
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>
