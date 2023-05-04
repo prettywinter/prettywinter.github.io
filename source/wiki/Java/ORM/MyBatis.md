@@ -9,6 +9,10 @@ order: 101
 
 ## 二、MyBatis Plus
 
+我觉得 MP 的官方文档写的很好，许多问题都可以在这里找到答案：
+
+{% link https://www.baomidou.com/pages/24112f/ MP官方文档 %}
+
 ### 1. 使用 Wrappers.xxxquery() 查询某个字段
 
 有时候，我们只需要查询一张表中的一个或几个字段（同一张表），又不想写 SQL 的情况下，可以使用 `queryWapper.select()` 方式，举个栗子：
