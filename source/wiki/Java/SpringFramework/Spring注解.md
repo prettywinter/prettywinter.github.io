@@ -20,6 +20,8 @@ order: 52
   - [@ControllerAdvice、@RestControllerAdvice](#controlleradvicerestcontrolleradvice)
   - [@ResponseBody、@RequestBody、@Controller](#responsebodyrequestbodycontroller)
   - [@Async](#async)
+- [Java 注解](#java-注解)
+  - [@Nonnull](#nonnull)
 
 <!-- /code_chunk_output -->
 
@@ -140,3 +142,11 @@ public class TestDemo {
     }
 }
 ```
+
+## Java 注解
+
+### @Nonnull
+
+标记变量、参数、返回值不能为 null，用来提示开发人员注意空指针；与之相反的是 @Nullable，这个注解表示可以为 null，并且为 null 时不会有 NPE 问题。代码中可以使用这两个注解提升代码的可读性、规范性。
+
+需要注意的是，Java 标准库和 Spring 都有这个注解，Spring 中对原来的注解进行了功能增强，Java 新版本的注解不再位于 javax 包，而是 jakarta 包中。
