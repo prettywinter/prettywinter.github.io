@@ -43,6 +43,8 @@ ps 测试安装是否成功：`java -version`
 
 ### 2. Maven
 
+Maven 官网下载特别慢，甚至有时后打不开，可以在 https://archive.apache.org/dist/maven/maven-3/ 下载。
+
 key: {% mark M2_HOME color:dark %}
 value: {% mark D:\software\maven-3.8.6 color:dark %}
 Path: {% mark %M2_HOME%\bin color:dark %}
