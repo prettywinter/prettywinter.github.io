@@ -18,6 +18,7 @@ abbrlink: 1ca431ad
 <!-- code_chunk_output -->
 
 - [1. MySQL](#1-mysql)
+  - [容器备份](#容器备份)
 - [2. Redis](#2-redis)
 - [3. Nginx](#3-nginx)
 - [4. RabbitMQ](#4-rabbitmq)
@@ -71,6 +72,22 @@ flush privileges;
 如果需要导入之前的数据库备份文件到此容器中，可以使用 `docker cp /data/docker-service/mysql/data/备份文件.sql mysql:/var/lib/mysql`，然后使用 `source 备份文件.sql;` 加载数据到容器。
 
 > 如果本机使用可视化工具（dbeaver、navicat）连接出现以下错误：Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock'，请使用 127.0.0.1 连接，不要使用 localhost。
+
+### 容器备份
+
+```bash
+# 导出单张表的数据（含结构）
+docker exec -it [contain_id/contain_name] mysqldump [db_name] -u[username] -p[password] --tables [table_name] > /home/user/xxx.sql
+# 导出单张表的数据（不含结构）
+docker exec -it [contain_id/contain_name] mysqldump -t [db_name] -u[username] -p[password] --tables [table_name] > /home/user/xxx.sql
+# 导出数据库数据（含结构）
+docker exec -it [contain_id/contain_name] mysqldump -u[username] -p[password] [db_name] > /home/user/xxx.sql
+# 导出数据库数据（不含结构）
+docker exec -it [contain_id/contain_name] mysqldump -t -u[username] -p[password] [db_name] > /home/user/xxx.sql
+
+# 只导出整个数据库的结构
+docker exec -it [contain_id/contain_name] mysqldump --opt -d -u[username] -p[password] [db_name] > /home/user/xxx.sql
+```
 
 ## 2. Redis
 
