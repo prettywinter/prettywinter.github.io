@@ -1,6 +1,6 @@
 ######## Stellar info ########
 stellar:
-  version: '1.18.5'
+  version: '1.19.0'
   homepage: 'https://xaoxuu.com/wiki/stellar/'
   repo: 'https://github.com/xaoxuu/hexo-theme-stellar'
   cdn_css: # Use cdn links instead of /css/main.css
@@ -84,7 +84,7 @@ comments:
   service: giscus
   # https://giscus.app/zh-CN
   giscus:
-    data-repo: prettywinter/blog-about # [在此输入仓库]
+    data-repo: prettywinter/dist # [在此输入仓库]
     data-repo-id: R_kgDOJcVqNA # [在此输入仓库 ID]
     data-category: Announcements # [在此输入分类名]
     data-category-id: DIC_kwDOJcVqNM4CWHBg
@@ -133,6 +133,7 @@ footer:
   # 主题用户越多，开发者维护和更新的积极性就越高，如果您喜欢本主题，请在适当的位置显示主题信息和仓库链接以表支持。
 
 
+
 ######## Tag Plugins ########
 tag_plugins:
   # {% ablock %} / {% note %}
@@ -160,8 +161,8 @@ tag_plugins:
   # {% image %}
   image:
     fancybox: true # true, false
-    replace_original:  #把markdown格式的图片解析成图片标签
-      enable: true
+    parse_markdown: true # 把 markdown 格式的图片解析成图片标签
+
   # {% timeline %}
   timeline:
     max-height: 80vh
@@ -171,6 +172,7 @@ tag_plugins:
   # {% tag %}
   tag:
     default_color: yellow # red, orange, yellow, green, cyan, blue, purple
+
 
 ######## JS Plugins ########
 plugins:
@@ -272,6 +274,20 @@ plugins:
     # Available themes: default | dark | forest | neutral
     # 推荐使用 dark 主题 在夜间模式下显示效果更好
     theme: dark
+
+  # 代码块复制按钮
+  copycode:
+    enable: true
+    js: /js/plugins/copycode.js
+    default_text: 'Copy'
+    success_text: 'Copied'
+  
+  # AI 摘要
+  # https://github.com/zhheo/Post-Abstract-AI
+  tianli_gpt:
+    enable: false
+    field: post # all, post, wiki
+    api: 5Q5mpqRK5DkwT1X9Gi5e
 
 style:
   darkmode: auto # auto / always / false
