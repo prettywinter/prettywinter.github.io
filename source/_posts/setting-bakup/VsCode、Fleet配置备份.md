@@ -169,6 +169,17 @@ abbrlink: 9e8f8686
     // maven 命令默认选项：跳过测试
     "maven.executable.options": "-o -DskipTests",
 
+    // ########################### Python ##############################
+    "[python]": {
+      "diffEditor.ignoreTrimWhitespace": false,
+      "editor.formatOnType": true,
+      "editor.wordBasedSuggestions": false
+    },
+    // 自动完成代码
+    "python.analysis.autoImportCompletions": true,
+    // 函数完成时自动加入括号
+    "python.analysis.completeFunctionParens": true,
+
     // ##########################################################################
     // ##########################################################################
     // ############################# 插件配置 end ################################
