@@ -127,6 +127,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 ## 三、MyBatis/MyBatis Plus（MP）
 
+{% link https://www.baomidou.com/pages/24112f/ MP官方文档 %}
+
 {% ablock Result Maps collection does not contain value for …… %}
 
 在 SQL 文件中使用了 `resultType="java.util.map"`，并且不止一处使用，那么凡是使用 `resultType` 或者 `resultMap` 这种属性的标签，不能有属性指向错误，否则就会报错： “Result Maps collection does not contain value for ……”
@@ -184,7 +186,6 @@ No primary or default constructor found for interface java.util.List]
 ```
 
 后端使用 `List<String>` 或者数组接参数收时，前端传入数组接收不到；但是可以传字符串，每个元素可以使用英文 `,` 分割。
-
 
 ### 3. MP插入或更新null值
 

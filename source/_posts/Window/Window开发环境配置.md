@@ -297,6 +297,19 @@ replace-with = 'ustc'
 registry = "https://mirrors.ustc.edu.cn/crates.io-index"
 ```
 
+### 12. [Python](https://www.python.org/downloads/)
+
+```bash
+# 设置镜像源
+python -m pip install --upgrade pip
+pip config set global.index-url https://mirrors.bfsu.edu.cn/pypi/web/simple
+
+# 代码格式化 black
+python -m pip install -U black
+```
+
+> black Github 地址：https://github.com/psf/black
+
 ## 插件
 
 ### 1. 油猴插件

@@ -30,8 +30,13 @@ abbrlink: 9e8f8686
     "editor.tabSize": 4,
     // 保存时自动格式化内容
     "editor.formatOnSave": true,
-    // 彩色括号对
-    "editor.guides.bracketPairs": "active",
+    // 是否自动格式化粘贴的内容。格式化程序必须可用，并且能针对文档中的某一范围进行格式化。
+    "editor.formatOnPaste": true,
+    // 文件保存时运行"整理 import 语句"操作
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true,
+      "source.organizeImports": true,
+    },
 
     // ########################### 文件配置 ###########################
 
@@ -39,6 +44,7 @@ abbrlink: 9e8f8686
     "files.autoSave": "afterDelay",
     // 要想 autoSaveDelay 生效，上面的设置必须为 afterDelay，否则不生效
     "files.autoSaveDelay": 1000,
+    
 
     // ########################### 终端设置 ###########################
     // 光标样式
@@ -170,11 +176,6 @@ abbrlink: 9e8f8686
     "maven.executable.options": "-o -DskipTests",
 
     // ########################### Python ##############################
-    "[python]": {
-      "diffEditor.ignoreTrimWhitespace": false,
-      "editor.formatOnType": true,
-      "editor.wordBasedSuggestions": false
-    },
     // 自动完成代码
     "python.analysis.autoImportCompletions": true,
     // 函数完成时自动加入括号
