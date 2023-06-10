@@ -18,7 +18,7 @@ abbrlink: 9e8f8686
 
     // 字体及字体大小，设置的字体本机需要安装才能生效
     // 如果有空格或者中文，尽量使用 单引号 括住
-    "editor.fontFamily": "'Fira Code', '文泉驿微米黑'",
+    "editor.fontFamily": "'Fira Code', '苹方', '文泉驿微米黑'",
     "editor.fontSize": 16,
     // 启用连字
     "editor.fontLigatures": true,
@@ -42,12 +42,12 @@ abbrlink: 9e8f8686
 
     // 1s 后自动保存文件内容 
     "files.autoSave": "afterDelay",
-    // 要想 autoSaveDelay 生效，上面的设置必须为 afterDelay，否则不生效
+    // 要想 autoSaveDelay 生效，上面的设置（即 files.autoSave）必须为 afterDelay，否则不生效
     "files.autoSaveDelay": 1000,
     
 
     // ########################### 终端设置 ###########################
-    // 光标样式
+    // 光标样式、宽度
     "terminal.integrated.cursorStyle": "line",
     "terminal.integrated.cursorWidth": 2,
     "terminal.integrated.cursorBlinking": true,
@@ -67,7 +67,7 @@ abbrlink: 9e8f8686
           "icon": "terminal-bash"
         }
       },
-    // 此处填写上面的自定义名称 Git-Bash
+    // 此处填写上面的自定义名称：Git-Bash
     "terminal.integrated.defaultProfile.windows": "Git-Bash",
 
     // ########################### JavaScript ###########################
@@ -111,6 +111,7 @@ abbrlink: 9e8f8686
     "hediet.vscode-drawio.customFonts": [
         "JetBrains Mono",
         "Fira Code",
+        "苹方",
         "文泉驿微米黑"
     ],
     "hediet.vscode-drawio.theme": "Kennedy",

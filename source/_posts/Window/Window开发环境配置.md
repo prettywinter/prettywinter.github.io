@@ -10,31 +10,41 @@ pin: true
 abbrlink: a35e2b34
 ---
 
-Window 开发环境配置整理。
+Windows 开发环境配置 + 软件配置。
+
+https://vscode.cdn.azure.cn/stable/b380da4ef1ee00e224a15c1d4d9793e27c2b6302/VSCode-win32-x64-1.79.0.zip
 
 <!-- more -->
 
 <!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=4 orderedList=false} -->
 
-## 环境配置
+## 一、环境配置
 
-Window 的环境变量配置非常简单。它分为用户变量和系统变量，配置系统变量使用任何用户登录系统都可以使用相关的命令；如果添加的是用户变量，那么只有添加变量的当前用户才能使用该命令，本文都以配置{% emp 系统变量 %}为例。
+Windows 的环境变量配置比较简单，它是以键值对（key-value）的方式配置的。
 
-配置系统变量一般有两种方式：
+在 Windows 系统中，有两种变量：用户变量和系统变量。
 
-- 直接在 {% kbd Path %} 里配置（一般配置到 bin 目录）。
-- 新建一个系统变量，设置 key-value，之后在 {% kbd Path %} 中引用 {% kbd %key% %} 。
+- 用户变量：只有当前登录用户能可以使用的变量，类似于 Linux 系统中用户目录下的 `.bashrc` 文件；
+
+- 系统变量：对所有用户生效、所有用户可以使用的变量，类似于 Linux 系统中的 `/etc/profile` 文件；
+
+本文都以配置 **系统变量** 为例，配置的 `value` 路径要替换自己本机的安装路径。Windows 配置变量一般有两种方式：
+
+1. 直接在 {% kbd Path %} 里编辑添加软件的执行文件所在的目录（一般是软件的 bin 目录）。
+2. 新建一个变量，设置变量名称（一般随便起，部分有约定，比如 `JAVA_HOME`，很多需要 java 环境的软件默认查询 `JAVA_HOME` 变量名）和路径（安装软件的根目录）的 key-value，然后在 {% kbd Path %} 中引用 {% kbd %key% %} 。
 
 ### 1. JDK
 
-key: {% mark JAVA_HOME color:dark %}
-value: {% mark D:\software\java color:dark %}
-Path: {% mark %JAVA_HOME%\bin color:dark %}
+第一个配置附带了截图，后面的就不带了 :wink:，只是帮助理解一下上面的第二种配置说明。第一种是比较简单的，直接把软件执行程序路径添加在 {% kbd Path %} 中。
 
-key: {% mark CLASSPATH color:dark %}
-value: {% mark .;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar color:dark %}
-Path: {% mark %JAVA_HOME%\bin color:dark %}
-ps 测试安装是否成功：`java -version`
+| key       | value                                              |
+| --------- | -------------------------------------------------- |
+| JAVA_HOME | D:\software\java                                   |
+| CLASSPATH | .;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar |
+
+Path 配置 `%JAVA_HOME%\bin`
+
+测试安装是否成功：`java -version`
 
 > **Tip：** jdk1.5以后CLASSPATH可以不用再进行设置;
 
@@ -43,12 +53,15 @@ ps 测试安装是否成功：`java -version`
 
 ### 2. Maven
 
-Maven 官网下载特别慢，甚至有时后打不开，可以在 https://archive.apache.org/dist/maven/maven-3/ 下载。
+Maven 官网下载特别慢，甚至打不开，可以在 https://archive.apache.org/dist/maven/maven-3/ 下载。
 
-key: {% mark M2_HOME color:dark %}
-value: {% mark D:\software\maven-3.8.6 color:dark %}
-Path: {% mark %M2_HOME%\bin color:dark %}
-ps 测试安装是否成功：`mvn -version`
+| key     | value                   |
+| ------- | ----------------------- |
+| M2_HOME | D:\software\maven-3.9.2 |
+
+
+Path: `%M2_HOME%\bin`
+测试安装是否成功：`mvn -version`
 
 [配置阿里源](https://developer.aliyun.com/mvn/guide)
 
