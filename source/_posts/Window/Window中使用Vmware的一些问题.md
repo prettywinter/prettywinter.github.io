@@ -1,16 +1,14 @@
 ---
 title: Window中使用VMware的一些常见问题
-categories: Window
+categories: Windows
 abbrlink: 13fda3d
 ---
 
-虽然 Win 下的 WSL 非常好用，但是浪子还是比较喜欢使用 Vmware 创建 Linux 环境，虽然它很吃内存。。。
+虽然 Win 下的 WSL 广受好评，但是浪子懒得折腾，不折腾使用还是不太方便。还是比较喜欢使用 Vmware 创建 Linux 环境，虽然它很吃内存。。。但也没办法 :relieved:
 
 <!-- more -->
 
 ## Vmware 虚拟机配置双网卡
-
-VMWare虚拟机配置双网卡
 
 使用 VMWare 时，推荐创建的虚拟机配置双网卡，默认的使用 NAT 模式，新添加一个使用 仅主机 模式，然后进行修改配置。这样就算以后连接无数个无线网，电脑依然能上网，但是使用 SSH 远程连接时依然不用修改 Linux 的网络配置文件。实现了一次配置，永久使用的效果。配置也很简单：
 
@@ -35,26 +33,26 @@ systemctl restart network
 
 {% link https://blog.csdn.net/weistin/article/details/80676955 参考文章地址 %}
 
-## 虚拟机可以ping通本机，本机ping不通虚拟机
+## CentOS
 
-如果使用的是 NAT 模式，不在同一个网段也可以 ping 通。因为当你的网络连接变了之后（从连 wifi 到使用网线），本机的 IP 网络也会随之更改，所以需要确认一边。设置完成记得重启。
-
-## 使用其它SSH工具连接虚拟机
-
-如果是 22.04 版本的 ubuntu-server 版本，其内置了 ufw 工具（最小安装可能没有）。可以使用 `sudo ufw disable` 关闭防火墙，或者开放 22 端口：`sudo ufw allow 22`。
-
-## 虚拟机
-
-centos7 问题描述：
-用的好好的虚拟机，之前内网都通，突然xshell连不上虚拟机了也连不上外网了，这时候怎么办呢？
-> 解决方法：
+1. 用的好好的虚拟机，之前内网都通，后面使用的时候使用 SSH 工具连不上虚拟机了，并且虚拟机也连不上外网
 
 ```bash
-# 1.将networkmanager服务停掉
+# 1.停止并关闭 networkmanager 服务
 systemctl stop NetworkManager
 systemctl disable NetworkManager
-# 2.重启网卡
+# 2.重启网络
 systemctl restart network
 ```
 
-[原博客地址](https://blog.csdn.net/weixin_44695793/article/details/108089356)
+[参考原博客地址](https://blog.csdn.net/weixin_44695793/article/details/108089356)
+
+## 其它问题
+
+### 1. ping
+
+ping 不通也可能是连接了 VPN 的问题。如果在连接 VPN 之前先开启了虚拟机并连接是可以的，当连接了 VPN 之后就不行了。
+
+虚拟机可以ping通本机，本机ping不通虚拟机
+
+如果使用的是 NAT 模式，不在同一个网段也可以 ping 通。因为当你的网络连接变了之后（从连 wifi 到使用网线），本机的 IP 网络也会随之更改，所以需要确认一边。设置完成记得重启。

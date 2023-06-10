@@ -188,7 +188,7 @@ http {
 
 > 修改配置文件再次启动报错：`[emerg]: bind() to 0.0.0.0:80 failed (80: Address already in use)`，执行命令：sudo fuser -k 80/tcp，然后 ./nginx
 
-### 2. 基础配置
+### 2. 自定义配置
 
 ```conf conf/nginx.conf
 http {
@@ -197,186 +197,130 @@ http {
     sendfile        on;
     keepalive_timeout  65;
 
+    # 日志打印
+    log_format main '$time_iso8601|$remote_addr|$remote_user|$request_method|$uri|'
+            '$status|$request_time|$request_length|$body_bytes_sent|$bytes_sent|'
+            '$connection|$http_x_forwarded_for|$upstream_addr|$upstream_status|'
+            '$upstream_response_time|$args|$http_referer|$http_user_agent';
+    access_log  logs/access.log  main;
+
+	# 负载均衡服务器
+	upstream server_name {
+		# 设置权重，权重越高，使用此服务器的概率越大
+		# 8080 出现的频率是其它服务器的两倍
+		server localhost:8080 weight=2;
+		server localhost:8081;
+		server localhost:8082;
+	}
+
     server {
-				listen       80;
-				server_name  localhost;
-				error_page   500 502 503 504  /50x.html;
-				
-				location = /50x.html {
-						root   html;
-				}
+		listen       80;
+		server_name  localhost;
+		error_page   500 502 503 504  /50x.html;
+		
+		location = /50x.html {
+				root   html;
+		}
 
-				location / {
-						# 配置反向代理
-						proxy_pass   http://127.0.0.1:8080;
-				}
+		location / {
+			# 使用负载均衡服务器，默认策略轮询
+			proxy_pass   http://server_name/;
+			proxy_set_header Host $http_host;
+			proxy_set_header X-Real-IP $remote_addr;
+			proxy_set_header REMOTE-HOST $remote_addr;
+			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		}
 
-				# 配置静态资源服务器
-				location ~ .*\.(css|gif|ico|jpg|js|png|ttf|woff)$ {
-						expires 24h;
-						# 指定图片存放路径 
-						root D:/image/;
-						proxy_store on;
-						proxy_store_access user:rw group:rw all:rw;
-						# 图片路径
-						proxy_temp_path D:/image/;
-						proxy_redirect off; 
+		# 配置静态资源
+		location ~ .*\.(css|gif|ico|jpg|js|png|ttf|woff)$ {
+			expires 24h;
+			# 指定图片存放路径 
+			root D:/image/;
+			proxy_store on;
+			proxy_store_access user:rw group:rw all:rw;
+			# 图片路径
+			proxy_temp_path D:/image/;
+			proxy_redirect off; 
 
-						proxy_set_header Host 127.0.0.1; 
-						proxy_set_header X-Real-IP $remote_addr; 
-						proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; 
-						client_max_body_size 10m; 
-						client_body_buffer_size 1280k; 
-						proxy_connect_timeout 900; 
-						proxy_send_timeout 900; 
-						proxy_read_timeout 900; 
-						proxy_buffer_size 40k; 
-						proxy_buffers 40 320k; 
-						proxy_busy_buffers_size 640k; 
-						proxy_temp_file_write_size 640k; 
-						if ( !-e $request_filename) { 
-							proxy_pass http://127.0.0.1:80; #代理访问地址
-						}
-        }
+			proxy_set_header Host 127.0.0.1; 
+			proxy_set_header X-Real-IP $remote_addr; 
+			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for; 
+			cl				ient_max_body_size 10m; 
+			client_body_buffer_size 1280k; 
+			proxy_connect_timeout 900; 
+			proxy_send_timeout 900; 
+			proxy_read_timeout 900; 
+			proxy_buffer_size 40k; 
+			proxy_buffers 40 320k; 
+			proxy_busy_buffers_size 640k; 
+			proxy_temp_file_write_size 640k; 
+			if ( !-e $request_filename) { 
+				proxy_pass http://127.0.0.1:80; #代理访问地址
+			}
 		}
 	}
-```
 
-重新启动Nginx，`./nginx -s reload`，然后用浏览器输入：localhost，回车。
-
-### 2. 配置负载均衡
-
-```conf conf/nginx.conf
-http {
-    include       mime.types;
-    default_type  application/octet-stream;
-
-    sendfile        on;
-    keepalive_timeout  65;
-	
-		upstream server_name {
-			server localhost:8080;
-			server localhost:8081;
-			server localhost:8082;
-		}
-
-    server {
-			listen       80;
-			server_name  localhost;
-			error_page   500 502 503 504  /50x.html;
-
-			location = /50x.html {
-				root   html;
-			}
-			
-			location / {
-				proxy_pass   http://server_name;
-			}
-		}
-}
-```
-
-地址栏输入 localhost 刷新观察每个网页的标题，看是否不同。
-
-经过测试，三台服务器出现的概率各为33.3333333%，交替显示。
-
-如果其中一台服务器性能比较好，想让其承担更多的压力，可以设置权重。
-
-比如想让 `8080` 出现次数是其它服务器的2倍，则修改配置如下：
-
-```conf
-http {
-    include       mime.types;
-    default_type  application/octet-stream;
-
-    sendfile        on;
-    keepalive_timeout  65;
-	
-		upstream server_name {
-			server localhost:8080;
-			server localhost:8081 weight=2;
-			server localhost:8082;
-		}
-
-    server {
-			listen       80;
-			server_name  localhost;
-			error_page   500 502 503 504  /50x.html;
-			location = /50x.html {
-				root   html;
-			}
-			
-			location / {
-				proxy_pass   http://server_name;
-			}
-		}
-}
-```
-
-### 3. 映射资源文件目录
-
-我们可以在服务器上使用Nginx映射出一个目录作为共享的目录，然后访问该可以进行下载。有许多网站使用了该技术。
-
-```conf
-server {
+	# 使用 nginx 映射文件服务器
+	server {
 		listen       8181;
 		server_name  localhost;
-		#配置跨域
-		#add_header Access-Control-Allow-Origin *;
-		#add_header Access-Control-Allow-Headers X-Requested-With;
-		#add_header Access-Control-Allow-Methods GET,POST,OPTIONS;
+		# 配置跨域
+		# add_header Access-Control-Allow-Origin *;
+		# add_header Access-Control-Allow-Headers X-Requested-With;
+		# add_header Access-Control-Allow-Methods GET,POST,OPTIONS;
 
-		#charset koi8-r;
+		# charset koi8-r;
 
-		#access_log  logs/host.access.log  main;
+		# access_log  logs/host.access.log  main;
 
 		location /share {
-				# /share 的上级全目录
-				root /data;
-				# 如果使用 alias，最后一定要加 /，而且只能用于 location 块
-				# alias /data/share/
-				# 显示索引，nginx内部的简单索引
-				autoindex on;
-				# 显示文件的时间
-				autoindex_localtime on;
+			# /share 的上级全目录
+			root /data;
+			# 如果使用 alias，最后一定要加 /，而且只能用于 location 块
+			# alias /data/share/
+			# 显示索引，nginx内部的简单索引
+			autoindex on;
+			# 显示文件的时间
+			autoindex_localtime on;
 		}
+	}
 }
 ```
+
+重新启动Nginx:`./nginx -s reload`
 
 > 在配置映射目录的时候，容易出现问题。因为在 location 块中可以使用两种目录配置方式。一种是 `root`，一种是 `alias`。
 > 如果使用的是 root（**不是root用户**），那么 `location` 后面应该填写 URL 访问的路径，而 root 后跟上级路径。
 > 如果使用的 alias，那么后面直接写共享的绝对路径即可，注意在绝对路径最后面加上 ”/“，而 location 后依然只写 URL 访问路径即可。
 > 以这里的配置为例。那么我访问的地址应该是 `xxx.com:8181/share`，我的共享目录是 `/root/share`。
+> nginx 配置地址的最后如果加 / 不会带 location 后的路径，如果不加请求时需要带此路径方能匹配到；正则匹配结尾不能带 /；
 
-### 4. 使用不同的端口号部署多个项目
+## 四、附
 
-```conf
-server {
-		listen       80;
-		server_name  localhost;
-		location / {
-				root   html;
-				index  index.html index.htm;
-		}
-		location /wasd {
-				alias /usr/local/nginx/test/;
-				index index.html index.htm;
-		}
-  }
+### 1. 常用的 nginx 全局变量
 
-	server {
-		listen       8081;
-		server_name  localhost;
-		location /qwer {
-				root   /usr/local/nginx/test;
-				index  index.html index.htm;
-		}
-		location /prod-api{
-			proxy_set_header Host $http_host;
-			proxy_set_header X-Real-IP $remote_addr;
-			proxy_set_header REMOTE-HOST $remote_addr;
-			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-			proxy_pass http://localhost:8080/;
-		}
-	}
+```bash
+$args #请求行中的参数。
+$content_length #请求头中的Content-length字段。
+$content_type #请求头中的Content-Type字段。
+$document_root #当前请求在root指令中指定的值。
+$host #请求主机头字段，否则为服务器名称。
+$http_user_agent #客户端agent信息
+$http_cookie #客户端cookie信息
+$limit_rate #这个变量可以限制连接速率。
+$request_body_file #客户端请求主体信息的临时文件名。
+$request_method #客户端请求的动作，通常为GET或POST。
+$remote_addr #客户端的IP地址。
+$remote_port #客户端的端口。
+$remote_user #已经经过Auth Basic Module验证的用户名。
+$request_filename #当前请求的文件路径，由root或alias指令与URI请求生成。
+$query_string #与$args相同。
+$scheme #HTTP方法（如http，https）。
+$server_protocol #请求使用的协议，通常是HTTP/1.0或HTTP/1.1。
+$server_addr #服务器地址，在完成一次系统调用后可以确定这个值。
+$server_name #服务器名称。
+$server_port #请求到达服务器的端口号。
+$request_uri #包含请求参数的原始URI，不包含主机名，如：”/foo/bar.php?arg=baz”。
+$uri #不带请求参数的当前URI，$uri不包含主机名，如”/foo/bar.html”。
+$document_uri #与$uri相同。
 ```
