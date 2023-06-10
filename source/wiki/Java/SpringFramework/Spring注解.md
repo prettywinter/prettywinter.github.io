@@ -1,7 +1,7 @@
 ---
 layout: wiki
 wiki: Java
-title: Spring注解
+title: 注解
 order: 52
 ---
 
@@ -9,27 +9,11 @@ order: 52
 
 <!-- more -->
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=4 orderedList=true} -->
-
-<!-- code_chunk_output -->
-
-- [Spring 注解](#spring-注解)
-  - [@SpringBootApplication](#springbootapplication)
-  - [@Component](#component)
-  - [@MapperScan](#mapperscan)
-  - [@ControllerAdvice、@RestControllerAdvice](#controlleradvicerestcontrolleradvice)
-  - [@ResponseBody、@RequestBody、@Controller](#responsebodyrequestbodycontroller)
-  - [@Async](#async)
-- [Java 注解](#java-注解)
-  - [@Nonnull](#nonnull)
-
-<!-- /code_chunk_output -->
-
 ## Spring 注解
 
 ![Spring注解](https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/Spring注解总结.png "Spring注解总结")
 
-### @SpringBootApplication
+### 1. @SpringBootApplication
 
 @SpringBootApplication 是一个组合注解，包含多个注解；
 
@@ -46,7 +30,7 @@ order: 52
 @ComponentScan
 ```
 
-### @Component
+### 2.@Component
 
 - @Repository/@Mapper DAO类型
 - @Service  Service类型
@@ -55,11 +39,7 @@ order: 52
 上面的注解的本质就是 @Component 注解，使用它们可以更加准确的表达一个类型的作用。
 顺带一提：@Configuration 可以创建多个 Bean 对象，而 @Component 只能创建单个 Bean 对象。
 
-### @MapperScan
-
-该注解是 Mybatis 提供的，作用是扫描 Dao 层接口，交给 Spring 工厂去创建对象（和在 Dao 接口加 @Mapper 注解效果一样），这个相当于扫描指定的包中所有的文件交给 Spring 管理，不需要在每个类中标识。
-
-### @ControllerAdvice、@RestControllerAdvice
+### 2. @ControllerAdvice、@RestControllerAdvice
 
 顾名思义，这两个类都是对 controller 层做增强处理。这两个注解可以用来对 controller 的返回值做统一包装（下面有一个小栗子），也可以和另一个注解 @ExceptionHandler 一起作为全局的系统异常处理（项目常用）。
 
@@ -92,7 +72,7 @@ public class ResultResponseHandler implements ResponseBodyAdvice {
 }
 ```
 
-### @ResponseBody、@RequestBody、@Controller
+### 3. @ResponseBody、@RequestBody、@Controller
 
 这三个注解通常只在 controller 层使用：`@RestController = @ResponseBody + @Controller`.
 所以对于目前常见的前后端分离的项目，一般我们直接使用 @RestController 注解即可。
@@ -101,7 +81,7 @@ public class ResultResponseHandler implements ResponseBodyAdvice {
 
 其中 @ResponseBody 把返回的对象转为 json 格式字符串后响应到客户端；而 @RequestBody 把客户端的 json 字符串参数转为 Java 中的复杂对象。
 
-### @Async
+### 4. @Async
 
 Spring 提供了异步执行的代码的功能,能让我们以多线程的方式执行,但是 Spring 中自带的 @Async 注解执行异步时并没有使用线程池的概念, 如果同时执行多个任务可能会把系统资源耗尽的情况。对此，SpingBoot 做好了优化，默认使用线程池执行任务。
 
@@ -143,10 +123,18 @@ public class TestDemo {
 }
 ```
 
-## Java 注解
+## 二、Java 注解
 
-### @Nonnull
+### 1. @Nonnull
+
+这个注解好多包中都有，包括 Spring、jetbrains 等。
 
 标记变量、参数、返回值不能为 null，用来提示开发人员注意空指针；与之相反的是 @Nullable，这个注解表示可以为 null，并且为 null 时不会有 NPE 问题。代码中可以使用这两个注解提升代码的可读性、规范性。
 
 需要注意的是，Java 标准库和 Spring 都有这个注解，Spring 中对原来的注解进行了功能增强，Java 新版本的注解不再位于 javax 包，而是 jakarta 包中。
+
+## 三、其它注解
+
+### 1. @MapperScan
+
+该注解是 Mybatis 提供的，作用是扫描 Dao 层接口，交给 Spring 工厂去创建对象（和在 Dao 接口加 @Mapper 注解效果一样），这个相当于扫描指定的包中所有的文件交给 Spring 管理，不需要在每个类中标识。

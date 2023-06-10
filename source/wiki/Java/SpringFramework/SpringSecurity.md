@@ -9,38 +9,6 @@ order: 55
 
 <!-- more -->
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=2 depthTo=4 orderedList=true} -->
-
-<!-- code_chunk_output -->
-
-- [一、官网学习](#一官网学习)
-  - [1. 思考](#1-思考)
-- [二、登录认证](#二登录认证)
-  - [1. 一些说明](#1-一些说明)
-      - [AuthenticationManager ProviderManager AuthencationProvider关系](#authenticationmanager-providermanager-authencationprovider关系)
-      - [WebSecurityConfigurerAdapter（最新版本标为弃用）](#websecurityconfigureradapter最新版本标为弃用)
-      - [UserDetails](#userdetails)
-      - [UserDetailsService用来修改默认认证的数据源信息](#userdetailsservice用来修改默认认证的数据源信息)
-      - [Authentication](#authentication)
-  - [2. 配置AuthenticationManager的两种方式](#2-配置authenticationmanager的两种方式)
-  - [3. 密码加密](#3-密码加密)
-  - [4. RememberMe](#4-rememberme)
-  - [5. 会话管理(SessionManagementFilter)](#5-会话管理sessionmanagementfilter)
-  - [6. 跨域问题](#6-跨域问题)
-  - [7. 异常处理](#7-异常处理)
-    - [7.1 认证异常](#71-认证异常)
-    - [7.2 授权异常](#72-授权异常)
-    - [7.3 自定义异常处理配置](#73-自定义异常处理配置)
-  - [8. CSRF（Cross-site request forgery）](#8-csrfcross-site-request-forgery)
-- [二、授权](#二授权)
-  - [2.1 两种权限管理策略](#21-两种权限管理策略)
-    - [1. 基于URL权限管理](#1-基于url权限管理)
-    - [2. 基于方法的权限管理](#2-基于方法的权限管理)
-  - [2.2 动态权限修改](#22-动态权限修改)
-  - [2.3 RBAC(Role-Based Access Control)](#23-rbacrole-based-access-control)
-
-<!-- /code_chunk_output -->
-
 ## 一、官网学习
 
 {% link https://docs.spring.io/spring-security/reference/servlet/authentication/architecture.html 官方文档 %}
