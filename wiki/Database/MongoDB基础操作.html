@@ -3,7 +3,7 @@
 
 <head>
   <meta name="generator" content="Hexo 6.3.0">
-  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.19.0">
   <meta charset="utf-8">
   
 
@@ -431,6 +431,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">./mongo --port 27026</span><br><span class="line">use admin</span><br><span class="line"><span class="comment"># 添加分片信息</span></span><br><span class="line">db.runCommand(&#123;addshard: <span class="string">&quot;121.5.167.13:27017&quot;</span>, <span class="string">&quot;allowLocal&quot;</span>:<span class="literal">true</span>&#125;);</span><br><span class="line">db.runCommand(&#123;addshard: <span class="string">&quot;121.5.167.13:27019&quot;</span>, <span class="string">&quot;allowLocal&quot;</span>:<span class="literal">true</span>&#125;);</span><br><span class="line">db.runCommand(&#123;addshard: <span class="string">&quot;121.5.167.13:27021&quot;</span>, <span class="string">&quot;allowLocal&quot;</span>:<span class="literal">true</span>&#125;);</span><br><span class="line"><span class="comment"># 启用指定数据库的分片</span></span><br><span class="line">db.runCommand(&#123;enablesharding: <span class="string">&quot;xxx&quot;</span>&#125;);</span><br><span class="line"><span class="comment"># 设置库的片键信息 xxx库的xxxx集合，使用 _id 作为片键（不推荐）</span></span><br><span class="line">db.runCommand(&#123;shardcollection: <span class="string">&quot;xxx.xxxx&quot;</span>, key: &#123;_id: 1&#125;&#125;);</span><br><span class="line"><span class="comment"># 使用 xxx库xxxx集合的 _id 的哈希作为散列（推荐）</span></span><br><span class="line">db.runCommand(&#123;shardcollection: <span class="string">&quot;xxx.xxxx&quot;</span>, key: &#123;_id: <span class="string">&quot;hashed&quot;</span>&#125;&#125;);</span><br></pre></td></tr></table></figure>
 
   
+  
 
 
   </article>
@@ -448,7 +449,7 @@
 
 <svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
 
-<div id="giscus" data-repo="prettywinter/blog-about" data-repo-id="R_kgDOJcVqNA" data-category="Announcements" data-category-id="DIC_kwDOJcVqNM4CWHBg" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="preferred_color_scheme" data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous"></div>
+<div id="giscus" data-repo="prettywinter/dist" data-repo-id="R_kgDOJcVqNA" data-category="Announcements" data-category-id="DIC_kwDOJcVqNM4CWHBg" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="preferred_color_scheme" data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous"></div>
 
     </section>
   </div>
@@ -564,8 +565,8 @@
       }
     }
   };
-  stellar.version = '1.18.5';
-  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.18.5';
+  stellar.version = '1.19.0';
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.19.0';
   stellar.config = {
     date_suffix: {
       just: 'Just',
@@ -613,6 +614,9 @@
   }
   if ('false' == 'true') {
     stellar.plugins.heti = Object.assign({"enable":false,"css":"https://unpkg.com/heti@0.9.2/umd/heti.min.css","js":"https://unpkg.com/heti@0.9.2/umd/heti-addon.min.js"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.copycode = Object.assign({"enable":true,"js":"/js/plugins/copycode.js","default_text":"Copy","success_text":"Copied"});
   }
 </script>
 
