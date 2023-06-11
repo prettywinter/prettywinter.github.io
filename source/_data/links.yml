@@ -71,21 +71,17 @@
     description: JetBrains Mono the free and open-source typeface for developers
 
 'learn':
-  - title: stackshare
-    url: https://stackshare.io/
-    screenshot: 
-    avatar:
-    description: 
   - title: stackoverflow
     url: https://stackoverflow.com/
     screenshot: 
     avatar:
     description: 
-  - title: stackoverflow
-    url: https://stackoverflow.com/
+  - title: geeksforgeeks
+    url: https://www.geeksforgeeks.org/
     screenshot: 
     avatar:
     description: 
+
 
 'tools':
   - title: shields.io

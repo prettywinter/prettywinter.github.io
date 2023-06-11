@@ -211,7 +211,7 @@ min_examined_row_limit = 100
 
 > 如果本机已经安装了 MySQL 数据库，那么使用这种方式安装需要在初始化数据库后，先修改 `my.ini` 文件，修改端口号避免端口占用导致启动失败，然后启动服务。
 > FEEDBACK 启动成功但是连接失败官方说明：https://mariadb.com/kb/en/feedback-plugin/
-> 配置文档：https://mariadb.com/kb/en/configuring-mariadb-with-option-files/
+> 官方配置文档：https://mariadb.com/kb/en/configuring-mariadb-with-option-files/
 > Unicode 排序规则：https://www.monolune.com/articles/mysql-utf8-charsets-and-collations-explained/
 
 ### 6. [PostgreSQL](https://www.enterprisedb.com/download-postgresql-binaries)
