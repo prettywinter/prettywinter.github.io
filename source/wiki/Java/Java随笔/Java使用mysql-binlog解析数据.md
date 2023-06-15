@@ -62,36 +62,36 @@ public class BinlogUtil {
     private static final Logger log = LoggerFactory.getLogger(BinlogUtil.class);
     @Autowired
     private BinlogProperty binlogProperty;
-    @Autowired
-    private FineTaskImplBpmService taskImplBpmService;
-    @Autowired
-    private FineWorkflowNodeService workflowNodeService;
+    /**
+     * 数据库名称 map
+     */
     private static final Map<Long, String> TABLE_MAP = new HashMap<>();
 
     /**
-     * 异步线程处理 binlog
+     * 异步线程处理 binlog，防止阻塞主线程
      */
     @PostConstruct
     public void handle() {
         ThreadUtil.execAsync(() -> {
             binlogListening();
 
-        log.info("正在监听 <{}:{}:{}> binlog……",
-                binlogProperty.getHostname(),
-                binlogProperty.getSchema(),
-                binlogProperty.getTableList());
+            log.info("正在监听 <{}:{}:{}> binlog……",
+                    binlogProperty.getHostname(),
+                    binlogProperty.getSchema(),
+                    binlogProperty.getTableList());
         }); 
     }
 
     /**
-     * 让其在线上打印出来，观察结果
+     * binlog 监听
      */
     public void binlogListening() {
         BinaryLogClient client = new BinaryLogClient(binlogProperty.getHostname(),
                     Integer.valueOf(binlogProperty.getPort()),
                     binlogProperty.getUsername(),
                     binlogProperty.getPassword());
-            client.setServerId(1);
+        client.setServerId(1);
+        // 注册监听
         client.registerEventListener(event -> {
             EventData data = event.getData();
             EventType eventType = event.getHeader().getEventType();
@@ -125,7 +125,7 @@ public class BinlogUtil {
                 }
             }
         });
-
+        // 连接服务
         connectServer(client);
     }
 
@@ -149,18 +149,22 @@ public class BinlogUtil {
      * @return 目标索引位置的值或者 null
      */
     public static String getValueByIndex(EventData data, int index) {
+        // 新增事件
         if (data instanceof WriteRowsEventData) {
             WriteRowsEventData wr = (WriteRowsEventData) data;
             BitSet includedColumns = wr.getIncludedColumns();
+            // 如果该位置有值为 true，否则是 false
             if (includedColumns.get(index)) {
                 List<Serializable[]> rows = wr.getRows();
                 // 只拿第一条记录的值
                 Serializable[] arr = rows.get(0);
+                // 需要判空，如果一条数据中某列的值为 null 则 NPE
                 if (Objects.nonNull(arr[index])) {
                     return arr[index].toString();
                 }
             }
         }
+        // 更新事件
         if (data instanceof UpdateRowsEventData) {
             UpdateRowsEventData ur = (UpdateRowsEventData) data;
             BitSet includedColumns = ur.getIncludedColumns();
@@ -178,7 +182,7 @@ public class BinlogUtil {
     }
 
     /**
-     * 获取事件数据指定索引位置的最新值
+     * 获取事件数据指定索引位置的最新值，把所有数据都拿到，批量的也处理
      *
      * @param data  binlog 数据
      * @param index 数据库目标字段的索引位置

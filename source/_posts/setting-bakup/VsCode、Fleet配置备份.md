@@ -170,9 +170,9 @@ abbrlink: 9e8f8686
 
     // ########################### Maven 配置 ###########################
     // settings.xml 路径
-    "java.configuration.maven.globalSettings": "/home/xxx/software/maven-3.9.0/conf/settings.xml",
+    "java.configuration.maven.globalSettings": "/home/xxx/software/maven-3.9.2/conf/settings.xml",
     // maven 执行文件路径
-    "maven.executable.path": "/home/xxx/software/maven-3.9.0/bin/",
+    "maven.executable.path": "/home/xxx/software/maven-3.9.2/bin/",
     // maven 命令默认选项：跳过测试
     "maven.executable.options": "-o -DskipTests",
 
