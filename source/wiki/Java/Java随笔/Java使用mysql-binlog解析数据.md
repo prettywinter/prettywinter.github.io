@@ -115,7 +115,7 @@ public class BinlogUtil1 {
                 String tableName = TABLE_MAP.get(wr.getTableId());
                 if (Objects.nonNull(tableName)) {
                     log.info("{} =============== INSERT", tableName);
-
+                    System.out.println(wr.toString());
                 }
             }
             // 更新的 binlog 数据
@@ -124,6 +124,7 @@ public class BinlogUtil1 {
                 String tableName = TABLE_MAP.get(ur.getTableId());
                 if (Objects.nonNull(tableName)) {
                     log.info("{} =============== UPDATE", tableName);
+                    System.out.println(ur.toString());
                 }
             }
         });
