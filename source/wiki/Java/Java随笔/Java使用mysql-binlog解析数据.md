@@ -15,6 +15,9 @@ order: 160
 </dependency>
 ```
 
+> 网络上很多使用 https://github.com/shyiko/mysql-binlog-connector-java 的，作者在 github 上已经表明此库不在维护。
+> 现在维护的是：https://github.com/osheroff/mysql-binlog-connector-java 库，浪子使用的也是该库的依赖。
+
 2. 编码
 
 ```yml
@@ -27,7 +30,6 @@ mysql:
     password: root
     table-list: exp_user
 ```
-
 
 ```java
 @Data
@@ -58,7 +60,7 @@ public class BinlogProperty {
  * @since 2023/5/29 9:57
  */
 @Component
-public class BinlogUtil {
+public class BinlogUtil1 {
     private static final Logger log = LoggerFactory.getLogger(BinlogUtil.class);
     @Autowired
     private BinlogProperty binlogProperty;
@@ -79,7 +81,7 @@ public class BinlogUtil {
                     binlogProperty.getHostname(),
                     binlogProperty.getSchema(),
                     binlogProperty.getTableList());
-        }); 
+        });
     }
 
     /**
@@ -87,9 +89,9 @@ public class BinlogUtil {
      */
     public void binlogListening() {
         BinaryLogClient client = new BinaryLogClient(binlogProperty.getHostname(),
-                    Integer.valueOf(binlogProperty.getPort()),
-                    binlogProperty.getUsername(),
-                    binlogProperty.getPassword());
+                Integer.valueOf(binlogProperty.getPort()),
+                binlogProperty.getUsername(),
+                binlogProperty.getPassword());
         client.setServerId(1);
         // 注册监听
         client.registerEventListener(event -> {
@@ -130,19 +132,7 @@ public class BinlogUtil {
     }
 
     /**
-     * 获取事件数据指定索引位置的最新值
-     *
-     * @param data  数据
-     * @param index 字段索引位置
-     * @param key   索引位置的名称
-     * @return 目标索引位置的值
-     */
-    public static String getValueStringByIndex(EventData data, int index, String key) {
-        return getValueByIndex(data, index, key).get(0).get(key).toString();
-    }
-
-    /**
-     * 获取指定索引位置的最新值，如果是批量，只拿第一条记录的值，还没搞清楚批量插入或者更新放入的是什么值。。。
+     * 获取指定索引位置的最新值，如果是批量，只拿第一条记录的值
      *
      * @param data  binlog 数据
      * @param index 数据库目标字段的索引位置，起始索引 0
@@ -182,7 +172,7 @@ public class BinlogUtil {
     }
 
     /**
-     * 获取事件数据指定索引位置的最新值，把所有数据都拿到，批量的也处理
+     * 获取事件数据指定索引位置的值
      *
      * @param data  binlog 数据
      * @param index 数据库目标字段的索引位置
@@ -197,10 +187,11 @@ public class BinlogUtil {
             if (includedColumns.get(index)) {
                 // 获取每一行的值，Serializable[] 一条记录的所有值
                 List<Serializable[]> rows = wr.getRows();
-                // TODO 批量插入不清楚什么格式，先循环吧，后面出问题再调试
+                // TODO 批量插入不清楚什么格式，先循环吧，使用 MAP 装载结果，后面出问题再调试
                 rows.forEach(r -> {
                     // 拿到索引位的值
                     Serializable value = r[index];
+                    // 若 value 为 null，则抛出 NPE
                     if (Objects.nonNull(value)) {
                         Map<String, Object> map = new HashMap<>();
                         map.put(key, value);
@@ -241,5 +232,4 @@ public class BinlogUtil {
         }
     }
 }
-
 ```
