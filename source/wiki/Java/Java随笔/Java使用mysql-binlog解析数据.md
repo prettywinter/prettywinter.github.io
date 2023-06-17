@@ -15,10 +15,9 @@ order: 160
 </dependency>
 ```
 
-> 网络上很多使用 https://github.com/shyiko/mysql-binlog-connector-java 的，作者在 github 上已经表明此库不在维护。
-> 现在维护的是：https://github.com/osheroff/mysql-binlog-connector-java 库，浪子使用的也是该库的依赖。
+> Github：https://github.com/osheroff/mysql-binlog-connector-java
 
-2. 编码
+1. 编码
 
 ```yml
 mysql:

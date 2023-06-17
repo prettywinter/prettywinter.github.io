@@ -235,8 +235,8 @@ pg_ctl -D "D:\software\pgsql\data" -l logfile start
 ```
 
 > Navicat 15.x 连接时报错 ”datlastsysoid“ 字段不存在，估计需要 Navicat 16 吧；
-> 如果使用最新版本推荐使用官方提供的客户端 pgAdmin4，可在设置中调整为中文界面(缺点就是响应较慢)，推荐使用开源的 Dbeaver；
-> pgsql 的配置文件在 data 文件夹中。
+> 如果使用最新版本可以使用官方提供的客户端 pgAdmin4，可在设置中调整为中文界面(缺点就是响应较慢)，推荐使用开源的 Dbeaver；
+> pgsql 的配置文件在 data 文件夹中 `postgres.conf`。
 
 {% image https://fastly.jsdelivr.net/gh/prettywinter/dist/images/doc/20221023164038.png pgAdmin4界面示例 %}
 
@@ -333,9 +333,17 @@ python -m pip install -U black
 VsCode 使用的频率只次于写代码，平常写文章、前端还有其它的场景使用较多，浪子喜欢使用 压缩包（俗称绿色、便携版）的方式安装。安装简便，安装后可以指定插件的位置：在安装目录新建 **data** 文件夹，这样安装插件时，VsCode 会自动把插件下载到此目录。升级也是非常的简单，下载最新版本的解压，把旧版的 **data** 文件夹移动到新版本根目录中，删除旧版本的即可。
 
 VsCode 1.79 下载地址：
-{% copy https://vscode.cdn.azure.cn/stable/b380da4ef1ee00e224a15c1d4d9793e27c2b6302/VSCode-win32-x64-1.79.0.zip %}
+{% copy https://vscode.cdn.azure.cn/stable/695af097c7bd098fbf017ce3ac85e09bbc5dda06/VSCode-win32-x64-1.79.2.zip %}
 
 注意这里使用的的 cdn 加速，VsCode 下载是比较慢的，原下载链接前缀由 `https://az764295.vo.msecnd.net` 改为 `https://vscode.cdn.azure.cn` 即可加速。
+
+### 2. Vivaldi
+
+Vivaldi 官网在国内是访问不到的，可以在 `hosts` 文件中添加以下内容：
+
+```hosts C:\Windows\System32\drivers\etc\hosts
+172.67.21.227 vivaldi.com www.vivialdi.com update.vivaldi.com downloads.vivaldi.com help.vivaldi.com bifrost.vivaldi.com mimir.vivaldi.com
+```
 
 ## 三、插件
 
@@ -355,10 +363,9 @@ VsCode 1.79 下载地址：
 2. [沉浸式翻译](https://microsoftedge.microsoft.com/addons/detail/%E6%B2%89%E6%B5%B8%E5%BC%8F%E7%BF%BB%E8%AF%91/amkbmndfnliijdhojkpoglbnaaahippg)
 3. [JSON Beautifier & Editor](https://microsoftedge.microsoft.com/addons/detail/json-beautifier-editor/kpfjmbnldfjpgbglcdcmlkekajbcjlem)
 4. [AdGuard 广告拦截器](https://microsoftedge.microsoft.com/addons/detail/adguard-%E5%B9%BF%E5%91%8A%E6%8B%A6%E6%88%AA%E5%99%A8/pdffkfellgipmhklpdmokmckkkfcopbh)
-5. [Greenhub绿墙—网络出海工具](https://microsoftedge.microsoft.com/addons/detail/greenhub%E7%BB%BF%E5%A2%99%E2%80%94%E7%BD%91%E7%BB%9C%E5%87%BA%E6%B5%B7%E5%B7%A5%E5%85%B7/hholdpohidinjmkoanabdchniingdfac)
-6. [文件蜈蚣（需要安装对应的软件）](https://microsoftedge.microsoft.com/addons/detail/jeekmibdibcjeihbjnjgbegjalfelhon)
-7. [图片下载](https://microsoftedge.microsoft.com/addons/detail/fatkun%E5%9B%BE%E7%89%87%E6%89%B9%E9%87%8F%E4%B8%8B%E8%BD%BD-pro/dammmokdamnimedflemdaoamhldmldff)
-8. [Replace Google CDN](https://microsoftedge.microsoft.com/addons/detail/replace-google-cdn/cojepngjobmaiajphkijbdcdjnnjhpjc)
+5. [文件蜈蚣（需要安装对应的软件）](https://microsoftedge.microsoft.com/addons/detail/jeekmibdibcjeihbjnjgbegjalfelhon)
+6. [图片下载](https://microsoftedge.microsoft.com/addons/detail/fatkun%E5%9B%BE%E7%89%87%E6%89%B9%E9%87%8F%E4%B8%8B%E8%BD%BD-pro/dammmokdamnimedflemdaoamhldmldff)
+7. [Replace Google CDN](https://microsoftedge.microsoft.com/addons/detail/replace-google-cdn/cojepngjobmaiajphkijbdcdjnnjhpjc)
 
 > 细滚动条设置（默认长方形）：打开 Edge，URL地址输入 “edge://flags”，进入页面搜索 “Windows 11 fluent scrollbars.”，点击选择框选择 Enabled，重启浏览器（仅限 win 平台）。
 
@@ -383,19 +390,7 @@ VsCode 1.79 下载地址：
 
 ## 四、其它
 
-### 1. Git-Bash 使用 [tree](https://gnuwin32.sourceforge.net/packages/tree.htm) 命令
-
-下载 [tree](https://gnuwin32.sourceforge.net/packages/tree.htm) 的压缩包版的二进制（Binaries）文件并解压。
-
-进入解压的目录中，把 `bin` 目录下的 `tree.exe` 复制到 Git 的安装路径中的 `xxx\Git\usr\bin\` 下。
-
-如果想要在 git-bash 中使用 `ll` 命令，可以在 `C:\Users\yourname` 下创建新文件 `.bashrc`，有的话就不用创建了，在该文件中加入以下内容保存退出：
-
-```bash .bashrc
-alias ll='ls -al'
-```
-
-### 2. 命令操作
+### 1. 命令操作
 
 | 目标     | 操作                             |
 | -------- | -------------------------------- |
@@ -405,7 +400,7 @@ alias ll='ls -al'
 | 服务     | win + r 输入 `services.msc` 回车 |
 | 电脑信息 | win + r 输入 `winver` 回车       |
 
-### 3、删除开机多余启动项
+### 2、删除开机多余启动项
 
 {% kbd Win %} + {% kbd R %}，输入 `msconfig`，点击确定，选择 “引导” 标签，选择 **非当前OS** 记录，点击删除并应用，按照提示重启即可。
 
@@ -418,7 +413,7 @@ efibootmgr
 efibootmgr -b 0001(序号) -B
 ```
 
-### 4. PowerShell 运行脚本报错
+### 3. PowerShell 运行脚本报错
 
 管理员身份运行 ps，
 

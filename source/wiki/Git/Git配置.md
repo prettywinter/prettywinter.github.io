@@ -57,7 +57,7 @@ $ ssh-keygen -t ed25519 -C 'xxx@xx.com' -f C:/Users/用户名/.ssh/gitee_id_rsa
 # github1
 # Host 可以自己定义，在此文件中必须唯一，之后在 down 源码时需要使用这个自定义的 host
 Host github.com
-# HostName 是代码托管平台的域名，例如：code.aliyun.com, github.com, gitee.come 等
+# HostName 是代码托管平台的域名，例如：code.aliyun.com, github.com, gitee.com 等
 HostName github.com
 # 设置用户身份认证方式，这里当然使用 公钥 的方式
 PreferredAuthentications publickey
@@ -113,7 +113,7 @@ $ ssh -T git@xyzgithub.com
 alias ll='ls -al'
 ```
 
-#### 5.3 配置编码为 utf-8
+#### 5.3 配置 git-bash 编码为 utf-8
 
 修改 Git 安装目录下的 `/etc/bash.bashrc` 文件，在最后加入下面的内容，保存退出，重启 git-bash 即可。
 
