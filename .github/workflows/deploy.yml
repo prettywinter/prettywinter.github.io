@@ -1,0 +1,37 @@
+name: Hexo Blog CI
+
+# master branch on push, auto run
+on: 
+  push:
+    branches:
+      - main
+      
+jobs:
+  build: 
+    runs-on: ubuntu-latest 
+        
+    steps:
+    # check it to your workflow can access it
+    # from: https://github.com/marketplace/actions/checkout?version=v3.6.0
+    # v3 版本是新的版本，提供了更多功能和选项。除了将代码检出到工作目录外，它还支持子模块、LFS（大文件存储）和深度克隆等功能
+    - name: Checkout Repository main branch
+      uses: actions/checkout@v3
+      with:
+        submodules: true # Checkout private submodules(themes or something else)
+        fetch-depth: 0
+      
+    # from: https://github.com/actions/setup-node  
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+    
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: public
+        # 部署分支
+        branch: pages
+        # token: ${{ secrets.GITHUB_TOKEN }}
+
+

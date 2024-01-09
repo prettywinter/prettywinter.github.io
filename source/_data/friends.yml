@@ -1,0 +1,9 @@
+- group: 诗酒趁年华 # 分组标题
+  description:  # 分组描述
+  items:
+    - title: Azhe # 名称
+      avatar: https://s3.bmp.ovh/imgs/2022/08/04/35f6ddf1240a85c0.jpg # 头像
+      url: https://lollipopazhe.github.io/ # 链接
+      screenshot: # 截图
+      keywords: # 关键词
+      description: # 描述

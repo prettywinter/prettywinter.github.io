@@ -7,32 +7,11 @@ title: 浮萍一叶
 subtitle: '可叹 落叶飘零 | Sadly, the leaves are falling'
 description: '只要不失你的崇高 全世界都会为你敞开'
 keywords:
-author: 江湖浪子
+author: jhlz
 language: 
   - en
   - zh-CN
-  - zh-TW
 timezone: ''
-
-# In the front-matter of your post,
-# you can optionally add a description, intro or excerpt setting to write a summary for the post.
-# Otherwise the summary will default to the excerpt or the first 140 characters of the post.
-# feed:
-#   enable: true
-#   type: 
-#     - atom
-#     - rss2
-#   path: 
-#     - atom.xml
-#     - rss2.xml
-#   limit: 20
-#   hub:
-#   content: false
-#   content_limit: 140
-#   content_limit_delim: ' '
-#   order_by: -date
-#   icon: icon.png
-#   autodiscovery: true
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
@@ -69,15 +48,14 @@ render_drafts: false
 post_asset_folder: false
 relative_link: false
 future: true
+syntax_highlighter: highlight.js
 highlight:
-  enable: true
   line_number: true
   auto_detect: false
   tab_replace: ''
   wrap: true
   hljs: false
 prismjs:
-  enable: false
   preprocess: true
   line_number: true
   tab_replace: ''
@@ -123,7 +101,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: stellar
+theme: volantis
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
@@ -134,22 +112,3 @@ deploy:
   message: Automatic deploy by Github Action： {{ now('YYYY-MM-DD HH:mm:ss') }}
 
 favicon: https://fastly.jsdelivr.net/gh/prettywinter/dist/images/favicon/favicon-32x32.png
-# wiki 页面返回时返回到所有 wiki 项目，若不指定则会直接返回到主页
-wiki_dir: wiki
-
-# feed:
-#   enable: true
-#   type: 
-#     - atom
-#     - rss2
-#   path: 
-#     - atom.xml
-#     - rss2.xml
-#   limit: 20
-#   hub:
-#   content: false
-#   content_limit: 140
-#   content_limit_delim: ' '
-#   order_by: -date
-#   icon: icon.png
-#   autodiscovery: true
