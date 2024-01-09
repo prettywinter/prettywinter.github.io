@@ -26,6 +26,12 @@ jobs:
       with:
         node-version: 20
     
+    - name: Generator docs
+      run: |
+        npm i
+        npm install -g hexo-cli
+        hexo cl && hexo g
+      
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@v4
       with:
