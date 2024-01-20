@@ -1,6 +1,6 @@
 name: Hexo Blog CI
 
-# master branch on push, auto run
+# main branch on push, auto run
 on: 
   push:
     branches:
@@ -31,13 +31,13 @@ jobs:
         npm i
         npm install -g hexo-cli
         hexo cl && hexo g
-      
-    - name: Deploy
+    
+    # https://github.com/JamesIves/github-pages-deploy-action
+    - name: Deploy pages
       uses: JamesIves/github-pages-deploy-action@v4
       with:
         folder: public
         # 部署分支
         branch: pages
+        # 默认使用 secrets.GITHUB_TOKEN
         # token: ${{ secrets.GITHUB_TOKEN }}
-
-
