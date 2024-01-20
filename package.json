@@ -5,9 +5,7 @@
   "scripts": {
     "build": "hexo generate",
     "clean": "hexo clean",
-    "generate": "hexo generate",
-    "cgd": "hexo cl && hexo g && hexo d",
-    "server": "hexo server"
+    "generate": "hexo generate"
   },
   "hexo": {
     "version": "7.1.0"
