@@ -2,7 +2,6 @@
 title: Hexo使用Volantis主题配置
 categories: Hexo
 tags: 配置
-abbrlink: bb1f26c1
 ---
 
 <!-- more -->
@@ -34,10 +33,64 @@ b2 --> b3(客观唯心主义（绝对精神）)
 
 ```
 
-插件
+## 本博客使用插件
 
-hexo-abbrlink 唯一链接
+### 为每篇文章生成唯一链接
 
-hexo-generator-feed rss 订阅
+```bash
+npm i hexo-abbrlink
+```
 
-hexo-filter-kroki mermaid 图片
+在 `_config_yml` 中添加以下配置：
+
+```yml blog/_config.yml
+permalink: p/:abbrlink/
+abbrlink: 
+  alg: crc32  #算法： crc16(default) and crc32
+  rep: hex    #进制： dec(default) and hex
+```
+
+### RSS 订阅
+
+```bash
+npm i hexo-generator-feed
+```
+
+在 `_config_yml` 中添加以下配置：
+
+```yml blog/_config.yml
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+  hub:
+  content:
+  content_limit: 140
+  content_limit_delim: ' '
+  order_by: -date
+  icon: icon.png
+  autodiscovery: true
+  template:
+```
+
+### mermaid 支持
+
+```bash
+npm i hexo-filter-kroki
+```
+
+### Github Action 自动部署日期更新问题
+
+```bash
+npm i hexo-filter-date-from-git
+```
+
+自动部署脚本设置 `fetch-depth: 0` 检出 Git 全部提交记录。
+
+```yml .github/workflows/deploy.yml
+- name: Checkout Repository main branch
+  uses: actions/checkout@v3
+  with:
+    submodules: true # Checkout private submodules(themes or something else)
+    fetch-depth: 0
+```
